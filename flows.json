@@ -1,1 +1,2251 @@
-[]
+[
+    {
+        "id": "7ac738eef3d259eb",
+        "type": "tab",
+        "label": "Flow 1",
+        "disabled": false,
+        "info": "",
+        "env": []
+    },
+    {
+        "id": "c74ceced8c3687a1",
+        "type": "tab",
+        "label": "Flow 1",
+        "disabled": false,
+        "info": "",
+        "env": []
+    },
+    {
+        "id": "8a595db6babaf80e",
+        "type": "tab",
+        "label": "Check:Umowy:New",
+        "disabled": false,
+        "info": "",
+        "env": []
+    },
+    {
+        "id": "bf6e5312884e6967",
+        "type": "tab",
+        "label": "Check:Umowy:email-confirmed",
+        "disabled": false,
+        "info": "",
+        "env": []
+    },
+    {
+        "id": "6ef65b964aaf43e6",
+        "type": "tab",
+        "label": "API:GET",
+        "disabled": false,
+        "info": "",
+        "env": []
+    },
+    {
+        "id": "7f8edcc91438aff6",
+        "type": "tab",
+        "label": "API:POST:Rejestracja",
+        "disabled": false,
+        "info": "",
+        "env": []
+    },
+    {
+        "id": "8971cc29f27d4741",
+        "type": "tab",
+        "label": "API:POST:Check",
+        "disabled": false,
+        "info": "",
+        "env": []
+    },
+    {
+        "id": "03b285947d86a284",
+        "type": "subflow",
+        "name": "ZFAI - Init",
+        "info": "",
+        "category": "ZFAI",
+        "in": [
+            {
+                "x": 60,
+                "y": 80,
+                "wires": [
+                    {
+                        "id": "b53d3e27e0d7792d"
+                    }
+                ]
+            }
+        ],
+        "out": [
+            {
+                "x": 840,
+                "y": 80,
+                "wires": [
+                    {
+                        "id": "5717605838cc4ae7",
+                        "port": 0
+                    }
+                ]
+            }
+        ],
+        "env": [],
+        "meta": {},
+        "color": "#C7E9C0"
+    },
+    {
+        "id": "7918a80261c18fd1",
+        "type": "group",
+        "z": "8a595db6babaf80e",
+        "name": "q-umowy-get",
+        "style": {
+            "label": true
+        },
+        "nodes": [
+            "ae66d354533891ae",
+            "d76b89fea3b3511f",
+            "7eb560b5c3a4cab1",
+            "fab7b4e4e51382e7",
+            "f7b559c39a8a4937",
+            "5c20d9e3f4361aa9",
+            "98e816074884f3ab",
+            "66a4803a3bc0c120",
+            "bffe11eda272cf24",
+            "76342c885c64be03",
+            "cb758e32c8fde973",
+            "6fdc192e553c1f08",
+            "735f7d3bd2c17e95",
+            "cc7083de28d2431d",
+            "b7688480.6338"
+        ],
+        "x": 34,
+        "y": 179,
+        "w": 792,
+        "h": 302
+    },
+    {
+        "id": "b53d3e27e0d7792d",
+        "type": "function",
+        "z": "03b285947d86a284",
+        "name": "Init - ZenFlowAI",
+        "func": "\n// const uuidv4 = () => {\n//     return 'xxxxxxxx-xxxx-4xxx-yxxx-xxxxxxxxxxxx'.replace(/[xy]/g, function (c) {\n//         let r = Math.random() * 16 | 0, v = c === 'x' ? r : (r & 0x3 | 0x8);\n//         return v.toString(16);\n//     });\n// };\n\nglobal.set(\"uuidv4\", function () {\n    return 'xxxxxxxx-xxxx-4xxx-yxxx-xxxxxxxxxxxx'.replace(/[xy]/g, function (c) {\n        let r = Math.random() * 16 | 0;\n        let v = (c === 'x') ? r : ((r & 0x3) | 0x8);\n        return v.toString(16);\n    });\n});\n\nglobal.set(\"getDateTime\", function () {\n    const now = new Date();\n    const pad = (n) => n.toString().padStart(2, '0');\n\n    const year = now.getFullYear();\n    const month = pad(now.getMonth() + 1);\n    const day = pad(now.getDate());\n    const hours = pad(now.getHours());\n    const minutes = pad(now.getMinutes());\n    const seconds = pad(now.getSeconds());\n\n    return `${year}-${month}-${day} ${hours}:${minutes}:${seconds}`;\n});\n\nglobal.set(\"getTimeStamp\", function () {\n    const now = new Date();\n    const pad = (a) => a.toString().padStart(2, '0');\n    const ts = `${now.getFullYear()}-${pad(now.getMonth() + 1)}-${pad(now.getDate())}_${pad(now.getHours())}-${pad(now.getMinutes())}-${pad(now.getSeconds())}`;\n\n    return ts;\n});\n\nflow.set(\"uuid_global\", global.get(\"uuidv4\")());\n\nglobal.set(\"storage\", \"/zenflowai/storage/\");\nglobal.set(\"path_template_umowy\", \"teamplates/umowy/\")\nglobal.set(\"path_umowy\", \"umowy/\");\nglobal.set(\"path_tmp\", \"tmp/\")\n\nglobal.set(\"url_form_public\", \"http://localhost:5173/\")\n\nmsg.uuid = global.get(\"uuidv4\")();\n\nnode.status({ fill: \"green\", shape: \"dot\", text: global.get(\"getDateTime\")() }); // STATUS\nreturn msg;",
+        "outputs": 1,
+        "timeout": 0,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 220,
+        "y": 80,
+        "wires": [
+            [
+                "d99796da1dd07fa1"
+            ]
+        ]
+    },
+    {
+        "id": "d99796da1dd07fa1",
+        "type": "function",
+        "z": "03b285947d86a284",
+        "name": "tables - ZenFlowAI",
+        "func": "msg.nocodb_host = global.get('env').NOCODB_HOST;\nflow.set('xc-token', global.get('env').NOCODB_KEY) // NocoDB token\nmsg.xc_token = flow.get(\"xc-token\");\n\nmsg.nocodb_t = {\n    osoby: \"mbe32zcic0pndmu\",\n    osoby_view: \"vwh8lh3uhiwcczp0\",\n    rejsy: \"m39ru683xn4zzq2\",\n    rejsy_view: \"vwa56ad99xpcnv5c\",\n    umowy: \"m65niapemqndt0y\",\n    umowy_view: \"vwex9b96thj0h0ef\",\n    messages: \"mqghtzopkll6zjc\",\n    messages_view: \"vwe9peexvucdnp9p\",\n\n};\n\nnode.status({ fill: \"green\", shape: \"dot\", text: global.get(\"getDateTime\")() });\nreturn msg;",
+        "outputs": 1,
+        "timeout": 0,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 430,
+        "y": 80,
+        "wires": [
+            [
+                "5717605838cc4ae7"
+            ]
+        ]
+    },
+    {
+        "id": "5717605838cc4ae7",
+        "type": "function",
+        "z": "03b285947d86a284",
+        "name": "smtp-config",
+        "func": "\nconst smtpUser = \"kwatermistrz@zenflowai.net\";\nconst smtpPass = \"8ZEwvwirdrwZYaPCRmBe\";\nconst smtpHost = \"mail.zenflowai.net\";\nconst smtpPort = 465; // SSL\n\n// konfiguracja SMTP\nmsg.smtp = {\n    host: smtpHost,\n    port: smtpPort,\n    secure: true,\n    auth: {\n        user: smtpUser,\n        pass: smtpPass\n    },\n    tls: {\n        rejectUnauthorized: false // Setze auf true, wenn du eine Zertifikatsüberprüfung erzwingen möchtest\n    }\n};\n\nreturn msg;",
+        "outputs": 1,
+        "timeout": 0,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 630,
+        "y": 80,
+        "wires": [
+            []
+        ]
+    },
+    {
+        "id": "a977c1487e0d24c5",
+        "type": "function",
+        "z": "c74ceced8c3687a1",
+        "name": "function 2",
+        "func": "// const fs = require(\"fs\");\n\n// const createReport = require(\"docx-templates\").default;\nconst createReport = global.get(\"docx-templates\");\n\nconst template = msg.payload;\n\n(async () => {\n    // const template = fs.readFileSync(\"/zewnflowai/umowy/szablon.docx\");\n    // const data = JSON.parse(fs.readFileSync(\"/tmp/dane.json\"));\n\n    const data = {\n        nr_umowy: \"12/12\",\n        data_zawarcia: \"2025-05-24\",\n    };\n\n    const buffer = await createReport({\n        template,\n        data\n    });\n\n    msg.payload = buffer;\n    // fs.writeFileSync(\"/zewnflowai/umowy/wypelniona.docx\", buffer);\n})();",
+        "outputs": 1,
+        "timeout": 0,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 780,
+        "y": 620,
+        "wires": [
+            [
+                "6aadcda335adcd24",
+                "aa20ba6ab7f01f61"
+            ]
+        ]
+    },
+    {
+        "id": "6aadcda335adcd24",
+        "type": "debug",
+        "z": "c74ceced8c3687a1",
+        "name": "debug 4",
+        "active": true,
+        "tosidebar": true,
+        "console": false,
+        "tostatus": false,
+        "complete": "true",
+        "targetType": "full",
+        "statusVal": "",
+        "statusType": "auto",
+        "x": 1000,
+        "y": 540,
+        "wires": []
+    },
+    {
+        "id": "f850f1b4e43d171b",
+        "type": "file in",
+        "z": "c74ceced8c3687a1",
+        "name": "",
+        "filename": "/zenflowai/storage/templates/umowa-mazury.docx",
+        "filenameType": "str",
+        "format": "utf8",
+        "chunk": false,
+        "sendError": false,
+        "encoding": "none",
+        "allProps": false,
+        "x": 450,
+        "y": 620,
+        "wires": [
+            [
+                "a977c1487e0d24c5",
+                "8f267f752b686196"
+            ]
+        ]
+    },
+    {
+        "id": "aa20ba6ab7f01f61",
+        "type": "file",
+        "z": "c74ceced8c3687a1",
+        "name": "",
+        "filename": "/zenflowai/storage/templates/gotowe.docx",
+        "filenameType": "str",
+        "appendNewline": true,
+        "createDir": false,
+        "overwriteFile": "true",
+        "encoding": "none",
+        "x": 1090,
+        "y": 620,
+        "wires": [
+            [
+                "48d0564e608f78b1"
+            ]
+        ]
+    },
+    {
+        "id": "48d0564e608f78b1",
+        "type": "debug",
+        "z": "c74ceced8c3687a1",
+        "name": "debug 5",
+        "active": true,
+        "tosidebar": true,
+        "console": false,
+        "tostatus": false,
+        "complete": "true",
+        "targetType": "full",
+        "statusVal": "",
+        "statusType": "auto",
+        "x": 1290,
+        "y": 540,
+        "wires": []
+    },
+    {
+        "id": "579358545ee05ab1",
+        "type": "inject",
+        "z": "c74ceced8c3687a1",
+        "name": "",
+        "props": [
+            {
+                "p": "payload"
+            },
+            {
+                "p": "topic",
+                "vt": "str"
+            }
+        ],
+        "repeat": "",
+        "crontab": "",
+        "once": false,
+        "onceDelay": 0.1,
+        "topic": "",
+        "payload": "",
+        "payloadType": "date",
+        "x": 160,
+        "y": 500,
+        "wires": [
+            [
+                "b118b96dcac8580e"
+            ]
+        ]
+    },
+    {
+        "id": "b118b96dcac8580e",
+        "type": "function",
+        "z": "c74ceced8c3687a1",
+        "name": "function 3",
+        "func": "const os = global.get(\"os\");\nmsg.payload = os.platform();\nreturn msg;",
+        "outputs": 1,
+        "timeout": 0,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 380,
+        "y": 500,
+        "wires": [
+            [
+                "cc90b15d5b2ee908"
+            ]
+        ]
+    },
+    {
+        "id": "cc90b15d5b2ee908",
+        "type": "debug",
+        "z": "c74ceced8c3687a1",
+        "name": "debug 6",
+        "active": true,
+        "tosidebar": true,
+        "console": false,
+        "tostatus": false,
+        "complete": "false",
+        "statusVal": "",
+        "statusType": "auto",
+        "x": 590,
+        "y": 500,
+        "wires": []
+    },
+    {
+        "id": "8f267f752b686196",
+        "type": "debug",
+        "z": "c74ceced8c3687a1",
+        "name": "debug 7",
+        "active": true,
+        "tosidebar": true,
+        "console": false,
+        "tostatus": false,
+        "complete": "true",
+        "targetType": "full",
+        "statusVal": "",
+        "statusType": "auto",
+        "x": 780,
+        "y": 540,
+        "wires": []
+    },
+    {
+        "id": "1722428ed71a4c40",
+        "type": "inject",
+        "z": "c74ceced8c3687a1",
+        "name": "",
+        "props": [
+            {
+                "p": "payload"
+            },
+            {
+                "p": "topic",
+                "vt": "str"
+            }
+        ],
+        "repeat": "",
+        "crontab": "",
+        "once": false,
+        "onceDelay": 0.1,
+        "topic": "",
+        "payload": "",
+        "payloadType": "date",
+        "x": 120,
+        "y": 560,
+        "wires": [
+            [
+                "8f267f752b686196",
+                "f850f1b4e43d171b"
+            ]
+        ]
+    },
+    {
+        "id": "0593c53023e99d07",
+        "type": "function",
+        "z": "c74ceced8c3687a1",
+        "name": "function 4",
+        "func": "// Get required modules from global context (configured in settings.js)\nconst fs = global.get('fs');\nconst path = global.get('path');\nconst createReport = global.get('docx_templates').createReport;\n\n(async () => {\n    try {\n        const templatePath = \"/zenflowai/storage/templates/umowa-mazury.docx\";\n\n        if (!fs.existsSync(templatePath)) {\n            throw new Error(`Template nie istnieje: ${templatePath}`);\n        }\n\n        const template = fs.readFileSync(templatePath);\n\n        const data = {\n            nr_umowy: \"12/12\",\n            data_zawarcia: \"2025-05-24\",\n        };\n\n        console.log(\"Generowanie dokumentu...\");\n\n        const buffer = await createReport({\n            template,\n            data\n        });\n\n        msg.payload = buffer;\n\n        const outputPath = \"/zenflowai/storage/templates/umowa-mazury-wypelniona.docx\";\n        fs.writeFileSync(outputPath, buffer);\n\n        console.log(`Dokument zapisany: ${outputPath}`);\n\n        node.send(msg);\n\n    } catch (error) {\n        console.error(\"Błąd:\", error);\n        node.error(error.message, msg);\n    }\n})();",
+        "outputs": 1,
+        "timeout": 0,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 420,
+        "y": 760,
+        "wires": [
+            [
+                "b06dcd616dd28661"
+            ]
+        ]
+    },
+    {
+        "id": "ef054bf8b4f4d793",
+        "type": "inject",
+        "z": "c74ceced8c3687a1",
+        "name": "",
+        "props": [
+            {
+                "p": "payload"
+            },
+            {
+                "p": "topic",
+                "vt": "str"
+            }
+        ],
+        "repeat": "",
+        "crontab": "",
+        "once": false,
+        "onceDelay": 0.1,
+        "topic": "",
+        "payload": "",
+        "payloadType": "date",
+        "x": 130,
+        "y": 740,
+        "wires": [
+            [
+                "0593c53023e99d07",
+                "b06dcd616dd28661"
+            ]
+        ]
+    },
+    {
+        "id": "b06dcd616dd28661",
+        "type": "debug",
+        "z": "c74ceced8c3687a1",
+        "name": "debug 8",
+        "active": true,
+        "tosidebar": true,
+        "console": false,
+        "tostatus": false,
+        "complete": "true",
+        "targetType": "full",
+        "statusVal": "",
+        "statusType": "auto",
+        "x": 690,
+        "y": 740,
+        "wires": []
+    },
+    {
+        "id": "39aa69ec25e10e77",
+        "type": "function",
+        "z": "c74ceced8c3687a1",
+        "name": "function 5",
+        "func": "console.log(\"fs z global:\", global.get(\"fs\"));\nconsole.log(\"Dostępne klucze w global:\", Object.keys(global.keys || {}));\nreturn msg;",
+        "outputs": 1,
+        "timeout": 0,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 420,
+        "y": 840,
+        "wires": [
+            [
+                "6ec1c583de8e5378"
+            ]
+        ]
+    },
+    {
+        "id": "3eb17527ac4b17b4",
+        "type": "inject",
+        "z": "c74ceced8c3687a1",
+        "name": "",
+        "props": [
+            {
+                "p": "payload"
+            },
+            {
+                "p": "topic",
+                "vt": "str"
+            }
+        ],
+        "repeat": "",
+        "crontab": "",
+        "once": false,
+        "onceDelay": 0.1,
+        "topic": "",
+        "payload": "",
+        "payloadType": "date",
+        "x": 210,
+        "y": 820,
+        "wires": [
+            [
+                "39aa69ec25e10e77"
+            ]
+        ]
+    },
+    {
+        "id": "6ec1c583de8e5378",
+        "type": "debug",
+        "z": "c74ceced8c3687a1",
+        "name": "debug 9",
+        "active": true,
+        "tosidebar": true,
+        "console": false,
+        "tostatus": false,
+        "complete": "true",
+        "targetType": "full",
+        "statusVal": "",
+        "statusType": "auto",
+        "x": 730,
+        "y": 820,
+        "wires": []
+    },
+    {
+        "id": "bc8a691041330981",
+        "type": "subflow:03b285947d86a284",
+        "z": "8a595db6babaf80e",
+        "name": "",
+        "x": 300,
+        "y": 80,
+        "wires": [
+            [
+                "3a862aed26a5ef2e"
+            ]
+        ]
+    },
+    {
+        "id": "6b878d2c9c32a6e1",
+        "type": "inject",
+        "z": "8a595db6babaf80e",
+        "name": "",
+        "props": [
+            {
+                "p": "payload"
+            },
+            {
+                "p": "topic",
+                "vt": "str"
+            }
+        ],
+        "repeat": "",
+        "crontab": "",
+        "once": false,
+        "onceDelay": 0.1,
+        "topic": "",
+        "payload": "",
+        "payloadType": "date",
+        "x": 120,
+        "y": 80,
+        "wires": [
+            [
+                "bc8a691041330981"
+            ]
+        ]
+    },
+    {
+        "id": "3a862aed26a5ef2e",
+        "type": "function",
+        "z": "8a595db6babaf80e",
+        "name": "NocoDB - umowy:get:new",
+        "func": "msg.nocodb_t_active = msg.nocodb_t.umowy;\n\nlet nr_k = msg.payload.nr_k;\n\nmsg.form_data = msg.payload;\n\nmsg.payload = {\n    offset: '0',\n    limit: '25',\n    viewId: msg.nocodb_t.umowy_view,\n    where: `(status,eq,01 new)`,\n    \"nested[osoby][fields]\": \"*\"\n};\n\nnode.status({ fill: \"green\", shape: \"dot\", text: global.get(\"getDateTime\")() });\n\nreturn msg;",
+        "outputs": 1,
+        "timeout": 0,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 540,
+        "y": 80,
+        "wires": [
+            [
+                "c66408c43bb56b21"
+            ]
+        ]
+    },
+    {
+        "id": "c66408c43bb56b21",
+        "type": "http request",
+        "z": "8a595db6babaf80e",
+        "name": "NocoDB - GET",
+        "method": "GET",
+        "ret": "obj",
+        "paytoqs": "query",
+        "url": "http://{{nocodb_host}}/api/v2/tables/{{nocodb_t_active}}/records",
+        "tls": "",
+        "persist": false,
+        "proxy": "",
+        "insecureHTTPParser": false,
+        "authType": "",
+        "senderr": false,
+        "headers": [
+            {
+                "keyType": "other",
+                "keyValue": "xc-token",
+                "valueType": "msg",
+                "valueValue": "xc_token"
+            },
+            {
+                "keyType": "Content-Type",
+                "keyValue": "",
+                "valueType": "application/json",
+                "valueValue": ""
+            }
+        ],
+        "x": 800,
+        "y": 80,
+        "wires": [
+            [
+                "7464f14b8f075e77",
+                "8be11d0711271c4f"
+            ]
+        ]
+    },
+    {
+        "id": "23bc26edc4890059",
+        "type": "function",
+        "z": "8a595db6babaf80e",
+        "name": "email:template:confirm-email",
+        "func": "var data = msg.payload;\n\nconst fs = global.get('fs');\nconst path = global.get('path');\n\n// Ścieżki do plików (dostosuj według potrzeb)\nconst htmlPath = global.get('storage') + \"/teamplates/html/email_verify.html\";\nconst cssPath = global.get('storage') + \"/teamplates/html/email-style.css\";\n\nlet html = fs.readFileSync(htmlPath, \"utf8\");\nconst css = fs.readFileSync(cssPath, \"utf8\");\n\nconst formdata = {\n    \"osoba_name\": data.osoby.imie,\n    \"confirm_email_link\": global.get(\"url_form_public\") + \"confirm_email/\" + data.uuid\n}\n\n// Wstawienie stylu inline w miejsce <link rel=\"stylesheet\"...>\nhtml = html.replace(\n    /<link\\s+rel=[\"']stylesheet[\"']\\s+href=[\"'][^\"']+[\"']\\s*\\/?>/,\n    `<style>\\n${css}\\n</style>`\n);\n\n// Zamiana znaczników {{...}} dynamicznie z msg.payload\nhtml = html\n    .replace(/{{osoba_name}}/g, formdata.osoba_name)\n    .replace(/{{confirm_email_link}}/g,formdata.confirm_email_link);\n\nmsg.payload = html;\nmsg.to = `${data.osoby.email}`;\nmsg.from = \"kwatermistrz@zenflowai.net\";\nmsg.subject = \"Potwierdzenie adresu e-mail - Kapitan Bastek\";\nmsg.headers = {\n    \"Content-Type\": \"text/html\"\n};\nmsg.html = html;\n\nreturn msg;\n\n\n\n\n// msg.to = `${data.osoby.email}`;\n// msg.from = \"kwatermistrz@zenflowai.net\";\n// msg.subject = `Potwierdz adres email - Kapitan Bastek`;\n// msg.text = \"Cześć,\\nWysłam plik z przelewami — zaimportuj go w banku.\\nAsystent 🦊 Fox\";\n// msg.html = `\n// <p>Cześć,</p>\n// <p>Musisz potwierdzić adres email, aby otrzymać umowę.</p>\n// <p>Klikni w poniższy link. Po potwierdzeniu adresu eamil otrzymasz umowę w następnym emailu.</p>\n   \n// <p>Kwatermistrz ⛵️ Kapitana Bastka</p>\n\n// `;\n\nnode.status({ fill: \"green\", shape: \"dot\", text: global.get(\"getDateTime\")() });\n\n\nreturn msg;",
+        "outputs": 1,
+        "timeout": 0,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 320,
+        "y": 660,
+        "wires": [
+            [
+                "adff4f876ee6b8db",
+                "51dd78dd65af83e3"
+            ]
+        ]
+    },
+    {
+        "id": "edeefa61e219a61a",
+        "type": "debug",
+        "z": "8a595db6babaf80e",
+        "name": "debug 2",
+        "active": true,
+        "tosidebar": true,
+        "console": false,
+        "tostatus": false,
+        "complete": "false",
+        "statusVal": "",
+        "statusType": "auto",
+        "x": 1200,
+        "y": 560,
+        "wires": []
+    },
+    {
+        "id": "ae66d354533891ae",
+        "type": "function",
+        "z": "8a595db6babaf80e",
+        "g": "7918a80261c18fd1",
+        "name": "separate records",
+        "func": "let rows = msg.q.list;\n\nmsg.payload = rows.map(row => {\n    let singleMsg = RED.util.cloneMessage(msg); // duplikujemy oryginalny msg\n    singleMsg.payload = row;\n    return singleMsg;\n});\n\nnode.status({ fill: \"green\", shape: \"dot\", text: global.get(\"getDateTime\")() }); //STATUS\nreturn [msg.payload]; ",
+        "outputs": 1,
+        "timeout": 0,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 410,
+        "y": 220,
+        "wires": [
+            [
+                "7eb560b5c3a4cab1"
+            ]
+        ]
+    },
+    {
+        "id": "d76b89fea3b3511f",
+        "type": "link in",
+        "z": "8a595db6babaf80e",
+        "g": "7918a80261c18fd1",
+        "name": "in-q",
+        "links": [
+            "5c20d9e3f4361aa9",
+            "bffe11eda272cf24"
+        ],
+        "x": 485,
+        "y": 280,
+        "wires": [
+            [
+                "7eb560b5c3a4cab1"
+            ]
+        ]
+    },
+    {
+        "id": "fab7b4e4e51382e7",
+        "type": "link in",
+        "z": "8a595db6babaf80e",
+        "g": "7918a80261c18fd1",
+        "name": "start-all_node_get_next",
+        "links": [
+            "45f34c55d1865088"
+        ],
+        "x": 160,
+        "y": 340,
+        "wires": [
+            [
+                "f7b559c39a8a4937"
+            ]
+        ],
+        "l": true
+    },
+    {
+        "id": "f7b559c39a8a4937",
+        "type": "function",
+        "z": "8a595db6babaf80e",
+        "g": "7918a80261c18fd1",
+        "name": "get next",
+        "func": "const q = flow.get('q');\nnode.send({ topic: q.ct, payload: \"drop\"})\nmsg.topic = q.ct\nmsg.payload = \"peek\"\n\nnode.status({ fill: \"green\", shape: \"dot\", text: global.get(\"getDateTime\")() }); //STATUS\nreturn msg;",
+        "outputs": 1,
+        "timeout": "",
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 420,
+        "y": 340,
+        "wires": [
+            [
+                "5c20d9e3f4361aa9"
+            ]
+        ]
+    },
+    {
+        "id": "5c20d9e3f4361aa9",
+        "type": "link out",
+        "z": "8a595db6babaf80e",
+        "g": "7918a80261c18fd1",
+        "name": "end-all_node_get_next",
+        "mode": "link",
+        "links": [
+            "d76b89fea3b3511f"
+        ],
+        "x": 700,
+        "y": 340,
+        "wires": [],
+        "l": true
+    },
+    {
+        "id": "98e816074884f3ab",
+        "type": "status",
+        "z": "8a595db6babaf80e",
+        "g": "7918a80261c18fd1",
+        "name": "q-status",
+        "scope": [
+            "7eb560b5c3a4cab1"
+        ],
+        "x": 120,
+        "y": 440,
+        "wires": [
+            [
+                "66a4803a3bc0c120"
+            ]
+        ]
+    },
+    {
+        "id": "66a4803a3bc0c120",
+        "type": "function",
+        "z": "8a595db6babaf80e",
+        "g": "7918a80261c18fd1",
+        "name": "check if first in q",
+        "func": "const statusText = msg.status.text;\nlet processing = flow.get(\"processing\") || false;\nconst q = flow.get('q');\n\n// Dopasuj liczbę po \"queuing:\"\nconst match = statusText.match(/queuing:\\s*(\\d+)/);\n\nif (match) {\n    const queuingCount = parseInt(match[1], 10);\n    node.status({ fill: \"gray\", shape: \"ring\", text: queuingCount });\n    const timestamp = global.get(\"getDateTime\")();\n\n    // Ustaw status węzła\n    node.status({\n        fill: queuingCount > 0 ? \"yellow\" : \"green\",\n        shape: \"dot\",\n        text: `${timestamp} | queuing: ${queuingCount}`\n    });\n\n    if (queuingCount == 0) {\n        flow.set(\"processing\", false);\n        msg.payload = \"end\";\n        node.status({ fill: \"gray\", shape: \"dot\", text: \"processing end\"  });\n        return msg;\n    }\n\n    \n        \n        if (queuingCount > 0) {\n\n            if (!processing) {\n                flow.set(\"processing\", true);\n                msg.topic = q.ct;\n                msg.payload = \"peek\";\n                node.status({ fill: \"gray\", shape: \"dot\", text: \"od true\" });\n                return msg;\n            } else {\n                node.status({ fill: \"gray\", shape: \"dot\", text: \"od false\" });\n            }\n\n            // msg.payload = {\n            //     queuing: queuingCount,\n            //     time: timestamp, peek\n            //     rawStatus: statusText\n            // };\n            node.status({ fill: \"gray\", shape: \"dot\", text: processing });\n            // return msg;\n        \n    } else {\n        node.status({ fill: \"green\", shape: \"dot\", text: \"processing ...\" });\n    }\n}\n\n// Jeśli nie pasuje – wyczyść status i nic nie wysyłaj\nnode.status({ fill: \"gray\", shape: \"ring\", text: \"no match or queuing ≤ 1\" });\n// node.status({ fill: \"gray\", shape: \"ring\", text: match });\n\nreturn null;",
+        "outputs": 1,
+        "timeout": 0,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 300,
+        "y": 440,
+        "wires": [
+            [
+                "cb758e32c8fde973"
+            ]
+        ]
+    },
+    {
+        "id": "bffe11eda272cf24",
+        "type": "link out",
+        "z": "8a595db6babaf80e",
+        "g": "7918a80261c18fd1",
+        "name": "link out 1",
+        "mode": "link",
+        "links": [
+            "d76b89fea3b3511f"
+        ],
+        "x": 785,
+        "y": 400,
+        "wires": []
+    },
+    {
+        "id": "76342c885c64be03",
+        "type": "delay",
+        "z": "8a595db6babaf80e",
+        "g": "7918a80261c18fd1",
+        "name": "",
+        "pauseType": "delay",
+        "timeout": "1",
+        "timeoutUnits": "seconds",
+        "rate": "1",
+        "nbRateUnits": "1",
+        "rateUnits": "second",
+        "randomFirst": "1",
+        "randomLast": "5",
+        "randomUnits": "seconds",
+        "drop": false,
+        "allowrate": false,
+        "outputs": 1,
+        "x": 660,
+        "y": 400,
+        "wires": [
+            [
+                "bffe11eda272cf24"
+            ]
+        ]
+    },
+    {
+        "id": "cb758e32c8fde973",
+        "type": "switch",
+        "z": "8a595db6babaf80e",
+        "g": "7918a80261c18fd1",
+        "name": "",
+        "property": "payload",
+        "propertyType": "msg",
+        "rules": [
+            {
+                "t": "eq",
+                "v": "peek",
+                "vt": "str"
+            },
+            {
+                "t": "eq",
+                "v": "end",
+                "vt": "str"
+            }
+        ],
+        "checkall": "true",
+        "repair": false,
+        "outputs": 2,
+        "x": 470,
+        "y": 440,
+        "wires": [
+            [
+                "76342c885c64be03"
+            ],
+            []
+        ]
+    },
+    {
+        "id": "6fdc192e553c1f08",
+        "type": "function",
+        "z": "8a595db6babaf80e",
+        "g": "7918a80261c18fd1",
+        "name": "q-config",
+        "func": "msg.q = {\n    ct: \"control-umowy_get\",\n    list: msg.payload.list,\n}\n\nflow.set(\"q\", msg.q);\n\nnode.status({ fill: \"green\", shape: \"dot\", text: global.get(\"getDateTime\")() }); //STATUS\nreturn msg;",
+        "outputs": 1,
+        "timeout": 0,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 200,
+        "y": 220,
+        "wires": [
+            [
+                "ae66d354533891ae"
+            ]
+        ]
+    },
+    {
+        "id": "8be11d0711271c4f",
+        "type": "link out",
+        "z": "8a595db6babaf80e",
+        "name": "link out 2",
+        "mode": "link",
+        "links": [
+            "735f7d3bd2c17e95"
+        ],
+        "x": 935,
+        "y": 80,
+        "wires": []
+    },
+    {
+        "id": "735f7d3bd2c17e95",
+        "type": "link in",
+        "z": "8a595db6babaf80e",
+        "g": "7918a80261c18fd1",
+        "name": "link in 1",
+        "links": [
+            "8be11d0711271c4f"
+        ],
+        "x": 75,
+        "y": 220,
+        "wires": [
+            [
+                "6fdc192e553c1f08"
+            ]
+        ]
+    },
+    {
+        "id": "cc7083de28d2431d",
+        "type": "link out",
+        "z": "8a595db6babaf80e",
+        "g": "7918a80261c18fd1",
+        "name": "link out 3",
+        "mode": "link",
+        "links": [
+            "45ddc02187c0cca4"
+        ],
+        "x": 785,
+        "y": 220,
+        "wires": []
+    },
+    {
+        "id": "b7688480.6338",
+        "type": "inject",
+        "z": "8a595db6babaf80e",
+        "g": "7918a80261c18fd1",
+        "name": "reset",
+        "props": [
+            {
+                "p": "payload"
+            },
+            {
+                "p": "topic",
+                "v": "q.ct",
+                "vt": "flow"
+            }
+        ],
+        "repeat": "",
+        "crontab": "",
+        "once": false,
+        "onceDelay": 0.1,
+        "topic": "",
+        "payload": "reset",
+        "payloadType": "str",
+        "x": 650,
+        "y": 280,
+        "wires": [
+            [
+                "7eb560b5c3a4cab1"
+            ]
+        ]
+    },
+    {
+        "id": "45ddc02187c0cca4",
+        "type": "link in",
+        "z": "8a595db6babaf80e",
+        "name": "link in 2",
+        "links": [
+            "cc7083de28d2431d"
+        ],
+        "x": 125,
+        "y": 660,
+        "wires": [
+            [
+                "f526af978974e235",
+                "23bc26edc4890059"
+            ]
+        ]
+    },
+    {
+        "id": "45f34c55d1865088",
+        "type": "link out",
+        "z": "8a595db6babaf80e",
+        "name": "link out 4",
+        "mode": "link",
+        "links": [
+            "fab7b4e4e51382e7"
+        ],
+        "x": 1275,
+        "y": 800,
+        "wires": []
+    },
+    {
+        "id": "f526af978974e235",
+        "type": "debug",
+        "z": "8a595db6babaf80e",
+        "name": "debug 1",
+        "active": true,
+        "tosidebar": true,
+        "console": false,
+        "tostatus": false,
+        "complete": "true",
+        "targetType": "full",
+        "statusVal": "",
+        "statusType": "auto",
+        "x": 230,
+        "y": 580,
+        "wires": []
+    },
+    {
+        "id": "7464f14b8f075e77",
+        "type": "debug",
+        "z": "8a595db6babaf80e",
+        "name": "debug 3",
+        "active": true,
+        "tosidebar": true,
+        "console": false,
+        "tostatus": false,
+        "complete": "false",
+        "statusVal": "",
+        "statusType": "auto",
+        "x": 990,
+        "y": 180,
+        "wires": []
+    },
+    {
+        "id": "adff4f876ee6b8db",
+        "type": "function",
+        "z": "8a595db6babaf80e",
+        "name": "NocoDB:post:osoba",
+        "func": "msg.nocodb_t_active = msg.nocodb_t.messages;\n\n// const uploadedFile = msg.payload[0];\n\nconst now = new Date();\nconst pad = (n) => n.toString().padStart(2, '0');\n\nconst year = now.getFullYear();\nconst month = pad(now.getMonth() + 1);\nconst day = pad(now.getDate());\nconst hours = pad(now.getHours());\nconst minutes = pad(now.getMinutes());\nconst seconds = pad(now.getSeconds());\n\nconst uuid = global.get(\"uuidv4\")();\n\n// Prepare the update payload for the record\nmsg.payload = {\n    \"name\": year+month+day+hours+minutes+seconds+\" confirm-email \" + msg.to,\n    \"status\": \"new\",\n    \"type\": \"email\",\n    \"msg_to\": msg.to,\n    \"msg_subject\": msg.subject,\n    \"msg_body\": msg.html,\n    uuid: msg.uuid\n};\nmsg.method = \"POST\";\n\n\nnode.status({ fill: \"green\", shape: \"dot\", text: global.get(\"getDateTime\")() });\nreturn msg;",
+        "outputs": 1,
+        "timeout": 0,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 600,
+        "y": 660,
+        "wires": [
+            [
+                "193521fa10b04844",
+                "edeefa61e219a61a"
+            ]
+        ]
+    },
+    {
+        "id": "193521fa10b04844",
+        "type": "http request",
+        "z": "8a595db6babaf80e",
+        "name": "NocoDB - ALL",
+        "method": "use",
+        "ret": "obj",
+        "paytoqs": "ignore",
+        "url": "http://{{nocodb_host}}/api/v2/tables/{{nocodb_t_active}}/records",
+        "tls": "",
+        "persist": false,
+        "proxy": "",
+        "insecureHTTPParser": false,
+        "authType": "",
+        "senderr": false,
+        "headers": [
+            {
+                "keyType": "other",
+                "keyValue": "xc-token",
+                "valueType": "msg",
+                "valueValue": "xc_token"
+            },
+            {
+                "keyType": "Content-Type",
+                "keyValue": "",
+                "valueType": "application/json",
+                "valueValue": ""
+            }
+        ],
+        "x": 820,
+        "y": 660,
+        "wires": [
+            [
+                "edeefa61e219a61a",
+                "7e71c160d6b3bdef"
+            ]
+        ]
+    },
+    {
+        "id": "7e71c160d6b3bdef",
+        "type": "function",
+        "z": "8a595db6babaf80e",
+        "name": "get:id:msg",
+        "func": "msg.msg_id = msg.payload.Id\nnode.status({ fill: \"green\", shape: \"dot\", text: global.get(\"getDateTime\")() }); //STATUS\nreturn msg;\n",
+        "outputs": 1,
+        "timeout": 0,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 1030,
+        "y": 660,
+        "wires": [
+            [
+                "21e185dded19e0ef"
+            ]
+        ]
+    },
+    {
+        "id": "1438e47a6d3d8d47",
+        "type": "http request",
+        "z": "8a595db6babaf80e",
+        "name": "NocoDB - ALL",
+        "method": "use",
+        "ret": "obj",
+        "paytoqs": "ignore",
+        "url": "http://{{nocodb_host}}/api/v2/tables/{{nocodb_t_active}}/records",
+        "tls": "",
+        "persist": false,
+        "proxy": "",
+        "insecureHTTPParser": false,
+        "authType": "",
+        "senderr": false,
+        "headers": [
+            {
+                "keyType": "other",
+                "keyValue": "xc-token",
+                "valueType": "msg",
+                "valueValue": "xc_token"
+            },
+            {
+                "keyType": "Content-Type",
+                "keyValue": "",
+                "valueType": "application/json",
+                "valueValue": ""
+            }
+        ],
+        "x": 840,
+        "y": 860,
+        "wires": [
+            [
+                "45f34c55d1865088",
+                "7a6c446833ec8533"
+            ]
+        ]
+    },
+    {
+        "id": "ac8cbb807a19bde8",
+        "type": "function",
+        "z": "8a595db6babaf80e",
+        "name": "NocoDB:patch:msg",
+        "func": "msg.nocodb_t_active = msg.nocodb_t.messages;\n\n// Domyślny status\nlet status = \"pending\";\n\n// Sprawdzenie pól accepted/rejected\nif (msg.payload.accepted && msg.payload.accepted.length > 0) {\n    status = \"send\";\n} else if (msg.payload.rejected && msg.payload.rejected.length > 0) {\n    status = \"error\";\n}\n\nmsg.payload = {\n    Id: msg.msg_id,   // klucz podstawowy w Twojej tabeli\n    status: status\n};\n\nmsg.method = \"PATCH\";\n\nnode.status({\n    fill: \"green\",\n    shape: \"dot\",\n    text: `${global.get(\"getDateTime\")()}`\n});\n\nreturn msg;",
+        "outputs": 1,
+        "timeout": 0,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 490,
+        "y": 860,
+        "wires": [
+            [
+                "1438e47a6d3d8d47",
+                "af55551f4e70f174"
+            ]
+        ]
+    },
+    {
+        "id": "b8b71d274e9ca7f8",
+        "type": "debug",
+        "z": "8a595db6babaf80e",
+        "name": "debug 10",
+        "active": true,
+        "tosidebar": true,
+        "console": false,
+        "tostatus": false,
+        "complete": "true",
+        "targetType": "full",
+        "statusVal": "",
+        "statusType": "auto",
+        "x": 190,
+        "y": 840,
+        "wires": []
+    },
+    {
+        "id": "af55551f4e70f174",
+        "type": "debug",
+        "z": "8a595db6babaf80e",
+        "name": "debug 11",
+        "active": true,
+        "tosidebar": true,
+        "console": false,
+        "tostatus": false,
+        "complete": "false",
+        "statusVal": "",
+        "statusType": "auto",
+        "x": 730,
+        "y": 780,
+        "wires": []
+    },
+    {
+        "id": "7a6c446833ec8533",
+        "type": "debug",
+        "z": "8a595db6babaf80e",
+        "name": "debug 12",
+        "active": true,
+        "tosidebar": true,
+        "console": false,
+        "tostatus": false,
+        "complete": "false",
+        "statusVal": "",
+        "statusType": "auto",
+        "x": 1010,
+        "y": 740,
+        "wires": []
+    },
+    {
+        "id": "51dd78dd65af83e3",
+        "type": "debug",
+        "z": "8a595db6babaf80e",
+        "name": "debug 13",
+        "active": true,
+        "tosidebar": true,
+        "console": false,
+        "tostatus": false,
+        "complete": "false",
+        "statusVal": "",
+        "statusType": "auto",
+        "x": 530,
+        "y": 560,
+        "wires": []
+    },
+    {
+        "id": "7eb560b5c3a4cab1",
+        "type": "q-gate",
+        "z": "8a595db6babaf80e",
+        "g": "7918a80261c18fd1",
+        "name": "q-umowy_get",
+        "controlTopic": "control-umowy_get",
+        "defaultState": "queueing",
+        "openCmd": "open",
+        "closeCmd": "close",
+        "toggleCmd": "toggle",
+        "queueCmd": "queue",
+        "defaultCmd": "default",
+        "triggerCmd": "trigger",
+        "flushCmd": "flush",
+        "resetCmd": "reset",
+        "peekCmd": "peek",
+        "dropCmd": "drop",
+        "statusCmd": "status",
+        "maxQueueLength": "100",
+        "keepNewest": false,
+        "qToggle": false,
+        "persist": false,
+        "storeName": "memory",
+        "x": 640,
+        "y": 220,
+        "wires": [
+            [
+                "cc7083de28d2431d"
+            ]
+        ]
+    },
+    {
+        "id": "21e185dded19e0ef",
+        "type": "email-dynamic",
+        "z": "8a595db6babaf80e",
+        "name": "",
+        "smtpServer": "",
+        "smtpPort": "",
+        "smtpUser": "",
+        "smtpPass": "",
+        "secure": false,
+        "tlsRejectUnauthorized": false,
+        "x": 280,
+        "y": 760,
+        "wires": [
+            [
+                "b8b71d274e9ca7f8",
+                "ac8cbb807a19bde8"
+            ]
+        ]
+    },
+    {
+        "id": "292d42f2cac760e2",
+        "type": "subflow:03b285947d86a284",
+        "z": "bf6e5312884e6967",
+        "name": "",
+        "x": 300,
+        "y": 60,
+        "wires": [
+            [
+                "18d583dbe85332cc"
+            ]
+        ]
+    },
+    {
+        "id": "570980b42d7a140f",
+        "type": "inject",
+        "z": "bf6e5312884e6967",
+        "name": "",
+        "props": [
+            {
+                "p": "payload"
+            },
+            {
+                "p": "topic",
+                "vt": "str"
+            }
+        ],
+        "repeat": "",
+        "crontab": "",
+        "once": false,
+        "onceDelay": 0.1,
+        "topic": "",
+        "payload": "",
+        "payloadType": "date",
+        "x": 120,
+        "y": 60,
+        "wires": [
+            [
+                "292d42f2cac760e2"
+            ]
+        ]
+    },
+    {
+        "id": "18d583dbe85332cc",
+        "type": "function",
+        "z": "bf6e5312884e6967",
+        "name": "NocoDB - umowy:get:05 email-confirmed",
+        "func": "msg.nocodb_t_active = msg.nocodb_t.umowy;\n\nlet nr_k = msg.payload.nr_k;\n\nmsg.form_data = msg.payload;\n\nmsg.payload = {\n    offset: '0',\n    limit: '1',\n    viewId: msg.nocodb_t.umowy_view,\n    where: `(status,eq,05 email-confirmed)`,\n    \"nested[osoby][fields]\": \"*\",\n    \"nested[rejsy][fields]\": \"*\"\n};\n\nnode.status({ fill: \"green\", shape: \"dot\", text: global.get(\"getDateTime\")() });\n\nreturn msg;",
+        "outputs": 1,
+        "timeout": 0,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 580,
+        "y": 60,
+        "wires": [
+            [
+                "fc912d421d472bc9"
+            ]
+        ]
+    },
+    {
+        "id": "fc912d421d472bc9",
+        "type": "http request",
+        "z": "bf6e5312884e6967",
+        "name": "NocoDB - GET",
+        "method": "GET",
+        "ret": "obj",
+        "paytoqs": "query",
+        "url": "http://{{nocodb_host}}/api/v2/tables/{{nocodb_t_active}}/records",
+        "tls": "",
+        "persist": false,
+        "proxy": "",
+        "insecureHTTPParser": false,
+        "authType": "",
+        "senderr": false,
+        "headers": [
+            {
+                "keyType": "other",
+                "keyValue": "xc-token",
+                "valueType": "msg",
+                "valueValue": "xc_token"
+            },
+            {
+                "keyType": "Content-Type",
+                "keyValue": "",
+                "valueType": "application/json",
+                "valueValue": ""
+            }
+        ],
+        "x": 880,
+        "y": 60,
+        "wires": [
+            [
+                "e7154bd86822a712",
+                "13bd61d5d00e0938"
+            ]
+        ]
+    },
+    {
+        "id": "e7154bd86822a712",
+        "type": "debug",
+        "z": "bf6e5312884e6967",
+        "name": "debug 17",
+        "active": false,
+        "tosidebar": true,
+        "console": false,
+        "tostatus": false,
+        "complete": "false",
+        "statusVal": "",
+        "statusType": "auto",
+        "x": 1030,
+        "y": 200,
+        "wires": []
+    },
+    {
+        "id": "d3849b6988415d4c",
+        "type": "function",
+        "z": "bf6e5312884e6967",
+        "name": "crate:umowa",
+        "func": "// Get required modules from global context (configured in settings.js)\nconst fs = global.get('fs');\nconst path = global.get('path');\nconst createReport = global.get('docx_templates').createReport;\n\n(async () => {\n    try {\n        const templatePath = msg.umowa.path_umowa_template;\n\n        if (!fs.existsSync(templatePath)) {\n            throw new Error(`Template nie istnieje: ${templatePath}`);\n        }\n\n        const template = fs.readFileSync(templatePath);\n\n        const data = msg.umowa;\n\n        console.log(\"Generowanie dokumentu...\");\n\n        const buffer = await createReport({\n            template,\n            data\n        });\n\n        msg.file_buffer = buffer;\n\n        const outputPath = msg.umowa.path_tmp + msg.umowa.umowa_name + \".docx\" ;\n        fs.writeFileSync(outputPath, buffer);\n\n        console.log(`Dokument zapisany: ${outputPath}`);\n\n        node.send(msg);\n\n    } catch (error) {\n        console.error(\"Błąd:\", error);\n        node.error(error.message, msg);\n    }\n})();",
+        "outputs": 1,
+        "timeout": 0,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 470,
+        "y": 360,
+        "wires": [
+            [
+                "ac0741e3d2640d99",
+                "0a915799cd0a9b38"
+            ]
+        ]
+    },
+    {
+        "id": "13bd61d5d00e0938",
+        "type": "function",
+        "z": "bf6e5312884e6967",
+        "name": "prepare:umowa",
+        "func": "function slowniePL(kwota) {\n    const jednostki = [\"\", \"jeden\", \"dwa\", \"trzy\", \"cztery\", \"pięć\", \"sześć\", \"siedem\", \"osiem\", \"dziewięć\"];\n    const nascie = [\"dziesięć\", \"jedenaście\", \"dwanaście\", \"trzynaście\", \"czternaście\", \"piętnaście\", \"szesnaście\", \"siedemnaście\", \"osiemnaście\", \"dziewiętnaście\"];\n    const dziesiatki = [\"\", \"\", \"dwadzieścia\", \"trzydzieści\", \"czterdzieści\", \"pięćdziesiąt\", \"sześćdziesiąt\", \"siedemdziesiąt\", \"osiemdziesiąt\", \"dziewięćdziesiąt\"];\n    const setki = [\"\", \"sto\", \"dwieście\", \"trzysta\", \"czterysta\", \"pięćset\", \"sześćset\", \"siedemset\", \"osiemset\", \"dziewięćset\"];\n\n    const grupy = [\n        [\"\", \"\", \"\"],\n        [\"tysiąc\", \"tysiące\", \"tysięcy\"],\n        [\"milion\", \"miliony\", \"milionów\"],\n        [\"miliard\", \"miliardy\", \"miliardów\"]\n    ];\n\n    function odmiana(liczba, formy) {\n        if (liczba === 1) return formy[0];\n        if ([2, 3, 4].includes(liczba % 10) && !(liczba % 100 >= 10 && liczba % 100 <= 20)) return formy[1];\n        return formy[2];\n    }\n\n    function segment(n) {\n        const s = Math.floor(n / 100);\n        const d = Math.floor((n % 100) / 10);\n        const j = n % 10;\n\n        let wynik = [];\n\n        if (s) wynik.push(setki[s]);\n        if (d === 1) {\n            wynik.push(nascie[j]);\n        } else {\n            if (d > 1) wynik.push(dziesiatki[d]);\n            if (j > 0) wynik.push(jednostki[j]);\n        }\n\n        return wynik.join(\" \");\n    }\n\n    function liczbaNaSlowa(n) {\n        if (n === 0) return \"zero\";\n\n        let res = [];\n        let i = 0;\n\n        while (n > 0) {\n            let trzy = n % 1000;\n            if (trzy > 0) {\n                let seg = segment(trzy);\n                if (i > 0) {\n                    let formy = grupy[i];\n                    let odm = odmiana(trzy, formy);\n                    if (trzy === 1 && i === 1) {\n                        seg = odm; // tylko \"tysiąc\", bez \"jeden\"\n                    } else {\n                        seg += \" \" + odm;\n                    }\n                }\n                res.unshift(seg);\n            }\n            n = Math.floor(n / 1000);\n            i++;\n        }\n\n        return res.join(\" \");\n    }\n\n    let zl = Math.floor(kwota);\n    let gr = Math.round((kwota - zl) * 100);\n\n    let wynik = liczbaNaSlowa(zl);// + \" złotych\";\n    if (gr > 0) {\n        wynik += \" i \" + liczbaNaSlowa(gr) + \" groszy\";\n    }\n\n    return wynik;\n}\n\n\n\nconst umowa = msg.payload.list[0];\nconst rejs = umowa.rejsy;\nconst osoba = umowa.osoby;\n\nconst storage = global.get(\"storage\");\nconst path_template_umowy = global.get(\"path_template_umowy\");\nconst path_umowy = global.get(\"path_umowy\");\nconst path_tmp = global.get(\"path_tmp\")\n\nlet new_nr_umowa = \"1-25\";\n\nlet umowa_name = global.get(\"getTimeStamp\")() + \"_\" + new_nr_umowa\n\nmsg.umowa = {\n    \"umowa_name\": umowa_name,\n    \"umowa_uuid\": umowa.uuid,\n    \"nr_umowy\": \"12/12\",\n    \"data_zawarcia\": \"1212\",\n    \"path_umowa_template\": storage + path_template_umowy + rejs.umowa_template,\n    \"path_tmp\": storage + path_tmp,\n    \"path_umowa\": storage + path_umowy,\n\n    \"imie_nazwisko\": osoba.imie + \" \" + osoba.nazwisko,\n    \"adres_zamieszkania\": osoba.adres_zamieszkania,\n    \"data_i_miejsce_urodzenia\": osoba.miejsce_urodzenia + \" \" + osoba.miejsce_urodzenia,\n    \"email\": osoba.email,\n    \"nr_telefonu\": osoba.telefon,\n    \"nr_dokumentu\": osoba.nr_dowodu,\n    \"stopien\": osoba.uprawnienia,\n    \"rozmiar_koszulki\": osoba.rozmiar_koszulki,\n    \"eme_osoba\": osoba.eme_contact,\n    \"umowa_przedmiot\": rejs.umowa_przedmiot,\n    \"termin_od\": rejs.termin_od,\n    \"termin_do\": rejs.termin_do,\n    \"port_start\": rejs.port_start,\n    \"port_koniec\": rejs.port_koniec,\n    \"port_start_czas\": \"\",\n    \"port_koniec_czas\": \"\",\n    \"cena\": rejs.cena,\n    \"cena_slownie\": slowniePL(rejs.cena),\n    \"rezerwacja_ilosc\": umowa.ile_osob,\n    \"rezerwacja_ilosc_slownie\": slowniePL(umowa.ile_osob),\n    \"rezerwacja_cena\": umowa.rezerwacja_cena,\n    \"rezerwacja_cena_slownie\": slowniePL(umowa.rezerwacja_cena),\n    \"rezerwacja_cena_rata1\": umowa.rezerwacja_cena_rata1,\n    \"rezerwacja_cena_rata1_slownie\": slowniePL(umowa.rezerwacja_cena_rata1),\n    \"rezerwacja_cena_rata2\": umowa.rezerwacja_cena_rata2,\n    \"cena_wydatki\": rejs.cena_wydatki,\n    \"cena_zaokretowania\": rejs.cena_zaokretowania,\n\n}\n\nnode.status({ fill: \"green\", shape: \"dot\", text: global.get(\"getDateTime\")() });\nreturn msg;",
+        "outputs": 1,
+        "timeout": 0,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 230,
+        "y": 360,
+        "wires": [
+            [
+                "d3849b6988415d4c",
+                "8001e7fd53fd91b5"
+            ]
+        ]
+    },
+    {
+        "id": "8001e7fd53fd91b5",
+        "type": "debug",
+        "z": "bf6e5312884e6967",
+        "name": "debug 18",
+        "active": true,
+        "tosidebar": true,
+        "console": false,
+        "tostatus": false,
+        "complete": "true",
+        "targetType": "full",
+        "statusVal": "",
+        "statusType": "auto",
+        "x": 450,
+        "y": 500,
+        "wires": []
+    },
+    {
+        "id": "ac0741e3d2640d99",
+        "type": "debug",
+        "z": "bf6e5312884e6967",
+        "name": "debug 19",
+        "active": false,
+        "tosidebar": true,
+        "console": false,
+        "tostatus": false,
+        "complete": "false",
+        "statusVal": "",
+        "statusType": "auto",
+        "x": 710,
+        "y": 240,
+        "wires": []
+    },
+    {
+        "id": "52a11ea9f254b4c4",
+        "type": "exec",
+        "z": "bf6e5312884e6967",
+        "command": "libreoffice --headless --convert-to pdf ",
+        "addpay": "payload",
+        "append": "",
+        "useSpawn": "false",
+        "timer": "",
+        "winHide": false,
+        "oldrc": false,
+        "name": "Docx to PDF",
+        "x": 930,
+        "y": 360,
+        "wires": [
+            [
+                "02526e8cb9de9ed8"
+            ],
+            [
+                "1670fe814c5f6509"
+            ],
+            [
+                "1749324184fbc90d"
+            ]
+        ]
+    },
+    {
+        "id": "0a915799cd0a9b38",
+        "type": "function",
+        "z": "bf6e5312884e6967",
+        "name": "path with space",
+        "func": "// msg.payload = msg.payload.replace(/ /g, \"\\\\ \");\n// msg.payload += ` ${flow.get(\"storage\")}/tmp/pdf/output`;\n\nconst source_file = `${msg.umowa.path_tmp}${msg.umowa.umowa_name}.docx`;\nconst dest_file = `${msg.umowa.path_umowa}`; \n\nmsg.payload = `${source_file} --outdir ${dest_file}`;\n\nmsg.topic = \"docx_to_pdf\";\nreturn msg;",
+        "outputs": 1,
+        "timeout": 0,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 700,
+        "y": 360,
+        "wires": [
+            [
+                "52a11ea9f254b4c4"
+            ]
+        ]
+    },
+    {
+        "id": "02526e8cb9de9ed8",
+        "type": "debug",
+        "z": "bf6e5312884e6967",
+        "name": "debug 20",
+        "active": false,
+        "tosidebar": true,
+        "console": false,
+        "tostatus": false,
+        "complete": "false",
+        "statusVal": "",
+        "statusType": "auto",
+        "x": 1110,
+        "y": 340,
+        "wires": []
+    },
+    {
+        "id": "1670fe814c5f6509",
+        "type": "debug",
+        "z": "bf6e5312884e6967",
+        "name": "debug 21",
+        "active": false,
+        "tosidebar": true,
+        "console": false,
+        "tostatus": false,
+        "complete": "false",
+        "statusVal": "",
+        "statusType": "auto",
+        "x": 1170,
+        "y": 400,
+        "wires": []
+    },
+    {
+        "id": "1749324184fbc90d",
+        "type": "debug",
+        "z": "bf6e5312884e6967",
+        "name": "debug 22",
+        "active": false,
+        "tosidebar": true,
+        "console": false,
+        "tostatus": false,
+        "complete": "false",
+        "statusVal": "",
+        "statusType": "auto",
+        "x": 1090,
+        "y": 460,
+        "wires": []
+    },
+    {
+        "id": "353379d5bcdeee09",
+        "type": "http in",
+        "z": "6ef65b964aaf43e6",
+        "name": "",
+        "url": "/api/rejsy/get",
+        "method": "get",
+        "upload": false,
+        "swaggerDoc": "",
+        "x": 210,
+        "y": 100,
+        "wires": [
+            [
+                "9a824614bd5da150"
+            ]
+        ]
+    },
+    {
+        "id": "b8e46ab11cd82e31",
+        "type": "http response",
+        "z": "6ef65b964aaf43e6",
+        "name": "",
+        "statusCode": "200",
+        "headers": {},
+        "x": 1420,
+        "y": 100,
+        "wires": []
+    },
+    {
+        "id": "e2ee6162640b5a29",
+        "type": "function",
+        "z": "6ef65b964aaf43e6",
+        "name": "prepare:response",
+        "func": "let output = [];\n\nif (msg.payload && Array.isArray(msg.payload.list)) {\n    for (let item of msg.payload.list) {\n        output.push({\n            name: `${item.nazwa} ${item.termin_od} - ${item.termin_do}`,\n            value: item.Id,\n            free_space: (item.ilosc_max || 0) - (item.ilosc_wyk || 0),\n            cena: item.cena || 0,\n            czym: item.czym\n        });\n    }\n}\n\nmsg.payload = output;\nreturn msg;",
+        "outputs": 1,
+        "timeout": 0,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 1110,
+        "y": 100,
+        "wires": [
+            [
+                "b8e46ab11cd82e31"
+            ]
+        ]
+    },
+    {
+        "id": "9a824614bd5da150",
+        "type": "subflow:03b285947d86a284",
+        "z": "6ef65b964aaf43e6",
+        "name": "",
+        "x": 420,
+        "y": 100,
+        "wires": [
+            [
+                "5c111b1ca0dd686e"
+            ]
+        ]
+    },
+    {
+        "id": "5c111b1ca0dd686e",
+        "type": "function",
+        "z": "6ef65b964aaf43e6",
+        "name": "NocoDB - rejsy:get",
+        "func": "msg.nocodb_t_active = msg.nocodb_t.rejsy;\n\nlet nr_k = msg.payload.nr_k;\n\nmsg.form_data = msg.payload;\n\nmsg.payload = {\n    offset: '0',\n    limit: '25',\n    viewId: msg.nocodb_t.rejsy_view,\n    where: `(status,eq,active)`\n};\n//${nr_k}\nnode.status({ fill: \"green\", shape: \"dot\", text: global.get(\"getDateTime\")() });\n\nreturn msg;",
+        "outputs": 1,
+        "timeout": 0,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 650,
+        "y": 100,
+        "wires": [
+            [
+                "f6fc7c875e15e454"
+            ]
+        ]
+    },
+    {
+        "id": "f6fc7c875e15e454",
+        "type": "http request",
+        "z": "6ef65b964aaf43e6",
+        "name": "NocoDB - GET",
+        "method": "GET",
+        "ret": "obj",
+        "paytoqs": "query",
+        "url": "http://{{nocodb_host}}/api/v2/tables/{{nocodb_t_active}}/records",
+        "tls": "",
+        "persist": false,
+        "proxy": "",
+        "insecureHTTPParser": false,
+        "authType": "",
+        "senderr": false,
+        "headers": [
+            {
+                "keyType": "other",
+                "keyValue": "xc-token",
+                "valueType": "msg",
+                "valueValue": "xc_token"
+            },
+            {
+                "keyType": "Content-Type",
+                "keyValue": "",
+                "valueType": "application/json",
+                "valueValue": ""
+            }
+        ],
+        "x": 880,
+        "y": 100,
+        "wires": [
+            [
+                "e2ee6162640b5a29"
+            ]
+        ]
+    },
+    {
+        "id": "c4604a396ef799b7",
+        "type": "inject",
+        "z": "6ef65b964aaf43e6",
+        "name": "",
+        "props": [
+            {
+                "p": "payload"
+            },
+            {
+                "p": "topic",
+                "vt": "str"
+            }
+        ],
+        "repeat": "",
+        "crontab": "",
+        "once": false,
+        "onceDelay": 0.1,
+        "topic": "",
+        "payload": "",
+        "payloadType": "date",
+        "x": 270,
+        "y": 240,
+        "wires": [
+            [
+                "9a824614bd5da150"
+            ]
+        ]
+    },
+    {
+        "id": "e9c1304f5f90927e",
+        "type": "http in",
+        "z": "7f8edcc91438aff6",
+        "name": "",
+        "url": "/api/rejsy/zapisz",
+        "method": "post",
+        "upload": false,
+        "swaggerDoc": "",
+        "x": 160,
+        "y": 60,
+        "wires": [
+            [
+                "eb069a6838953468"
+            ]
+        ]
+    },
+    {
+        "id": "c9199959da0f2652",
+        "type": "http response",
+        "z": "7f8edcc91438aff6",
+        "name": "",
+        "statusCode": "200",
+        "headers": {},
+        "x": 560,
+        "y": 360,
+        "wires": []
+    },
+    {
+        "id": "8b0f70caea35ed13",
+        "type": "function",
+        "z": "7f8edcc91438aff6",
+        "name": "NocoDB:post:osoba",
+        "func": "msg.nocodb_t_active = msg.nocodb_t.osoby;\n\n// const uploadedFile = msg.payload[0];\n\nconst now = new Date();\nconst pad = (n) => n.toString().padStart(2, '0');\n\nconst year = now.getFullYear();\nconst month = pad(now.getMonth() + 1);\nconst day = pad(now.getDate());\nconst hours = pad(now.getHours());\nconst minutes = pad(now.getMinutes());\nconst seconds = pad(now.getSeconds());\n\n// const uuid = global.get(\"uuidv4\")();\n\nmsg.form = {\n    \"liczbaOsob\": msg.payload.data.liczbaOsob,\n    \"rejsId\": msg.payload.data.rejsId,\n}\n\n// Prepare the update payload for the record\nmsg.payload = {\n    \"cj5mwpsab4bh5zv\": msg.payload.data.imie,\n    \"cm1fyirgmdcemtv\": msg.payload.data.nazwisko,\n    \"c5hrv18inqamu4d\": msg.payload.data.email,\n    \"co7qha0ikufbnjx\": msg.payload.data.telefon,\n    \"cb0a24v6fm28sj0\": msg.payload.data.miejsceUrodzenia,\n    \"c77doycdzvddszv\": msg.payload.data.dataUrodzenia ,\n    \"ca42qwypv1kcyh7\": msg.payload.data.adresZamieszkania ,\n    \"cioe98sbu9qwxjg\": msg.payload.data.nrDokumentu ,\n    \"cp07bymy87xk9qf\": msg.payload.data.uprawnienia ,\n    \"cfihnz9e66moiug\": msg.payload.data.rozmiarKoszulki ,\n    \"cfewcth4yte2zhr\": msg.payload.data.osobaKontaktowaImieNazwisko + ' ' + msg.payload.data.osobaKontaktowaTelefon ,\n    uuid: msg.uuid\n};\nmsg.method = \"POST\";\n\n\nnode.status({ fill: \"green\", shape: \"dot\", text: global.get(\"getDateTime\")() });\nreturn msg;",
+        "outputs": 1,
+        "timeout": 0,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 560,
+        "y": 60,
+        "wires": [
+            [
+                "050dabcd08732f94"
+            ]
+        ]
+    },
+    {
+        "id": "050dabcd08732f94",
+        "type": "http request",
+        "z": "7f8edcc91438aff6",
+        "name": "NocoDB - ALL",
+        "method": "use",
+        "ret": "obj",
+        "paytoqs": "ignore",
+        "url": "http://{{nocodb_host}}/api/v2/tables/{{nocodb_t_active}}/records",
+        "tls": "",
+        "persist": false,
+        "proxy": "",
+        "insecureHTTPParser": false,
+        "authType": "",
+        "senderr": false,
+        "headers": [
+            {
+                "keyType": "other",
+                "keyValue": "xc-token",
+                "valueType": "msg",
+                "valueValue": "xc_token"
+            },
+            {
+                "keyType": "Content-Type",
+                "keyValue": "",
+                "valueType": "application/json",
+                "valueValue": ""
+            }
+        ],
+        "x": 780,
+        "y": 60,
+        "wires": [
+            [
+                "24362b7ab3a611b8"
+            ]
+        ]
+    },
+    {
+        "id": "eb069a6838953468",
+        "type": "subflow:03b285947d86a284",
+        "z": "7f8edcc91438aff6",
+        "name": "",
+        "x": 360,
+        "y": 60,
+        "wires": [
+            [
+                "8b0f70caea35ed13"
+            ]
+        ]
+    },
+    {
+        "id": "388e845554a0cdbb",
+        "type": "function",
+        "z": "7f8edcc91438aff6",
+        "name": "NocoDB:post:umowy",
+        "func": "msg.nocodb_t_active = msg.nocodb_t.umowy;\nconst rejs = msg.payload.list[0];\n\nconst now = new Date();\nconst pad = (n) => n.toString().padStart(2, '0');\n\nconst year = now.getFullYear();\nconst month = pad(now.getMonth() + 1);\nconst day = pad(now.getDate());\nconst hours = pad(now.getHours());\nconst minutes = pad(now.getMinutes());\nconst seconds = pad(now.getSeconds());\n\nconst uuid = global.get(\"uuidv4\")();\n\nconst rezerwacja_cena = rejs.cena * msg.form.liczbaOsob;\nconst rezerwacja_cena_rata1 = Math.floor(rezerwacja_cena * 0.3);\nconst rezerwacja_cena_rata2 = rezerwacja_cena - rezerwacja_cena_rata1; \nconst cena_wydatki = rejs.cena_wydatki * msg.form.liczbaOsob;\nconst cena_zaokretowania = rejs.cena_zaokretowania * msg.form.liczbaOsob;\n\nmsg.payload = {\n    \"nc_5cf7__osoby_id\": msg.osoba_id,\n    \"cdp5l9hs8gbe7kn\": msg.form.liczbaOsob,\n    \"nc_5cf7___rejsy_id\": msg.form.rejsId,\n    uuid: uuid,\n    \"nazwa\": \"Umowa - wait for confirm\",\n    \"rezerwacja_cena\": rezerwacja_cena,\n    \"rezerwacja_cena_rata1\": rezerwacja_cena_rata1,\n    \"rezerwacja_cena_rata2\": rezerwacja_cena_rata2,\n    \"cena_wydatki\": cena_wydatki,\n    \"cena_zaokretowania\": cena_zaokretowania\n}\n\nmsg.method = \"POST\";\n\nnode.status({ fill: \"green\", shape: \"dot\", text: global.get(\"getDateTime\")() });\nreturn msg;",
+        "outputs": 1,
+        "timeout": 0,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 160,
+        "y": 360,
+        "wires": [
+            [
+                "d747d5ba3cbab626",
+                "2c67425d251ae254"
+            ]
+        ]
+    },
+    {
+        "id": "d747d5ba3cbab626",
+        "type": "http request",
+        "z": "7f8edcc91438aff6",
+        "name": "NocoDB - ALL",
+        "method": "use",
+        "ret": "obj",
+        "paytoqs": "ignore",
+        "url": "http://{{nocodb_host}}/api/v2/tables/{{nocodb_t_active}}/records",
+        "tls": "",
+        "persist": false,
+        "proxy": "",
+        "insecureHTTPParser": false,
+        "authType": "",
+        "senderr": false,
+        "headers": [
+            {
+                "keyType": "other",
+                "keyValue": "xc-token",
+                "valueType": "msg",
+                "valueValue": "xc_token"
+            },
+            {
+                "keyType": "Content-Type",
+                "keyValue": "",
+                "valueType": "application/json",
+                "valueValue": ""
+            }
+        ],
+        "x": 380,
+        "y": 360,
+        "wires": [
+            [
+                "c9199959da0f2652"
+            ]
+        ]
+    },
+    {
+        "id": "24362b7ab3a611b8",
+        "type": "function",
+        "z": "7f8edcc91438aff6",
+        "name": "NocoDB - rejsy:get:Id",
+        "func": "msg.nocodb_t_active = msg.nocodb_t.rejsy;\n\nmsg.osoba_id = msg.payload.Id;\n\nmsg.payload = {\n    offset: '0',\n    limit: '1',\n    viewId: msg.nocodb_t.rejsy_view,\n    where: `(Id,eq,${msg.form.rejsId})`,\n};\n\nnode.status({ fill: \"green\", shape: \"dot\", text: global.get(\"getDateTime\")() });\n\nreturn msg;",
+        "outputs": 1,
+        "timeout": 0,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 160,
+        "y": 180,
+        "wires": [
+            [
+                "8aff7492ecde8657",
+                "2b8bc73127ce89cf"
+            ]
+        ]
+    },
+    {
+        "id": "8aff7492ecde8657",
+        "type": "http request",
+        "z": "7f8edcc91438aff6",
+        "name": "NocoDB - GET",
+        "method": "GET",
+        "ret": "obj",
+        "paytoqs": "query",
+        "url": "http://{{nocodb_host}}/api/v2/tables/{{nocodb_t_active}}/records",
+        "tls": "",
+        "persist": false,
+        "proxy": "",
+        "insecureHTTPParser": false,
+        "authType": "",
+        "senderr": false,
+        "headers": [
+            {
+                "keyType": "other",
+                "keyValue": "xc-token",
+                "valueType": "msg",
+                "valueValue": "xc_token"
+            },
+            {
+                "keyType": "Content-Type",
+                "keyValue": "",
+                "valueType": "application/json",
+                "valueValue": ""
+            }
+        ],
+        "x": 380,
+        "y": 180,
+        "wires": [
+            [
+                "388e845554a0cdbb",
+                "77f50fe396c3c695"
+            ]
+        ]
+    },
+    {
+        "id": "2b8bc73127ce89cf",
+        "type": "debug",
+        "z": "7f8edcc91438aff6",
+        "name": "debug 23",
+        "active": true,
+        "tosidebar": true,
+        "console": false,
+        "tostatus": false,
+        "complete": "false",
+        "statusVal": "",
+        "statusType": "auto",
+        "x": 750,
+        "y": 160,
+        "wires": []
+    },
+    {
+        "id": "77f50fe396c3c695",
+        "type": "debug",
+        "z": "7f8edcc91438aff6",
+        "name": "debug 24",
+        "active": true,
+        "tosidebar": true,
+        "console": false,
+        "tostatus": false,
+        "complete": "false",
+        "statusVal": "",
+        "statusType": "auto",
+        "x": 750,
+        "y": 240,
+        "wires": []
+    },
+    {
+        "id": "2c67425d251ae254",
+        "type": "debug",
+        "z": "7f8edcc91438aff6",
+        "name": "debug 25",
+        "active": true,
+        "tosidebar": true,
+        "console": false,
+        "tostatus": false,
+        "complete": "false",
+        "statusVal": "",
+        "statusType": "auto",
+        "x": 760,
+        "y": 280,
+        "wires": []
+    },
+    {
+        "id": "0ad1c2e33d36b2e2",
+        "type": "http in",
+        "z": "8971cc29f27d4741",
+        "name": "",
+        "url": "/api/check/email",
+        "method": "post",
+        "upload": false,
+        "swaggerDoc": "",
+        "x": 140,
+        "y": 60,
+        "wires": [
+            [
+                "ee1d170117a16cb9"
+            ]
+        ]
+    },
+    {
+        "id": "ee1d170117a16cb9",
+        "type": "subflow:03b285947d86a284",
+        "z": "8971cc29f27d4741",
+        "name": "",
+        "x": 360,
+        "y": 60,
+        "wires": [
+            [
+                "9e688097fabb5e63",
+                "92cf13ad610664b9"
+            ]
+        ]
+    },
+    {
+        "id": "9e688097fabb5e63",
+        "type": "debug",
+        "z": "8971cc29f27d4741",
+        "name": "debug 14",
+        "active": true,
+        "tosidebar": true,
+        "console": false,
+        "tostatus": false,
+        "complete": "false",
+        "statusVal": "",
+        "statusType": "auto",
+        "x": 1400,
+        "y": 20,
+        "wires": []
+    },
+    {
+        "id": "92cf13ad610664b9",
+        "type": "function",
+        "z": "8971cc29f27d4741",
+        "name": "NocoDB - umowy:get:new",
+        "func": "msg.nocodb_t_active = msg.nocodb_t.umowy;\n\nmsg.form_data = msg.payload;\n\nmsg.payload = {\n    offset: '0',\n    limit: '25',\n    viewId: msg.nocodb_t.umowy_view,\n    where: `(status,eq,01 new)~and(uuid,eq,${msg.form_data.uuid})`,\n    \"nested[osoby][fields]\": \"*\"\n};\n\nnode.status({ fill: \"green\", shape: \"dot\", text: global.get(\"getDateTime\")() });\n\nreturn msg;",
+        "outputs": 1,
+        "timeout": 0,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 660,
+        "y": 60,
+        "wires": [
+            [
+                "1843a6fb6ef174c8"
+            ]
+        ]
+    },
+    {
+        "id": "1843a6fb6ef174c8",
+        "type": "http request",
+        "z": "8971cc29f27d4741",
+        "name": "NocoDB - GET",
+        "method": "GET",
+        "ret": "obj",
+        "paytoqs": "query",
+        "url": "http://{{nocodb_host}}/api/v2/tables/{{nocodb_t_active}}/records",
+        "tls": "",
+        "persist": false,
+        "proxy": "",
+        "insecureHTTPParser": false,
+        "authType": "",
+        "senderr": false,
+        "headers": [
+            {
+                "keyType": "other",
+                "keyValue": "xc-token",
+                "valueType": "msg",
+                "valueValue": "xc_token"
+            },
+            {
+                "keyType": "Content-Type",
+                "keyValue": "",
+                "valueType": "application/json",
+                "valueValue": ""
+            }
+        ],
+        "x": 940,
+        "y": 60,
+        "wires": [
+            [
+                "d6f7fb58ba6308a6",
+                "2da5f5f1636f4f75"
+            ]
+        ]
+    },
+    {
+        "id": "d6f7fb58ba6308a6",
+        "type": "debug",
+        "z": "8971cc29f27d4741",
+        "name": "debug 15",
+        "active": true,
+        "tosidebar": true,
+        "console": false,
+        "tostatus": false,
+        "complete": "false",
+        "statusVal": "",
+        "statusType": "auto",
+        "x": 1400,
+        "y": 60,
+        "wires": []
+    },
+    {
+        "id": "2da5f5f1636f4f75",
+        "type": "function",
+        "z": "8971cc29f27d4741",
+        "name": "NocoDB:patch:osoby",
+        "func": "msg.nocodb_t_active = msg.nocodb_t.osoby;\nmsg.umowa_data = msg.payload.list[0];\n// Domyślny status\n// let status = false;\n\n// // Sprawdzenie pól accepted/rejected\n// if (msg.payload.accepted && msg.payload.accepted.length > 0) {\n//     status = \"send\";\n// } else if (msg.payload.rejected && msg.payload.rejected.length > 0) {\n//     status = \"error\";\n// }\n\nmsg.payload = {\n    Id: msg.umowa_data.osoby.Id,   // klucz podstawowy w Twojej tabeli\n    email_confirmed: true\n};\n\nmsg.method = \"PATCH\";\n\nnode.status({\n    fill: \"green\",\n    shape: \"dot\",\n    text: `${global.get(\"getDateTime\")()}`\n});\n\nreturn msg;",
+        "outputs": 1,
+        "timeout": 0,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 160,
+        "y": 200,
+        "wires": [
+            [
+                "64fb459404f1d9ec"
+            ]
+        ]
+    },
+    {
+        "id": "64fb459404f1d9ec",
+        "type": "http request",
+        "z": "8971cc29f27d4741",
+        "name": "NocoDB - ALL",
+        "method": "use",
+        "ret": "obj",
+        "paytoqs": "ignore",
+        "url": "http://{{nocodb_host}}/api/v2/tables/{{nocodb_t_active}}/records",
+        "tls": "",
+        "persist": false,
+        "proxy": "",
+        "insecureHTTPParser": false,
+        "authType": "",
+        "senderr": false,
+        "headers": [
+            {
+                "keyType": "other",
+                "keyValue": "xc-token",
+                "valueType": "msg",
+                "valueValue": "xc_token"
+            },
+            {
+                "keyType": "Content-Type",
+                "keyValue": "",
+                "valueType": "application/json",
+                "valueValue": ""
+            }
+        ],
+        "x": 500,
+        "y": 200,
+        "wires": [
+            [
+                "82659668adc9e858"
+            ]
+        ]
+    },
+    {
+        "id": "e518727a103282bf",
+        "type": "debug",
+        "z": "8971cc29f27d4741",
+        "name": "debug 16",
+        "active": true,
+        "tosidebar": true,
+        "console": false,
+        "tostatus": false,
+        "complete": "false",
+        "statusVal": "",
+        "statusType": "auto",
+        "x": 1400,
+        "y": 280,
+        "wires": []
+    },
+    {
+        "id": "82659668adc9e858",
+        "type": "function",
+        "z": "8971cc29f27d4741",
+        "name": "NocoDB:patch:umowy",
+        "func": "msg.nocodb_t_active = msg.nocodb_t.umowy;\n\n// Domyślny status\n// let status = false;\n\n// // Sprawdzenie pól accepted/rejected\n// if (msg.payload.accepted && msg.payload.accepted.length > 0) {\n//     status = \"send\";\n// } else if (msg.payload.rejected && msg.payload.rejected.length > 0) {\n//     status = \"error\";\n// }\n\nmsg.payload = {\n    Id: msg.umowa_data.Id,   // klucz podstawowy w Twojej tabeli\n    email_confirmed: true,\n    status: \"05 email-confirmed\"\n};\n\nmsg.method = \"PATCH\";\n\nnode.status({\n    fill: \"green\",\n    shape: \"dot\",\n    text: `${global.get(\"getDateTime\")()}`\n});\n\nreturn msg;",
+        "outputs": 1,
+        "timeout": 0,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 160,
+        "y": 280,
+        "wires": [
+            [
+                "6af24b5c04863e1b"
+            ]
+        ]
+    },
+    {
+        "id": "6af24b5c04863e1b",
+        "type": "http request",
+        "z": "8971cc29f27d4741",
+        "name": "NocoDB - ALL",
+        "method": "use",
+        "ret": "obj",
+        "paytoqs": "ignore",
+        "url": "http://{{nocodb_host}}/api/v2/tables/{{nocodb_t_active}}/records",
+        "tls": "",
+        "persist": false,
+        "proxy": "",
+        "insecureHTTPParser": false,
+        "authType": "",
+        "senderr": false,
+        "headers": [
+            {
+                "keyType": "other",
+                "keyValue": "xc-token",
+                "valueType": "msg",
+                "valueValue": "xc_token"
+            },
+            {
+                "keyType": "Content-Type",
+                "keyValue": "",
+                "valueType": "application/json",
+                "valueValue": ""
+            }
+        ],
+        "x": 500,
+        "y": 280,
+        "wires": [
+            [
+                "e518727a103282bf",
+                "d675709b0a7d7e1c"
+            ]
+        ]
+    },
+    {
+        "id": "aafbd476563b4156",
+        "type": "http response",
+        "z": "8971cc29f27d4741",
+        "name": "",
+        "statusCode": "200",
+        "headers": {},
+        "x": 520,
+        "y": 360,
+        "wires": []
+    },
+    {
+        "id": "d675709b0a7d7e1c",
+        "type": "function",
+        "z": "8971cc29f27d4741",
+        "name": "response:ok",
+        "func": "msg.payload = {\n    confirm: true\n};\nreturn msg;",
+        "outputs": 1,
+        "timeout": 0,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 130,
+        "y": 360,
+        "wires": [
+            [
+                "aafbd476563b4156"
+            ]
+        ]
+    }
+]
