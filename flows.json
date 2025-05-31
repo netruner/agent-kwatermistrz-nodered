@@ -325,6 +325,53 @@
         "h": 302
     },
     {
+        "id": "de07ac967b5ab328",
+        "type": "group",
+        "z": "7f8edcc91438aff6",
+        "name": "Save form to NoCoDB",
+        "style": {
+            "label": true
+        },
+        "nodes": [
+            "e9c1304f5f90927e",
+            "c9199959da0f2652",
+            "8b0f70caea35ed13",
+            "050dabcd08732f94",
+            "eb069a6838953468",
+            "388e845554a0cdbb",
+            "d747d5ba3cbab626",
+            "24362b7ab3a611b8",
+            "8aff7492ecde8657",
+            "dfbd52e418f9fe83"
+        ],
+        "x": 194,
+        "y": 99,
+        "w": 1052,
+        "h": 362
+    },
+    {
+        "id": "49c2be5b620ebeda",
+        "type": "group",
+        "z": "6ef65b964aaf43e6",
+        "name": "Response json to Form Select",
+        "style": {
+            "label": true
+        },
+        "nodes": [
+            "353379d5bcdeee09",
+            "b8e46ab11cd82e31",
+            "e2ee6162640b5a29",
+            "9a824614bd5da150",
+            "5c111b1ca0dd686e",
+            "f6fc7c875e15e454",
+            "d9b3f86bef90891d"
+        ],
+        "x": 194,
+        "y": 99,
+        "w": 1072,
+        "h": 242
+    },
+    {
         "id": "b53d3e27e0d7792d",
         "type": "function",
         "z": "03b285947d86a284",
@@ -1142,7 +1189,7 @@
         "z": "7ac738eef3d259eb",
         "name": "",
         "x": 230,
-        "y": 260,
+        "y": 560,
         "wires": [
             []
         ]
@@ -1153,7 +1200,7 @@
         "z": "7ac738eef3d259eb",
         "name": "",
         "x": 240,
-        "y": 340,
+        "y": 640,
         "wires": [
             []
         ]
@@ -1164,7 +1211,7 @@
         "z": "7ac738eef3d259eb",
         "name": "",
         "x": 240,
-        "y": 420,
+        "y": 720,
         "wires": [
             []
         ]
@@ -1175,7 +1222,18 @@
         "z": "7ac738eef3d259eb",
         "name": "",
         "x": 240,
-        "y": 180,
+        "y": 480,
+        "wires": [
+            []
+        ]
+    },
+    {
+        "id": "0514578f98829e26",
+        "type": "subflow:03b285947d86a284",
+        "z": "7ac738eef3d259eb",
+        "name": "",
+        "x": 280,
+        "y": 260,
         "wires": [
             []
         ]
@@ -2334,7 +2392,7 @@
         "type": "function",
         "z": "bf6e5312884e6967",
         "name": "prepare:umowa",
-        "func": "function slowniePL(kwota) {\n    const jednostki = [\"\", \"jeden\", \"dwa\", \"trzy\", \"cztery\", \"pięć\", \"sześć\", \"siedem\", \"osiem\", \"dziewięć\"];\n    const nascie = [\"dziesięć\", \"jedenaście\", \"dwanaście\", \"trzynaście\", \"czternaście\", \"piętnaście\", \"szesnaście\", \"siedemnaście\", \"osiemnaście\", \"dziewiętnaście\"];\n    const dziesiatki = [\"\", \"\", \"dwadzieścia\", \"trzydzieści\", \"czterdzieści\", \"pięćdziesiąt\", \"sześćdziesiąt\", \"siedemdziesiąt\", \"osiemdziesiąt\", \"dziewięćdziesiąt\"];\n    const setki = [\"\", \"sto\", \"dwieście\", \"trzysta\", \"czterysta\", \"pięćset\", \"sześćset\", \"siedemset\", \"osiemset\", \"dziewięćset\"];\n\n    const grupy = [\n        [\"\", \"\", \"\"],\n        [\"tysiąc\", \"tysiące\", \"tysięcy\"],\n        [\"milion\", \"miliony\", \"milionów\"],\n        [\"miliard\", \"miliardy\", \"miliardów\"]\n    ];\n\n    function odmiana(liczba, formy) {\n        if (liczba === 1) return formy[0];\n        if ([2, 3, 4].includes(liczba % 10) && !(liczba % 100 >= 10 && liczba % 100 <= 20)) return formy[1];\n        return formy[2];\n    }\n\n    function segment(n) {\n        const s = Math.floor(n / 100);\n        const d = Math.floor((n % 100) / 10);\n        const j = n % 10;\n\n        let wynik = [];\n\n        if (s) wynik.push(setki[s]);\n        if (d === 1) {\n            wynik.push(nascie[j]);\n        } else {\n            if (d > 1) wynik.push(dziesiatki[d]);\n            if (j > 0) wynik.push(jednostki[j]);\n        }\n\n        return wynik.join(\" \");\n    }\n\n    function liczbaNaSlowa(n) {\n        if (n === 0) return \"zero\";\n\n        let res = [];\n        let i = 0;\n\n        while (n > 0) {\n            let trzy = n % 1000;\n            if (trzy > 0) {\n                let seg = segment(trzy);\n                if (i > 0) {\n                    let formy = grupy[i];\n                    let odm = odmiana(trzy, formy);\n                    if (trzy === 1 && i === 1) {\n                        seg = odm; // tylko \"tysiąc\", bez \"jeden\"\n                    } else {\n                        seg += \" \" + odm;\n                    }\n                }\n                res.unshift(seg);\n            }\n            n = Math.floor(n / 1000);\n            i++;\n        }\n\n        return res.join(\" \");\n    }\n\n    let zl = Math.floor(kwota);\n    let gr = Math.round((kwota - zl) * 100);\n\n    let wynik = liczbaNaSlowa(zl);// + \" złotych\";\n    if (gr > 0) {\n        wynik += \" i \" + liczbaNaSlowa(gr) + \" groszy\";\n    }\n\n    return wynik;\n}\n\n\nconst now = new Date();\nconst pad = (n) => n.toString().padStart(2, '0');\n\nconst year = now.getFullYear();\nconst month = pad(now.getMonth() + 1);\nconst day = pad(now.getDate());\nconst hours = pad(now.getHours());\nconst minutes = pad(now.getMinutes());\nconst seconds = pad(now.getSeconds());\n\nconst data_zawarcia = `${year}-${month}-${day}`;\n\nconst umowa = msg.umowa_get;\nconst rejs = umowa.rejsy;\nconst osoba = umowa.osoby;\n\nconst storage = global.get(\"storage\");\nconst path_template_umowy = global.get(\"path_template_umowy\");\nconst path_umowy = global.get(\"path_umowy\");\nconst path_tmp = global.get(\"path_tmp\")\n\nlet nr_umowa_new = parseInt(msg.umowa_ostatni_nr, 10) + 1;\n\nlet nr_umowy = msg.umowa_prefix + \"/\" + nr_umowa_new;\nlet nr_umowy_file = msg.umowa_prefix + \"-\" + nr_umowa_new;\nlet umowa_name = nr_umowy_file + \"_\" + global.get(\"getTimeStamp\")() ;\n\nmsg.umowa = {\n    \"nr_umowa_new\": nr_umowa_new,\n    \"umowa_name\": umowa_name,\n    \"umowa_uuid\": umowa.uuid,\n    \"nr_umowy\": nr_umowy,\n    \"nr_umowy_file\": nr_umowy_file,\n    \"data_zawarcia\": data_zawarcia,\n    \"path_umowa_template\": storage + path_template_umowy + rejs.umowa_template,\n    \"path_tmp\": storage + path_tmp,\n    \"path_umowa\": storage + path_umowy,\n    \"imie\": osoba.imie,\n    \"imie_nazwisko\": osoba.imie + \" \" + osoba.nazwisko,\n    \"adres_zamieszkania\": osoba.adres_zamieszkania,\n    \"data_i_miejsce_urodzenia\": osoba.data_urodzenia + \" \" + osoba.miejsce_urodzenia,\n    \"email\": osoba.email,\n    \"nr_telefonu\": osoba.telefon,\n    \"nr_dokumentu\": osoba.nr_dowodu,\n    \"stopien\": osoba.uprawnienia,\n    \"rozmiar_koszulki\": osoba.rozmiar_koszulki,\n    \"eme_osoba\": osoba.eme_contact,\n    \"umowa_przedmiot\": rejs.umowa_przedmiot,\n    \"termin_od\": rejs.termin_od,\n    \"termin_do\": rejs.termin_do,\n    \"port_start\": rejs.port_start,\n    \"port_koniec\": rejs.port_koniec,\n    \"port_start_czas\": \"\",\n    \"port_koniec_czas\": \"\",\n    \"cena\": rejs.cena,\n    \"cena_slownie\": slowniePL(rejs.cena),\n    \"rezerwacja_ilosc\": umowa.ile_osob,\n    \"rezerwacja_ilosc_slownie\": slowniePL(umowa.ile_osob),\n    \"rezerwacja_cena\": umowa.rezerwacja_cena,\n    \"rezerwacja_cena_slownie\": slowniePL(umowa.rezerwacja_cena),\n    \"rezerwacja_cena_rata1\": umowa.rezerwacja_cena_rata1,\n    \"rezerwacja_cena_rata1_slownie\": slowniePL(umowa.rezerwacja_cena_rata1),\n    \"rezerwacja_cena_rata2\": umowa.rezerwacja_cena_rata2,\n    \"cena_wydatki\": rejs.cena_wydatki,\n    \"cena_zaokretowania\": rejs.cena_zaokretowania,\n\n}\n\nnode.status({ fill: \"green\", shape: \"dot\", text: global.get(\"getDateTime\")() });\nreturn msg;",
+        "func": "function slowniePL(kwota) {\n    const jednostki = [\"\", \"jeden\", \"dwa\", \"trzy\", \"cztery\", \"pięć\", \"sześć\", \"siedem\", \"osiem\", \"dziewięć\"];\n    const nascie = [\"dziesięć\", \"jedenaście\", \"dwanaście\", \"trzynaście\", \"czternaście\", \"piętnaście\", \"szesnaście\", \"siedemnaście\", \"osiemnaście\", \"dziewiętnaście\"];\n    const dziesiatki = [\"\", \"\", \"dwadzieścia\", \"trzydzieści\", \"czterdzieści\", \"pięćdziesiąt\", \"sześćdziesiąt\", \"siedemdziesiąt\", \"osiemdziesiąt\", \"dziewięćdziesiąt\"];\n    const setki = [\"\", \"sto\", \"dwieście\", \"trzysta\", \"czterysta\", \"pięćset\", \"sześćset\", \"siedemset\", \"osiemset\", \"dziewięćset\"];\n\n    const grupy = [\n        [\"\", \"\", \"\"],\n        [\"tysiąc\", \"tysiące\", \"tysięcy\"],\n        [\"milion\", \"miliony\", \"milionów\"],\n        [\"miliard\", \"miliardy\", \"miliardów\"]\n    ];\n\n    function odmiana(liczba, formy) {\n        if (liczba === 1) return formy[0];\n        if ([2, 3, 4].includes(liczba % 10) && !(liczba % 100 >= 10 && liczba % 100 <= 20)) return formy[1];\n        return formy[2];\n    }\n\n    function segment(n) {\n        const s = Math.floor(n / 100);\n        const d = Math.floor((n % 100) / 10);\n        const j = n % 10;\n\n        let wynik = [];\n\n        if (s) wynik.push(setki[s]);\n        if (d === 1) {\n            wynik.push(nascie[j]);\n        } else {\n            if (d > 1) wynik.push(dziesiatki[d]);\n            if (j > 0) wynik.push(jednostki[j]);\n        }\n\n        return wynik.join(\" \");\n    }\n\n    function liczbaNaSlowa(n) {\n        if (n === 0) return \"zero\";\n\n        let res = [];\n        let i = 0;\n\n        while (n > 0) {\n            let trzy = n % 1000;\n            if (trzy > 0) {\n                let seg = segment(trzy);\n                if (i > 0) {\n                    let formy = grupy[i];\n                    let odm = odmiana(trzy, formy);\n                    if (trzy === 1 && i === 1) {\n                        seg = odm; // tylko \"tysiąc\", bez \"jeden\"\n                    } else {\n                        seg += \" \" + odm;\n                    }\n                }\n                res.unshift(seg);\n            }\n            n = Math.floor(n / 1000);\n            i++;\n        }\n\n        return res.join(\" \");\n    }\n\n    let zl = Math.floor(kwota);\n    let gr = Math.round((kwota - zl) * 100);\n\n    let wynik = liczbaNaSlowa(zl);// + \" złotych\";\n    if (gr > 0) {\n        wynik += \" i \" + liczbaNaSlowa(gr) + \" groszy\";\n    }\n\n    return wynik;\n}\n\n\nconst now = new Date();\nconst pad = (n) => n.toString().padStart(2, '0');\n\nconst year = now.getFullYear();\nconst month = pad(now.getMonth() + 1);\nconst day = pad(now.getDate());\nconst hours = pad(now.getHours());\nconst minutes = pad(now.getMinutes());\nconst seconds = pad(now.getSeconds());\n\nconst data_zawarcia = `${year}-${month}-${day}`;\n\nconst umowa = msg.umowa_get;\nconst rejs = umowa.rejsy;\nconst osoba = umowa.osoby;\n\nconst storage = global.get(\"storage\");\nconst path_template_umowy = global.get(\"path_template_umowy\");\nconst path_umowy = global.get(\"path_umowy\");\nconst path_tmp = global.get(\"path_tmp\")\n\nlet nr_umowa_new = parseInt(msg.umowa_ostatni_nr, 10) + 1;\n\nlet nr_umowy = msg.umowa_prefix + \"/\" + nr_umowa_new;\nlet nr_umowy_file = msg.umowa_prefix + \"-\" + nr_umowa_new;\nlet umowa_name = nr_umowy_file + \"_\" + global.get(\"getTimeStamp\")() ;\n\nmsg.umowa = {\n    \"nr_umowa_new\": nr_umowa_new,\n    \"umowa_name\": umowa_name,\n    \"umowa_uuid\": umowa.uuid,\n    \"nr_umowy\": nr_umowy,\n    \"nr_umowy_file\": nr_umowy_file,\n    \"data_zawarcia\": data_zawarcia,\n    \"path_umowa_template\": storage + path_template_umowy + rejs.umowa_template,\n    \"path_tmp\": storage + path_tmp,\n    \"path_umowa\": storage + path_umowy,\n    \"imie\": osoba.imie,\n    \"imie_nazwisko\": osoba.imie + \" \" + osoba.nazwisko,\n    \"adres_zamieszkania\": osoba.adres_zamieszkania,\n    \"data_i_miejsce_urodzenia\": osoba.data_urodzenia + \" \" + osoba.miejsce_urodzenia,\n    \"email\": osoba.email,\n    \"nr_telefonu\": osoba.telefon,\n    \"nr_dokumentu\": osoba.nr_dowodu,\n    \"stopien\": osoba.uprawnienia,\n    \"rozmiar_koszulki\": osoba.rozmiar_koszulki,\n    \"eme_osoba\": osoba.eme_contact,\n    \"umowa_przedmiot\": rejs.umowa_przedmiot,\n    \"termin_od\": rejs.termin_od,\n    \"termin_do\": rejs.termin_do,\n    \"port_start\": rejs.port_start,\n    \"port_koniec\": rejs.port_koniec,\n    \"port_start_czas\": \"\",\n    \"port_koniec_czas\": \"\",\n    \"cena\": rejs.cena,\n    \"cena_slownie\": slowniePL(rejs.cena),\n    \"rezerwacja_ilosc\": umowa.ile_osob,\n    \"rezerwacja_ilosc_slownie\": slowniePL(umowa.ile_osob),\n    \"rezerwacja_cena\": umowa.rezerwacja_cena,\n    \"rezerwacja_cena_slownie\": slowniePL(umowa.rezerwacja_cena),\n    \"rezerwacja_cena_rata1\": umowa.rezerwacja_cena_rata1,\n    \"rezerwacja_cena_rata1_slownie\": slowniePL(umowa.rezerwacja_cena_rata1),\n    \"rezerwacja_cena_rata2\": umowa.rezerwacja_cena_rata2,\n    \"cena_wydatki\": rejs.cena_wydatki,\n    \"cena_zaokretowania\": rejs.cena_zaokretowania,\n    \"uuid\": umowa.uuid\n}\n\nnode.status({ fill: \"green\", shape: \"dot\", text: global.get(\"getDateTime\")() });\nreturn msg;",
         "outputs": 1,
         "timeout": 0,
         "noerr": 0,
@@ -3541,13 +3599,14 @@
         "id": "353379d5bcdeee09",
         "type": "http in",
         "z": "6ef65b964aaf43e6",
+        "g": "49c2be5b620ebeda",
         "name": "",
         "url": "/api/rejsy/get",
         "method": "get",
         "upload": false,
         "swaggerDoc": "",
-        "x": 210,
-        "y": 100,
+        "x": 490,
+        "y": 220,
         "wires": [
             [
                 "9a824614bd5da150"
@@ -3558,17 +3617,19 @@
         "id": "b8e46ab11cd82e31",
         "type": "http response",
         "z": "6ef65b964aaf43e6",
+        "g": "49c2be5b620ebeda",
         "name": "",
         "statusCode": "200",
         "headers": {},
-        "x": 1420,
-        "y": 100,
+        "x": 720,
+        "y": 300,
         "wires": []
     },
     {
         "id": "e2ee6162640b5a29",
         "type": "function",
         "z": "6ef65b964aaf43e6",
+        "g": "49c2be5b620ebeda",
         "name": "prepare:response",
         "func": "let output = [];\n\nif (msg.payload && Array.isArray(msg.payload.list)) {\n    for (let item of msg.payload.list) {\n        output.push({\n            name: `${item.nazwa} ${item.termin_od} - ${item.termin_do}`,\n            value: item.Id,\n            free_space: (item.ilosc_max || 0) - (item.ilosc_wyk || 0),\n            cena: item.cena || 0,\n            czym: item.czym\n        });\n    }\n}\n\nmsg.payload = output;\nreturn msg;",
         "outputs": 1,
@@ -3577,8 +3638,8 @@
         "initialize": "",
         "finalize": "",
         "libs": [],
-        "x": 1110,
-        "y": 100,
+        "x": 490,
+        "y": 300,
         "wires": [
             [
                 "b8e46ab11cd82e31"
@@ -3589,9 +3650,10 @@
         "id": "9a824614bd5da150",
         "type": "subflow:03b285947d86a284",
         "z": "6ef65b964aaf43e6",
+        "g": "49c2be5b620ebeda",
         "name": "",
-        "x": 420,
-        "y": 100,
+        "x": 700,
+        "y": 220,
         "wires": [
             [
                 "5c111b1ca0dd686e"
@@ -3602,6 +3664,7 @@
         "id": "5c111b1ca0dd686e",
         "type": "function",
         "z": "6ef65b964aaf43e6",
+        "g": "49c2be5b620ebeda",
         "name": "NocoDB - rejsy:get",
         "func": "msg.nocodb_t_active = msg.nocodb_t.rejsy;\n\nlet nr_k = msg.payload.nr_k;\n\nmsg.form_data = msg.payload;\n\nmsg.payload = {\n    offset: '0',\n    limit: '25',\n    viewId: msg.nocodb_t.rejsy_view,\n    where: `(status,eq,active)`\n};\n//${nr_k}\nnode.status({ fill: \"green\", shape: \"dot\", text: global.get(\"getDateTime\")() });\n\nreturn msg;",
         "outputs": 1,
@@ -3610,8 +3673,8 @@
         "initialize": "",
         "finalize": "",
         "libs": [],
-        "x": 650,
-        "y": 100,
+        "x": 930,
+        "y": 220,
         "wires": [
             [
                 "f6fc7c875e15e454"
@@ -3622,6 +3685,7 @@
         "id": "f6fc7c875e15e454",
         "type": "http request",
         "z": "6ef65b964aaf43e6",
+        "g": "49c2be5b620ebeda",
         "name": "NocoDB - GET",
         "method": "GET",
         "ret": "obj",
@@ -3647,71 +3711,37 @@
                 "valueValue": ""
             }
         ],
-        "x": 880,
-        "y": 100,
+        "x": 1160,
+        "y": 220,
         "wires": [
             [
-                "e2ee6162640b5a29",
-                "6c9a84b62fa1c761"
+                "e2ee6162640b5a29"
             ]
         ]
     },
     {
-        "id": "c4604a396ef799b7",
-        "type": "inject",
+        "id": "d9b3f86bef90891d",
+        "type": "comment",
         "z": "6ef65b964aaf43e6",
-        "name": "",
-        "props": [
-            {
-                "p": "payload"
-            },
-            {
-                "p": "topic",
-                "vt": "str"
-            }
-        ],
-        "repeat": "",
-        "crontab": "",
-        "once": false,
-        "onceDelay": 0.1,
-        "topic": "",
-        "payload": "",
-        "payloadType": "date",
-        "x": 270,
-        "y": 240,
-        "wires": [
-            [
-                "9a824614bd5da150"
-            ]
-        ]
-    },
-    {
-        "id": "6c9a84b62fa1c761",
-        "type": "debug",
-        "z": "6ef65b964aaf43e6",
-        "name": "debug 26",
-        "active": true,
-        "tosidebar": true,
-        "console": false,
-        "tostatus": false,
-        "complete": "false",
-        "statusVal": "",
-        "statusType": "auto",
-        "x": 1030,
-        "y": 180,
+        "g": "49c2be5b620ebeda",
+        "name": "Respone Json",
+        "info": "Zwraca rejsy do formularza w formie jsona.",
+        "x": 290,
+        "y": 140,
         "wires": []
     },
     {
         "id": "e9c1304f5f90927e",
         "type": "http in",
         "z": "7f8edcc91438aff6",
+        "g": "de07ac967b5ab328",
         "name": "",
         "url": "/api/rejsy/zapisz",
         "method": "post",
         "upload": false,
         "swaggerDoc": "",
-        "x": 160,
-        "y": 60,
+        "x": 520,
+        "y": 220,
         "wires": [
             [
                 "eb069a6838953468"
@@ -3722,27 +3752,29 @@
         "id": "c9199959da0f2652",
         "type": "http response",
         "z": "7f8edcc91438aff6",
+        "g": "de07ac967b5ab328",
         "name": "",
         "statusCode": "200",
         "headers": {},
-        "x": 560,
-        "y": 360,
+        "x": 920,
+        "y": 420,
         "wires": []
     },
     {
         "id": "8b0f70caea35ed13",
         "type": "function",
         "z": "7f8edcc91438aff6",
+        "g": "de07ac967b5ab328",
         "name": "NocoDB:post:osoba",
-        "func": "msg.nocodb_t_active = msg.nocodb_t.osoby;\n\n// const uploadedFile = msg.payload[0];\n\nconst now = new Date();\nconst pad = (n) => n.toString().padStart(2, '0');\n\nconst year = now.getFullYear();\nconst month = pad(now.getMonth() + 1);\nconst day = pad(now.getDate());\nconst hours = pad(now.getHours());\nconst minutes = pad(now.getMinutes());\nconst seconds = pad(now.getSeconds());\n\n// const uuid = global.get(\"uuidv4\")();\n\nmsg.form = {\n    \"liczbaOsob\": msg.payload.data.liczbaOsob,\n    \"rejsId\": msg.payload.data.rejsId,\n}\n\n// Prepare the update payload for the record\nmsg.payload = {\n    \"cj5mwpsab4bh5zv\": msg.payload.data.imie,\n    \"cm1fyirgmdcemtv\": msg.payload.data.nazwisko,\n    \"c5hrv18inqamu4d\": msg.payload.data.email,\n    \"co7qha0ikufbnjx\": msg.payload.data.telefon,\n    \"cb0a24v6fm28sj0\": msg.payload.data.miejsceUrodzenia,\n    \"c77doycdzvddszv\": msg.payload.data.dataUrodzenia ,\n    \"ca42qwypv1kcyh7\": msg.payload.data.adresZamieszkania ,\n    \"cioe98sbu9qwxjg\": msg.payload.data.nrDokumentu ,\n    \"cp07bymy87xk9qf\": msg.payload.data.uprawnienia ,\n    \"cfihnz9e66moiug\": msg.payload.data.rozmiarKoszulki ,\n    \"cfewcth4yte2zhr\": msg.payload.data.osobaKontaktowaImieNazwisko + ' ' + msg.payload.data.osobaKontaktowaTelefon ,\n    uuid: msg.uuid\n};\nmsg.method = \"POST\";\n\n\nnode.status({ fill: \"green\", shape: \"dot\", text: global.get(\"getDateTime\")() });\nreturn msg;",
+        "func": "msg.nocodb_t_active = msg.nocodb_t.osoby;\n\n// const uploadedFile = msg.payload[0];\n\nconst now = new Date();\nconst pad = (n) => n.toString().padStart(2, '0');\n\nconst year = now.getFullYear();\nconst month = pad(now.getMonth() + 1);\nconst day = pad(now.getDate());\nconst hours = pad(now.getHours());\nconst minutes = pad(now.getMinutes());\nconst seconds = pad(now.getSeconds());\n\n// const uuid = global.get(\"uuidv4\")();\n\nmsg.form = {\n    \"liczbaOsob\": msg.payload.data.liczbaOsob,\n    \"rejsId\": msg.payload.data.rejsId,\n}\n\n// Prepare the update payload for the record\nmsg.payload = {\n    \"cj5mwpsab4bh5zv\": msg.payload.data.imie,\n    \"cm1fyirgmdcemtv\": msg.payload.data.nazwisko,\n    \"c5hrv18inqamu4d\": msg.payload.data.email,\n    \"co7qha0ikufbnjx\": msg.payload.data.telefon,\n    \"cb0a24v6fm28sj0\": msg.payload.data.miejsceUrodzenia,\n    \"c77doycdzvddszv\": msg.payload.data.dataUrodzenia ,\n    \"ca42qwypv1kcyh7\": msg.payload.data.adresZamieszkania ,\n    \"cioe98sbu9qwxjg\": msg.payload.data.nrDokumentu ,\n    \"cp07bymy87xk9qf\": msg.payload.data.uprawnienia ,\n    \"cfihnz9e66moiug\": msg.payload.data.rozmiarKoszulki ,\n    \"cfewcth4yte2zhr\": msg.payload.data.osobaKontaktowaImieNazwisko + ' ' + msg.payload.data.osobaKontaktowaTelefon ,\n    uuid: msg.uuid,\n    \"rodo\": msg.payload.data.regulamin,\n    \"oswiadczenie\": msg.payload.data.oswiadczenie,\n    \"umie_plywac\": msg.payload.data.plywanie\n};\nmsg.method = \"POST\";\n\n\nnode.status({ fill: \"green\", shape: \"dot\", text: global.get(\"getDateTime\")() });\nreturn msg;",
         "outputs": 1,
         "timeout": 0,
         "noerr": 0,
         "initialize": "",
         "finalize": "",
         "libs": [],
-        "x": 560,
-        "y": 60,
+        "x": 920,
+        "y": 220,
         "wires": [
             [
                 "050dabcd08732f94"
@@ -3753,6 +3785,7 @@
         "id": "050dabcd08732f94",
         "type": "http request",
         "z": "7f8edcc91438aff6",
+        "g": "de07ac967b5ab328",
         "name": "NocoDB - ALL",
         "method": "use",
         "ret": "obj",
@@ -3778,8 +3811,8 @@
                 "valueValue": ""
             }
         ],
-        "x": 780,
-        "y": 60,
+        "x": 1140,
+        "y": 220,
         "wires": [
             [
                 "24362b7ab3a611b8"
@@ -3790,9 +3823,10 @@
         "id": "eb069a6838953468",
         "type": "subflow:03b285947d86a284",
         "z": "7f8edcc91438aff6",
+        "g": "de07ac967b5ab328",
         "name": "",
-        "x": 360,
-        "y": 60,
+        "x": 720,
+        "y": 220,
         "wires": [
             [
                 "8b0f70caea35ed13"
@@ -3803,6 +3837,7 @@
         "id": "388e845554a0cdbb",
         "type": "function",
         "z": "7f8edcc91438aff6",
+        "g": "de07ac967b5ab328",
         "name": "NocoDB:post:umowy",
         "func": "msg.nocodb_t_active = msg.nocodb_t.umowy;\nconst rejs = msg.payload.list[0];\n\nconst now = new Date();\nconst pad = (n) => n.toString().padStart(2, '0');\n\nconst year = now.getFullYear();\nconst month = pad(now.getMonth() + 1);\nconst day = pad(now.getDate());\nconst hours = pad(now.getHours());\nconst minutes = pad(now.getMinutes());\nconst seconds = pad(now.getSeconds());\n\nconst uuid = global.get(\"uuidv4\")();\n\nconst rezerwacja_cena = rejs.cena * msg.form.liczbaOsob;\nconst rezerwacja_cena_rata1 = Math.floor(rezerwacja_cena * 0.3);\nconst rezerwacja_cena_rata2 = rezerwacja_cena - rezerwacja_cena_rata1; \nconst cena_wydatki = rejs.cena_wydatki * msg.form.liczbaOsob;\nconst cena_zaokretowania = rejs.cena_zaokretowania * msg.form.liczbaOsob;\n\nmsg.payload = {\n    \"nc_5cf7__osoby_id\": msg.osoba_id,\n    \"cdp5l9hs8gbe7kn\": msg.form.liczbaOsob,\n    \"nc_5cf7___rejsy_id\": msg.form.rejsId,\n    uuid: uuid,\n    \"nazwa\": \"Umowa - wait for confirm\",\n    \"rezerwacja_cena\": rezerwacja_cena,\n    \"rezerwacja_cena_rata1\": rezerwacja_cena_rata1,\n    \"rezerwacja_cena_rata2\": rezerwacja_cena_rata2,\n    \"cena_wydatki\": cena_wydatki,\n    \"cena_zaokretowania\": cena_zaokretowania\n}\n\nmsg.method = \"POST\";\n\nnode.status({ fill: \"green\", shape: \"dot\", text: global.get(\"getDateTime\")() });\nreturn msg;",
         "outputs": 1,
@@ -3811,12 +3846,11 @@
         "initialize": "",
         "finalize": "",
         "libs": [],
-        "x": 160,
-        "y": 360,
+        "x": 520,
+        "y": 420,
         "wires": [
             [
-                "d747d5ba3cbab626",
-                "2c67425d251ae254"
+                "d747d5ba3cbab626"
             ]
         ]
     },
@@ -3824,6 +3858,7 @@
         "id": "d747d5ba3cbab626",
         "type": "http request",
         "z": "7f8edcc91438aff6",
+        "g": "de07ac967b5ab328",
         "name": "NocoDB - ALL",
         "method": "use",
         "ret": "obj",
@@ -3849,8 +3884,8 @@
                 "valueValue": ""
             }
         ],
-        "x": 380,
-        "y": 360,
+        "x": 740,
+        "y": 420,
         "wires": [
             [
                 "c9199959da0f2652"
@@ -3861,6 +3896,7 @@
         "id": "24362b7ab3a611b8",
         "type": "function",
         "z": "7f8edcc91438aff6",
+        "g": "de07ac967b5ab328",
         "name": "NocoDB - rejsy:get:Id",
         "func": "msg.nocodb_t_active = msg.nocodb_t.rejsy;\n\nmsg.osoba_id = msg.payload.Id;\n\nmsg.payload = {\n    offset: '0',\n    limit: '1',\n    viewId: msg.nocodb_t.rejsy_view,\n    where: `(Id,eq,${msg.form.rejsId})`,\n};\n\nnode.status({ fill: \"green\", shape: \"dot\", text: global.get(\"getDateTime\")() });\n\nreturn msg;",
         "outputs": 1,
@@ -3869,12 +3905,11 @@
         "initialize": "",
         "finalize": "",
         "libs": [],
-        "x": 160,
-        "y": 180,
+        "x": 520,
+        "y": 320,
         "wires": [
             [
-                "8aff7492ecde8657",
-                "2b8bc73127ce89cf"
+                "8aff7492ecde8657"
             ]
         ]
     },
@@ -3882,6 +3917,7 @@
         "id": "8aff7492ecde8657",
         "type": "http request",
         "z": "7f8edcc91438aff6",
+        "g": "de07ac967b5ab328",
         "name": "NocoDB - GET",
         "method": "GET",
         "ret": "obj",
@@ -3907,61 +3943,23 @@
                 "valueValue": ""
             }
         ],
-        "x": 380,
-        "y": 180,
+        "x": 740,
+        "y": 320,
         "wires": [
             [
-                "388e845554a0cdbb",
-                "77f50fe396c3c695"
+                "388e845554a0cdbb"
             ]
         ]
     },
     {
-        "id": "2b8bc73127ce89cf",
-        "type": "debug",
+        "id": "dfbd52e418f9fe83",
+        "type": "comment",
         "z": "7f8edcc91438aff6",
-        "name": "debug 23",
-        "active": true,
-        "tosidebar": true,
-        "console": false,
-        "tostatus": false,
-        "complete": "false",
-        "statusVal": "",
-        "statusType": "auto",
-        "x": 750,
-        "y": 160,
-        "wires": []
-    },
-    {
-        "id": "77f50fe396c3c695",
-        "type": "debug",
-        "z": "7f8edcc91438aff6",
-        "name": "debug 24",
-        "active": true,
-        "tosidebar": true,
-        "console": false,
-        "tostatus": false,
-        "complete": "false",
-        "statusVal": "",
-        "statusType": "auto",
-        "x": 750,
-        "y": 240,
-        "wires": []
-    },
-    {
-        "id": "2c67425d251ae254",
-        "type": "debug",
-        "z": "7f8edcc91438aff6",
-        "name": "debug 25",
-        "active": true,
-        "tosidebar": true,
-        "console": false,
-        "tostatus": false,
-        "complete": "false",
-        "statusVal": "",
-        "statusType": "auto",
-        "x": 760,
-        "y": 280,
+        "g": "de07ac967b5ab328",
+        "name": "Save Form",
+        "info": "Przyjmuje dane z formularza i zapisuje je do NoCoDB.\n- do osoby\n- do umowy",
+        "x": 280,
+        "y": 140,
         "wires": []
     },
     {
