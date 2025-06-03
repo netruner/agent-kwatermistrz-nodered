@@ -1,24 +1,8 @@
 [
     {
-        "id": "7ac738eef3d259eb",
-        "type": "tab",
-        "label": "Flow 1",
-        "disabled": false,
-        "info": "",
-        "env": []
-    },
-    {
-        "id": "c74ceced8c3687a1",
-        "type": "tab",
-        "label": "Flow 1",
-        "disabled": false,
-        "info": "",
-        "env": []
-    },
-    {
         "id": "8a595db6babaf80e",
         "type": "tab",
-        "label": "Check:Umowy:New",
+        "label": "01 - Check:Umowy:New",
         "disabled": false,
         "info": "",
         "env": []
@@ -26,7 +10,7 @@
     {
         "id": "bf6e5312884e6967",
         "type": "tab",
-        "label": "Check:Umowy:email-confirmed",
+        "label": "02 - Check:Umowy:email-confirmed",
         "disabled": false,
         "info": "",
         "env": []
@@ -56,6 +40,30 @@
         "env": []
     },
     {
+        "id": "c74ceced8c3687a1",
+        "type": "tab",
+        "label": "Flow 1",
+        "disabled": false,
+        "info": "",
+        "env": []
+    },
+    {
+        "id": "7ac738eef3d259eb",
+        "type": "tab",
+        "label": "Flow 1",
+        "disabled": false,
+        "info": "",
+        "env": []
+    },
+    {
+        "id": "be1c3f3f839ca819",
+        "type": "tab",
+        "label": "email",
+        "disabled": false,
+        "info": "",
+        "env": []
+    },
+    {
         "id": "03b285947d86a284",
         "type": "subflow",
         "name": "ZFAI - Init",
@@ -74,11 +82,11 @@
         ],
         "out": [
             {
-                "x": 840,
+                "x": 980,
                 "y": 80,
                 "wires": [
                     {
-                        "id": "5717605838cc4ae7",
+                        "id": "7e485c2935113754",
                         "port": 0
                     }
                 ]
@@ -265,6 +273,125 @@
         }
     },
     {
+        "id": "bfda0bc698f05633",
+        "type": "subflow",
+        "name": "Lucy_Brain - Get ",
+        "info": "",
+        "category": "",
+        "in": [
+            {
+                "x": 50,
+                "y": 30,
+                "wires": [
+                    {
+                        "id": "029d060e6a95c1e4"
+                    }
+                ]
+            }
+        ],
+        "out": [
+            {
+                "x": 1140,
+                "y": 40,
+                "wires": [
+                    {
+                        "id": "bf2659ad317a32de",
+                        "port": 0
+                    }
+                ]
+            }
+        ],
+        "env": [],
+        "meta": {},
+        "color": "#E6E0F8",
+        "icon": "font-awesome/fa-braille",
+        "status": {
+            "x": 880,
+            "y": 360,
+            "wires": [
+                {
+                    "id": "3616461914df5781",
+                    "port": 0
+                },
+                {
+                    "id": "e9fe2d445440e3d5",
+                    "port": 0
+                },
+                {
+                    "id": "51990d93c1fe83ba",
+                    "port": 0
+                }
+            ]
+        }
+    },
+    {
+        "id": "4b1994ea08f806f1",
+        "type": "subflow",
+        "name": "ChatGPT - Prepare",
+        "info": "",
+        "category": "",
+        "in": [
+            {
+                "x": 54,
+                "y": 50,
+                "wires": [
+                    {
+                        "id": "8bd4d0fdbf8d5d3e"
+                    }
+                ]
+            }
+        ],
+        "out": [
+            {
+                "x": 840,
+                "y": 680,
+                "wires": [
+                    {
+                        "id": "ba37a094af10769a",
+                        "port": 0
+                    }
+                ]
+            }
+        ],
+        "env": [],
+        "meta": {},
+        "color": "#E6E0F8",
+        "inputLabels": [
+            "Question"
+        ],
+        "icon": "font-awesome/fa-braille"
+    },
+    {
+        "id": "cb0cbe65f5a7b6e2",
+        "type": "subflow",
+        "name": "Purge OpenAI Files",
+        "info": "Usuwa pliki z OpenAI API po ich użyciu.",
+        "category": "",
+        "in": [
+            {
+                "x": 60,
+                "y": 80,
+                "wires": [
+                    {
+                        "id": "fbb9c3d6c4b6e5cb"
+                    }
+                ]
+            }
+        ],
+        "out": [
+            {
+                "x": 960,
+                "y": 80,
+                "wires": [
+                    {
+                        "id": "f5b4a6fef8e9dbd6",
+                        "port": 0
+                    }
+                ]
+            }
+        ]
+    },
+    {
         "id": "7918a80261c18fd1",
         "type": "group",
         "z": "8a595db6babaf80e",
@@ -344,8 +471,8 @@
             "8aff7492ecde8657",
             "dfbd52e418f9fe83"
         ],
-        "x": 194,
-        "y": 99,
+        "x": 34,
+        "y": 39,
         "w": 1052,
         "h": 362
     },
@@ -366,17 +493,110 @@
             "f6fc7c875e15e454",
             "d9b3f86bef90891d"
         ],
-        "x": 194,
-        "y": 99,
+        "x": 34,
+        "y": 39,
         "w": 1072,
         "h": 242
+    },
+    {
+        "id": "4ee9ee381cb20b47",
+        "type": "group",
+        "z": "8971cc29f27d4741",
+        "name": "Save if email Valid",
+        "style": {
+            "label": true
+        },
+        "nodes": [
+            "0ad1c2e33d36b2e2",
+            "ee1d170117a16cb9",
+            "92cf13ad610664b9",
+            "1843a6fb6ef174c8",
+            "2da5f5f1636f4f75",
+            "64fb459404f1d9ec",
+            "82659668adc9e858",
+            "6af24b5c04863e1b",
+            "aafbd476563b4156",
+            "d675709b0a7d7e1c",
+            "76b5da44be016767"
+        ],
+        "x": 34,
+        "y": 39,
+        "w": 1232,
+        "h": 442
+    },
+    {
+        "id": "e70669bd24ffbcf3",
+        "type": "group",
+        "z": "be1c3f3f839ca819",
+        "name": "q-umowy-email-examine",
+        "style": {
+            "label": true
+        },
+        "nodes": [
+            "344f4fdbcc7aa161",
+            "7282e4f8e111ba27",
+            "9c3521cbdd01940d",
+            "432f72cad7c993b3",
+            "3321558b29da0cf7",
+            "eeb338a064f555cf",
+            "0ea7646b207b1c61",
+            "5de2046e824d541f",
+            "6133dc5ef9a2e7f8",
+            "1fc92443bd36b6ac",
+            "06a3092fd10d6b09",
+            "f54078fb7e5ba183",
+            "59f39a36a11b77c4",
+            "689f0bd78eab811c",
+            "aaeb584c7ed5f33b",
+            "7e2415a1a8fb10f8",
+            "f21258598582116b",
+            "5b3d9084b179b7b3"
+        ],
+        "x": 94,
+        "y": 139,
+        "w": 792,
+        "h": 422
+    },
+    {
+        "id": "24acd2baaff30f4c",
+        "type": "group",
+        "z": "be1c3f3f839ca819",
+        "style": {
+            "stroke": "#2c4d57",
+            "stroke-opacity": "1",
+            "fill": "#002b36",
+            "fill-opacity": "0.5",
+            "label": true,
+            "label-position": "nw",
+            "color": "#839496"
+        },
+        "nodes": [
+            "10899b1d53947e83",
+            "4ff8d3d1742d566c",
+            "ebe57c8170dea9e9",
+            "f33441915ef0ebbc",
+            "d41ccd5e807be2a6",
+            "fd42845d2e4811c2",
+            "2820d7330d92ab47",
+            "637ef8f0903ac97f",
+            "2ff200c302939b5e",
+            "794fce53fee844fa",
+            "d755982a75b47618",
+            "c4558b8c86d550ac",
+            "86183fdac91b6d57",
+            "12cdc8782fc3c323"
+        ],
+        "x": 54,
+        "y": 1579,
+        "w": 1562,
+        "h": 262
     },
     {
         "id": "b53d3e27e0d7792d",
         "type": "function",
         "z": "03b285947d86a284",
         "name": "Init - ZenFlowAI",
-        "func": "\n// const uuidv4 = () => {\n//     return 'xxxxxxxx-xxxx-4xxx-yxxx-xxxxxxxxxxxx'.replace(/[xy]/g, function (c) {\n//         let r = Math.random() * 16 | 0, v = c === 'x' ? r : (r & 0x3 | 0x8);\n//         return v.toString(16);\n//     });\n// };\n\nglobal.set(\"uuidv4\", function () {\n    return 'xxxxxxxx-xxxx-4xxx-yxxx-xxxxxxxxxxxx'.replace(/[xy]/g, function (c) {\n        let r = Math.random() * 16 | 0;\n        let v = (c === 'x') ? r : ((r & 0x3) | 0x8);\n        return v.toString(16);\n    });\n});\n\nglobal.set(\"getDateTime\", function () {\n    const now = new Date();\n    const pad = (n) => n.toString().padStart(2, '0');\n\n    const year = now.getFullYear();\n    const month = pad(now.getMonth() + 1);\n    const day = pad(now.getDate());\n    const hours = pad(now.getHours());\n    const minutes = pad(now.getMinutes());\n    const seconds = pad(now.getSeconds());\n\n    return `${year}-${month}-${day} ${hours}:${minutes}:${seconds}`;\n});\n\nglobal.set(\"getTimeStamp\", function () {\n    const now = new Date();\n    const pad = (a) => a.toString().padStart(2, '0');\n    const ts = `${now.getFullYear()}-${pad(now.getMonth() + 1)}-${pad(now.getDate())}_${pad(now.getHours())}-${pad(now.getMinutes())}-${pad(now.getSeconds())}`;\n\n    return ts;\n});\n\nflow.set(\"uuid_global\", global.get(\"uuidv4\")());\n\nglobal.set(\"storage\", \"/zenflowai/storage/\");\nglobal.set(\"path_template_umowy\", \"teamplates/umowy/\")\nglobal.set(\"path_umowy\", \"umowy/\");\nglobal.set(\"path_tmp\", \"tmp/\")\n\nglobal.set(\"url_form_public\", \"https://kwatermistrz.dev.zenflowai.net/\")\n\nmsg.uuid = global.get(\"uuidv4\")();\n\nnode.status({ fill: \"green\", shape: \"dot\", text: global.get(\"getDateTime\")() }); // STATUS\nreturn msg;",
+        "func": "\n// const uuidv4 = () => {\n//     return 'xxxxxxxx-xxxx-4xxx-yxxx-xxxxxxxxxxxx'.replace(/[xy]/g, function (c) {\n//         let r = Math.random() * 16 | 0, v = c === 'x' ? r : (r & 0x3 | 0x8);\n//         return v.toString(16);\n//     });\n// };\n\nglobal.set(\"uuidv4\", function () {\n    return 'xxxxxxxx-xxxx-4xxx-yxxx-xxxxxxxxxxxx'.replace(/[xy]/g, function (c) {\n        let r = Math.random() * 16 | 0;\n        let v = (c === 'x') ? r : ((r & 0x3) | 0x8);\n        return v.toString(16);\n    });\n});\n\nglobal.set(\"getDateTime\", function () {\n    const now = new Date();\n    const pad = (n) => n.toString().padStart(2, '0');\n\n    const year = now.getFullYear();\n    const month = pad(now.getMonth() + 1);\n    const day = pad(now.getDate());\n    const hours = pad(now.getHours());\n    const minutes = pad(now.getMinutes());\n    const seconds = pad(now.getSeconds());\n\n    return `${year}-${month}-${day} ${hours}:${minutes}:${seconds}`;\n});\n\nglobal.set(\"getTimeStamp\", function () {\n    const now = new Date();\n    const pad = (a) => a.toString().padStart(2, '0');\n    const ts = `${now.getFullYear()}-${pad(now.getMonth() + 1)}-${pad(now.getDate())}_${pad(now.getHours())}-${pad(now.getMinutes())}-${pad(now.getSeconds())}`;\n\n    return ts;\n});\n\nflow.set(\"uuid_global\", global.get(\"uuidv4\")());\n\nglobal.set(\"storage\", \"/zenflowai/storage/\");\nglobal.set(\"path_template_umowy\", \"teamplates/umowy/\")\nglobal.set(\"path_umowy\", \"umowy/\");\nglobal.set(\"path_tmp\", \"tmp/\")\nglobal.set(\"path_email\", \"email/\")\nglobal.set(\"path_email_attachment\", \"attachment/\")\n\nglobal.set(\"url_form_public\", \"https://kwatermistrz.dev.zenflowai.net/\")\n\nmsg.uuid = global.get(\"uuidv4\")();\n\nnode.status({ fill: \"green\", shape: \"dot\", text: global.get(\"getDateTime\")() }); // STATUS\nreturn msg;",
         "outputs": 1,
         "timeout": 0,
         "noerr": 0,
@@ -396,7 +616,7 @@
         "type": "function",
         "z": "03b285947d86a284",
         "name": "tables - ZenFlowAI",
-        "func": "msg.nocodb_host = global.get('env').NOCODB_HOST;\nflow.set('xc-token', global.get('env').NOCODB_KEY) // NocoDB token\nmsg.xc_token = flow.get(\"xc-token\");\n\nmsg.nocodb_t = {\n    osoby: \"mbe32zcic0pndmu\",\n    osoby_view: \"vwh8lh3uhiwcczp0\",\n    rejsy: \"m39ru683xn4zzq2\",\n    rejsy_view: \"vwa56ad99xpcnv5c\",\n    umowy: \"m65niapemqndt0y\",\n    umowy_view: \"vwex9b96thj0h0ef\",\n    messages: \"mqghtzopkll6zjc\",\n    messages_view: \"vwe9peexvucdnp9p\",\n    app_queue: \"mmqs1jtawvqm3kw\",\n    app_queue_view: \"vwxyx1j609yaquzk\",\n};\n\nnode.status({ fill: \"green\", shape: \"dot\", text: global.get(\"getDateTime\")() });\nreturn msg;",
+        "func": "msg.nocodb_host = global.get('env').NOCODB_HOST;\nflow.set('xc-token', global.get('env').NOCODB_KEY) // NocoDB token\nmsg.xc_token = flow.get(\"xc-token\");\n\nmsg.nocodb_t = {\n    osoby: \"mbe32zcic0pndmu\",\n    osoby_view: \"vwh8lh3uhiwcczp0\",\n    rejsy: \"m39ru683xn4zzq2\",\n    rejsy_view: \"vwa56ad99xpcnv5c\",\n    umowy: \"m65niapemqndt0y\",\n    umowy_view: \"vwex9b96thj0h0ef\",\n    messages: \"mqghtzopkll6zjc\",\n    messages_view: \"vwe9peexvucdnp9p\",\n    app_queue: \"mmqs1jtawvqm3kw\",\n    app_queue_view: \"vwxyx1j609yaquzk\",\n    app_mail_inbox: \"mpctanl7dubh7wi\",\n    app_mail_inbox_view: \"vww1vda54exa9tje\",\n};\n\nnode.status({ fill: \"green\", shape: \"dot\", text: global.get(\"getDateTime\")() });\nreturn msg;",
         "outputs": 1,
         "timeout": 0,
         "noerr": 0,
@@ -424,6 +644,26 @@
         "finalize": "",
         "libs": [],
         "x": 630,
+        "y": 80,
+        "wires": [
+            [
+                "7e485c2935113754"
+            ]
+        ]
+    },
+    {
+        "id": "7e485c2935113754",
+        "type": "function",
+        "z": "03b285947d86a284",
+        "name": "chaggpt",
+        "func": "global.set('chatgpt_api', global.get('env').CHAT_GPT_API);\nglobal.set('chatgpt_asst_email', global.get('env').CHAT_GPT_ASST_EMAIL)\n\nreturn msg;",
+        "outputs": 1,
+        "timeout": 0,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 820,
         "y": 80,
         "wires": [
             []
@@ -1184,399 +1424,625 @@
         ]
     },
     {
-        "id": "0feee4d4edd3a765",
-        "type": "subflow:7a14c201fa805842",
-        "z": "7ac738eef3d259eb",
+        "id": "029d060e6a95c1e4",
+        "type": "http request",
+        "z": "bfda0bc698f05633",
+        "name": "Check Run Status",
+        "method": "GET",
+        "ret": "obj",
+        "paytoqs": "ignore",
+        "url": "https://api.openai.com/v1/threads/{{thread_id}}/runs/{{run_id}}",
+        "tls": "",
+        "persist": false,
+        "proxy": "",
+        "insecureHTTPParser": false,
+        "authType": "",
+        "senderr": false,
+        "headers": [
+            {
+                "keyType": "Authorization",
+                "keyValue": "",
+                "valueType": "msg",
+                "valueValue": "chatgpt_bearer"
+            },
+            {
+                "keyType": "other",
+                "keyValue": "OpenAI-Beta",
+                "valueType": "other",
+                "valueValue": "assistants=v2"
+            }
+        ],
+        "x": 170,
+        "y": 120,
+        "wires": [
+            [
+                "2a51cb1b8b5fcdbd"
+            ]
+        ]
+    },
+    {
+        "id": "2a51cb1b8b5fcdbd",
+        "type": "switch",
+        "z": "bfda0bc698f05633",
+        "name": "Status complete?",
+        "property": "payload.status",
+        "propertyType": "msg",
+        "rules": [
+            {
+                "t": "eq",
+                "v": "completed",
+                "vt": "str"
+            },
+            {
+                "t": "else"
+            }
+        ],
+        "checkall": "true",
+        "repair": false,
+        "outputs": 2,
+        "x": 430,
+        "y": 120,
+        "wires": [
+            [
+                "e05670493e6af583"
+            ],
+            [
+                "614dac60cbb0a72a",
+                "3616461914df5781"
+            ]
+        ]
+    },
+    {
+        "id": "e05670493e6af583",
+        "type": "http request",
+        "z": "bfda0bc698f05633",
+        "name": "Get Assistant Message",
+        "method": "GET",
+        "ret": "obj",
+        "paytoqs": "ignore",
+        "url": "https://api.openai.com/v1/threads/{{thread_id}}/messages",
+        "tls": "",
+        "persist": false,
+        "proxy": "",
+        "insecureHTTPParser": false,
+        "authType": "",
+        "senderr": false,
+        "headers": [
+            {
+                "keyType": "Authorization",
+                "keyValue": "",
+                "valueType": "msg",
+                "valueValue": "chatgpt_bearer"
+            },
+            {
+                "keyType": "other",
+                "keyValue": "OpenAI-Beta",
+                "valueType": "other",
+                "valueValue": "assistants=v2"
+            }
+        ],
+        "x": 690,
+        "y": 120,
+        "wires": [
+            [
+                "bf2659ad317a32de"
+            ]
+        ]
+    },
+    {
+        "id": "bf2659ad317a32de",
+        "type": "function",
+        "z": "bfda0bc698f05633",
+        "name": "Extract Assistant Reply",
+        "func": "let messages = msg.payload.data;\nlet reply = messages.find(m => m.role === \"assistant\");\nmsg.payload = reply ? reply.content[0].text.value : \"Brak odpowiedzi od Lucy.\";\nreturn msg;",
+        "outputs": 1,
+        "timeout": "",
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 970,
+        "y": 120,
+        "wires": [
+            [
+                "51990d93c1fe83ba"
+            ]
+        ]
+    },
+    {
+        "id": "614dac60cbb0a72a",
+        "type": "delay",
+        "z": "bfda0bc698f05633",
         "name": "",
-        "x": 230,
-        "y": 560,
+        "pauseType": "delay",
+        "timeout": "2",
+        "timeoutUnits": "seconds",
+        "rate": "1",
+        "nbRateUnits": "1",
+        "rateUnits": "second",
+        "randomFirst": "1",
+        "randomLast": "5",
+        "randomUnits": "seconds",
+        "drop": false,
+        "allowrate": false,
+        "outputs": 1,
+        "x": 320,
+        "y": 240,
+        "wires": [
+            [
+                "029d060e6a95c1e4",
+                "e9fe2d445440e3d5"
+            ]
+        ]
+    },
+    {
+        "id": "3616461914df5781",
+        "type": "function",
+        "z": "bfda0bc698f05633",
+        "name": "function 6",
+        "func": "delete msg.payload;\nmsg.payload = { fill: \"yellow\", shape: \"dot\", text: \"Wait for Lucy\" }; \nreturn msg;",
+        "outputs": 1,
+        "timeout": 0,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 660,
+        "y": 320,
         "wires": [
             []
         ]
     },
     {
-        "id": "e1c6dd31625d6476",
-        "type": "subflow:aa23e6e4889d7c8b",
-        "z": "7ac738eef3d259eb",
-        "name": "",
-        "x": 240,
-        "y": 640,
+        "id": "e9fe2d445440e3d5",
+        "type": "function",
+        "z": "bfda0bc698f05633",
+        "name": "function 8",
+        "func": "msg.payload = { fill: \"blue\", shape: \"dot\", text: \"Check Answer\" }; \n\nreturn msg;",
+        "outputs": 1,
+        "timeout": 0,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 660,
+        "y": 380,
         "wires": [
             []
         ]
     },
     {
-        "id": "a4e8d143cd70f13e",
-        "type": "subflow:c977f243f2f9f757",
-        "z": "7ac738eef3d259eb",
-        "name": "",
-        "x": 240,
-        "y": 720,
-        "wires": [
-            []
-        ]
-    },
-    {
-        "id": "5062fa87b6bfcd4b",
-        "type": "subflow:742f4a5525c4b3be",
-        "z": "7ac738eef3d259eb",
-        "name": "",
-        "x": 240,
-        "y": 480,
-        "wires": [
-            []
-        ]
-    },
-    {
-        "id": "0514578f98829e26",
-        "type": "subflow:03b285947d86a284",
-        "z": "7ac738eef3d259eb",
-        "name": "",
-        "x": 280,
+        "id": "51990d93c1fe83ba",
+        "type": "function",
+        "z": "bfda0bc698f05633",
+        "name": "function 9",
+        "func": "delete msg.payload;\nmsg.payload = { fill: \"gray\", shape: \"ring\", text: \"Lucy is bored\" };\nreturn msg;",
+        "outputs": 1,
+        "timeout": 0,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 960,
         "y": 260,
         "wires": [
             []
         ]
     },
     {
-        "id": "a977c1487e0d24c5",
+        "id": "ceb7a71d6503b21e",
         "type": "function",
-        "z": "c74ceced8c3687a1",
-        "name": "function 2",
-        "func": "// const fs = require(\"fs\");\n\n// const createReport = require(\"docx-templates\").default;\nconst createReport = global.get(\"docx-templates\");\n\nconst template = msg.payload;\n\n(async () => {\n    // const template = fs.readFileSync(\"/zewnflowai/umowy/szablon.docx\");\n    // const data = JSON.parse(fs.readFileSync(\"/tmp/dane.json\"));\n\n    const data = {\n        nr_umowy: \"12/12\",\n        data_zawarcia: \"2025-05-24\",\n    };\n\n    const buffer = await createReport({\n        template,\n        data\n    });\n\n    msg.payload = buffer;\n    // fs.writeFileSync(\"/zewnflowai/umowy/wypelniona.docx\", buffer);\n})();",
+        "z": "4b1994ea08f806f1",
+        "name": "Build Payload",
+        "func": "msg.chatgpt_api = global.get('chatgpt_api');\nmsg.chatgpt_bearer = \"Bearer \" + msg.chatgpt_api;\nmsg.chatgpt_asst_email = global.get('chatgpt_asst_email');\n\n// pytanie domyślne\n// msg.question = msg.question || \"Czy dokument zawiera podpis ręczny?\";\n\nlet contentArray = [];\ncontentArray.push({ type: \"text\", text: msg.question });\n\n// dodanie plików (jeśli nie wyłączone)\nif (!msg.nofile && Array.isArray(msg.file_ids) && msg.file_ids.length > 0) {\n    for (let i = 0; i < msg.file_ids.length; i++) {\n        contentArray.push({\n            type: \"image_file\",\n            image_file: { file_id: msg.file_ids[i] }\n        });\n    }\n}\n\nmsg.message_body = {\n    role: \"user\",\n    content: contentArray\n};\n\nmsg.thread_body = {};\nmsg.payload = {};\n\nreturn msg;",
+        "outputs": 1,
+        "timeout": "",
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 400,
+        "y": 380,
+        "wires": [
+            [
+                "b24cfb5325653d90"
+            ]
+        ]
+    },
+    {
+        "id": "b24cfb5325653d90",
+        "type": "http request",
+        "z": "4b1994ea08f806f1",
+        "name": "Create Thread",
+        "method": "POST",
+        "ret": "obj",
+        "paytoqs": "ignore",
+        "url": "https://api.openai.com/v1/threads",
+        "tls": "",
+        "persist": false,
+        "proxy": "",
+        "insecureHTTPParser": false,
+        "authType": "",
+        "senderr": false,
+        "headers": [
+            {
+                "keyType": "Authorization",
+                "keyValue": "",
+                "valueType": "msg",
+                "valueValue": "chatgpt_bearer"
+            },
+            {
+                "keyType": "Content-Type",
+                "keyValue": "",
+                "valueType": "application/json",
+                "valueValue": ""
+            },
+            {
+                "keyType": "other",
+                "keyValue": "OpenAI-Beta",
+                "valueType": "other",
+                "valueValue": "assistants=v2"
+            }
+        ],
+        "x": 640,
+        "y": 380,
+        "wires": [
+            [
+                "6c7aa32f405245bc"
+            ]
+        ]
+    },
+    {
+        "id": "6c7aa32f405245bc",
+        "type": "function",
+        "z": "4b1994ea08f806f1",
+        "name": "Build Add Message",
+        "func": "msg.thread_id = msg.payload.id;\nmsg.url = \"https://api.openai.com/v1/threads/\" + msg.thread_id + \"/messages\";\nmsg.payload = msg.message_body;\nreturn msg;",
+        "outputs": 1,
+        "timeout": "",
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 410,
+        "y": 460,
+        "wires": [
+            [
+                "43779495fba54a02"
+            ]
+        ]
+    },
+    {
+        "id": "43779495fba54a02",
+        "type": "http request",
+        "z": "4b1994ea08f806f1",
+        "name": "Add Message",
+        "method": "POST",
+        "ret": "obj",
+        "paytoqs": "ignore",
+        "url": "",
+        "tls": "",
+        "persist": false,
+        "proxy": "",
+        "insecureHTTPParser": false,
+        "authType": "",
+        "senderr": false,
+        "headers": [
+            {
+                "keyType": "Authorization",
+                "keyValue": "",
+                "valueType": "msg",
+                "valueValue": "chatgpt_bearer"
+            },
+            {
+                "keyType": "Content-Type",
+                "keyValue": "",
+                "valueType": "application/json",
+                "valueValue": ""
+            },
+            {
+                "keyType": "other",
+                "keyValue": "OpenAI-Beta",
+                "valueType": "other",
+                "valueValue": "assistants=v2"
+            }
+        ],
+        "x": 640,
+        "y": 460,
+        "wires": [
+            [
+                "d2c528a1bb0a595c"
+            ]
+        ]
+    },
+    {
+        "id": "d2c528a1bb0a595c",
+        "type": "function",
+        "z": "4b1994ea08f806f1",
+        "name": "Run Assistant",
+        "func": "msg.url = \"https://api.openai.com/v1/threads/\" + msg.thread_id + \"/runs\";\nmsg.payload = {\n    assistant_id: msg.chatgpt_asst_email\n};\nreturn msg;",
+        "outputs": 1,
+        "timeout": "",
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 400,
+        "y": 540,
+        "wires": [
+            [
+                "ba37a094af10769a"
+            ]
+        ]
+    },
+    {
+        "id": "ba37a094af10769a",
+        "type": "http request",
+        "z": "4b1994ea08f806f1",
+        "name": "Start Run",
+        "method": "POST",
+        "ret": "obj",
+        "paytoqs": "ignore",
+        "url": "",
+        "tls": "",
+        "persist": false,
+        "proxy": "",
+        "insecureHTTPParser": false,
+        "authType": "",
+        "senderr": false,
+        "headers": [
+            {
+                "keyType": "Authorization",
+                "keyValue": "",
+                "valueType": "msg",
+                "valueValue": "chatgpt_bearer"
+            },
+            {
+                "keyType": "Content-Type",
+                "keyValue": "",
+                "valueType": "application/json",
+                "valueValue": ""
+            },
+            {
+                "keyType": "other",
+                "keyValue": "OpenAI-Beta",
+                "valueType": "other",
+                "valueValue": "assistants=v2"
+            }
+        ],
+        "x": 660,
+        "y": 540,
+        "wires": [
+            []
+        ]
+    },
+    {
+        "id": "5cda78b9778c1f2f",
+        "type": "function",
+        "z": "4b1994ea08f806f1",
+        "name": "function 13",
+        "func": "const fs = global.get('fs');\n\nmsg.files = msg.files.map(f => {\n    try {\n        node.warn(`Wczytano: ${f.filename} -> ${f.path}`);\n        return {\n            filename: f.filename,\n            file: fs.readFileSync(f.path)\n        };\n    } catch (err) {\n        node.error(`Błąd wczytywania pliku: ${f.path} - ${err.message}`);\n        return null;\n    }\n}).filter(Boolean);\n\nreturn msg;",
         "outputs": 1,
         "timeout": 0,
         "noerr": 0,
         "initialize": "",
         "finalize": "",
         "libs": [],
-        "x": 780,
-        "y": 620,
+        "x": 670,
+        "y": 60,
         "wires": [
             [
-                "6aadcda335adcd24",
-                "aa20ba6ab7f01f61"
+                "4c1c6555f38ceb7e"
             ]
         ]
     },
     {
-        "id": "6aadcda335adcd24",
-        "type": "debug",
-        "z": "c74ceced8c3687a1",
-        "name": "debug 4",
-        "active": true,
-        "tosidebar": true,
-        "console": false,
-        "tostatus": false,
-        "complete": "true",
-        "targetType": "full",
-        "statusVal": "",
-        "statusType": "auto",
-        "x": 1000,
-        "y": 540,
-        "wires": []
-    },
-    {
-        "id": "f850f1b4e43d171b",
-        "type": "file in",
-        "z": "c74ceced8c3687a1",
-        "name": "",
-        "filename": "/zenflowai/storage/templates/umowa-mazury.docx",
-        "filenameType": "str",
-        "format": "utf8",
-        "chunk": false,
-        "sendError": false,
-        "encoding": "none",
-        "allProps": false,
-        "x": 450,
-        "y": 620,
+        "id": "4c1c6555f38ceb7e",
+        "type": "function",
+        "z": "4b1994ea08f806f1",
+        "name": "upload:queue",
+        "func": "const files = msg.files || [];\n\nif (!Array.isArray(files) || files.length === 0) {\n    node.error(\"Brak plików w msg.files\");\n    return null;\n}\n\nmsg.uploadQueue = files.map((f, index) => {\n    return {\n        file: f.file,                              // tylko Buffer\n        filename: f.filename || `file-${index + 1}`, // nazwa\n        index\n    };\n});\n\nmsg.uploadResults = [];\nmsg.currentUploadIndex = 0;\n\nreturn msg;",
+        "outputs": 1,
+        "timeout": 0,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 860,
+        "y": 60,
         "wires": [
             [
-                "a977c1487e0d24c5",
-                "8f267f752b686196"
+                "26fd971ca0d6bfac"
             ]
         ]
     },
     {
-        "id": "aa20ba6ab7f01f61",
-        "type": "file",
-        "z": "c74ceced8c3687a1",
-        "name": "",
-        "filename": "/zenflowai/storage/templates/gotowe.docx",
-        "filenameType": "str",
-        "appendNewline": true,
-        "createDir": false,
-        "overwriteFile": "true",
-        "encoding": "none",
+        "id": "26fd971ca0d6bfac",
+        "type": "function",
+        "z": "4b1994ea08f806f1",
+        "name": "function 14",
+        "func": "const fileObj = msg.uploadQueue[msg.currentUploadIndex];\nconst boundary = \"----WebKitFormBoundary\" + Math.random().toString(16).substr(2);\n\n// Sprawdzenie, czy mamy bufor\nif (!Buffer.isBuffer(fileObj.file)) {\n    node.error(\"Plik nie jest Bufferem! Upewnij się, że został poprawnie załadowany z dysku.\");\n    return null;\n}\n\nmsg.headers = {\n    \"Content-Type\": \"multipart/form-data; boundary=\" + boundary,\n    \"Authorization\": \"Bearer \" + global.get(\"chatgpt_api\")\n};\n\nconst crlf = \"\\r\\n\";\nconst bodyParts = [\n    Buffer.from(`--${boundary}${crlf}` +\n        `Content-Disposition: form-data; name=\"purpose\"${crlf}${crlf}` +\n        `assistants${crlf}`),\n\n    Buffer.from(`--${boundary}${crlf}` +\n        `Content-Disposition: form-data; name=\"file\"; filename=\"${fileObj.filename}\"${crlf}` +\n        `Content-Type: image/png${crlf}${crlf}`),\n\n    fileObj.file,\n\n    Buffer.from(`${crlf}--${boundary}--${crlf}`)\n];\n\nmsg.payload = Buffer.concat(bodyParts);\n\nreturn msg;",
+        "outputs": 1,
+        "timeout": 0,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
         "x": 1090,
-        "y": 620,
+        "y": 60,
         "wires": [
             [
-                "48d0564e608f78b1"
+                "9e3d6ac41c3bfa2a"
             ]
         ]
     },
     {
-        "id": "48d0564e608f78b1",
-        "type": "debug",
-        "z": "c74ceced8c3687a1",
-        "name": "debug 5",
-        "active": true,
-        "tosidebar": true,
-        "console": false,
-        "tostatus": false,
-        "complete": "true",
-        "targetType": "full",
-        "statusVal": "",
-        "statusType": "auto",
-        "x": 1290,
-        "y": 540,
-        "wires": []
-    },
-    {
-        "id": "579358545ee05ab1",
-        "type": "inject",
-        "z": "c74ceced8c3687a1",
-        "name": "",
-        "props": [
-            {
-                "p": "payload"
-            },
-            {
-                "p": "topic",
-                "vt": "str"
-            }
-        ],
-        "repeat": "",
-        "crontab": "",
-        "once": false,
-        "onceDelay": 0.1,
-        "topic": "",
-        "payload": "",
-        "payloadType": "date",
-        "x": 160,
-        "y": 500,
-        "wires": [
-            [
-                "b118b96dcac8580e"
-            ]
-        ]
-    },
-    {
-        "id": "b118b96dcac8580e",
+        "id": "295acf7d185c7d2a",
         "type": "function",
-        "z": "c74ceced8c3687a1",
-        "name": "function 3",
-        "func": "const os = global.get(\"os\");\nmsg.payload = os.platform();\nreturn msg;",
+        "z": "4b1994ea08f806f1",
+        "name": "function 15",
+        "func": "msg.uploadResults.push(msg.payload.id);\nmsg.currentUploadIndex++;\n\nif (msg.currentUploadIndex < msg.uploadQueue.length) {\n    return [msg, null];  // repeat\n} else {\n    msg.file_ids = msg.uploadResults;\n    return [null, msg];  // done\n}",
+        "outputs": 2,
+        "timeout": 0,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 1190,
+        "y": 140,
+        "wires": [
+            [
+                "26fd971ca0d6bfac"
+            ],
+            [
+                "ceb7a71d6503b21e"
+            ]
+        ]
+    },
+    {
+        "id": "9e3d6ac41c3bfa2a",
+        "type": "http request",
+        "z": "4b1994ea08f806f1",
+        "name": "",
+        "method": "POST",
+        "ret": "obj",
+        "paytoqs": "ignore",
+        "url": "https://api.openai.com/v1/files",
+        "tls": "",
+        "persist": false,
+        "proxy": "",
+        "insecureHTTPParser": false,
+        "authType": "",
+        "senderr": false,
+        "headers": [],
+        "x": 1270,
+        "y": 60,
+        "wires": [
+            [
+                "295acf7d185c7d2a"
+            ]
+        ]
+    },
+    {
+        "id": "8bd4d0fdbf8d5d3e",
+        "type": "function",
+        "z": "4b1994ea08f806f1",
+        "name": "nofile?",
+        "func": "const files = msg.files || [];\nmsg.nofile = true;\n\nif (!Array.isArray(files) || files.length === 0) {\n    node.error(\"Brak plików w msg.files\");\n    msg.nofile = true;\n} else {\n    msg.nofile = false;\n}\n\nreturn msg;",
         "outputs": 1,
         "timeout": 0,
         "noerr": 0,
         "initialize": "",
         "finalize": "",
         "libs": [],
-        "x": 380,
-        "y": 500,
+        "x": 250,
+        "y": 100,
         "wires": [
             [
-                "cc90b15d5b2ee908"
+                "84ad973dd639c523"
             ]
         ]
     },
     {
-        "id": "cc90b15d5b2ee908",
-        "type": "debug",
-        "z": "c74ceced8c3687a1",
-        "name": "debug 6",
-        "active": true,
-        "tosidebar": true,
-        "console": false,
-        "tostatus": false,
-        "complete": "false",
-        "statusVal": "",
-        "statusType": "auto",
-        "x": 590,
-        "y": 500,
-        "wires": []
-    },
-    {
-        "id": "8f267f752b686196",
-        "type": "debug",
-        "z": "c74ceced8c3687a1",
-        "name": "debug 7",
-        "active": true,
-        "tosidebar": true,
-        "console": false,
-        "tostatus": false,
-        "complete": "true",
-        "targetType": "full",
-        "statusVal": "",
-        "statusType": "auto",
-        "x": 780,
-        "y": 540,
-        "wires": []
-    },
-    {
-        "id": "1722428ed71a4c40",
-        "type": "inject",
-        "z": "c74ceced8c3687a1",
+        "id": "84ad973dd639c523",
+        "type": "switch",
+        "z": "4b1994ea08f806f1",
         "name": "",
-        "props": [
+        "property": "nofile",
+        "propertyType": "msg",
+        "rules": [
             {
-                "p": "payload"
+                "t": "true"
             },
             {
-                "p": "topic",
-                "vt": "str"
+                "t": "false"
             }
         ],
-        "repeat": "",
-        "crontab": "",
-        "once": false,
-        "onceDelay": 0.1,
-        "topic": "",
-        "payload": "",
-        "payloadType": "date",
-        "x": 120,
-        "y": 560,
+        "checkall": "true",
+        "repair": false,
+        "outputs": 2,
+        "x": 410,
+        "y": 100,
         "wires": [
             [
-                "8f267f752b686196",
-                "f850f1b4e43d171b"
+                "ceb7a71d6503b21e"
+            ],
+            [
+                "5cda78b9778c1f2f"
             ]
         ]
     },
     {
-        "id": "0593c53023e99d07",
+        "id": "fbb9c3d6c4b6e5cb",
         "type": "function",
-        "z": "c74ceced8c3687a1",
-        "name": "function 4",
-        "func": "// Get required modules from global context (configured in settings.js)\nconst fs = global.get('fs');\nconst path = global.get('path');\nconst createReport = global.get('docx_templates').createReport;\n\n(async () => {\n    try {\n        const templatePath = \"/zenflowai/storage/templates/umowa-mazury.docx\";\n\n        if (!fs.existsSync(templatePath)) {\n            throw new Error(`Template nie istnieje: ${templatePath}`);\n        }\n\n        const template = fs.readFileSync(templatePath);\n\n        const data = {\n            nr_umowy: \"12/12\",\n            data_zawarcia: \"2025-05-24\",\n        };\n\n        console.log(\"Generowanie dokumentu...\");\n\n        const buffer = await createReport({\n            template,\n            data\n        });\n\n        msg.payload = buffer;\n\n        const outputPath = \"/zenflowai/storage/templates/umowa-mazury-wypelniona.docx\";\n        fs.writeFileSync(outputPath, buffer);\n\n        console.log(`Dokument zapisany: ${outputPath}`);\n\n        node.send(msg);\n\n    } catch (error) {\n        console.error(\"Błąd:\", error);\n        node.error(error.message, msg);\n    }\n})();",
+        "z": "cb0cbe65f5a7b6e2",
+        "name": "Prepare Delete Queue",
+        "func": "msg.deleteIndex = 0;\nmsg.deleteQueue = msg.file_ids || [];\nmsg.deleteResults = [];\n\nif (msg.deleteQueue.length === 0) {\n    node.warn(\"Brak plików do usunięcia\");\n    return null;\n}\n\nreturn msg;",
         "outputs": 1,
-        "timeout": 0,
         "noerr": 0,
         "initialize": "",
         "finalize": "",
         "libs": [],
-        "x": 420,
-        "y": 760,
+        "x": 230,
+        "y": 80,
         "wires": [
             [
-                "b06dcd616dd28661"
+                "ea09dbf8973c4421"
             ]
         ]
     },
     {
-        "id": "ef054bf8b4f4d793",
-        "type": "inject",
-        "z": "c74ceced8c3687a1",
-        "name": "",
-        "props": [
-            {
-                "p": "payload"
-            },
-            {
-                "p": "topic",
-                "vt": "str"
-            }
-        ],
-        "repeat": "",
-        "crontab": "",
-        "once": false,
-        "onceDelay": 0.1,
-        "topic": "",
-        "payload": "",
-        "payloadType": "date",
-        "x": 130,
-        "y": 740,
-        "wires": [
-            [
-                "0593c53023e99d07",
-                "b06dcd616dd28661"
-            ]
-        ]
-    },
-    {
-        "id": "b06dcd616dd28661",
-        "type": "debug",
-        "z": "c74ceced8c3687a1",
-        "name": "debug 8",
-        "active": true,
-        "tosidebar": true,
-        "console": false,
-        "tostatus": false,
-        "complete": "true",
-        "targetType": "full",
-        "statusVal": "",
-        "statusType": "auto",
-        "x": 690,
-        "y": 740,
-        "wires": []
-    },
-    {
-        "id": "39aa69ec25e10e77",
+        "id": "ea09dbf8973c4421",
         "type": "function",
-        "z": "c74ceced8c3687a1",
-        "name": "function 5",
-        "func": "console.log(\"fs z global:\", global.get(\"fs\"));\nconsole.log(\"Dostępne klucze w global:\", Object.keys(global.keys || {}));\nreturn msg;",
+        "z": "cb0cbe65f5a7b6e2",
+        "name": "Build DELETE request",
+        "func": "const file_id = msg.deleteQueue[msg.deleteIndex];\n\nmsg.url = `https://api.openai.com/v1/files/${file_id}`;\nmsg.method = \"DELETE\";\nmsg.headers = {\n    \"Authorization\": \"Bearer \" + global.get(\"chatgpt_api\")\n};\nmsg.payload = null;\n\nreturn msg;",
         "outputs": 1,
-        "timeout": 0,
         "noerr": 0,
-        "initialize": "",
-        "finalize": "",
-        "libs": [],
-        "x": 420,
-        "y": 840,
+        "x": 500,
+        "y": 80,
         "wires": [
             [
-                "6ec1c583de8e5378"
+                "90a9b8c2c6c98e53"
             ]
         ]
     },
     {
-        "id": "3eb17527ac4b17b4",
-        "type": "inject",
-        "z": "c74ceced8c3687a1",
-        "name": "",
-        "props": [
-            {
-                "p": "payload"
-            },
-            {
-                "p": "topic",
-                "vt": "str"
-            }
-        ],
-        "repeat": "",
-        "crontab": "",
-        "once": false,
-        "onceDelay": 0.1,
-        "topic": "",
-        "payload": "",
-        "payloadType": "date",
-        "x": 210,
-        "y": 820,
+        "id": "90a9b8c2c6c98e53",
+        "type": "http request",
+        "z": "cb0cbe65f5a7b6e2",
+        "name": "DELETE OpenAI File",
+        "method": "use",
+        "ret": "obj",
+        "url": "",
+        "tls": "",
+        "persist": false,
+        "proxy": "",
+        "authType": "",
+        "x": 760,
+        "y": 80,
         "wires": [
             [
-                "39aa69ec25e10e77"
+                "f5b4a6fef8e9dbd6"
             ]
         ]
     },
     {
-        "id": "6ec1c583de8e5378",
-        "type": "debug",
-        "z": "c74ceced8c3687a1",
-        "name": "debug 9",
-        "active": true,
-        "tosidebar": true,
-        "console": false,
-        "tostatus": false,
-        "complete": "true",
-        "targetType": "full",
-        "statusVal": "",
-        "statusType": "auto",
-        "x": 730,
-        "y": 820,
-        "wires": []
+        "id": "f5b4a6fef8e9dbd6",
+        "type": "function",
+        "z": "cb0cbe65f5a7b6e2",
+        "name": "Loop or Done",
+        "func": "msg.deleteResults.push(msg.payload);\nmsg.deleteIndex++;\n\nif (msg.deleteIndex < msg.deleteQueue.length) {\n    return [msg, null]; // continue loop\n} else {\n    msg.payload = {\n        deleted: msg.deleteResults.length,\n        results: msg.deleteResults\n    };\n    return [null, msg]; // done\n}",
+        "outputs": 2,
+        "noerr": 0,
+        "x": 640,
+        "y": 260,
+        "wires": [
+            [
+                "ea09dbf8973c4421"
+            ],
+            []
+        ]
     },
     {
         "id": "bc8a691041330981",
@@ -2371,18 +2837,17 @@
         "type": "function",
         "z": "bf6e5312884e6967",
         "name": "crate:umowa",
-        "func": "// Get required modules from global context (configured in settings.js)\nconst fs = global.get('fs');\nconst path = global.get('path');\nconst createReport = global.get('docx_templates').createReport;\n\n(async () => {\n    try {\n        const templatePath = msg.umowa.path_umowa_template;\n\n        if (!fs.existsSync(templatePath)) {\n            throw new Error(`Template nie istnieje: ${templatePath}`);\n        }\n\n        const template = fs.readFileSync(templatePath);\n\n        const data = msg.umowa;\n\n        console.log(\"Generowanie dokumentu...\");\n\n        const buffer = await createReport({\n            template,\n            data\n        });\n\n        msg.file_buffer = buffer;\n\n        const outputPath = msg.umowa.path_tmp + msg.umowa.umowa_name + \".docx\" ;\n        fs.writeFileSync(outputPath, buffer);\n\n        console.log(`Dokument zapisany: ${outputPath}`);\n\n        node.send(msg);\n\n    } catch (error) {\n        console.error(\"Błąd:\", error);\n        node.error(error.message, msg);\n    }\n})();",
+        "func": "// Get required modules from global context (configured in settings.js)\nconst fs = global.get('fs');\nconst path = global.get('path');\nconst createReport = global.get('docx_templates').createReport;\n\nnode.status({ fill: \"blue\", shape: \"dot\", text: global.get(\"getDateTime\")() });\n\n\n(async () => {\n    try {\n        const templatePath = msg.umowa.path_umowa_template;\n\n        if (!fs.existsSync(templatePath)) {\n            throw new Error(`Template nie istnieje: ${templatePath}`);\n        }\n\n        const template = fs.readFileSync(templatePath);\n        // const data = msg.umowa;\n\n        const data = {\n            ...msg.umowa,\n            barcodeImage: {\n                width: 4, // w centymetrach\n                height: 4,\n                data: msg.barcode_uuid,\n                extension: '.png'\n            }\n        };\n\n        console.log(\"Generowanie dokumentu...\");\n        const buffer = await createReport({\n            template,\n            data\n        });\n\n        msg.file_buffer = buffer;\n\n        const outputPath = msg.umowa.path_tmp + msg.umowa.umowa_name + \".docx\" ;\n        fs.writeFileSync(outputPath, buffer);\n\n        console.log(`Dokument zapisany: ${outputPath}`);\n        node.status({ fill: \"green\", shape: \"dot\", text: global.get(\"getDateTime\")() });\n        node.send(msg);\n\n    } catch (error) {\n        console.error(\"Błąd:\", error);\n        node.error(error.message, msg);\n    }\n})();",
         "outputs": 1,
         "timeout": 0,
         "noerr": 0,
         "initialize": "",
         "finalize": "",
         "libs": [],
-        "x": 370,
+        "x": 650,
         "y": 800,
         "wires": [
             [
-                "ac0741e3d2640d99",
                 "0a915799cd0a9b38"
             ]
         ]
@@ -2392,54 +2857,21 @@
         "type": "function",
         "z": "bf6e5312884e6967",
         "name": "prepare:umowa",
-        "func": "function slowniePL(kwota) {\n    const jednostki = [\"\", \"jeden\", \"dwa\", \"trzy\", \"cztery\", \"pięć\", \"sześć\", \"siedem\", \"osiem\", \"dziewięć\"];\n    const nascie = [\"dziesięć\", \"jedenaście\", \"dwanaście\", \"trzynaście\", \"czternaście\", \"piętnaście\", \"szesnaście\", \"siedemnaście\", \"osiemnaście\", \"dziewiętnaście\"];\n    const dziesiatki = [\"\", \"\", \"dwadzieścia\", \"trzydzieści\", \"czterdzieści\", \"pięćdziesiąt\", \"sześćdziesiąt\", \"siedemdziesiąt\", \"osiemdziesiąt\", \"dziewięćdziesiąt\"];\n    const setki = [\"\", \"sto\", \"dwieście\", \"trzysta\", \"czterysta\", \"pięćset\", \"sześćset\", \"siedemset\", \"osiemset\", \"dziewięćset\"];\n\n    const grupy = [\n        [\"\", \"\", \"\"],\n        [\"tysiąc\", \"tysiące\", \"tysięcy\"],\n        [\"milion\", \"miliony\", \"milionów\"],\n        [\"miliard\", \"miliardy\", \"miliardów\"]\n    ];\n\n    function odmiana(liczba, formy) {\n        if (liczba === 1) return formy[0];\n        if ([2, 3, 4].includes(liczba % 10) && !(liczba % 100 >= 10 && liczba % 100 <= 20)) return formy[1];\n        return formy[2];\n    }\n\n    function segment(n) {\n        const s = Math.floor(n / 100);\n        const d = Math.floor((n % 100) / 10);\n        const j = n % 10;\n\n        let wynik = [];\n\n        if (s) wynik.push(setki[s]);\n        if (d === 1) {\n            wynik.push(nascie[j]);\n        } else {\n            if (d > 1) wynik.push(dziesiatki[d]);\n            if (j > 0) wynik.push(jednostki[j]);\n        }\n\n        return wynik.join(\" \");\n    }\n\n    function liczbaNaSlowa(n) {\n        if (n === 0) return \"zero\";\n\n        let res = [];\n        let i = 0;\n\n        while (n > 0) {\n            let trzy = n % 1000;\n            if (trzy > 0) {\n                let seg = segment(trzy);\n                if (i > 0) {\n                    let formy = grupy[i];\n                    let odm = odmiana(trzy, formy);\n                    if (trzy === 1 && i === 1) {\n                        seg = odm; // tylko \"tysiąc\", bez \"jeden\"\n                    } else {\n                        seg += \" \" + odm;\n                    }\n                }\n                res.unshift(seg);\n            }\n            n = Math.floor(n / 1000);\n            i++;\n        }\n\n        return res.join(\" \");\n    }\n\n    let zl = Math.floor(kwota);\n    let gr = Math.round((kwota - zl) * 100);\n\n    let wynik = liczbaNaSlowa(zl);// + \" złotych\";\n    if (gr > 0) {\n        wynik += \" i \" + liczbaNaSlowa(gr) + \" groszy\";\n    }\n\n    return wynik;\n}\n\n\nconst now = new Date();\nconst pad = (n) => n.toString().padStart(2, '0');\n\nconst year = now.getFullYear();\nconst month = pad(now.getMonth() + 1);\nconst day = pad(now.getDate());\nconst hours = pad(now.getHours());\nconst minutes = pad(now.getMinutes());\nconst seconds = pad(now.getSeconds());\n\nconst data_zawarcia = `${year}-${month}-${day}`;\n\nconst umowa = msg.umowa_get;\nconst rejs = umowa.rejsy;\nconst osoba = umowa.osoby;\n\nconst storage = global.get(\"storage\");\nconst path_template_umowy = global.get(\"path_template_umowy\");\nconst path_umowy = global.get(\"path_umowy\");\nconst path_tmp = global.get(\"path_tmp\")\n\nlet nr_umowa_new = parseInt(msg.umowa_ostatni_nr, 10) + 1;\n\nlet nr_umowy = msg.umowa_prefix + \"/\" + nr_umowa_new;\nlet nr_umowy_file = msg.umowa_prefix + \"-\" + nr_umowa_new;\nlet umowa_name = nr_umowy_file + \"_\" + global.get(\"getTimeStamp\")() ;\n\nmsg.umowa = {\n    \"nr_umowa_new\": nr_umowa_new,\n    \"umowa_name\": umowa_name,\n    \"umowa_uuid\": umowa.uuid,\n    \"nr_umowy\": nr_umowy,\n    \"nr_umowy_file\": nr_umowy_file,\n    \"data_zawarcia\": data_zawarcia,\n    \"path_umowa_template\": storage + path_template_umowy + rejs.umowa_template,\n    \"path_tmp\": storage + path_tmp,\n    \"path_umowa\": storage + path_umowy,\n    \"imie\": osoba.imie,\n    \"imie_nazwisko\": osoba.imie + \" \" + osoba.nazwisko,\n    \"adres_zamieszkania\": osoba.adres_zamieszkania,\n    \"data_i_miejsce_urodzenia\": osoba.data_urodzenia + \" \" + osoba.miejsce_urodzenia,\n    \"email\": osoba.email,\n    \"nr_telefonu\": osoba.telefon,\n    \"nr_dokumentu\": osoba.nr_dowodu,\n    \"stopien\": osoba.uprawnienia,\n    \"rozmiar_koszulki\": osoba.rozmiar_koszulki,\n    \"eme_osoba\": osoba.eme_contact,\n    \"umowa_przedmiot\": rejs.umowa_przedmiot,\n    \"termin_od\": rejs.termin_od,\n    \"termin_do\": rejs.termin_do,\n    \"port_start\": rejs.port_start,\n    \"port_koniec\": rejs.port_koniec,\n    \"port_start_czas\": \"\",\n    \"port_koniec_czas\": \"\",\n    \"cena\": rejs.cena,\n    \"cena_slownie\": slowniePL(rejs.cena),\n    \"rezerwacja_ilosc\": umowa.ile_osob,\n    \"rezerwacja_ilosc_slownie\": slowniePL(umowa.ile_osob),\n    \"rezerwacja_cena\": umowa.rezerwacja_cena,\n    \"rezerwacja_cena_slownie\": slowniePL(umowa.rezerwacja_cena),\n    \"rezerwacja_cena_rata1\": umowa.rezerwacja_cena_rata1,\n    \"rezerwacja_cena_rata1_slownie\": slowniePL(umowa.rezerwacja_cena_rata1),\n    \"rezerwacja_cena_rata2\": umowa.rezerwacja_cena_rata2,\n    \"cena_wydatki\": rejs.cena_wydatki,\n    \"cena_zaokretowania\": rejs.cena_zaokretowania,\n    \"uuid\": umowa.uuid\n}\n\nnode.status({ fill: \"green\", shape: \"dot\", text: global.get(\"getDateTime\")() });\nreturn msg;",
+        "func": "function slowniePL(kwota) {\n    const jednostki = [\"\", \"jeden\", \"dwa\", \"trzy\", \"cztery\", \"pięć\", \"sześć\", \"siedem\", \"osiem\", \"dziewięć\"];\n    const nascie = [\"dziesięć\", \"jedenaście\", \"dwanaście\", \"trzynaście\", \"czternaście\", \"piętnaście\", \"szesnaście\", \"siedemnaście\", \"osiemnaście\", \"dziewiętnaście\"];\n    const dziesiatki = [\"\", \"\", \"dwadzieścia\", \"trzydzieści\", \"czterdzieści\", \"pięćdziesiąt\", \"sześćdziesiąt\", \"siedemdziesiąt\", \"osiemdziesiąt\", \"dziewięćdziesiąt\"];\n    const setki = [\"\", \"sto\", \"dwieście\", \"trzysta\", \"czterysta\", \"pięćset\", \"sześćset\", \"siedemset\", \"osiemset\", \"dziewięćset\"];\n\n    const grupy = [\n        [\"\", \"\", \"\"],\n        [\"tysiąc\", \"tysiące\", \"tysięcy\"],\n        [\"milion\", \"miliony\", \"milionów\"],\n        [\"miliard\", \"miliardy\", \"miliardów\"]\n    ];\n\n    function odmiana(liczba, formy) {\n        if (liczba === 1) return formy[0];\n        if ([2, 3, 4].includes(liczba % 10) && !(liczba % 100 >= 10 && liczba % 100 <= 20)) return formy[1];\n        return formy[2];\n    }\n\n    function segment(n) {\n        const s = Math.floor(n / 100);\n        const d = Math.floor((n % 100) / 10);\n        const j = n % 10;\n\n        let wynik = [];\n\n        if (s) wynik.push(setki[s]);\n        if (d === 1) {\n            wynik.push(nascie[j]);\n        } else {\n            if (d > 1) wynik.push(dziesiatki[d]);\n            if (j > 0) wynik.push(jednostki[j]);\n        }\n\n        return wynik.join(\" \");\n    }\n\n    function liczbaNaSlowa(n) {\n        if (n === 0) return \"zero\";\n\n        let res = [];\n        let i = 0;\n\n        while (n > 0) {\n            let trzy = n % 1000;\n            if (trzy > 0) {\n                let seg = segment(trzy);\n                if (i > 0) {\n                    let formy = grupy[i];\n                    let odm = odmiana(trzy, formy);\n                    if (trzy === 1 && i === 1) {\n                        seg = odm; // tylko \"tysiąc\", bez \"jeden\"\n                    } else {\n                        seg += \" \" + odm;\n                    }\n                }\n                res.unshift(seg);\n            }\n            n = Math.floor(n / 1000);\n            i++;\n        }\n\n        return res.join(\" \");\n    }\n\n    let zl = Math.floor(kwota);\n    let gr = Math.round((kwota - zl) * 100);\n\n    let wynik = liczbaNaSlowa(zl);// + \" złotych\";\n    if (gr > 0) {\n        wynik += \" i \" + liczbaNaSlowa(gr) + \" groszy\";\n    }\n\n    return wynik;\n}\n\n\nconst now = new Date();\nconst pad = (n) => n.toString().padStart(2, '0');\n\nconst year = now.getFullYear();\nconst month = pad(now.getMonth() + 1);\nconst day = pad(now.getDate());\nconst hours = pad(now.getHours());\nconst minutes = pad(now.getMinutes());\nconst seconds = pad(now.getSeconds());\n\nconst data_zawarcia = `${year}-${month}-${day}`;\n\nconst umowa = msg.umowa_get;\nconst rejs = umowa.rejsy;\nconst osoba = umowa.osoby;\n\nconst storage = global.get(\"storage\");\nconst path_template_umowy = global.get(\"path_template_umowy\");\nconst path_umowy = global.get(\"path_umowy\");\nconst path_tmp = global.get(\"path_tmp\")\n\nlet nr_umowa_new = parseInt(msg.umowa_ostatni_nr, 10) + 1;\n\nlet nr_umowy = msg.umowa_prefix + \"/\" + nr_umowa_new;\nlet nr_umowy_file = msg.umowa_prefix + \"-\" + nr_umowa_new;\nlet umowa_name = nr_umowy_file + `_${month}${day}${hours}${minutes}`  ;\n\nmsg.umowa = {\n    \"nr_umowa_new\": nr_umowa_new,\n    \"umowa_year\": msg.umowa_prefix,\n    \"umowa_name\": umowa_name,\n    \"umowa_uuid\": umowa.uuid,\n    \"nr_umowy\": nr_umowy,\n    \"nr_umowy_file\": nr_umowy_file,\n    \"data_zawarcia\": data_zawarcia,\n    \"przelew_nazwa\": nr_umowy + \" \" + data_zawarcia,\n    \"path_umowa_template\": storage + path_template_umowy + rejs.umowa_template,\n    \"path_tmp\": storage + path_tmp,\n    \"path_umowa\": storage + path_umowy + msg.umowa_prefix + \"/\" + nr_umowa_new + \"/\",\n    \"imie\": osoba.imie,\n    \"imie_nazwisko\": osoba.imie + \" \" + osoba.nazwisko,\n    \"adres_zamieszkania\": osoba.adres_zamieszkania,\n    \"data_i_miejsce_urodzenia\": osoba.data_urodzenia + \" \" + osoba.miejsce_urodzenia,\n    \"email\": osoba.email,\n    \"nr_telefonu\": osoba.telefon,\n    \"nr_dokumentu\": osoba.nr_dowodu,\n    \"stopien\": osoba.uprawnienia,\n    \"rozmiar_koszulki\": osoba.rozmiar_koszulki,\n    \"eme_osoba\": osoba.eme_contact,\n    \"umowa_przedmiot\": rejs.umowa_przedmiot,\n    \"termin_od\": rejs.termin_od,\n    \"termin_do\": rejs.termin_do,\n    \"port_start\": rejs.port_start,\n    \"port_koniec\": rejs.port_koniec,\n    \"port_start_czas\": rejs.port_start_time,\n    \"port_koniec_czas\": rejs.port_koniec_time,\n    \"cena\": rejs.cena,\n    \"cena_slownie\": slowniePL(rejs.cena),\n    \"rezerwacja_ilosc\": umowa.ile_osob,\n    \"rezerwacja_ilosc_slownie\": slowniePL(umowa.ile_osob),\n    \"rezerwacja_cena\": umowa.rezerwacja_cena,\n    \"rezerwacja_cena_slownie\": slowniePL(umowa.rezerwacja_cena),\n    \"rezerwacja_cena_rata1\": umowa.rezerwacja_cena_rata1,\n    \"rezerwacja_cena_rata1_slownie\": slowniePL(umowa.rezerwacja_cena_rata1),\n    \"rezerwacja_cena_rata2\": umowa.rezerwacja_cena_rata2,\n    \"cena_wydatki\": rejs.cena_wydatki,\n    \"cena_zaokretowania\": rejs.cena_zaokretowania,\n    \"uuid\": umowa.uuid\n}\n\nnode.status({ fill: \"green\", shape: \"dot\", text: global.get(\"getDateTime\")() });\nreturn msg;",
         "outputs": 1,
         "timeout": 0,
         "noerr": 0,
         "initialize": "",
         "finalize": "",
         "libs": [],
-        "x": 130,
+        "x": 140,
         "y": 800,
         "wires": [
             [
-                "d3849b6988415d4c",
-                "8001e7fd53fd91b5"
+                "95e693f57eca5b12",
+                "1fecc97559a778e5"
             ]
         ]
-    },
-    {
-        "id": "8001e7fd53fd91b5",
-        "type": "debug",
-        "z": "bf6e5312884e6967",
-        "name": "debug 18",
-        "active": true,
-        "tosidebar": true,
-        "console": false,
-        "tostatus": false,
-        "complete": "true",
-        "targetType": "full",
-        "statusVal": "",
-        "statusType": "auto",
-        "x": 350,
-        "y": 940,
-        "wires": []
-    },
-    {
-        "id": "ac0741e3d2640d99",
-        "type": "debug",
-        "z": "bf6e5312884e6967",
-        "name": "debug 19",
-        "active": false,
-        "tosidebar": true,
-        "console": false,
-        "tostatus": false,
-        "complete": "false",
-        "statusVal": "",
-        "statusType": "auto",
-        "x": 740,
-        "y": 740,
-        "wires": []
     },
     {
         "id": "52a11ea9f254b4c4",
@@ -2453,17 +2885,12 @@
         "winHide": false,
         "oldrc": false,
         "name": "Docx to PDF",
-        "x": 830,
+        "x": 1050,
         "y": 800,
         "wires": [
+            [],
+            [],
             [
-                "02526e8cb9de9ed8"
-            ],
-            [
-                "1670fe814c5f6509"
-            ],
-            [
-                "1749324184fbc90d",
                 "3b722634e39a14c5"
             ]
         ]
@@ -2480,61 +2907,13 @@
         "initialize": "",
         "finalize": "",
         "libs": [],
-        "x": 600,
+        "x": 860,
         "y": 800,
         "wires": [
             [
                 "52a11ea9f254b4c4"
             ]
         ]
-    },
-    {
-        "id": "02526e8cb9de9ed8",
-        "type": "debug",
-        "z": "bf6e5312884e6967",
-        "name": "debug 20",
-        "active": false,
-        "tosidebar": true,
-        "console": false,
-        "tostatus": false,
-        "complete": "false",
-        "statusVal": "",
-        "statusType": "auto",
-        "x": 1010,
-        "y": 780,
-        "wires": []
-    },
-    {
-        "id": "1670fe814c5f6509",
-        "type": "debug",
-        "z": "bf6e5312884e6967",
-        "name": "debug 21",
-        "active": false,
-        "tosidebar": true,
-        "console": false,
-        "tostatus": false,
-        "complete": "false",
-        "statusVal": "",
-        "statusType": "auto",
-        "x": 1070,
-        "y": 840,
-        "wires": []
-    },
-    {
-        "id": "1749324184fbc90d",
-        "type": "debug",
-        "z": "bf6e5312884e6967",
-        "name": "debug 22",
-        "active": false,
-        "tosidebar": true,
-        "console": false,
-        "tostatus": false,
-        "complete": "false",
-        "statusVal": "",
-        "statusType": "auto",
-        "x": 1100,
-        "y": 880,
-        "wires": []
     },
     {
         "id": "3b722634e39a14c5",
@@ -2560,27 +2939,10 @@
         "y": 960,
         "wires": [
             [
-                "53bc96e340f90170",
                 "a1f0d6f7e579f70e"
             ],
             []
         ]
-    },
-    {
-        "id": "53bc96e340f90170",
-        "type": "debug",
-        "z": "bf6e5312884e6967",
-        "name": "debug 1",
-        "active": true,
-        "tosidebar": true,
-        "console": false,
-        "tostatus": false,
-        "complete": "false",
-        "statusVal": "",
-        "statusType": "auto",
-        "x": 1170,
-        "y": 960,
-        "wires": []
     },
     {
         "id": "9060eb281e8a08fd",
@@ -2925,8 +3287,7 @@
         "y": 560,
         "wires": [
             [
-                "2f8f8edda548213e",
-                "af57170f05cefb13"
+                "2f8f8edda548213e"
             ]
         ]
     },
@@ -2948,7 +3309,7 @@
         "type": "function",
         "z": "bf6e5312884e6967",
         "name": "email:template:umowa-email",
-        "func": "const content = msg.payload; //file data\n\nconst fs = global.get('fs');\nconst path = global.get('path');\n\n// Ścieżki do plików (dostosuj według potrzeb)\nconst htmlPath = global.get('storage') + \"/teamplates/html/email_umowa.html\";\nconst cssPath = global.get('storage') + \"/teamplates/html/email-style.css\";\n\nlet html = fs.readFileSync(htmlPath, \"utf8\");\nconst css = fs.readFileSync(cssPath, \"utf8\");\n\nconst formdata = {\n    \"osoba_name\": msg.umowa.imie,\n    \"umowa_przedmiot\": msg.umowa.umowa_przedmiot,\n    \"termin_od\": msg.umowa.termin_od,\n    \"termin_do\": msg.umowa.termin_do,\n    \"nr_umowy\": msg.umowa.nr_umowy,\n    \"rezerwacja_cena_rata1\": msg.umowa.rezerwacja_cena_rata1, \n\n}\n\n// Wstawienie stylu inline w miejsce <link rel=\"stylesheet\"...>\nhtml = html.replace(\n    /<link\\s+rel=[\"']stylesheet[\"']\\s+href=[\"'][^\"']+[\"']\\s*\\/?>/,\n    `<style>\\n${css}\\n</style>`\n);\n\n// Zamiana znaczników {{...}} dynamicznie z msg.payload\nhtml = html\n    .replace(/{{osoba_name}}/g, formdata.osoba_name)\n    .replace(/{{umowa_przedmiot}}/g, formdata.umowa_przedmiot)\n    .replace(/{{termin_od}}/g, formdata.termin_od)\n    .replace(/{{termin_do}}/g, formdata.termin_do)\n    .replace(/{{nr_umowy}}/g, formdata.nr_umowy)\n    .replace(/{{rezerwacja_cena_rata1}}/g, formdata.rezerwacja_cena_rata1);\n\nmsg.payload = html;\nmsg.to = `${msg.umowa.email}`;\nmsg.from = \"kwatermistrz@zenflowai.net\";\nmsg.subject = `Umowa Rejsu - ${msg.umowa.nr_umowy} - Kapitan Bastek`;\nmsg.headers = {\n    \"Content-Type\": \"text/html\"\n};\n\n\nmsg.attachments = [\n{\n    \"filename\": msg.umowa_pdf_file_name,\n    \"content\": content,\n    // \"encoding\": \"base64\"\n}];\n\nmsg.html = html;\n\nnode.status({ fill: \"green\", shape: \"dot\", text: global.get(\"getDateTime\")() });\nreturn msg;",
+        "func": "const content = msg.payload; //file data\n\nconst fs = global.get('fs');\nconst path = global.get('path');\n\n// Ścieżki do plików (dostosuj według potrzeb)\nconst htmlPath = global.get('storage') + \"/teamplates/html/email_umowa.html\";\nconst cssPath = global.get('storage') + \"/teamplates/html/email-style.css\";\n\nlet html = fs.readFileSync(htmlPath, \"utf8\");\nconst css = fs.readFileSync(cssPath, \"utf8\");\n\nconst formdata = {\n    \"osoba_name\": msg.umowa.imie,\n    \"umowa_przedmiot\": msg.umowa.umowa_przedmiot,\n    \"termin_od\": msg.umowa.termin_od,\n    \"termin_do\": msg.umowa.termin_do,\n    \"nr_umowy\": msg.umowa.nr_umowy,\n    \"rezerwacja_cena_rata1\": msg.umowa.rezerwacja_cena_rata1, \n    \"przelew_nazwa\": msg.umowa.przelew_nazwa,\n    \"uuid\": msg.umowa_get.uuid\n}   \n\n// Wstawienie stylu inline w miejsce <link rel=\"stylesheet\"...>\nhtml = html.replace(\n    /<link\\s+rel=[\"']stylesheet[\"']\\s+href=[\"'][^\"']+[\"']\\s*\\/?>/,\n    `<style>\\n${css}\\n</style>`\n);\n\n// Zamiana znaczników {{...}} dynamicznie z msg.payload\nhtml = html\n    .replace(/{{osoba_name}}/g, formdata.osoba_name)\n    .replace(/{{umowa_przedmiot}}/g, formdata.umowa_przedmiot)\n    .replace(/{{termin_od}}/g, formdata.termin_od)\n    .replace(/{{termin_do}}/g, formdata.termin_do)\n    .replace(/{{nr_umowy}}/g, formdata.nr_umowy)\n    .replace(/{{rezerwacja_cena_rata1}}/g, formdata.rezerwacja_cena_rata1)\n    .replace(/{{przelew_nazwa}}/g, formdata.przelew_nazwa)\n    .replace(/{{uuid}}/g, formdata.uuid)\n    ;\n\nmsg.payload = html;\nmsg.to = `${msg.umowa.email}`;\nmsg.from = \"kwatermistrz@zenflowai.net\";\nmsg.subject = `Umowa Rejsu - ${msg.umowa.nr_umowy} - Kapitan Bastek`;\nmsg.headers = {\n    \"Content-Type\": \"text/html\"\n};\n\n\nmsg.attachments = [\n{\n    \"filename\": msg.umowa_pdf_file_name,\n    \"content\": content,\n    // \"encoding\": \"base64\"\n}, {\n    filename: \"barcode.png\",\n    content: msg.barcode,\n    encoding: \"base64\",\n    cid: \"barcode.png\"\n}\n];\n\nmsg.html = html;\n\nnode.status({ fill: \"green\", shape: \"dot\", text: global.get(\"getDateTime\")() });\nreturn msg;",
         "outputs": 1,
         "timeout": 0,
         "noerr": 0,
@@ -2956,7 +3317,7 @@
         "finalize": "",
         "libs": [],
         "x": 200,
-        "y": 1400,
+        "y": 1460,
         "wires": [
             [
                 "0acbe55c9c85d051"
@@ -2976,7 +3337,7 @@
         "finalize": "",
         "libs": [],
         "x": 480,
-        "y": 1400,
+        "y": 1460,
         "wires": [
             [
                 "7aef1045a90da312"
@@ -3013,7 +3374,7 @@
             }
         ],
         "x": 700,
-        "y": 1400,
+        "y": 1460,
         "wires": [
             [
                 "b960958154a1f87a"
@@ -3033,7 +3394,7 @@
         "finalize": "",
         "libs": [],
         "x": 890,
-        "y": 1400,
+        "y": 1460,
         "wires": [
             [
                 "058bdbf2af7b05e9"
@@ -3052,7 +3413,7 @@
         "secure": false,
         "tlsRejectUnauthorized": false,
         "x": 160,
-        "y": 1460,
+        "y": 1560,
         "wires": [
             [
                 "4c3b30ac86632a0d"
@@ -3072,7 +3433,7 @@
         "finalize": "",
         "libs": [],
         "x": 470,
-        "y": 1460,
+        "y": 1560,
         "wires": [
             [
                 "febfbd1ef9c92d1c"
@@ -3109,11 +3470,10 @@
             }
         ],
         "x": 700,
-        "y": 1460,
+        "y": 1560,
         "wires": [
             [
-                "41d85efdfdc2b98b",
-                "b09a093db14b09b8"
+                "41d85efdfdc2b98b"
             ]
         ]
     },
@@ -3129,7 +3489,7 @@
         "initialize": "",
         "finalize": "",
         "libs": [],
-        "x": 430,
+        "x": 410,
         "y": 560,
         "wires": [
             [
@@ -3281,7 +3641,7 @@
         "type": "function",
         "z": "bf6e5312884e6967",
         "name": "umowa:status:07 generate-contract",
-        "func": "msg.nocodb_t_active = msg.nocodb_t.umowy;\nmsg.method = \"PATCH\";\n\nmsg.payload = {\n    Id: msg.umowa_get.Id,   // klucz podstawowy w Twojej tabeli\n    status: \"07 generate-contract\",\n    data_umowy: msg.umowa.data_umowy,\n    nazwa: msg.umowa.nr_umowy\n};\n\n\nnode.status({\n    fill: \"green\",\n    shape: \"dot\",\n    text: `${global.get(\"getDateTime\")()}`\n});\nreturn msg;",
+        "func": "msg.nocodb_t_active = msg.nocodb_t.umowy;\nmsg.method = \"PATCH\";\n\nmsg.payload = {\n    Id: msg.umowa_get.Id,   // klucz podstawowy w Twojej tabeli\n    status: \"07 generate-contract\",\n    umowa_data: msg.umowa.data_zawarcia,\n    umowa_nr: msg.umowa.nr_umowa_new,\n    umowa_year: msg.umowa.umowa_year,\n    nazwa: msg.umowa.nr_umowy\n};\n\n\nnode.status({\n    fill: \"green\",\n    shape: \"dot\",\n    text: `${global.get(\"getDateTime\")()}`\n});\nreturn msg;",
         "outputs": 1,
         "timeout": 0,
         "noerr": 0,
@@ -3338,7 +3698,7 @@
         "type": "function",
         "z": "bf6e5312884e6967",
         "name": "umowa:status:10 send-contract",
-        "func": "msg.nocodb_t_active = msg.nocodb_t.umowy;\nmsg.method = \"PATCH\";\n\nmsg.payload = {\n    Id: msg.umowa_get.Id,   // klucz podstawowy w Twojej tabeli\n    status: \"10 send-contract\",\n};\n\n\nnode.status({\n    fill: \"green\",\n    shape: \"dot\",\n    text: `${global.get(\"getDateTime\")()}`\n});\nreturn msg;",
+        "func": "msg.nocodb_t_active = msg.nocodb_t.umowy;\nmsg.method = \"PATCH\";\n\nmsg.payload = {\n    Id: msg.umowa_get.Id,   // klucz podstawowy w Twojej tabeli\n    status: \"10 send-contract\",\n    path_umowa_orginalna: msg.umowa_pdf_file\n};\n\n\nnode.status({\n    fill: \"green\",\n    shape: \"dot\",\n    text: `${global.get(\"getDateTime\")()}`\n});\nreturn msg;",
         "outputs": 1,
         "timeout": 0,
         "noerr": 0,
@@ -3346,11 +3706,10 @@
         "finalize": "",
         "libs": [],
         "x": 210,
-        "y": 1580,
+        "y": 1680,
         "wires": [
             [
-                "37d6a6fc56adeb94",
-                "0f3bfb4c92cb748b"
+                "37d6a6fc56adeb94"
             ]
         ]
     },
@@ -3384,7 +3743,7 @@
             }
         ],
         "x": 500,
-        "y": 1580,
+        "y": 1680,
         "wires": [
             [
                 "c9e62eaccd0241cc"
@@ -3444,33 +3803,16 @@
         "y": 1260,
         "wires": [
             [
-                "9f1f4e5acee212da"
+                "a7a91fd27a16e6b0"
             ]
         ]
-    },
-    {
-        "id": "af57170f05cefb13",
-        "type": "debug",
-        "z": "bf6e5312884e6967",
-        "name": "debug 3",
-        "active": true,
-        "tosidebar": true,
-        "console": false,
-        "tostatus": false,
-        "complete": "true",
-        "targetType": "full",
-        "statusVal": "",
-        "statusType": "auto",
-        "x": 130,
-        "y": 500,
-        "wires": []
     },
     {
         "id": "049ea2e3b06585d6",
         "type": "function",
         "z": "bf6e5312884e6967",
         "name": "rejsy:get",
-        "func": "msg.nocodb_t_active = msg.nocodb_t.rejsy;\n\nmsg.payload = {\n    offset: '0',\n    limit: '1',\n    viewId: msg.nocodb_t.rejsy_view,\n    where: `(Id,eq,${msg.umowa_get.rejsy.Id})`,\n};\n\nnode.status({ fill: \"green\", shape: \"dot\", text: global.get(\"getDateTime\")() });\n\nreturn msg;",
+        "func": "msg.nocodb_t_active = msg.nocodb_t.rejsy;\n\ndelete msg.heders;\ndelete msg.method;\n\nmsg.payload = {\n    offset: '0',\n    limit: '1',\n    viewId: msg.nocodb_t.rejsy_view,\n    where: `(Id,eq,${msg.umowa_get.rejsy.Id})`,\n};\n\nnode.status({ fill: \"green\", shape: \"dot\", text: global.get(\"getDateTime\")() });\n\nreturn msg;",
         "outputs": 1,
         "timeout": 0,
         "noerr": 0,
@@ -3523,39 +3865,6 @@
         ]
     },
     {
-        "id": "0f3bfb4c92cb748b",
-        "type": "debug",
-        "z": "bf6e5312884e6967",
-        "name": "debug 10",
-        "active": true,
-        "tosidebar": true,
-        "console": false,
-        "tostatus": false,
-        "complete": "false",
-        "statusVal": "",
-        "statusType": "auto",
-        "x": 390,
-        "y": 1680,
-        "wires": []
-    },
-    {
-        "id": "b09a093db14b09b8",
-        "type": "debug",
-        "z": "bf6e5312884e6967",
-        "name": "debug 11",
-        "active": true,
-        "tosidebar": true,
-        "console": false,
-        "tostatus": false,
-        "complete": "true",
-        "targetType": "full",
-        "statusVal": "",
-        "statusType": "auto",
-        "x": 1180,
-        "y": 1460,
-        "wires": []
-    },
-    {
         "id": "7e10311e09146278",
         "type": "file in",
         "z": "bf6e5312884e6967",
@@ -3568,7 +3877,7 @@
         "encoding": "none",
         "allProps": false,
         "x": 440,
-        "y": 1340,
+        "y": 1400,
         "wires": [
             [
                 "51b64a89d353dc95"
@@ -3588,12 +3897,87 @@
         "finalize": "",
         "libs": [],
         "x": 160,
-        "y": 1340,
+        "y": 1400,
         "wires": [
             [
                 "7e10311e09146278"
             ]
         ]
+    },
+    {
+        "id": "a7a91fd27a16e6b0",
+        "type": "function",
+        "z": "bf6e5312884e6967",
+        "name": "qrcode:prepare:",
+        "func": "const bwipjs = global.get('bwip-js');\nconst fs = global.get('fs');\nconst path = global.get('path');\n\n// Funkcja pomocnicza do daty w formacie: YYYYMMDDHHMMSS\nconst getTimestamp = () => {\n    const now = new Date();\n    const pad = (n) => n.toString().padStart(2, '0');\n    return `${now.getFullYear()}${pad(now.getMonth() + 1)}${pad(now.getDate())}${pad(now.getHours())}${pad(now.getMinutes())}${pad(now.getSeconds())}`;\n};\n\nfunction generateQRText(msg) {\n    const NIP = \"5671906227\";  // <- Uzupełnij prawdziwym NIP-em odbiorcy\n    const account_number = \"02116022020000000371435981\"; // <- 26 cyfr\n    const account_number_clean = account_number.replace(/\\s/g, '');\n\n    const kwota_grosze = (msg.umowa.rezerwacja_cena || 0) * 100;\n    const kwota_string = kwota_grosze.toFixed(0).padStart(6, '0'); // 6 cyfr z zerami wiodącymi\n\n    const odbiorca_nazwa = \"K&S Transport Sp. z o.o.\";  // <- max 20 znaków\n    const tytul = (msg.umowa.przelew_nazwa || \"\").substring(0, 32); // max 32 znaki\n\n    const fields = [\n        NIP,\n        \"PL\",\n        account_number_clean,\n        kwota_string,\n        odbiorca_nazwa.substring(0, 20),\n        tytul,\n        \"\", \"\", \"\" // rezerwa1, rezerwa2, rezerwa3\n    ];\n\n    return fields.join(\"|\");\n}\n\nconst path_storage = global.get(\"storage\");\n// global.set(\"path_template_umowy\", \"teamplates/umowy/\")\nconst path_umowy = global.get(\"path_umowy\");\n// global.set(\"path_tmp\", \"tmp/\")\n\n// Tworzymy unikalną nazwę pliku\nconst filename = `rata1-${getTimestamp()}.png`;\nconst filepath = `${path_storage}${path_umowy}/${msg.umowa.umowa_year}/${msg.umowa.nr_umowa_new}/${filename}`;\nconst textbarcode = generateQRText(msg);\n\nbwipjs.toBuffer({\n    bcid: 'qrcode',\n    text: textbarcode,\n    scale: 3,\n    // height: 4,\n    includetext: true,\n    textxalign: 'center',\n}, function (err, png) {\n    if (err) {\n        node.error(\"Błąd generowania barcode\", err);\n    } else {\n        fs.writeFileSync(filepath, png);\n\n        msg.barcode = png.toString('base64');\n        msg.barcode_filename = filename;\n        msg.barcode_path = filepath;\n        msg.barcode_mime = \"image/png\";\n\n        return node.send(msg);\n    }\n});\n\n// return msg;",
+        "outputs": 1,
+        "timeout": 0,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 160,
+        "y": 1340,
+        "wires": [
+            [
+                "9f1f4e5acee212da"
+            ]
+        ]
+    },
+    {
+        "id": "95e693f57eca5b12",
+        "type": "debug",
+        "z": "bf6e5312884e6967",
+        "name": "debug 1",
+        "active": true,
+        "tosidebar": true,
+        "console": false,
+        "tostatus": false,
+        "complete": "true",
+        "targetType": "full",
+        "statusVal": "",
+        "statusType": "auto",
+        "x": 290,
+        "y": 900,
+        "wires": []
+    },
+    {
+        "id": "1fecc97559a778e5",
+        "type": "function",
+        "z": "bf6e5312884e6967",
+        "name": "qrcode:prepare:uuid",
+        "func": "const bwipjs = global.get('bwip-js');\nconst fs = global.get('fs');\nconst path = global.get('path');\n\n// Funkcja pomocnicza do daty w formacie: YYYYMMDDHHMMSS\nconst getTimestamp = () => {\n    const now = new Date();\n    const pad = (n) => n.toString().padStart(2, '0');\n    return `${now.getFullYear()}${pad(now.getMonth() + 1)}${pad(now.getDate())}${pad(now.getHours())}${pad(now.getMinutes())}${pad(now.getSeconds())}`;\n};\n\nconst path_storage = global.get(\"storage\");\nconst path_umowy = global.get(\"path_umowy\");\n\nconst filename = `uuid-qrcode.png`;\nconst filepath = `${path_storage}${path_umowy}${msg.umowa.umowa_year}/${msg.umowa.nr_umowa_new}/${filename}`;\nconst textbarcode = msg.umowa_get.uuid;\nnode.status({ fill: \"blue\", shape: \"dot\", text: textbarcode });\n\nconst folderPath = `${path_storage}${path_umowy}${msg.umowa.umowa_year}/${msg.umowa.nr_umowa_new}`;\nif (!fs.existsSync(folderPath)) {\n    fs.mkdirSync(folderPath, { recursive: true });\n}\n\nbwipjs.toBuffer({\n    bcid: 'qrcode',\n    text: textbarcode,\n    scale: 3,\n    // height: 4,\n    includetext: false,\n    textxalign: 'center',\n}, function (err, png) {\n    if (err) {\n        node.error(\"Błąd generowania barcode\", err);\n        node.status({ fill: \"red\", shape: \"dot\", text: err });\n    } else {\n        fs.writeFileSync(filepath, png);\n\n        msg.barcode_uuid = png.toString('base64');\n        msg.barcode_uuid_filename = filename;\n        msg.barcode_uuid_path = filepath;\n        msg.barcode_uuid_mime = \"image/png\";\n        //\n        node.status({ fill: \"green\", shape: \"dot\", text: global.get(\"getDateTime\")() });\n        node.send(msg);\n        // return msg;\n    }\n});\n\n// return msg;",
+        "outputs": 1,
+        "timeout": 0,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 400,
+        "y": 780,
+        "wires": [
+            [
+                "d3849b6988415d4c",
+                "0a7b196524a64b5e"
+            ]
+        ]
+    },
+    {
+        "id": "0a7b196524a64b5e",
+        "type": "debug",
+        "z": "bf6e5312884e6967",
+        "name": "debug 14",
+        "active": true,
+        "tosidebar": true,
+        "console": false,
+        "tostatus": false,
+        "complete": "true",
+        "targetType": "full",
+        "statusVal": "",
+        "statusType": "auto",
+        "x": 570,
+        "y": 880,
+        "wires": []
     },
     {
         "id": "353379d5bcdeee09",
@@ -3605,8 +3989,8 @@
         "method": "get",
         "upload": false,
         "swaggerDoc": "",
-        "x": 490,
-        "y": 220,
+        "x": 330,
+        "y": 160,
         "wires": [
             [
                 "9a824614bd5da150"
@@ -3621,8 +4005,8 @@
         "name": "",
         "statusCode": "200",
         "headers": {},
-        "x": 720,
-        "y": 300,
+        "x": 560,
+        "y": 240,
         "wires": []
     },
     {
@@ -3631,15 +4015,15 @@
         "z": "6ef65b964aaf43e6",
         "g": "49c2be5b620ebeda",
         "name": "prepare:response",
-        "func": "let output = [];\n\nif (msg.payload && Array.isArray(msg.payload.list)) {\n    for (let item of msg.payload.list) {\n        output.push({\n            name: `${item.nazwa} ${item.termin_od} - ${item.termin_do}`,\n            value: item.Id,\n            free_space: (item.ilosc_max || 0) - (item.ilosc_wyk || 0),\n            cena: item.cena || 0,\n            czym: item.czym\n        });\n    }\n}\n\nmsg.payload = output;\nreturn msg;",
+        "func": "let output = [];\n\nif (msg.payload && Array.isArray(msg.payload.list)) {\n    for (let item of msg.payload.list) {\n        const free_space = (item.ilosc_max || 0) - (item.ilosc_wyk || 0);\n        const termin_od = (item.termin_od || \"\").replaceAll(\"-\", \".\");\n        const termin_do = (item.termin_do || \"\").replaceAll(\"-\", \".\");\n\n        let name = `${item.nazwa} [${termin_od} - ${termin_do}]`;\n        if (free_space <= 0) {\n            name += \" BRAK MIEJSC\";\n        }\n\n        output.push({\n            name: name,\n            value: item.Id,\n            free_space: free_space,\n            cena: item.cena || 0,\n            czym: item.czym,\n            brak_miejsc: free_space <= 0\n        });\n    }\n}\n\nmsg.payload = output;\nreturn msg;",
         "outputs": 1,
         "timeout": 0,
         "noerr": 0,
         "initialize": "",
         "finalize": "",
         "libs": [],
-        "x": 490,
-        "y": 300,
+        "x": 330,
+        "y": 240,
         "wires": [
             [
                 "b8e46ab11cd82e31"
@@ -3652,8 +4036,8 @@
         "z": "6ef65b964aaf43e6",
         "g": "49c2be5b620ebeda",
         "name": "",
-        "x": 700,
-        "y": 220,
+        "x": 540,
+        "y": 160,
         "wires": [
             [
                 "5c111b1ca0dd686e"
@@ -3673,8 +4057,8 @@
         "initialize": "",
         "finalize": "",
         "libs": [],
-        "x": 930,
-        "y": 220,
+        "x": 770,
+        "y": 160,
         "wires": [
             [
                 "f6fc7c875e15e454"
@@ -3711,8 +4095,8 @@
                 "valueValue": ""
             }
         ],
-        "x": 1160,
-        "y": 220,
+        "x": 1000,
+        "y": 160,
         "wires": [
             [
                 "e2ee6162640b5a29"
@@ -3726,8 +4110,8 @@
         "g": "49c2be5b620ebeda",
         "name": "Respone Json",
         "info": "Zwraca rejsy do formularza w formie jsona.",
-        "x": 290,
-        "y": 140,
+        "x": 130,
+        "y": 80,
         "wires": []
     },
     {
@@ -3740,8 +4124,8 @@
         "method": "post",
         "upload": false,
         "swaggerDoc": "",
-        "x": 520,
-        "y": 220,
+        "x": 360,
+        "y": 160,
         "wires": [
             [
                 "eb069a6838953468"
@@ -3756,8 +4140,8 @@
         "name": "",
         "statusCode": "200",
         "headers": {},
-        "x": 920,
-        "y": 420,
+        "x": 760,
+        "y": 360,
         "wires": []
     },
     {
@@ -3773,8 +4157,8 @@
         "initialize": "",
         "finalize": "",
         "libs": [],
-        "x": 920,
-        "y": 220,
+        "x": 760,
+        "y": 160,
         "wires": [
             [
                 "050dabcd08732f94"
@@ -3811,8 +4195,8 @@
                 "valueValue": ""
             }
         ],
-        "x": 1140,
-        "y": 220,
+        "x": 980,
+        "y": 160,
         "wires": [
             [
                 "24362b7ab3a611b8"
@@ -3825,8 +4209,8 @@
         "z": "7f8edcc91438aff6",
         "g": "de07ac967b5ab328",
         "name": "",
-        "x": 720,
-        "y": 220,
+        "x": 560,
+        "y": 160,
         "wires": [
             [
                 "8b0f70caea35ed13"
@@ -3846,8 +4230,8 @@
         "initialize": "",
         "finalize": "",
         "libs": [],
-        "x": 520,
-        "y": 420,
+        "x": 360,
+        "y": 360,
         "wires": [
             [
                 "d747d5ba3cbab626"
@@ -3884,8 +4268,8 @@
                 "valueValue": ""
             }
         ],
-        "x": 740,
-        "y": 420,
+        "x": 580,
+        "y": 360,
         "wires": [
             [
                 "c9199959da0f2652"
@@ -3905,8 +4289,8 @@
         "initialize": "",
         "finalize": "",
         "libs": [],
-        "x": 520,
-        "y": 320,
+        "x": 360,
+        "y": 260,
         "wires": [
             [
                 "8aff7492ecde8657"
@@ -3943,8 +4327,8 @@
                 "valueValue": ""
             }
         ],
-        "x": 740,
-        "y": 320,
+        "x": 580,
+        "y": 260,
         "wires": [
             [
                 "388e845554a0cdbb"
@@ -3958,21 +4342,22 @@
         "g": "de07ac967b5ab328",
         "name": "Save Form",
         "info": "Przyjmuje dane z formularza i zapisuje je do NoCoDB.\n- do osoby\n- do umowy",
-        "x": 280,
-        "y": 140,
+        "x": 120,
+        "y": 80,
         "wires": []
     },
     {
         "id": "0ad1c2e33d36b2e2",
         "type": "http in",
         "z": "8971cc29f27d4741",
+        "g": "4ee9ee381cb20b47",
         "name": "",
         "url": "/api/check/email",
         "method": "post",
         "upload": false,
         "swaggerDoc": "",
-        "x": 140,
-        "y": 60,
+        "x": 360,
+        "y": 140,
         "wires": [
             [
                 "ee1d170117a16cb9"
@@ -3983,36 +4368,21 @@
         "id": "ee1d170117a16cb9",
         "type": "subflow:03b285947d86a284",
         "z": "8971cc29f27d4741",
+        "g": "4ee9ee381cb20b47",
         "name": "",
-        "x": 360,
-        "y": 60,
+        "x": 580,
+        "y": 140,
         "wires": [
             [
-                "9e688097fabb5e63",
                 "92cf13ad610664b9"
             ]
         ]
     },
     {
-        "id": "9e688097fabb5e63",
-        "type": "debug",
-        "z": "8971cc29f27d4741",
-        "name": "debug 14",
-        "active": true,
-        "tosidebar": true,
-        "console": false,
-        "tostatus": false,
-        "complete": "false",
-        "statusVal": "",
-        "statusType": "auto",
-        "x": 1400,
-        "y": 20,
-        "wires": []
-    },
-    {
         "id": "92cf13ad610664b9",
         "type": "function",
         "z": "8971cc29f27d4741",
+        "g": "4ee9ee381cb20b47",
         "name": "NocoDB - umowy:get:new",
         "func": "msg.nocodb_t_active = msg.nocodb_t.umowy;\n\nmsg.form_data = msg.payload;\n\nmsg.payload = {\n    offset: '0',\n    limit: '25',\n    viewId: msg.nocodb_t.umowy_view,\n    where: `(status,eq,03 email-send)~and(uuid,eq,${msg.form_data.uuid})`,\n    \"nested[osoby][fields]\": \"*\"\n};\n\nnode.status({ fill: \"green\", shape: \"dot\", text: global.get(\"getDateTime\")() });\n\nreturn msg;",
         "outputs": 1,
@@ -4021,8 +4391,8 @@
         "initialize": "",
         "finalize": "",
         "libs": [],
-        "x": 660,
-        "y": 60,
+        "x": 880,
+        "y": 140,
         "wires": [
             [
                 "1843a6fb6ef174c8"
@@ -4033,6 +4403,7 @@
         "id": "1843a6fb6ef174c8",
         "type": "http request",
         "z": "8971cc29f27d4741",
+        "g": "4ee9ee381cb20b47",
         "name": "NocoDB - GET",
         "method": "GET",
         "ret": "obj",
@@ -4058,35 +4429,19 @@
                 "valueValue": ""
             }
         ],
-        "x": 940,
-        "y": 60,
+        "x": 1160,
+        "y": 140,
         "wires": [
             [
-                "d6f7fb58ba6308a6",
                 "2da5f5f1636f4f75"
             ]
         ]
     },
     {
-        "id": "d6f7fb58ba6308a6",
-        "type": "debug",
-        "z": "8971cc29f27d4741",
-        "name": "debug 15",
-        "active": true,
-        "tosidebar": true,
-        "console": false,
-        "tostatus": false,
-        "complete": "false",
-        "statusVal": "",
-        "statusType": "auto",
-        "x": 1400,
-        "y": 60,
-        "wires": []
-    },
-    {
         "id": "2da5f5f1636f4f75",
         "type": "function",
         "z": "8971cc29f27d4741",
+        "g": "4ee9ee381cb20b47",
         "name": "NocoDB:patch:osoby",
         "func": "msg.nocodb_t_active = msg.nocodb_t.osoby;\nmsg.umowa_data = msg.payload.list[0];\nmsg.method = \"PATCH\";\n// Domyślny status\n// let status = false;\n\n// // Sprawdzenie pól accepted/rejected\n// if (msg.payload.accepted && msg.payload.accepted.length > 0) {\n//     status = \"send\";\n// } else if (msg.payload.rejected && msg.payload.rejected.length > 0) {\n//     status = \"error\";\n// }\n\nmsg.payload = {\n    Id: msg.umowa_data.osoby.Id,   // klucz podstawowy w Twojej tabeli\n    email_confirmed: true\n};\n\n\n\nnode.status({\n    fill: \"green\",\n    shape: \"dot\",\n    text: `${global.get(\"getDateTime\")()}`\n});\n\nreturn msg;",
         "outputs": 1,
@@ -4095,8 +4450,8 @@
         "initialize": "",
         "finalize": "",
         "libs": [],
-        "x": 160,
-        "y": 200,
+        "x": 380,
+        "y": 280,
         "wires": [
             [
                 "64fb459404f1d9ec"
@@ -4107,6 +4462,7 @@
         "id": "64fb459404f1d9ec",
         "type": "http request",
         "z": "8971cc29f27d4741",
+        "g": "4ee9ee381cb20b47",
         "name": "NocoDB - ALL",
         "method": "use",
         "ret": "obj",
@@ -4132,8 +4488,8 @@
                 "valueValue": ""
             }
         ],
-        "x": 500,
-        "y": 200,
+        "x": 720,
+        "y": 280,
         "wires": [
             [
                 "82659668adc9e858"
@@ -4141,25 +4497,10 @@
         ]
     },
     {
-        "id": "e518727a103282bf",
-        "type": "debug",
-        "z": "8971cc29f27d4741",
-        "name": "debug 16",
-        "active": true,
-        "tosidebar": true,
-        "console": false,
-        "tostatus": false,
-        "complete": "false",
-        "statusVal": "",
-        "statusType": "auto",
-        "x": 1400,
-        "y": 280,
-        "wires": []
-    },
-    {
         "id": "82659668adc9e858",
         "type": "function",
         "z": "8971cc29f27d4741",
+        "g": "4ee9ee381cb20b47",
         "name": "NocoDB:patch:umowy",
         "func": "msg.nocodb_t_active = msg.nocodb_t.umowy;\nmsg.method = \"PATCH\";\n\n// Domyślny status\n// let status = false;\n\n// // Sprawdzenie pól accepted/rejected\n// if (msg.payload.accepted && msg.payload.accepted.length > 0) {\n//     status = \"send\";\n// } else if (msg.payload.rejected && msg.payload.rejected.length > 0) {\n//     status = \"error\";\n// }\n\nmsg.payload = {\n    Id: msg.umowa_data.Id,   // klucz podstawowy w Twojej tabeli\n    email_confirmed: true,\n    status: \"05 email-confirmed\"\n};\n\n\n\nnode.status({\n    fill: \"green\",\n    shape: \"dot\",\n    text: `${global.get(\"getDateTime\")()}`\n});\n\nreturn msg;",
         "outputs": 1,
@@ -4168,8 +4509,8 @@
         "initialize": "",
         "finalize": "",
         "libs": [],
-        "x": 160,
-        "y": 280,
+        "x": 380,
+        "y": 360,
         "wires": [
             [
                 "6af24b5c04863e1b"
@@ -4180,6 +4521,1370 @@
         "id": "6af24b5c04863e1b",
         "type": "http request",
         "z": "8971cc29f27d4741",
+        "g": "4ee9ee381cb20b47",
+        "name": "NocoDB - ALL",
+        "method": "use",
+        "ret": "obj",
+        "paytoqs": "ignore",
+        "url": "http://{{nocodb_host}}/api/v2/tables/{{nocodb_t_active}}/records",
+        "tls": "",
+        "persist": false,
+        "proxy": "",
+        "insecureHTTPParser": false,
+        "authType": "",
+        "senderr": false,
+        "headers": [
+            {
+                "keyType": "other",
+                "keyValue": "xc-token",
+                "valueType": "msg",
+                "valueValue": "xc_token"
+            },
+            {
+                "keyType": "Content-Type",
+                "keyValue": "",
+                "valueType": "application/json",
+                "valueValue": ""
+            }
+        ],
+        "x": 720,
+        "y": 360,
+        "wires": [
+            [
+                "d675709b0a7d7e1c"
+            ]
+        ]
+    },
+    {
+        "id": "aafbd476563b4156",
+        "type": "http response",
+        "z": "8971cc29f27d4741",
+        "g": "4ee9ee381cb20b47",
+        "name": "",
+        "statusCode": "200",
+        "headers": {},
+        "x": 740,
+        "y": 440,
+        "wires": []
+    },
+    {
+        "id": "d675709b0a7d7e1c",
+        "type": "function",
+        "z": "8971cc29f27d4741",
+        "g": "4ee9ee381cb20b47",
+        "name": "response:ok",
+        "func": "msg.payload = {\n    confirm: true\n};\nreturn msg;",
+        "outputs": 1,
+        "timeout": 0,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 350,
+        "y": 440,
+        "wires": [
+            [
+                "aafbd476563b4156"
+            ]
+        ]
+    },
+    {
+        "id": "76b5da44be016767",
+        "type": "comment",
+        "z": "8971cc29f27d4741",
+        "g": "4ee9ee381cb20b47",
+        "name": "Email Verifi",
+        "info": "",
+        "x": 120,
+        "y": 80,
+        "wires": []
+    },
+    {
+        "id": "a977c1487e0d24c5",
+        "type": "function",
+        "z": "c74ceced8c3687a1",
+        "name": "function 2",
+        "func": "// const fs = require(\"fs\");\n\n// const createReport = require(\"docx-templates\").default;\nconst createReport = global.get(\"docx-templates\");\n\nconst template = msg.payload;\n\n(async () => {\n    // const template = fs.readFileSync(\"/zewnflowai/umowy/szablon.docx\");\n    // const data = JSON.parse(fs.readFileSync(\"/tmp/dane.json\"));\n\n    const data = {\n        nr_umowy: \"12/12\",\n        data_zawarcia: \"2025-05-24\",\n    };\n\n    const buffer = await createReport({\n        template,\n        data\n    });\n\n    msg.payload = buffer;\n    // fs.writeFileSync(\"/zewnflowai/umowy/wypelniona.docx\", buffer);\n})();",
+        "outputs": 1,
+        "timeout": 0,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 780,
+        "y": 620,
+        "wires": [
+            [
+                "6aadcda335adcd24",
+                "aa20ba6ab7f01f61"
+            ]
+        ]
+    },
+    {
+        "id": "6aadcda335adcd24",
+        "type": "debug",
+        "z": "c74ceced8c3687a1",
+        "name": "debug 4",
+        "active": true,
+        "tosidebar": true,
+        "console": false,
+        "tostatus": false,
+        "complete": "true",
+        "targetType": "full",
+        "statusVal": "",
+        "statusType": "auto",
+        "x": 1000,
+        "y": 540,
+        "wires": []
+    },
+    {
+        "id": "f850f1b4e43d171b",
+        "type": "file in",
+        "z": "c74ceced8c3687a1",
+        "name": "",
+        "filename": "/zenflowai/storage/templates/umowa-mazury.docx",
+        "filenameType": "str",
+        "format": "utf8",
+        "chunk": false,
+        "sendError": false,
+        "encoding": "none",
+        "allProps": false,
+        "x": 450,
+        "y": 620,
+        "wires": [
+            [
+                "a977c1487e0d24c5",
+                "8f267f752b686196"
+            ]
+        ]
+    },
+    {
+        "id": "aa20ba6ab7f01f61",
+        "type": "file",
+        "z": "c74ceced8c3687a1",
+        "name": "",
+        "filename": "/zenflowai/storage/templates/gotowe.docx",
+        "filenameType": "str",
+        "appendNewline": true,
+        "createDir": false,
+        "overwriteFile": "true",
+        "encoding": "none",
+        "x": 1090,
+        "y": 620,
+        "wires": [
+            [
+                "48d0564e608f78b1"
+            ]
+        ]
+    },
+    {
+        "id": "48d0564e608f78b1",
+        "type": "debug",
+        "z": "c74ceced8c3687a1",
+        "name": "debug 5",
+        "active": true,
+        "tosidebar": true,
+        "console": false,
+        "tostatus": false,
+        "complete": "true",
+        "targetType": "full",
+        "statusVal": "",
+        "statusType": "auto",
+        "x": 1290,
+        "y": 540,
+        "wires": []
+    },
+    {
+        "id": "579358545ee05ab1",
+        "type": "inject",
+        "z": "c74ceced8c3687a1",
+        "name": "",
+        "props": [
+            {
+                "p": "payload"
+            },
+            {
+                "p": "topic",
+                "vt": "str"
+            }
+        ],
+        "repeat": "",
+        "crontab": "",
+        "once": false,
+        "onceDelay": 0.1,
+        "topic": "",
+        "payload": "",
+        "payloadType": "date",
+        "x": 160,
+        "y": 500,
+        "wires": [
+            [
+                "b118b96dcac8580e"
+            ]
+        ]
+    },
+    {
+        "id": "b118b96dcac8580e",
+        "type": "function",
+        "z": "c74ceced8c3687a1",
+        "name": "function 3",
+        "func": "const os = global.get(\"os\");\nmsg.payload = os.platform();\nreturn msg;",
+        "outputs": 1,
+        "timeout": 0,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 380,
+        "y": 500,
+        "wires": [
+            [
+                "cc90b15d5b2ee908"
+            ]
+        ]
+    },
+    {
+        "id": "cc90b15d5b2ee908",
+        "type": "debug",
+        "z": "c74ceced8c3687a1",
+        "name": "debug 6",
+        "active": true,
+        "tosidebar": true,
+        "console": false,
+        "tostatus": false,
+        "complete": "false",
+        "statusVal": "",
+        "statusType": "auto",
+        "x": 590,
+        "y": 500,
+        "wires": []
+    },
+    {
+        "id": "8f267f752b686196",
+        "type": "debug",
+        "z": "c74ceced8c3687a1",
+        "name": "debug 7",
+        "active": true,
+        "tosidebar": true,
+        "console": false,
+        "tostatus": false,
+        "complete": "true",
+        "targetType": "full",
+        "statusVal": "",
+        "statusType": "auto",
+        "x": 780,
+        "y": 540,
+        "wires": []
+    },
+    {
+        "id": "1722428ed71a4c40",
+        "type": "inject",
+        "z": "c74ceced8c3687a1",
+        "name": "",
+        "props": [
+            {
+                "p": "payload"
+            },
+            {
+                "p": "topic",
+                "vt": "str"
+            }
+        ],
+        "repeat": "",
+        "crontab": "",
+        "once": false,
+        "onceDelay": 0.1,
+        "topic": "",
+        "payload": "",
+        "payloadType": "date",
+        "x": 120,
+        "y": 560,
+        "wires": [
+            [
+                "8f267f752b686196",
+                "f850f1b4e43d171b"
+            ]
+        ]
+    },
+    {
+        "id": "0593c53023e99d07",
+        "type": "function",
+        "z": "c74ceced8c3687a1",
+        "name": "function 4",
+        "func": "// Get required modules from global context (configured in settings.js)\nconst fs = global.get('fs');\nconst path = global.get('path');\nconst createReport = global.get('docx_templates').createReport;\n\n(async () => {\n    try {\n        const templatePath = \"/zenflowai/storage/templates/umowa-mazury.docx\";\n\n        if (!fs.existsSync(templatePath)) {\n            throw new Error(`Template nie istnieje: ${templatePath}`);\n        }\n\n        const template = fs.readFileSync(templatePath);\n\n        const data = {\n            nr_umowy: \"12/12\",\n            data_zawarcia: \"2025-05-24\",\n        };\n\n        console.log(\"Generowanie dokumentu...\");\n\n        const buffer = await createReport({\n            template,\n            data\n        });\n\n        msg.payload = buffer;\n\n        const outputPath = \"/zenflowai/storage/templates/umowa-mazury-wypelniona.docx\";\n        fs.writeFileSync(outputPath, buffer);\n\n        console.log(`Dokument zapisany: ${outputPath}`);\n\n        node.send(msg);\n\n    } catch (error) {\n        console.error(\"Błąd:\", error);\n        node.error(error.message, msg);\n    }\n})();",
+        "outputs": 1,
+        "timeout": 0,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 420,
+        "y": 760,
+        "wires": [
+            [
+                "b06dcd616dd28661"
+            ]
+        ]
+    },
+    {
+        "id": "ef054bf8b4f4d793",
+        "type": "inject",
+        "z": "c74ceced8c3687a1",
+        "name": "",
+        "props": [
+            {
+                "p": "payload"
+            },
+            {
+                "p": "topic",
+                "vt": "str"
+            }
+        ],
+        "repeat": "",
+        "crontab": "",
+        "once": false,
+        "onceDelay": 0.1,
+        "topic": "",
+        "payload": "",
+        "payloadType": "date",
+        "x": 130,
+        "y": 740,
+        "wires": [
+            [
+                "0593c53023e99d07",
+                "b06dcd616dd28661"
+            ]
+        ]
+    },
+    {
+        "id": "b06dcd616dd28661",
+        "type": "debug",
+        "z": "c74ceced8c3687a1",
+        "name": "debug 8",
+        "active": true,
+        "tosidebar": true,
+        "console": false,
+        "tostatus": false,
+        "complete": "true",
+        "targetType": "full",
+        "statusVal": "",
+        "statusType": "auto",
+        "x": 690,
+        "y": 740,
+        "wires": []
+    },
+    {
+        "id": "39aa69ec25e10e77",
+        "type": "function",
+        "z": "c74ceced8c3687a1",
+        "name": "function 5",
+        "func": "console.log(\"fs z global:\", global.get(\"fs\"));\nconsole.log(\"Dostępne klucze w global:\", Object.keys(global.keys || {}));\nreturn msg;",
+        "outputs": 1,
+        "timeout": 0,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 420,
+        "y": 840,
+        "wires": [
+            [
+                "6ec1c583de8e5378"
+            ]
+        ]
+    },
+    {
+        "id": "3eb17527ac4b17b4",
+        "type": "inject",
+        "z": "c74ceced8c3687a1",
+        "name": "",
+        "props": [
+            {
+                "p": "payload"
+            },
+            {
+                "p": "topic",
+                "vt": "str"
+            }
+        ],
+        "repeat": "",
+        "crontab": "",
+        "once": false,
+        "onceDelay": 0.1,
+        "topic": "",
+        "payload": "",
+        "payloadType": "date",
+        "x": 210,
+        "y": 820,
+        "wires": [
+            [
+                "39aa69ec25e10e77"
+            ]
+        ]
+    },
+    {
+        "id": "6ec1c583de8e5378",
+        "type": "debug",
+        "z": "c74ceced8c3687a1",
+        "name": "debug 9",
+        "active": true,
+        "tosidebar": true,
+        "console": false,
+        "tostatus": false,
+        "complete": "true",
+        "targetType": "full",
+        "statusVal": "",
+        "statusType": "auto",
+        "x": 730,
+        "y": 820,
+        "wires": []
+    },
+    {
+        "id": "0feee4d4edd3a765",
+        "type": "subflow:7a14c201fa805842",
+        "z": "7ac738eef3d259eb",
+        "name": "",
+        "x": 230,
+        "y": 560,
+        "wires": [
+            []
+        ]
+    },
+    {
+        "id": "e1c6dd31625d6476",
+        "type": "subflow:aa23e6e4889d7c8b",
+        "z": "7ac738eef3d259eb",
+        "name": "",
+        "x": 240,
+        "y": 640,
+        "wires": [
+            []
+        ]
+    },
+    {
+        "id": "a4e8d143cd70f13e",
+        "type": "subflow:c977f243f2f9f757",
+        "z": "7ac738eef3d259eb",
+        "name": "",
+        "x": 240,
+        "y": 720,
+        "wires": [
+            []
+        ]
+    },
+    {
+        "id": "5062fa87b6bfcd4b",
+        "type": "subflow:742f4a5525c4b3be",
+        "z": "7ac738eef3d259eb",
+        "name": "",
+        "x": 240,
+        "y": 480,
+        "wires": [
+            []
+        ]
+    },
+    {
+        "id": "0514578f98829e26",
+        "type": "subflow:03b285947d86a284",
+        "z": "7ac738eef3d259eb",
+        "name": "",
+        "x": 280,
+        "y": 260,
+        "wires": [
+            []
+        ]
+    },
+    {
+        "id": "33846803aebf9374",
+        "type": "inject",
+        "z": "7ac738eef3d259eb",
+        "name": "",
+        "props": [
+            {
+                "p": "payload"
+            },
+            {
+                "p": "topic",
+                "vt": "str"
+            }
+        ],
+        "repeat": "",
+        "crontab": "",
+        "once": false,
+        "onceDelay": 0.1,
+        "topic": "",
+        "payload": "",
+        "payloadType": "date",
+        "x": 580,
+        "y": 200,
+        "wires": [
+            [
+                "dcadc820f6d6ecee"
+            ]
+        ]
+    },
+    {
+        "id": "dcadc820f6d6ecee",
+        "type": "function",
+        "z": "7ac738eef3d259eb",
+        "name": "function 1",
+        "func": "const bwipjs = global.get('bwip-js');\nconst fs = global.get('fs');\nconst path = global.get('path');\n\n// Funkcja pomocnicza do daty w formacie: YYYYMMDDHHMMSS\nconst getTimestamp = () => {\n    const now = new Date();\n    const pad = (n) => n.toString().padStart(2, '0');\n    return `${now.getFullYear()}${pad(now.getMonth() + 1)}${pad(now.getDate())}${pad(now.getHours())}${pad(now.getMinutes())}${pad(now.getSeconds())}`;\n};\n\n// Tworzymy unikalną nazwę pliku\nconst filename = `barcode-${getTimestamp()}.png`;\nconst filepath = `/zenflowai/storage/tmp/${filename}`;\n\nbwipjs.toBuffer({\n    bcid: 'qrcode',\n    text: '123456789012',\n    scale: 4,\n    // height: 4,\n    includetext: true,\n    textxalign: 'center',\n}, function (err, png) {\n    if (err) {\n        node.error(\"Błąd generowania barcode\", err);\n    } else {\n        fs.writeFileSync(filepath, png);\n\n        msg.payload = png.toString('base64');\n        msg.barcode_filename = filename;\n        msg.barcode_path = filepath;\n        msg.barcode_mime = \"image/png\";\n\n        return node.send(msg);\n    }\n});",
+        "outputs": 1,
+        "timeout": 0,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 780,
+        "y": 260,
+        "wires": [
+            [
+                "0f041c1641a0f5f1"
+            ]
+        ]
+    },
+    {
+        "id": "0f041c1641a0f5f1",
+        "type": "debug",
+        "z": "7ac738eef3d259eb",
+        "name": "debug 2",
+        "active": true,
+        "tosidebar": true,
+        "console": false,
+        "tostatus": false,
+        "complete": "false",
+        "statusVal": "",
+        "statusType": "auto",
+        "x": 950,
+        "y": 240,
+        "wires": []
+    },
+    {
+        "id": "8416ddccd2a3af4b",
+        "type": "inject",
+        "z": "be1c3f3f839ca819",
+        "name": "",
+        "props": [
+            {
+                "p": "payload"
+            },
+            {
+                "p": "topic",
+                "vt": "str"
+            }
+        ],
+        "repeat": "",
+        "crontab": "",
+        "once": false,
+        "onceDelay": 0.1,
+        "topic": "",
+        "payload": "",
+        "payloadType": "date",
+        "x": 180,
+        "y": 100,
+        "wires": [
+            [
+                "fc7a029f2661abcd"
+            ]
+        ]
+    },
+    {
+        "id": "f12da4027c5395e9",
+        "type": "function",
+        "z": "be1c3f3f839ca819",
+        "name": "email:get:new",
+        "func": "msg.nocodb_t_active = msg.nocodb_t.app_mail_inbox;\n\ndelete msg.heders;\ndelete msg.method;\n\nmsg.payload = {\n    offset: '0',\n    limit: '10',\n    viewId: msg.nocodb_t.app_mail_inbox_view,\n    where: `(status,eq,new)`,\n};\n\nnode.status({ fill: \"green\", shape: \"dot\", text: global.get(\"getDateTime\")() });\nreturn msg;",
+        "outputs": 1,
+        "timeout": 0,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 620,
+        "y": 100,
+        "wires": [
+            [
+                "d661f297f856f96e"
+            ]
+        ]
+    },
+    {
+        "id": "d661f297f856f96e",
+        "type": "http request",
+        "z": "be1c3f3f839ca819",
+        "name": "NocoDB - GET",
+        "method": "GET",
+        "ret": "obj",
+        "paytoqs": "query",
+        "url": "http://{{nocodb_host}}/api/v2/tables/{{nocodb_t_active}}/records",
+        "tls": "",
+        "persist": false,
+        "proxy": "",
+        "insecureHTTPParser": false,
+        "authType": "",
+        "senderr": false,
+        "headers": [
+            {
+                "keyType": "other",
+                "keyValue": "xc-token",
+                "valueType": "msg",
+                "valueValue": "xc_token"
+            },
+            {
+                "keyType": "Content-Type",
+                "keyValue": "",
+                "valueType": "application/json",
+                "valueValue": ""
+            }
+        ],
+        "x": 860,
+        "y": 100,
+        "wires": [
+            [
+                "179ae273d6c373f9",
+                "04ed4b3b6c47ab86"
+            ]
+        ]
+    },
+    {
+        "id": "fc7a029f2661abcd",
+        "type": "subflow:03b285947d86a284",
+        "z": "be1c3f3f839ca819",
+        "name": "",
+        "x": 380,
+        "y": 100,
+        "wires": [
+            [
+                "f12da4027c5395e9"
+            ]
+        ]
+    },
+    {
+        "id": "179ae273d6c373f9",
+        "type": "debug",
+        "z": "be1c3f3f839ca819",
+        "name": "debug 3",
+        "active": true,
+        "tosidebar": true,
+        "console": false,
+        "tostatus": false,
+        "complete": "false",
+        "statusVal": "",
+        "statusType": "auto",
+        "x": 860,
+        "y": 40,
+        "wires": []
+    },
+    {
+        "id": "344f4fdbcc7aa161",
+        "type": "function",
+        "z": "be1c3f3f839ca819",
+        "g": "e70669bd24ffbcf3",
+        "name": "separate records",
+        "func": "let rows = msg.q.list;\n\nmsg.payload = rows.map(row => {\n    let singleMsg = RED.util.cloneMessage(msg); // duplikujemy oryginalny msg\n    singleMsg.payload = row;\n    return singleMsg;\n});\n\nnode.status({ fill: \"green\", shape: \"dot\", text: global.get(\"getDateTime\")() }); //STATUS\nreturn [msg.payload]; ",
+        "outputs": 1,
+        "timeout": 0,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 470,
+        "y": 300,
+        "wires": [
+            [
+                "9c3521cbdd01940d"
+            ]
+        ]
+    },
+    {
+        "id": "7282e4f8e111ba27",
+        "type": "link in",
+        "z": "be1c3f3f839ca819",
+        "g": "e70669bd24ffbcf3",
+        "name": "in-q",
+        "links": [
+            "eeb338a064f555cf",
+            "6133dc5ef9a2e7f8"
+        ],
+        "x": 545,
+        "y": 360,
+        "wires": [
+            [
+                "9c3521cbdd01940d"
+            ]
+        ]
+    },
+    {
+        "id": "9c3521cbdd01940d",
+        "type": "q-gate",
+        "z": "be1c3f3f839ca819",
+        "g": "e70669bd24ffbcf3",
+        "name": "q-email_examine",
+        "controlTopic": "control-email_examine",
+        "defaultState": "queueing",
+        "openCmd": "open",
+        "closeCmd": "close",
+        "toggleCmd": "toggle",
+        "queueCmd": "queue",
+        "defaultCmd": "default",
+        "triggerCmd": "trigger",
+        "flushCmd": "flush",
+        "resetCmd": "reset",
+        "peekCmd": "peek",
+        "dropCmd": "drop",
+        "statusCmd": "status",
+        "maxQueueLength": "100",
+        "keepNewest": false,
+        "qToggle": false,
+        "persist": false,
+        "storeName": "memory",
+        "x": 710,
+        "y": 300,
+        "wires": [
+            [
+                "689f0bd78eab811c"
+            ]
+        ]
+    },
+    {
+        "id": "432f72cad7c993b3",
+        "type": "link in",
+        "z": "be1c3f3f839ca819",
+        "g": "e70669bd24ffbcf3",
+        "name": "start-all_node_get_next",
+        "links": [
+            "4376394ee780c7ec"
+        ],
+        "x": 220,
+        "y": 420,
+        "wires": [
+            [
+                "3321558b29da0cf7"
+            ]
+        ],
+        "l": true
+    },
+    {
+        "id": "3321558b29da0cf7",
+        "type": "function",
+        "z": "be1c3f3f839ca819",
+        "g": "e70669bd24ffbcf3",
+        "name": "get next",
+        "func": "const q = flow.get('q');\nnode.send({ topic: q.ct, payload: \"drop\"})\nmsg.topic = q.ct\nmsg.payload = \"peek\"\n\nnode.status({ fill: \"green\", shape: \"dot\", text: global.get(\"getDateTime\")() }); //STATUS\nreturn msg;",
+        "outputs": 1,
+        "timeout": "",
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 480,
+        "y": 420,
+        "wires": [
+            [
+                "eeb338a064f555cf"
+            ]
+        ]
+    },
+    {
+        "id": "eeb338a064f555cf",
+        "type": "link out",
+        "z": "be1c3f3f839ca819",
+        "g": "e70669bd24ffbcf3",
+        "name": "end-all_node_get_next",
+        "mode": "link",
+        "links": [
+            "7282e4f8e111ba27"
+        ],
+        "x": 760,
+        "y": 420,
+        "wires": [],
+        "l": true
+    },
+    {
+        "id": "0ea7646b207b1c61",
+        "type": "status",
+        "z": "be1c3f3f839ca819",
+        "g": "e70669bd24ffbcf3",
+        "name": "q-status",
+        "scope": [
+            "9c3521cbdd01940d"
+        ],
+        "x": 180,
+        "y": 520,
+        "wires": [
+            [
+                "5de2046e824d541f"
+            ]
+        ]
+    },
+    {
+        "id": "5de2046e824d541f",
+        "type": "function",
+        "z": "be1c3f3f839ca819",
+        "g": "e70669bd24ffbcf3",
+        "name": "check if first in q",
+        "func": "const statusText = msg.status.text;\nconst processing_tag = \"processing-email_examine\";\nlet processing = flow.get(processing_tag) || false;\nconst q = flow.get('q');\n\n// Dopasuj liczbę po \"queuing:\"\nconst match = statusText.match(/queuing:\\s*(\\d+)/);\n\nif (match) {\n    const queuingCount = parseInt(match[1], 10);\n    node.status({ fill: \"gray\", shape: \"ring\", text: queuingCount });\n    const timestamp = global.get(\"getDateTime\")();\n\n    // Ustaw status węzła\n    node.status({\n        fill: queuingCount > 0 ? \"yellow\" : \"green\",\n        shape: \"dot\",\n        text: `${timestamp} | queuing: ${queuingCount}`\n    });\n\n    if (queuingCount == 0) {\n        flow.set(processing_tag, false);\n        msg.payload = \"end\";\n        node.status({ fill: \"gray\", shape: \"dot\", text: \"processing end\"  });\n        return msg;\n    }\n\n    \n        \n        if (queuingCount > 0) {\n\n            if (!processing) {\n                flow.set(processing_tag, true);\n                msg.topic = q.ct;\n                msg.payload = \"peek\";\n                node.status({ fill: \"gray\", shape: \"dot\", text: \"od true\" });\n                return msg;\n            } else {\n                node.status({ fill: \"gray\", shape: \"dot\", text: \"od false\" });\n            }\n\n            // msg.payload = {\n            //     queuing: queuingCount,\n            //     time: timestamp, peek\n            //     rawStatus: statusText\n            // };\n            node.status({ fill: \"gray\", shape: \"dot\", text: processing });\n            // return msg;\n        \n    } else {\n        node.status({ fill: \"green\", shape: \"dot\", text: \"processing ...\" });\n    }\n}\n\n// Jeśli nie pasuje – wyczyść status i nic nie wysyłaj\nnode.status({ fill: \"gray\", shape: \"ring\", text: \"no match or queuing ≤ 1\" });\n// node.status({ fill: \"gray\", shape: \"ring\", text: match });\n\nreturn null;",
+        "outputs": 1,
+        "timeout": 0,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 360,
+        "y": 520,
+        "wires": [
+            [
+                "06a3092fd10d6b09"
+            ]
+        ]
+    },
+    {
+        "id": "6133dc5ef9a2e7f8",
+        "type": "link out",
+        "z": "be1c3f3f839ca819",
+        "g": "e70669bd24ffbcf3",
+        "name": "link out 9",
+        "mode": "link",
+        "links": [
+            "7282e4f8e111ba27"
+        ],
+        "x": 845,
+        "y": 480,
+        "wires": []
+    },
+    {
+        "id": "1fc92443bd36b6ac",
+        "type": "delay",
+        "z": "be1c3f3f839ca819",
+        "g": "e70669bd24ffbcf3",
+        "name": "",
+        "pauseType": "delay",
+        "timeout": "1",
+        "timeoutUnits": "seconds",
+        "rate": "1",
+        "nbRateUnits": "1",
+        "rateUnits": "second",
+        "randomFirst": "1",
+        "randomLast": "5",
+        "randomUnits": "seconds",
+        "drop": false,
+        "allowrate": false,
+        "outputs": 1,
+        "x": 720,
+        "y": 480,
+        "wires": [
+            [
+                "6133dc5ef9a2e7f8"
+            ]
+        ]
+    },
+    {
+        "id": "06a3092fd10d6b09",
+        "type": "switch",
+        "z": "be1c3f3f839ca819",
+        "g": "e70669bd24ffbcf3",
+        "name": "",
+        "property": "payload",
+        "propertyType": "msg",
+        "rules": [
+            {
+                "t": "eq",
+                "v": "peek",
+                "vt": "str"
+            },
+            {
+                "t": "eq",
+                "v": "end",
+                "vt": "str"
+            }
+        ],
+        "checkall": "true",
+        "repair": false,
+        "outputs": 2,
+        "x": 530,
+        "y": 520,
+        "wires": [
+            [
+                "1fc92443bd36b6ac"
+            ],
+            []
+        ]
+    },
+    {
+        "id": "f54078fb7e5ba183",
+        "type": "function",
+        "z": "be1c3f3f839ca819",
+        "g": "e70669bd24ffbcf3",
+        "name": "q-config",
+        "func": "msg.q = {\n    ct: \"control-email_examine\",\n    list: msg.payload.list,\n}\n\nflow.set(\"q\", msg.q);\n\nnode.status({ fill: \"green\", shape: \"dot\", text: global.get(\"getDateTime\")() }); //STATUS\nreturn msg;",
+        "outputs": 1,
+        "timeout": 0,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 260,
+        "y": 180,
+        "wires": [
+            [
+                "344f4fdbcc7aa161"
+            ]
+        ]
+    },
+    {
+        "id": "59f39a36a11b77c4",
+        "type": "link in",
+        "z": "be1c3f3f839ca819",
+        "g": "e70669bd24ffbcf3",
+        "name": "link in 5",
+        "links": [
+            "04ed4b3b6c47ab86"
+        ],
+        "x": 135,
+        "y": 180,
+        "wires": [
+            [
+                "f54078fb7e5ba183"
+            ]
+        ]
+    },
+    {
+        "id": "689f0bd78eab811c",
+        "type": "link out",
+        "z": "be1c3f3f839ca819",
+        "g": "e70669bd24ffbcf3",
+        "name": "link out 10",
+        "mode": "link",
+        "links": [
+            "aaadc52352e816a9"
+        ],
+        "x": 845,
+        "y": 300,
+        "wires": []
+    },
+    {
+        "id": "aaeb584c7ed5f33b",
+        "type": "inject",
+        "z": "be1c3f3f839ca819",
+        "g": "e70669bd24ffbcf3",
+        "name": "reset",
+        "props": [
+            {
+                "p": "payload"
+            },
+            {
+                "p": "topic",
+                "v": "q.ct",
+                "vt": "flow"
+            }
+        ],
+        "repeat": "",
+        "crontab": "",
+        "once": false,
+        "onceDelay": 0.1,
+        "topic": "",
+        "payload": "reset",
+        "payloadType": "str",
+        "x": 710,
+        "y": 360,
+        "wires": [
+            [
+                "9c3521cbdd01940d"
+            ]
+        ]
+    },
+    {
+        "id": "04ed4b3b6c47ab86",
+        "type": "link out",
+        "z": "be1c3f3f839ca819",
+        "name": "link out 11",
+        "mode": "link",
+        "links": [
+            "59f39a36a11b77c4"
+        ],
+        "x": 1025,
+        "y": 100,
+        "wires": []
+    },
+    {
+        "id": "3d6f84614a1fbf6e",
+        "type": "function",
+        "z": "be1c3f3f839ca819",
+        "name": "check:email:find",
+        "func": "msg.email = msg.payload;\n\nlet email = msg.email;\nlet email_find = {\n    nr_umowy: null,\n    uuid: null,\n    attachments: [],\n    probably_contract: false\n};\n\n// 1. Szukamy numeru umowy w temacie, np. \"25/69\"\nlet nr_umowy_match = email.subject?.match(/\\b\\d{2}\\/\\d{2}\\b/);\nif (nr_umowy_match) {\n    email_find.nr_umowy = nr_umowy_match[0];\n}\n\n// 2. Szukamy UUID w treści wiadomości: uuid:xxxxxxxx-xxxx-4xxx-yxxx-xxxxxxxxxxxx\nlet uuid_match = email.body?.match(/uuid:([0-9a-f]{8}-[0-9a-f]{4}-4[0-9a-f]{3}-[89ab][0-9a-f]{3}-[0-9a-f]{12})/i);\nif (uuid_match) {\n    email_find.uuid = uuid_match[1];\n}\n\n// 3. Parsowanie załączników — jeśli jako string oddzielony przecinkami\nlet raw_attachments = typeof email.attachments === \"string\" ? email.attachments.split(\",\") : [];\n\nlet found_pdf_with_nr = false;\nlet found_image_non_barcode = false;\n\nraw_attachments.forEach(path => {\n    const filename = path.split(\"/\").pop();\n    if (filename === \"barcode.png\") {\n        // Pomijamy plik barcode.png\n        return;\n    }\n\n    const ext = filename.toLowerCase().split(\".\").pop();\n\n    let kind = null;\n    if ([\"pdf\"].includes(ext)) kind = \"pdf\";\n    else if ([\"jpg\", \"jpeg\", \"png\", \"bmp\", \"tiff\", \"webp\"].includes(ext)) kind = \"image\";\n\n    let nr_umowy_from_filename = null;\n    let match_prefix = filename.match(/^(\\d{2})-(\\d{2})_/);\n    if (match_prefix) {\n        nr_umowy_from_filename = `${match_prefix[1]}/${match_prefix[2]}`;\n    }\n\n    // warunki do oznaczenia jako prawdopodobna umowa\n    if (kind === \"pdf\" && nr_umowy_from_filename === email_find.nr_umowy) {\n        found_pdf_with_nr = true;\n    }\n\n    if (kind === \"image\") {\n        found_image_non_barcode = true;\n    }\n\n    email_find.attachments.push({\n        patch: path,\n        filename: filename,\n        kind: kind,\n        nr_umowy: nr_umowy_from_filename\n    });\n});\n\n// 4. Warunek prawdopodobieństwa umowy\nif ((email_find.nr_umowy || email_find.uuid) && (found_pdf_with_nr || found_image_non_barcode)) {\n    email_find.probably_contract = true;\n    node.status({ fill: \"green\", shape: \"dot\", text: \"OK \" + global.get(\"getDateTime\")() });\n} else {\n    node.status({ fill: \"green\", shape: \"dot\", text: global.get(\"getDateTime\")() });\n}\n\nmsg.email_find = email_find;\nreturn msg;",
+        "outputs": 1,
+        "timeout": 0,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 260,
+        "y": 720,
+        "wires": [
+            [
+                "b2edea07e9697dc0"
+            ]
+        ]
+    },
+    {
+        "id": "aaadc52352e816a9",
+        "type": "link in",
+        "z": "be1c3f3f839ca819",
+        "name": "link in 6",
+        "links": [
+            "689f0bd78eab811c"
+        ],
+        "x": 125,
+        "y": 720,
+        "wires": [
+            [
+                "3d6f84614a1fbf6e"
+            ]
+        ]
+    },
+    {
+        "id": "4376394ee780c7ec",
+        "type": "link out",
+        "z": "be1c3f3f839ca819",
+        "name": "link out 12",
+        "mode": "link",
+        "links": [
+            "432f72cad7c993b3"
+        ],
+        "x": 1345,
+        "y": 1180,
+        "wires": []
+    },
+    {
+        "id": "7704455dea750a69",
+        "type": "debug",
+        "z": "be1c3f3f839ca819",
+        "name": "debug 11",
+        "active": true,
+        "tosidebar": true,
+        "console": false,
+        "tostatus": false,
+        "complete": "true",
+        "targetType": "full",
+        "statusVal": "",
+        "statusType": "auto",
+        "x": 1400,
+        "y": 780,
+        "wires": []
+    },
+    {
+        "id": "e088baaede4c8f3c",
+        "type": "switch",
+        "z": "be1c3f3f839ca819",
+        "name": "",
+        "property": "route",
+        "propertyType": "msg",
+        "rules": [
+            {
+                "t": "eq",
+                "v": "pdf_z_nr_umowy",
+                "vt": "str"
+            },
+            {
+                "t": "eq",
+                "v": "wiele_obrazow",
+                "vt": "str"
+            },
+            {
+                "t": "eq",
+                "v": "inne_probably_contract",
+                "vt": "str"
+            },
+            {
+                "t": "eq",
+                "v": "uuid_only",
+                "vt": "str"
+            },
+            {
+                "t": "else"
+            }
+        ],
+        "checkall": "true",
+        "repair": false,
+        "outputs": 5,
+        "x": 1230,
+        "y": 940,
+        "wires": [
+            [
+                "0a9bd45f1d1b05f1",
+                "7704455dea750a69"
+            ],
+            [
+                "4376394ee780c7ec",
+                "cd43186167406e89",
+                "c5a5fb7b9de73e41"
+            ],
+            [
+                "4376394ee780c7ec"
+            ],
+            [
+                "4376394ee780c7ec"
+            ],
+            [
+                "4376394ee780c7ec"
+            ]
+        ]
+    },
+    {
+        "id": "210f906ede8ee242",
+        "type": "function",
+        "z": "be1c3f3f839ca819",
+        "name": "analize:route",
+        "func": "let find = msg.email_find;\nlet attachments = find.attachments || [];\n\nlet imageCount = attachments.filter(a => a.kind === \"image\").length;\nlet pdfWithNrCount = attachments.filter(a => a.kind === \"pdf\" && a.nr_umowy === find.nr_umowy).length;\n\nlet route = \"brak_danych\";\n\nif (find.probably_contract) {\n    if (pdfWithNrCount > 0) {\n        route = \"pdf_z_nr_umowy\";\n    } else if (imageCount > 0) {\n        route = \"wiele_obrazow\";\n    } else {\n        route = \"inne_probably_contract\";\n    }\n} else if (find.uuid && !find.nr_umowy) {\n    route = \"uuid_only\";\n}\n\nmsg.umowa = msg.payload.list[0];\nmsg.route = route;\nreturn msg;",
+        "outputs": 1,
+        "timeout": 0,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 170,
+        "y": 940,
+        "wires": [
+            [
+                "e088baaede4c8f3c",
+                "edcea42f1cf042c6"
+            ]
+        ]
+    },
+    {
+        "id": "edcea42f1cf042c6",
+        "type": "debug",
+        "z": "be1c3f3f839ca819",
+        "name": "debug 10",
+        "active": true,
+        "tosidebar": true,
+        "console": false,
+        "tostatus": false,
+        "complete": "route",
+        "targetType": "msg",
+        "statusVal": "",
+        "statusType": "auto",
+        "x": 200,
+        "y": 1000,
+        "wires": []
+    },
+    {
+        "id": "9957284425d66a7f",
+        "type": "comment",
+        "z": "be1c3f3f839ca819",
+        "name": "analiza:pdf:sumakontrolna",
+        "info": "",
+        "x": 210,
+        "y": 1120,
+        "wires": []
+    },
+    {
+        "id": "0a9bd45f1d1b05f1",
+        "type": "function",
+        "z": "be1c3f3f839ca819",
+        "name": "checsume:sha256",
+        "func": "const path = global.get(\"path\");\n\nconst path_storage = global.get(\"storage\");\n// global.set(\"path_template_umowy\", \"teamplates/umowy/\")\nconst path_umowy = global.get(\"path_umowy\");\nconst path_email = global.get(\"path_email\");\n\n// global.set(\"path_tmp\", \"tmp/\")\n\nconst crypto = global.get(\"crypto\");  // musisz mieć `crypto` jako globalny moduł\nconst fs = global.get(\"fs\");\n\nconst path1 = msg.umowa.path_umowa_orginalna;  // ścieżka do oryginału\nconst path2 = path_storage + path_email + msg.email_find.attachments[0].patch; // ścieżka do rzekomo podpisanego pliku\n\nconst buffer1 = fs.readFileSync(path1);\nconst buffer2 = fs.readFileSync(path2);\n\nconst hash1 = crypto.createHash('sha256').update(buffer1).digest('hex');\nconst hash2 = crypto.createHash('sha256').update(buffer2).digest('hex');\n\nmsg.hash_diff = hash1 !== hash2;\nmsg.hash_input = hash1;\nmsg.hash_signed = hash2;\n\nmsg.source_path = path.dirname(path2) + path.sep;\nmsg.source_file = path.basename(path2);\nmsg.dest_path = path_storage + path_umowy + msg.umowa.umowa_year + \"/\" + msg.umowa.umowa_nr + \"/\";\nmsg.dest_file = \"podpisana\" + \"-\" + path.basename(path2);\n\nmsg.path_umowa_podpisana_email_pdf = msg.dest_path + msg.dest_file;\n\nnode.status({ fill: \"green\", shape: \"dot\", text: global.get(\"getDateTime\")() });\nreturn msg;",
+        "outputs": 1,
+        "timeout": 0,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 190,
+        "y": 1180,
+        "wires": [
+            [
+                "466feb7cdf8743cd",
+                "b38108020e6fc6dd"
+            ]
+        ]
+    },
+    {
+        "id": "b2edea07e9697dc0",
+        "type": "switch",
+        "z": "be1c3f3f839ca819",
+        "name": "",
+        "property": "email_find.probably_contract",
+        "propertyType": "msg",
+        "rules": [
+            {
+                "t": "true"
+            },
+            {
+                "t": "else"
+            }
+        ],
+        "checkall": "true",
+        "repair": false,
+        "outputs": 2,
+        "x": 450,
+        "y": 720,
+        "wires": [
+            [
+                "9ba915fac081c1ff"
+            ],
+            [
+                "210f906ede8ee242"
+            ]
+        ]
+    },
+    {
+        "id": "c19662359a2b3bd2",
+        "type": "http request",
+        "z": "be1c3f3f839ca819",
+        "name": "NocoDB - GET",
+        "method": "GET",
+        "ret": "obj",
+        "paytoqs": "query",
+        "url": "http://{{nocodb_host}}/api/v2/tables/{{nocodb_t_active}}/records",
+        "tls": "",
+        "persist": false,
+        "proxy": "",
+        "insecureHTTPParser": false,
+        "authType": "",
+        "senderr": false,
+        "headers": [
+            {
+                "keyType": "other",
+                "keyValue": "xc-token",
+                "valueType": "msg",
+                "valueValue": "xc_token"
+            },
+            {
+                "keyType": "Content-Type",
+                "keyValue": "",
+                "valueType": "application/json",
+                "valueValue": ""
+            }
+        ],
+        "x": 1080,
+        "y": 720,
+        "wires": [
+            [
+                "7d7cbef9141e85c2",
+                "53e6c5b86871d08b"
+            ]
+        ]
+    },
+    {
+        "id": "bf60fb51fb38b989",
+        "type": "function",
+        "z": "be1c3f3f839ca819",
+        "name": "umowa:get:by_uuid",
+        "func": "msg.nocodb_t_active = msg.nocodb_t.umowy;\n\ndelete msg.heders;\ndelete msg.method;\n\nmsg.payload = {\n    offset: '0',\n    limit: '1',\n    viewId: msg.nocodb_t.umowy_view,\n    where: msg.nocodb_query.where,\n};\n\nnode.status({ fill: \"green\", shape: \"dot\", text: global.get(\"getDateTime\")() });\n\nreturn msg;",
+        "outputs": 1,
+        "timeout": 0,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 870,
+        "y": 720,
+        "wires": [
+            [
+                "c19662359a2b3bd2"
+            ]
+        ]
+    },
+    {
+        "id": "9ba915fac081c1ff",
+        "type": "function",
+        "z": "be1c3f3f839ca819",
+        "name": "build:where",
+        "func": "let find = msg.email_find || {};\nlet where = \"\";\n\nif (find.uuid) {\n    where = `(uuid,eq,${find.uuid})`;\n} else if (find.nr_umowy) {\n    let parts = find.nr_umowy.split(\"/\");\n    if (parts.length === 2) {\n        let year = parts[0];\n        let umowa_nr = parts[1];\n        where = `(umowa_year,eq,${year})~and(umowa_nr,eq,${umowa_nr})`;\n    }\n}\n\nmsg.nocodb_query = {\n    where: where\n};\n\nreturn msg;\n",
+        "outputs": 1,
+        "timeout": 0,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 670,
+        "y": 720,
+        "wires": [
+            [
+                "bf60fb51fb38b989"
+            ]
+        ]
+    },
+    {
+        "id": "7d7cbef9141e85c2",
+        "type": "debug",
+        "z": "be1c3f3f839ca819",
+        "name": "debug 12",
+        "active": true,
+        "tosidebar": true,
+        "console": false,
+        "tostatus": false,
+        "complete": "false",
+        "statusVal": "",
+        "statusType": "auto",
+        "x": 1310,
+        "y": 640,
+        "wires": []
+    },
+    {
+        "id": "53e6c5b86871d08b",
+        "type": "function",
+        "z": "be1c3f3f839ca819",
+        "name": "function 7",
+        "func": "\nreturn msg;",
+        "outputs": 1,
+        "timeout": 0,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 1290,
+        "y": 720,
+        "wires": [
+            [
+                "210f906ede8ee242"
+            ]
+        ]
+    },
+    {
+        "id": "466feb7cdf8743cd",
+        "type": "debug",
+        "z": "be1c3f3f839ca819",
+        "name": "debug 13",
+        "active": true,
+        "tosidebar": true,
+        "console": false,
+        "tostatus": false,
+        "complete": "true",
+        "targetType": "full",
+        "statusVal": "",
+        "statusType": "auto",
+        "x": 200,
+        "y": 1240,
+        "wires": []
+    },
+    {
+        "id": "7e2415a1a8fb10f8",
+        "type": "function",
+        "z": "be1c3f3f839ca819",
+        "g": "e70669bd24ffbcf3",
+        "name": "up:status:new_to_queue",
+        "func": "let rows = msg.payload.list;\n\nmsg.method = \"PATCH\";\nmsg.payload = rows.map(row => {\n    let singleMsg = {\n        \"Id\": row.Id,\n        \"status\": \"queue\"\n    };\n\n    return singleMsg;\n});\n\nnode.status({ fill: \"green\", shape: \"dot\", text: global.get(\"getDateTime\")() });\nreturn msg;",
+        "outputs": 1,
+        "timeout": 0,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 270,
+        "y": 240,
+        "wires": [
+            [
+                "f21258598582116b"
+            ]
+        ]
+    },
+    {
+        "id": "f21258598582116b",
+        "type": "http request",
+        "z": "be1c3f3f839ca819",
+        "g": "e70669bd24ffbcf3",
         "name": "NocoDB - ALL",
         "method": "use",
         "ret": "obj",
@@ -4206,43 +5911,587 @@
             }
         ],
         "x": 500,
-        "y": 280,
+        "y": 240,
         "wires": [
             [
-                "e518727a103282bf",
-                "d675709b0a7d7e1c"
+                "5b3d9084b179b7b3"
             ]
         ]
     },
     {
-        "id": "aafbd476563b4156",
-        "type": "http response",
-        "z": "8971cc29f27d4741",
-        "name": "",
-        "statusCode": "200",
-        "headers": {},
-        "x": 520,
-        "y": 360,
-        "wires": []
-    },
-    {
-        "id": "d675709b0a7d7e1c",
+        "id": "5b3d9084b179b7b3",
         "type": "function",
-        "z": "8971cc29f27d4741",
-        "name": "response:ok",
-        "func": "msg.payload = {\n    confirm: true\n};\nreturn msg;",
+        "z": "be1c3f3f839ca819",
+        "g": "e70669bd24ffbcf3",
+        "name": "NocoDB - analize save",
+        "func": "if (msg.payload && msg.payload.length > 0) {\n    node.status({ fill: \"grey\", shape: \"ring\", text: `update rows: ${msg.payload.length}` });\n    msg.statusText = `update rows: ${msg.payload.length}`;\n    return msg;\n}\n\n\nnode.status({ fill: \"yellow\", shape: \"dot\", text: \"Brak danych\" });\nmsg.statusText = \"no records update\";\nreturn msg;",
         "outputs": 1,
         "timeout": 0,
         "noerr": 0,
         "initialize": "",
         "finalize": "",
         "libs": [],
-        "x": 130,
-        "y": 360,
+        "x": 720,
+        "y": 240,
         "wires": [
             [
-                "aafbd476563b4156"
+                "344f4fdbcc7aa161"
             ]
         ]
+    },
+    {
+        "id": "24ada9ad71fb27e5",
+        "type": "function",
+        "z": "be1c3f3f839ca819",
+        "name": "up:umowa_podpisana",
+        "func": "delete msg.heders;\ndelete msg.method;\n\nlet rows = msg.payload.list;\nmsg.method = \"PATCH\";\n\nmsg.payload = {\n        \"Id\": msg.umowa.Id,\n        \"umowa_podpisana\": true,\n        \"umowa_podpisana_why\": \"diff_sha256\",\n        \"path_umowa_podpisana\": msg.path_umowa_podpisana_email_pdf\n    };\n\nnode.status({ fill: \"green\", shape: \"dot\", text: global.get(\"getDateTime\")() });\nreturn msg;",
+        "outputs": 1,
+        "timeout": 0,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 840,
+        "y": 1180,
+        "wires": [
+            [
+                "3948f3ca7ad74cf8"
+            ]
+        ]
+    },
+    {
+        "id": "3948f3ca7ad74cf8",
+        "type": "http request",
+        "z": "be1c3f3f839ca819",
+        "name": "NocoDB - ALL",
+        "method": "use",
+        "ret": "obj",
+        "paytoqs": "ignore",
+        "url": "http://{{nocodb_host}}/api/v2/tables/{{nocodb_t_active}}/records",
+        "tls": "",
+        "persist": false,
+        "proxy": "",
+        "insecureHTTPParser": false,
+        "authType": "",
+        "senderr": false,
+        "headers": [
+            {
+                "keyType": "other",
+                "keyValue": "xc-token",
+                "valueType": "msg",
+                "valueValue": "xc_token"
+            },
+            {
+                "keyType": "Content-Type",
+                "keyValue": "",
+                "valueType": "application/json",
+                "valueValue": ""
+            }
+        ],
+        "x": 1080,
+        "y": 1180,
+        "wires": [
+            [
+                "4376394ee780c7ec"
+            ]
+        ]
+    },
+    {
+        "id": "b38108020e6fc6dd",
+        "type": "switch",
+        "z": "be1c3f3f839ca819",
+        "name": "hash_diff",
+        "property": "hash_diff",
+        "propertyType": "msg",
+        "rules": [
+            {
+                "t": "true"
+            },
+            {
+                "t": "else"
+            }
+        ],
+        "checkall": "true",
+        "repair": false,
+        "outputs": 2,
+        "x": 440,
+        "y": 1180,
+        "wires": [
+            [
+                "1f33ac787fa27bb8"
+            ],
+            []
+        ]
+    },
+    {
+        "id": "1f33ac787fa27bb8",
+        "type": "fs-ops-copy",
+        "z": "be1c3f3f839ca819",
+        "name": "",
+        "sourcePath": "source_path",
+        "sourcePathType": "msg",
+        "sourceFilename": "source_file",
+        "sourceFilenameType": "msg",
+        "destPath": "dest_path",
+        "destPathType": "msg",
+        "destFilename": "dest_file",
+        "destFilenameType": "msg",
+        "link": false,
+        "overwrite": true,
+        "x": 620,
+        "y": 1180,
+        "wires": [
+            [
+                "24ada9ad71fb27e5"
+            ]
+        ]
+    },
+    {
+        "id": "10899b1d53947e83",
+        "type": "comment",
+        "z": "be1c3f3f839ca819",
+        "g": "24acd2baaff30f4c",
+        "name": "GPT analize",
+        "info": "",
+        "x": 150,
+        "y": 1800,
+        "wires": []
+    },
+    {
+        "id": "4ff8d3d1742d566c",
+        "type": "function",
+        "z": "be1c3f3f839ca819",
+        "g": "24acd2baaff30f4c",
+        "name": "Prepare",
+        "func": "node.status({ fill: \"green\", shape: \"dot\", text: global.get(\"getDateTime\")() }); // STATUS\n\n// Pobierz tekst z OCR\n// let ocrImgText = (msg.payload && msg.payload.responses && msg.payload.responses[0] && msg.payload.responses[0].fullTextAnnotation && msg.payload.responses[0].fullTextAnnotation.text) || \"\";\n\n// Pobierz tekst z msg.ocrpdf\n// let ocrPdfText = msg.ocrpdf || \"\";\n\n// Jeżeli oba są puste -> zakończ flow\n// if ((!ocrImgText || ocrImgText.trim() === \"\") && (!ocrPdfText || ocrPdfText.trim() === \"\")) {\n//     node.status({ fill: \"red\", shape: \"dot\", text: global.get(\"getDateTime\")() }); // STATUS\n//     return null;\n// }\n// const ocrText = (ocrImgText && ocrImgText.trim() !== \"\") ? ocrImgText : ocrPdfText;\n\n\n// const ocrText = msg.payload.responses[0].fullTextAnnotation.text;\n// msg.question = `Oto tekst OCR:\\n\\n${ocrText}`;\nmsg.question = \"test pytanie: Puk Puk \";\nmsg.files = [\n    \"asda/jeden.jpg\" ,\n    \"asdede/dwa.jpg\"\n]\n\n// const msg2 = {\n//     topic: \"prepare_ocr_to_ai\",\n//     ocrText: ocrText,\n//     payload: \"ok\"    \n// };\n\n// const uuidv4 = () => {\n//     return 'xxxxxxxx-xxxx-4xxx-yxxx-xxxxxxxxxxxx'.replace(/[xy]/g, function (c) {\n//         let r = Math.random() * 16 | 0, v = c === 'x' ? r : (r & 0x3 | 0x8);\n//         return v.toString(16);\n//     });\n// };\n\n// flow.set(\"uuidv4\", uuidv4());\n\ndelete msg.headers;\ndelete msg.url;\ndelete msg.method;\ndelete msg.statusCode;\ndelete msg.responseUrl;\ndelete msg.redirectList;\n\nnode.status({ fill: \"gray\", shape: \"dot\", text: global.get(\"getDateTime\")() }); // STATUS\nreturn msg;",
+        "outputs": 1,
+        "timeout": "",
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 360,
+        "y": 1720,
+        "wires": [
+            [
+                "ebe57c8170dea9e9"
+            ]
+        ]
+    },
+    {
+        "id": "ebe57c8170dea9e9",
+        "type": "subflow:4b1994ea08f806f1",
+        "z": "be1c3f3f839ca819",
+        "g": "24acd2baaff30f4c",
+        "name": "",
+        "x": 630,
+        "y": 1720,
+        "wires": [
+            [
+                "f33441915ef0ebbc",
+                "d755982a75b47618"
+            ]
+        ]
+    },
+    {
+        "id": "f33441915ef0ebbc",
+        "type": "function",
+        "z": "be1c3f3f839ca819",
+        "g": "24acd2baaff30f4c",
+        "name": "set Thred_id",
+        "func": "msg.thread_id = msg.payload.thread_id;\nmsg.run_id = msg.payload.id\n\ndelete msg.headers;\ndelete msg.url;\ndelete msg.method;\ndelete msg.statusCode;\ndelete msg.responseUrl;\ndelete msg.redirectList;\n\nreturn msg;",
+        "outputs": 1,
+        "timeout": 0,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 850,
+        "y": 1720,
+        "wires": [
+            [
+                "d41ccd5e807be2a6",
+                "c4558b8c86d550ac"
+            ]
+        ]
+    },
+    {
+        "id": "d41ccd5e807be2a6",
+        "type": "subflow:bfda0bc698f05633",
+        "z": "be1c3f3f839ca819",
+        "g": "24acd2baaff30f4c",
+        "name": "",
+        "x": 1050,
+        "y": 1720,
+        "wires": [
+            [
+                "fd42845d2e4811c2",
+                "794fce53fee844fa"
+            ]
+        ]
+    },
+    {
+        "id": "fd42845d2e4811c2",
+        "type": "function",
+        "z": "be1c3f3f839ca819",
+        "g": "24acd2baaff30f4c",
+        "name": "Parsuj respo ChatGPT",
+        "func": "const ts = flow.get(\"fileStamp\")\nconst path_storage = global.get(\"storage\");\n\nlet content = \"\";\ntry {\n    content = msg.payload || \"\";\n} catch (e) {\n    msg.payload = { error: \"Brak choices w odpowiedzi\", raw: msg.payload };\n    return msg;\n}\n\nlet parsed;\ntry {\n    parsed = JSON.parse(content);\n} catch (e) {\n    parsed = {\n        blad: \"Nie udało się sparsować JSON z odpowiedzi\",\n        surowaOdpowiedz: content\n    };\n}\n\n\nconst baseFilename = msg.filename?.split('/').pop().replace(/\\.[^/.]+$/, '') || \"dokument\";\nlet response = JSON.stringify(parsed, null, 2);\nmsg.filename = `${path_storage}tmp/${ts}_${baseFilename}.json`;\nmsg.payload = response;\nmsg.responseChatGPT = parsed;\n\n// Status Show Time\nconst now = new Date();\nconst pad = (n) => n.toString().padStart(2, '0');\nconst timestamp = `${now.getFullYear()}-${pad(now.getMonth() + 1)}-${pad(now.getDate())} ` +\n    `${pad(now.getHours())}:${pad(now.getMinutes())}:${pad(now.getSeconds())}`;\nnode.status({ fill: \"green\", shape: \"dot\", text: timestamp });\n\nreturn msg;",
+        "outputs": 1,
+        "timeout": "",
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 1280,
+        "y": 1720,
+        "wires": [
+            [
+                "86183fdac91b6d57",
+                "12cdc8782fc3c323"
+            ]
+        ]
+    },
+    {
+        "id": "2820d7330d92ab47",
+        "type": "link in",
+        "z": "be1c3f3f839ca819",
+        "g": "24acd2baaff30f4c",
+        "name": "start-analize_openai",
+        "links": [],
+        "x": 170,
+        "y": 1720,
+        "wires": [
+            [
+                "4ff8d3d1742d566c"
+            ]
+        ],
+        "l": true
+    },
+    {
+        "id": "637ef8f0903ac97f",
+        "type": "link out",
+        "z": "be1c3f3f839ca819",
+        "g": "24acd2baaff30f4c",
+        "name": "end-analize_openai",
+        "mode": "link",
+        "links": [],
+        "x": 1290,
+        "y": 1800,
+        "wires": [],
+        "l": true
+    },
+    {
+        "id": "2ff200c302939b5e",
+        "type": "inject",
+        "z": "be1c3f3f839ca819",
+        "g": "24acd2baaff30f4c",
+        "name": "",
+        "props": [
+            {
+                "p": "payload"
+            },
+            {
+                "p": "topic",
+                "vt": "str"
+            }
+        ],
+        "repeat": "",
+        "crontab": "",
+        "once": false,
+        "onceDelay": 0.1,
+        "topic": "",
+        "payload": "",
+        "payloadType": "date",
+        "x": 210,
+        "y": 1620,
+        "wires": [
+            [
+                "4ff8d3d1742d566c"
+            ]
+        ]
+    },
+    {
+        "id": "794fce53fee844fa",
+        "type": "debug",
+        "z": "be1c3f3f839ca819",
+        "g": "24acd2baaff30f4c",
+        "name": "debug 15",
+        "active": true,
+        "tosidebar": true,
+        "console": false,
+        "tostatus": false,
+        "complete": "true",
+        "targetType": "full",
+        "statusVal": "",
+        "statusType": "auto",
+        "x": 1230,
+        "y": 1640,
+        "wires": []
+    },
+    {
+        "id": "d755982a75b47618",
+        "type": "debug",
+        "z": "be1c3f3f839ca819",
+        "g": "24acd2baaff30f4c",
+        "name": "debug 16",
+        "active": false,
+        "tosidebar": true,
+        "console": false,
+        "tostatus": false,
+        "complete": "false",
+        "statusVal": "",
+        "statusType": "auto",
+        "x": 810,
+        "y": 1640,
+        "wires": []
+    },
+    {
+        "id": "c4558b8c86d550ac",
+        "type": "debug",
+        "z": "be1c3f3f839ca819",
+        "g": "24acd2baaff30f4c",
+        "name": "debug 17",
+        "active": false,
+        "tosidebar": true,
+        "console": false,
+        "tostatus": false,
+        "complete": "false",
+        "statusVal": "",
+        "statusType": "auto",
+        "x": 1020,
+        "y": 1640,
+        "wires": []
+    },
+    {
+        "id": "79bbefb00ba64ab5",
+        "type": "function",
+        "z": "be1c3f3f839ca819",
+        "name": "upload:queue",
+        "func": "const files = msg.files || [];\n\nif (!Array.isArray(files) || files.length === 0) {\n    node.error(\"Brak plików w msg.files\");\n    return null;\n}\n\nmsg.uploadQueue = files.map((f, index) => {\n    return {\n        file: f.file,                              // tylko Buffer\n        filename: f.filename || `file-${index + 1}`, // nazwa\n        index\n    };\n});\n\nmsg.uploadResults = [];\nmsg.currentUploadIndex = 0;\n\nreturn msg;",
+        "outputs": 1,
+        "timeout": 0,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 840,
+        "y": 2280,
+        "wires": [
+            [
+                "e0ad39da2ad46abe"
+            ]
+        ]
+    },
+    {
+        "id": "58158ff7821b7110",
+        "type": "function",
+        "z": "be1c3f3f839ca819",
+        "name": "Prepare",
+        "func": "node.status({ fill: \"green\", shape: \"dot\", text: global.get(\"getDateTime\")() }); // STATUS\n\n// Pobierz tekst z OCR\n// let ocrImgText = (msg.payload && msg.payload.responses && msg.payload.responses[0] && msg.payload.responses[0].fullTextAnnotation && msg.payload.responses[0].fullTextAnnotation.text) || \"\";\n\n// Pobierz tekst z msg.ocrpdf\n// let ocrPdfText = msg.ocrpdf || \"\";\n\n// Jeżeli oba są puste -> zakończ flow\n// if ((!ocrImgText || ocrImgText.trim() === \"\") && (!ocrPdfText || ocrPdfText.trim() === \"\")) {\n//     node.status({ fill: \"red\", shape: \"dot\", text: global.get(\"getDateTime\")() }); // STATUS\n//     return null;\n// }\n// const ocrText = (ocrImgText && ocrImgText.trim() !== \"\") ? ocrImgText : ocrPdfText;\n\n\n// const ocrText = msg.payload.responses[0].fullTextAnnotation.text;\n// msg.question = `Oto tekst OCR:\\n\\n${ocrText}`;\nmsg.question = \"Czy dokument (storna 4) zawiera podpis ręczny  nad qrcode ? Podpis Uczestnika. Dodatkowo zweryfikuj jaki uuid jest w qrcode. \";\n// msg.files = [\n//     \"asda/jeden.jpg\" ,\n//     \"asdede/dwa.jpg\"\n// ]\n\n// const msg2 = {\n//     topic: \"prepare_ocr_to_ai\",\n//     ocrText: ocrText,\n//     payload: \"ok\"    \n// };\n\n// const uuidv4 = () => {\n//     return 'xxxxxxxx-xxxx-4xxx-yxxx-xxxxxxxxxxxx'.replace(/[xy]/g, function (c) {\n//         let r = Math.random() * 16 | 0, v = c === 'x' ? r : (r & 0x3 | 0x8);\n//         return v.toString(16);\n//     });\n// };\n\n// flow.set(\"uuidv4\", uuidv4());\n\ndelete msg.headers;\ndelete msg.url;\ndelete msg.method;\ndelete msg.statusCode;\ndelete msg.responseUrl;\ndelete msg.redirectList;\n\nnode.status({ fill: \"gray\", shape: \"dot\", text: global.get(\"getDateTime\")() }); // STATUS\nreturn msg;",
+        "outputs": 1,
+        "timeout": "",
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 440,
+        "y": 1480,
+        "wires": [
+            [
+                "ebe57c8170dea9e9"
+            ]
+        ]
+    },
+    {
+        "id": "d40a2becfc894064",
+        "type": "http request",
+        "z": "be1c3f3f839ca819",
+        "name": "",
+        "method": "POST",
+        "ret": "obj",
+        "paytoqs": "ignore",
+        "url": "https://api.openai.com/v1/files",
+        "tls": "",
+        "persist": false,
+        "proxy": "",
+        "insecureHTTPParser": false,
+        "authType": "",
+        "senderr": false,
+        "headers": [],
+        "x": 1130,
+        "y": 2020,
+        "wires": [
+            [
+                "7c5480d716342e8a"
+            ]
+        ]
+    },
+    {
+        "id": "e0ad39da2ad46abe",
+        "type": "function",
+        "z": "be1c3f3f839ca819",
+        "name": "function 10",
+        "func": "const fileObj = msg.uploadQueue[msg.currentUploadIndex];\nconst boundary = \"----WebKitFormBoundary\" + Math.random().toString(16).substr(2);\n\n// Sprawdzenie, czy mamy bufor\nif (!Buffer.isBuffer(fileObj.file)) {\n    node.error(\"Plik nie jest Bufferem! Upewnij się, że został poprawnie załadowany z dysku.\");\n    return null;\n}\n\nmsg.headers = {\n    \"Content-Type\": \"multipart/form-data; boundary=\" + boundary,\n    \"Authorization\": \"Bearer \" + global.get(\"chatgpt_api\")\n};\n\nconst crlf = \"\\r\\n\";\nconst bodyParts = [\n    Buffer.from(`--${boundary}${crlf}` +\n        `Content-Disposition: form-data; name=\"purpose\"${crlf}${crlf}` +\n        `assistants${crlf}`),\n\n    Buffer.from(`--${boundary}${crlf}` +\n        `Content-Disposition: form-data; name=\"file\"; filename=\"${fileObj.filename}\"${crlf}` +\n        `Content-Type: image/png${crlf}${crlf}`),\n\n    fileObj.file,\n\n    Buffer.from(`${crlf}--${boundary}--${crlf}`)\n];\n\nmsg.payload = Buffer.concat(bodyParts);\n\nreturn msg;",
+        "outputs": 1,
+        "timeout": 0,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 830,
+        "y": 2020,
+        "wires": [
+            [
+                "d40a2becfc894064"
+            ]
+        ]
+    },
+    {
+        "id": "7c5480d716342e8a",
+        "type": "function",
+        "z": "be1c3f3f839ca819",
+        "name": "function 11",
+        "func": "msg.uploadResults.push(msg.payload.id);\nmsg.currentUploadIndex++;\n\nif (msg.currentUploadIndex < msg.uploadQueue.length) {\n    return [msg, null];  // repeat\n} else {\n    msg.file_ids = msg.uploadResults;\n    return [null, msg];  // done\n}",
+        "outputs": 2,
+        "timeout": 0,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 990,
+        "y": 2140,
+        "wires": [
+            [
+                "e0ad39da2ad46abe"
+            ],
+            [
+                "f1f8623baf9d3537"
+            ]
+        ]
+    },
+    {
+        "id": "f1f8623baf9d3537",
+        "type": "debug",
+        "z": "be1c3f3f839ca819",
+        "name": "debug 21",
+        "active": true,
+        "tosidebar": true,
+        "console": false,
+        "tostatus": false,
+        "complete": "true",
+        "targetType": "full",
+        "statusVal": "",
+        "statusType": "auto",
+        "x": 1180,
+        "y": 2200,
+        "wires": []
+    },
+    {
+        "id": "c5a5fb7b9de73e41",
+        "type": "function",
+        "z": "be1c3f3f839ca819",
+        "name": "attach:from:email to list",
+        "func": "const basePath = \"/zenflowai/storage/email/\";\n// const fileString = msg.file_string || \"\";\n// const fileString = 'attachment/27/image0.jpeg,attachment/27/image1.jpeg,attachment/27/image2.jpeg,attachment/27/image3.jpeg';\n\n// msg.files = fileString\n//     .split(\",\")\n//     .map(p => p.trim())\n//     .filter(p => p.length > 0)\n//     .map(relPath => {\n//         return {\n//             filename: relPath.split(\"/\").pop(),\n//             path: basePath + relPath\n//         };\n//     });\n\n// return msg;\n\n\nmsg.files = (msg.email_find.attachments || [])\n    .filter(a => a.patch && a.patch.length > 0)\n    .map(a => {\n        return {\n            filename: a.filename,\n            path: basePath + a.patch\n        };\n    });\n\nreturn msg;",
+        "outputs": 1,
+        "timeout": 0,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 210,
+        "y": 1480,
+        "wires": [
+            [
+                "58158ff7821b7110"
+            ]
+        ]
+    },
+    {
+        "id": "f475c7c759fed3dc",
+        "type": "function",
+        "z": "be1c3f3f839ca819",
+        "name": "function 12",
+        "func": "const fs = global.get('fs');\n\nmsg.files = msg.files.map(f => {\n    try {\n        node.warn(`Wczytano: ${f.filename} -> ${f.path}`);\n        return {\n            filename: f.filename,\n            file: fs.readFileSync(f.path)\n        };\n    } catch (err) {\n        node.error(`Błąd wczytywania pliku: ${f.path} - ${err.message}`);\n        return null;\n    }\n}).filter(Boolean);\n\nreturn msg;",
+        "outputs": 1,
+        "timeout": 0,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 650,
+        "y": 2280,
+        "wires": [
+            [
+                "79bbefb00ba64ab5",
+                "a6257ebbf14844bf"
+            ]
+        ]
+    },
+    {
+        "id": "a6257ebbf14844bf",
+        "type": "debug",
+        "z": "be1c3f3f839ca819",
+        "name": "debug 23",
+        "active": true,
+        "tosidebar": true,
+        "console": false,
+        "tostatus": false,
+        "complete": "true",
+        "targetType": "full",
+        "statusVal": "",
+        "statusType": "auto",
+        "x": 750,
+        "y": 2460,
+        "wires": []
+    },
+    {
+        "id": "86183fdac91b6d57",
+        "type": "subflow:cb0cbe65f5a7b6e2",
+        "z": "be1c3f3f839ca819",
+        "g": "24acd2baaff30f4c",
+        "name": "",
+        "x": 1030,
+        "y": 1800,
+        "wires": [
+            [
+                "637ef8f0903ac97f"
+            ]
+        ]
+    },
+    {
+        "id": "12cdc8782fc3c323",
+        "type": "debug",
+        "z": "be1c3f3f839ca819",
+        "g": "24acd2baaff30f4c",
+        "name": "debug 18",
+        "active": true,
+        "tosidebar": true,
+        "console": false,
+        "tostatus": false,
+        "complete": "true",
+        "targetType": "full",
+        "statusVal": "",
+        "statusType": "auto",
+        "x": 1510,
+        "y": 1680,
+        "wires": []
+    },
+    {
+        "id": "cd43186167406e89",
+        "type": "debug",
+        "z": "be1c3f3f839ca819",
+        "name": "debug 19",
+        "active": true,
+        "tosidebar": true,
+        "console": false,
+        "tostatus": false,
+        "complete": "true",
+        "targetType": "full",
+        "statusVal": "",
+        "statusType": "auto",
+        "x": 1430,
+        "y": 960,
+        "wires": []
     }
 ]
