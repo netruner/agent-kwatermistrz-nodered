@@ -380,12 +380,12 @@
         ],
         "out": [
             {
-                "x": 960,
-                "y": 80,
+                "x": 940,
+                "y": 340,
                 "wires": [
                     {
                         "id": "f5b4a6fef8e9dbd6",
-                        "port": 0
+                        "port": 1
                     }
                 ]
             }
@@ -579,17 +579,13 @@
             "fd42845d2e4811c2",
             "2820d7330d92ab47",
             "637ef8f0903ac97f",
-            "2ff200c302939b5e",
-            "794fce53fee844fa",
-            "d755982a75b47618",
-            "c4558b8c86d550ac",
             "86183fdac91b6d57",
             "12cdc8782fc3c323"
         ],
         "x": 54,
-        "y": 1579,
-        "w": 1562,
-        "h": 262
+        "y": 1619,
+        "w": 1412,
+        "h": 222
     },
     {
         "id": "b53d3e27e0d7792d",
@@ -3946,7 +3942,7 @@
         "type": "function",
         "z": "bf6e5312884e6967",
         "name": "qrcode:prepare:uuid",
-        "func": "const bwipjs = global.get('bwip-js');\nconst fs = global.get('fs');\nconst path = global.get('path');\n\n// Funkcja pomocnicza do daty w formacie: YYYYMMDDHHMMSS\nconst getTimestamp = () => {\n    const now = new Date();\n    const pad = (n) => n.toString().padStart(2, '0');\n    return `${now.getFullYear()}${pad(now.getMonth() + 1)}${pad(now.getDate())}${pad(now.getHours())}${pad(now.getMinutes())}${pad(now.getSeconds())}`;\n};\n\nconst path_storage = global.get(\"storage\");\nconst path_umowy = global.get(\"path_umowy\");\n\nconst filename = `uuid-qrcode.png`;\nconst filepath = `${path_storage}${path_umowy}${msg.umowa.umowa_year}/${msg.umowa.nr_umowa_new}/${filename}`;\nconst textbarcode = msg.umowa_get.uuid;\nnode.status({ fill: \"blue\", shape: \"dot\", text: textbarcode });\n\nconst folderPath = `${path_storage}${path_umowy}${msg.umowa.umowa_year}/${msg.umowa.nr_umowa_new}`;\nif (!fs.existsSync(folderPath)) {\n    fs.mkdirSync(folderPath, { recursive: true });\n}\n\nbwipjs.toBuffer({\n    bcid: 'qrcode',\n    text: textbarcode,\n    scale: 3,\n    // height: 4,\n    includetext: false,\n    textxalign: 'center',\n}, function (err, png) {\n    if (err) {\n        node.error(\"Błąd generowania barcode\", err);\n        node.status({ fill: \"red\", shape: \"dot\", text: err });\n    } else {\n        fs.writeFileSync(filepath, png);\n\n        msg.barcode_uuid = png.toString('base64');\n        msg.barcode_uuid_filename = filename;\n        msg.barcode_uuid_path = filepath;\n        msg.barcode_uuid_mime = \"image/png\";\n        //\n        node.status({ fill: \"green\", shape: \"dot\", text: global.get(\"getDateTime\")() });\n        node.send(msg);\n        // return msg;\n    }\n});\n\n// return msg;",
+        "func": "const bwipjs = global.get('bwip-js');\nconst fs = global.get('fs');\nconst path = global.get('path');\n\n// Funkcja pomocnicza do daty w formacie: YYYYMMDDHHMMSS\nconst getTimestamp = () => {\n    const now = new Date();\n    const pad = (n) => n.toString().padStart(2, '0');\n    return `${now.getFullYear()}${pad(now.getMonth() + 1)}${pad(now.getDate())}${pad(now.getHours())}${pad(now.getMinutes())}${pad(now.getSeconds())}`;\n};\n\nconst path_storage = global.get(\"storage\");\nconst path_umowy = global.get(\"path_umowy\");\n\nconst filename = `uuid-qrcode.png`;\nconst filepath = `${path_storage}${path_umowy}${msg.umowa.umowa_year}/${msg.umowa.nr_umowa_new}/${filename}`;\n// const textbarcode = msg.umowa_get.uuid;\nconst textbarcode = msg.umowa.umowa_year + \"/\" + msg.umowa.nr_umowa_new;\nnode.status({ fill: \"blue\", shape: \"dot\", text: textbarcode });\n\nconst folderPath = `${path_storage}${path_umowy}${msg.umowa.umowa_year}/${msg.umowa.nr_umowa_new}`;\nif (!fs.existsSync(folderPath)) {\n    fs.mkdirSync(folderPath, { recursive: true });\n}\n\nbwipjs.toBuffer({\n    bcid: 'qrcode',\n    text: textbarcode,\n    scale: 3,\n    // height: 4,\n    includetext: false,\n    textxalign: 'center',\n}, function (err, png) {\n    if (err) {\n        node.error(\"Błąd generowania barcode\", err);\n        node.status({ fill: \"red\", shape: \"dot\", text: err });\n    } else {\n        fs.writeFileSync(filepath, png);\n\n        msg.barcode_uuid = png.toString('base64');\n        msg.barcode_uuid_filename = filename;\n        msg.barcode_uuid_path = filepath;\n        msg.barcode_uuid_mime = \"image/png\";\n        //\n        node.status({ fill: \"green\", shape: \"dot\", text: global.get(\"getDateTime\")() });\n        node.send(msg);\n        // return msg;\n    }\n});\n\n// return msg;",
         "outputs": 1,
         "timeout": 0,
         "noerr": 0,
@@ -5093,7 +5089,7 @@
         "type": "function",
         "z": "be1c3f3f839ca819",
         "name": "email:get:new",
-        "func": "msg.nocodb_t_active = msg.nocodb_t.app_mail_inbox;\n\ndelete msg.heders;\ndelete msg.method;\n\nmsg.payload = {\n    offset: '0',\n    limit: '10',\n    viewId: msg.nocodb_t.app_mail_inbox_view,\n    where: `(status,eq,new)`,\n};\n\nnode.status({ fill: \"green\", shape: \"dot\", text: global.get(\"getDateTime\")() });\nreturn msg;",
+        "func": "msg.nocodb_t_active = msg.nocodb_t.app_mail_inbox;\n\ndelete msg.headers;\ndelete msg.method;\ndelete msg.responseCookies;\n\nmsg.payload = {\n    offset: '0',\n    limit: '10',\n    viewId: msg.nocodb_t.app_mail_inbox_view,\n    where: `(status,eq,new)`,\n};\n\nnode.status({ fill: \"green\", shape: \"dot\", text: global.get(\"getDateTime\")() });\nreturn msg;",
         "outputs": 1,
         "timeout": 0,
         "noerr": 0,
@@ -5551,7 +5547,7 @@
         "links": [
             "432f72cad7c993b3"
         ],
-        "x": 1345,
+        "x": 2175,
         "y": 1180,
         "wires": []
     },
@@ -5615,18 +5611,17 @@
                 "7704455dea750a69"
             ],
             [
-                "4376394ee780c7ec",
                 "cd43186167406e89",
                 "c5a5fb7b9de73e41"
             ],
             [
-                "4376394ee780c7ec"
+                "8521c39907b05f75"
             ],
             [
-                "4376394ee780c7ec"
+                "8521c39907b05f75"
             ],
             [
-                "4376394ee780c7ec"
+                "8521c39907b05f75"
             ]
         ]
     },
@@ -5992,7 +5987,7 @@
         "y": 1180,
         "wires": [
             [
-                "4376394ee780c7ec"
+                "8521c39907b05f75"
             ]
         ]
     },
@@ -6070,12 +6065,10 @@
         "initialize": "",
         "finalize": "",
         "libs": [],
-        "x": 360,
-        "y": 1720,
+        "x": 320,
+        "y": 1800,
         "wires": [
-            [
-                "ebe57c8170dea9e9"
-            ]
+            []
         ]
     },
     {
@@ -6084,12 +6077,11 @@
         "z": "be1c3f3f839ca819",
         "g": "24acd2baaff30f4c",
         "name": "",
-        "x": 630,
+        "x": 370,
         "y": 1720,
         "wires": [
             [
-                "f33441915ef0ebbc",
-                "d755982a75b47618"
+                "f33441915ef0ebbc"
             ]
         ]
     },
@@ -6106,12 +6098,11 @@
         "initialize": "",
         "finalize": "",
         "libs": [],
-        "x": 850,
+        "x": 590,
         "y": 1720,
         "wires": [
             [
-                "d41ccd5e807be2a6",
-                "c4558b8c86d550ac"
+                "d41ccd5e807be2a6"
             ]
         ]
     },
@@ -6121,12 +6112,11 @@
         "z": "be1c3f3f839ca819",
         "g": "24acd2baaff30f4c",
         "name": "",
-        "x": 1050,
+        "x": 810,
         "y": 1720,
         "wires": [
             [
-                "fd42845d2e4811c2",
-                "794fce53fee844fa"
+                "fd42845d2e4811c2"
             ]
         ]
     },
@@ -6143,7 +6133,7 @@
         "initialize": "",
         "finalize": "",
         "libs": [],
-        "x": 1280,
+        "x": 1060,
         "y": 1720,
         "wires": [
             [
@@ -6158,12 +6148,14 @@
         "z": "be1c3f3f839ca819",
         "g": "24acd2baaff30f4c",
         "name": "start-analize_openai",
-        "links": [],
+        "links": [
+            "7e2f867ede23e703"
+        ],
         "x": 170,
-        "y": 1720,
+        "y": 1660,
         "wires": [
             [
-                "4ff8d3d1742d566c"
+                "ebe57c8170dea9e9"
             ]
         ],
         "l": true
@@ -6175,93 +6167,13 @@
         "g": "24acd2baaff30f4c",
         "name": "end-analize_openai",
         "mode": "link",
-        "links": [],
-        "x": 1290,
+        "links": [
+            "3346c19ae8aa21d2"
+        ],
+        "x": 1350,
         "y": 1800,
         "wires": [],
         "l": true
-    },
-    {
-        "id": "2ff200c302939b5e",
-        "type": "inject",
-        "z": "be1c3f3f839ca819",
-        "g": "24acd2baaff30f4c",
-        "name": "",
-        "props": [
-            {
-                "p": "payload"
-            },
-            {
-                "p": "topic",
-                "vt": "str"
-            }
-        ],
-        "repeat": "",
-        "crontab": "",
-        "once": false,
-        "onceDelay": 0.1,
-        "topic": "",
-        "payload": "",
-        "payloadType": "date",
-        "x": 210,
-        "y": 1620,
-        "wires": [
-            [
-                "4ff8d3d1742d566c"
-            ]
-        ]
-    },
-    {
-        "id": "794fce53fee844fa",
-        "type": "debug",
-        "z": "be1c3f3f839ca819",
-        "g": "24acd2baaff30f4c",
-        "name": "debug 15",
-        "active": true,
-        "tosidebar": true,
-        "console": false,
-        "tostatus": false,
-        "complete": "true",
-        "targetType": "full",
-        "statusVal": "",
-        "statusType": "auto",
-        "x": 1230,
-        "y": 1640,
-        "wires": []
-    },
-    {
-        "id": "d755982a75b47618",
-        "type": "debug",
-        "z": "be1c3f3f839ca819",
-        "g": "24acd2baaff30f4c",
-        "name": "debug 16",
-        "active": false,
-        "tosidebar": true,
-        "console": false,
-        "tostatus": false,
-        "complete": "false",
-        "statusVal": "",
-        "statusType": "auto",
-        "x": 810,
-        "y": 1640,
-        "wires": []
-    },
-    {
-        "id": "c4558b8c86d550ac",
-        "type": "debug",
-        "z": "be1c3f3f839ca819",
-        "g": "24acd2baaff30f4c",
-        "name": "debug 17",
-        "active": false,
-        "tosidebar": true,
-        "console": false,
-        "tostatus": false,
-        "complete": "false",
-        "statusVal": "",
-        "statusType": "auto",
-        "x": 1020,
-        "y": 1640,
-        "wires": []
     },
     {
         "id": "79bbefb00ba64ab5",
@@ -6288,7 +6200,7 @@
         "type": "function",
         "z": "be1c3f3f839ca819",
         "name": "Prepare",
-        "func": "node.status({ fill: \"green\", shape: \"dot\", text: global.get(\"getDateTime\")() }); // STATUS\n\n// Pobierz tekst z OCR\n// let ocrImgText = (msg.payload && msg.payload.responses && msg.payload.responses[0] && msg.payload.responses[0].fullTextAnnotation && msg.payload.responses[0].fullTextAnnotation.text) || \"\";\n\n// Pobierz tekst z msg.ocrpdf\n// let ocrPdfText = msg.ocrpdf || \"\";\n\n// Jeżeli oba są puste -> zakończ flow\n// if ((!ocrImgText || ocrImgText.trim() === \"\") && (!ocrPdfText || ocrPdfText.trim() === \"\")) {\n//     node.status({ fill: \"red\", shape: \"dot\", text: global.get(\"getDateTime\")() }); // STATUS\n//     return null;\n// }\n// const ocrText = (ocrImgText && ocrImgText.trim() !== \"\") ? ocrImgText : ocrPdfText;\n\n\n// const ocrText = msg.payload.responses[0].fullTextAnnotation.text;\n// msg.question = `Oto tekst OCR:\\n\\n${ocrText}`;\nmsg.question = \"Czy dokument (storna 4) zawiera podpis ręczny  nad qrcode ? Podpis Uczestnika. Dodatkowo zweryfikuj jaki uuid jest w qrcode. \";\n// msg.files = [\n//     \"asda/jeden.jpg\" ,\n//     \"asdede/dwa.jpg\"\n// ]\n\n// const msg2 = {\n//     topic: \"prepare_ocr_to_ai\",\n//     ocrText: ocrText,\n//     payload: \"ok\"    \n// };\n\n// const uuidv4 = () => {\n//     return 'xxxxxxxx-xxxx-4xxx-yxxx-xxxxxxxxxxxx'.replace(/[xy]/g, function (c) {\n//         let r = Math.random() * 16 | 0, v = c === 'x' ? r : (r & 0x3 | 0x8);\n//         return v.toString(16);\n//     });\n// };\n\n// flow.set(\"uuidv4\", uuidv4());\n\ndelete msg.headers;\ndelete msg.url;\ndelete msg.method;\ndelete msg.statusCode;\ndelete msg.responseUrl;\ndelete msg.redirectList;\n\nnode.status({ fill: \"gray\", shape: \"dot\", text: global.get(\"getDateTime\")() }); // STATUS\nreturn msg;",
+        "func": "node.status({ fill: \"green\", shape: \"dot\", text: global.get(\"getDateTime\")() }); // STATUS\n\nmsg.question = \"Czy dokument (storna 4) zawiera podpis ręczny  nad qrcode ? Podpis Uczestnika. Dodatkowo zweryfikuj jaki nr umowy jest w qrcode. \";\n\ndelete msg.headers;\ndelete msg.url;\ndelete msg.method;\ndelete msg.statusCode;\ndelete msg.responseUrl;\ndelete msg.redirectList;\n\nnode.status({ fill: \"gray\", shape: \"dot\", text: global.get(\"getDateTime\")() }); // STATUS\nreturn msg;",
         "outputs": 1,
         "timeout": "",
         "noerr": 0,
@@ -6299,7 +6211,8 @@
         "y": 1480,
         "wires": [
             [
-                "ebe57c8170dea9e9"
+                "7e2f867ede23e703",
+                "2fcf53c5bddf3933"
             ]
         ]
     },
@@ -6319,8 +6232,8 @@
         "authType": "",
         "senderr": false,
         "headers": [],
-        "x": 1130,
-        "y": 2020,
+        "x": 1370,
+        "y": 2280,
         "wires": [
             [
                 "7c5480d716342e8a"
@@ -6339,8 +6252,8 @@
         "initialize": "",
         "finalize": "",
         "libs": [],
-        "x": 830,
-        "y": 2020,
+        "x": 1070,
+        "y": 2280,
         "wires": [
             [
                 "d40a2becfc894064"
@@ -6359,8 +6272,8 @@
         "initialize": "",
         "finalize": "",
         "libs": [],
-        "x": 990,
-        "y": 2140,
+        "x": 1230,
+        "y": 2400,
         "wires": [
             [
                 "e0ad39da2ad46abe"
@@ -6383,8 +6296,8 @@
         "targetType": "full",
         "statusVal": "",
         "statusType": "auto",
-        "x": 1180,
-        "y": 2200,
+        "x": 1420,
+        "y": 2460,
         "wires": []
     },
     {
@@ -6451,8 +6364,8 @@
         "z": "be1c3f3f839ca819",
         "g": "24acd2baaff30f4c",
         "name": "",
-        "x": 1030,
-        "y": 1800,
+        "x": 1330,
+        "y": 1720,
         "wires": [
             [
                 "637ef8f0903ac97f"
@@ -6473,8 +6386,8 @@
         "targetType": "full",
         "statusVal": "",
         "statusType": "auto",
-        "x": 1510,
-        "y": 1680,
+        "x": 1340,
+        "y": 1660,
         "wires": []
     },
     {
@@ -6492,6 +6405,265 @@
         "statusType": "auto",
         "x": 1430,
         "y": 960,
+        "wires": []
+    },
+    {
+        "id": "7e2f867ede23e703",
+        "type": "link out",
+        "z": "be1c3f3f839ca819",
+        "name": "link out 13",
+        "mode": "link",
+        "links": [
+            "2820d7330d92ab47"
+        ],
+        "x": 565,
+        "y": 1480,
+        "wires": []
+    },
+    {
+        "id": "3346c19ae8aa21d2",
+        "type": "link in",
+        "z": "be1c3f3f839ca819",
+        "name": "link in 7",
+        "links": [
+            "637ef8f0903ac97f"
+        ],
+        "x": 675,
+        "y": 1480,
+        "wires": [
+            [
+                "0379e85ef16424bc",
+                "d2cc40f15037896e"
+            ]
+        ]
+    },
+    {
+        "id": "0379e85ef16424bc",
+        "type": "switch",
+        "z": "be1c3f3f839ca819",
+        "name": "",
+        "property": "responseChatGPT.doc_is_sign",
+        "propertyType": "msg",
+        "rules": [
+            {
+                "t": "true"
+            },
+            {
+                "t": "else"
+            }
+        ],
+        "checkall": "true",
+        "repair": false,
+        "outputs": 2,
+        "x": 830,
+        "y": 1480,
+        "wires": [
+            [
+                "8bbe0f756fef0ef6"
+            ],
+            []
+        ]
+    },
+    {
+        "id": "8bbe0f756fef0ef6",
+        "type": "function",
+        "z": "be1c3f3f839ca819",
+        "name": "copy:makepdf:umowa",
+        "func": "const fs = global.get(\"fs\");\nconst path = global.get(\"path\");\nconst PDFDocument = global.get(\"pdfkit\");  // dodaj do settings.js jeśli nie ma\nconst A4_LANDSCAPE = [841.89, 595.28];\n\nconst path_storage = global.get(\"storage\");\nconst path_umowy = global.get(\"path_umowy\");\nconst path_email = global.get(\"path_email\");\n\nconst attachments = msg.email_find.attachments || [];\nconst umowa_folder = `${path_storage}${path_umowy}${msg.umowa.umowa_year}/${msg.umowa.umowa_nr}/`;\nconst email_folder = `${path_storage}${path_email}`;\nconst path1 = msg.umowa.path_umowa_orginalna;\nmsg.source_file = path.basename(path1);\n\nif (!fs.existsSync(umowa_folder)) {\n    fs.mkdirSync(umowa_folder, { recursive: true });\n}\n\nconst copied_files = [];\n\nfor (const att of attachments) {\n    const src = path.join(email_folder, att.patch); // np. /zenflowai/storage/inbox/attachment/27/image0.jpeg\n    const dest = path.join(umowa_folder, att.filename);\n\n    if (fs.existsSync(src)) {\n        fs.copyFileSync(src, dest);\n        copied_files.push(dest);\n    } else {\n        node.warn(`Plik nie istnieje: ${src}`);\n        node.status({ fill: \"red\", shape: \"dot\", text: `Plik nie istnieje: ${src}` });\n\n    }\n}\n\n// Tworzenie PDF z obrazków\nif (copied_files.length > 0) {\n    const pdfPath = path.join(umowa_folder, \"podpisana-e-\"+msg.source_file);\n    const doc = new PDFDocument({ autoFirstPage: false });\n\n    const writeStream = fs.createWriteStream(pdfPath);\n    doc.pipe(writeStream);\n\n    for (const imgPath of copied_files) {\n        // const { width, height } = doc.openImage(imgPath);\n        // doc.addPage({ size: [width, height] });\n        // doc.image(imgPath, 0, 0);\n\n        // const img = doc.openImage(imgPath);\n        // const width = img.width;\n        // const height = img.height;\n\n        // doc.addPage({ size: [width, height] });\n        // doc.image(img, 0, 0, { width, height: height - 1 }); // delikatna korekta\n\n        const img = doc.openImage(imgPath);\n        doc.addPage({ size: A4_LANDSCAPE });\n\n        doc.image(img, 0, 0, {\n            fit: A4_LANDSCAPE,\n            align: 'center',\n            valign: 'center'\n        });\n        \n    }\n\n    doc.end();\n\n    msg.umowa.path_pdf_zalaczniki = pdfPath;\n    msg.payload = {\n        status: \"ok\",\n        pdf: pdfPath,\n        kopie: copied_files\n    };\n    node.status({ fill: \"green\", shape: \"dot\", text: pdfPath });\n} else {\n    msg.payload = { status: \"brak plików do kopiowania\" };\n    node.status({ fill: \"red\", shape: \"dot\", text: \"brak plików do kopiowania\" });\n}\n\nreturn msg;",
+        "outputs": 1,
+        "timeout": 0,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 1030,
+        "y": 1480,
+        "wires": [
+            [
+                "3414a54310b77c3b",
+                "130b6b391a470d25"
+            ]
+        ]
+    },
+    {
+        "id": "130b6b391a470d25",
+        "type": "function",
+        "z": "be1c3f3f839ca819",
+        "name": "up:umowa_podpisana",
+        "func": "delete msg.headers;\ndelete msg.method;\ndelete msg.responseCookies;\n\nmsg.method = \"PATCH\";\n\nmsg.payload = {\n        \"Id\": msg.umowa.Id,\n        \"umowa_podpisana\": true,\n        \"umowa_podpisana_why\": \"chatgpt\",\n        \"path_umowa_podpisana\": msg.umowa.path_pdf_zalaczniki\n    };\n\nnode.status({ fill: \"green\", shape: \"dot\", text: global.get(\"getDateTime\")() });\nreturn msg;",
+        "outputs": 1,
+        "timeout": 0,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 1480,
+        "y": 1480,
+        "wires": [
+            [
+                "eb1fa11e2db45bd9"
+            ]
+        ]
+    },
+    {
+        "id": "eb1fa11e2db45bd9",
+        "type": "http request",
+        "z": "be1c3f3f839ca819",
+        "name": "NocoDB - ALL",
+        "method": "use",
+        "ret": "obj",
+        "paytoqs": "ignore",
+        "url": "http://{{nocodb_host}}/api/v2/tables/{{nocodb_t_active}}/records",
+        "tls": "",
+        "persist": false,
+        "proxy": "",
+        "insecureHTTPParser": false,
+        "authType": "",
+        "senderr": false,
+        "headers": [
+            {
+                "keyType": "other",
+                "keyValue": "xc-token",
+                "valueType": "msg",
+                "valueValue": "xc_token"
+            },
+            {
+                "keyType": "Content-Type",
+                "keyValue": "",
+                "valueType": "application/json",
+                "valueValue": ""
+            }
+        ],
+        "x": 1700,
+        "y": 1480,
+        "wires": [
+            [
+                "8521c39907b05f75"
+            ]
+        ]
+    },
+    {
+        "id": "3414a54310b77c3b",
+        "type": "debug",
+        "z": "be1c3f3f839ca819",
+        "name": "debug 17",
+        "active": true,
+        "tosidebar": true,
+        "console": false,
+        "tostatus": false,
+        "complete": "true",
+        "targetType": "full",
+        "statusVal": "",
+        "statusType": "auto",
+        "x": 1170,
+        "y": 1400,
+        "wires": []
+    },
+    {
+        "id": "8521c39907b05f75",
+        "type": "function",
+        "z": "be1c3f3f839ca819",
+        "name": "email:set:processed",
+        "func": "msg.nocodb_t_active = msg.nocodb_t.app_mail_inbox;\n\ndelete msg.headers;\ndelete msg.method;\ndelete msg.responseCookies;\n\nmsg.method = \"PATCH\";\n\nmsg.payload = {\n        \"Id\": msg.email.Id,\n        \"status\": \"processed\",\n        \"comment\": msg.umowa.nazwa\n    };\n\nnode.status({ fill: \"green\", shape: \"dot\", text: global.get(\"getDateTime\")() });\nreturn msg;",
+        "outputs": 1,
+        "timeout": 0,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 1780,
+        "y": 1180,
+        "wires": [
+            [
+                "8ed3a2d5bd808a6d"
+            ]
+        ]
+    },
+    {
+        "id": "8ed3a2d5bd808a6d",
+        "type": "http request",
+        "z": "be1c3f3f839ca819",
+        "name": "NocoDB - ALL",
+        "method": "use",
+        "ret": "obj",
+        "paytoqs": "ignore",
+        "url": "http://{{nocodb_host}}/api/v2/tables/{{nocodb_t_active}}/records",
+        "tls": "",
+        "persist": false,
+        "proxy": "",
+        "insecureHTTPParser": false,
+        "authType": "",
+        "senderr": false,
+        "headers": [
+            {
+                "keyType": "other",
+                "keyValue": "xc-token",
+                "valueType": "msg",
+                "valueValue": "xc_token"
+            },
+            {
+                "keyType": "Content-Type",
+                "keyValue": "",
+                "valueType": "application/json",
+                "valueValue": ""
+            }
+        ],
+        "x": 2040,
+        "y": 1180,
+        "wires": [
+            [
+                "4376394ee780c7ec",
+                "cca677982da884c4"
+            ]
+        ]
+    },
+    {
+        "id": "2fcf53c5bddf3933",
+        "type": "debug",
+        "z": "be1c3f3f839ca819",
+        "name": "debug 15",
+        "active": true,
+        "tosidebar": true,
+        "console": false,
+        "tostatus": false,
+        "complete": "true",
+        "targetType": "full",
+        "statusVal": "",
+        "statusType": "auto",
+        "x": 560,
+        "y": 1380,
+        "wires": []
+    },
+    {
+        "id": "d2cc40f15037896e",
+        "type": "debug",
+        "z": "be1c3f3f839ca819",
+        "name": "debug 16",
+        "active": true,
+        "tosidebar": true,
+        "console": false,
+        "tostatus": false,
+        "complete": "false",
+        "statusVal": "",
+        "statusType": "auto",
+        "x": 830,
+        "y": 1360,
+        "wires": []
+    },
+    {
+        "id": "cca677982da884c4",
+        "type": "debug",
+        "z": "be1c3f3f839ca819",
+        "name": "debug 20",
+        "active": true,
+        "tosidebar": true,
+        "console": false,
+        "tostatus": false,
+        "complete": "false",
+        "statusVal": "",
+        "statusType": "auto",
+        "x": 2130,
+        "y": 1100,
         "wires": []
     }
 ]

@@ -1,8 +1,12 @@
 {
     "name": "Kwatermistrz",
     "description": "Kwatermistrz dla Kapitana Bastka",
-    "version": "0.0.1",
-    "dependencies": {},
+    "version": "0.0.2",
+    "dependencies": {
+        "node-red-contrib-email-dynamic": "1.0.1",
+        "node-red-contrib-fs-ops": "1.6.0",
+        "node-red-contrib-queue-gate": "1.5.5"
+    },
     "node-red": {
         "settings": {
             "flowFile": "flows.json",
