@@ -40,9 +40,17 @@
         "env": []
     },
     {
-        "id": "c74ceced8c3687a1",
+        "id": "be1c3f3f839ca819",
         "type": "tab",
-        "label": "Flow 1",
+        "label": "Email:Processing",
+        "disabled": false,
+        "info": "",
+        "env": []
+    },
+    {
+        "id": "5e0f1a41e75562f7",
+        "type": "tab",
+        "label": "Email:New:Check",
         "disabled": false,
         "info": "",
         "env": []
@@ -56,9 +64,9 @@
         "env": []
     },
     {
-        "id": "be1c3f3f839ca819",
+        "id": "c74ceced8c3687a1",
         "type": "tab",
-        "label": "email",
+        "label": "Flow 1",
         "disabled": false,
         "info": "",
         "env": []
@@ -4716,466 +4724,6 @@
         "wires": []
     },
     {
-        "id": "a977c1487e0d24c5",
-        "type": "function",
-        "z": "c74ceced8c3687a1",
-        "name": "function 2",
-        "func": "// const fs = require(\"fs\");\n\n// const createReport = require(\"docx-templates\").default;\nconst createReport = global.get(\"docx-templates\");\n\nconst template = msg.payload;\n\n(async () => {\n    // const template = fs.readFileSync(\"/zewnflowai/umowy/szablon.docx\");\n    // const data = JSON.parse(fs.readFileSync(\"/tmp/dane.json\"));\n\n    const data = {\n        nr_umowy: \"12/12\",\n        data_zawarcia: \"2025-05-24\",\n    };\n\n    const buffer = await createReport({\n        template,\n        data\n    });\n\n    msg.payload = buffer;\n    // fs.writeFileSync(\"/zewnflowai/umowy/wypelniona.docx\", buffer);\n})();",
-        "outputs": 1,
-        "timeout": 0,
-        "noerr": 0,
-        "initialize": "",
-        "finalize": "",
-        "libs": [],
-        "x": 780,
-        "y": 620,
-        "wires": [
-            [
-                "6aadcda335adcd24",
-                "aa20ba6ab7f01f61"
-            ]
-        ]
-    },
-    {
-        "id": "6aadcda335adcd24",
-        "type": "debug",
-        "z": "c74ceced8c3687a1",
-        "name": "debug 4",
-        "active": true,
-        "tosidebar": true,
-        "console": false,
-        "tostatus": false,
-        "complete": "true",
-        "targetType": "full",
-        "statusVal": "",
-        "statusType": "auto",
-        "x": 1000,
-        "y": 540,
-        "wires": []
-    },
-    {
-        "id": "f850f1b4e43d171b",
-        "type": "file in",
-        "z": "c74ceced8c3687a1",
-        "name": "",
-        "filename": "/zenflowai/storage/templates/umowa-mazury.docx",
-        "filenameType": "str",
-        "format": "utf8",
-        "chunk": false,
-        "sendError": false,
-        "encoding": "none",
-        "allProps": false,
-        "x": 450,
-        "y": 620,
-        "wires": [
-            [
-                "a977c1487e0d24c5",
-                "8f267f752b686196"
-            ]
-        ]
-    },
-    {
-        "id": "aa20ba6ab7f01f61",
-        "type": "file",
-        "z": "c74ceced8c3687a1",
-        "name": "",
-        "filename": "/zenflowai/storage/templates/gotowe.docx",
-        "filenameType": "str",
-        "appendNewline": true,
-        "createDir": false,
-        "overwriteFile": "true",
-        "encoding": "none",
-        "x": 1090,
-        "y": 620,
-        "wires": [
-            [
-                "48d0564e608f78b1"
-            ]
-        ]
-    },
-    {
-        "id": "48d0564e608f78b1",
-        "type": "debug",
-        "z": "c74ceced8c3687a1",
-        "name": "debug 5",
-        "active": true,
-        "tosidebar": true,
-        "console": false,
-        "tostatus": false,
-        "complete": "true",
-        "targetType": "full",
-        "statusVal": "",
-        "statusType": "auto",
-        "x": 1290,
-        "y": 540,
-        "wires": []
-    },
-    {
-        "id": "579358545ee05ab1",
-        "type": "inject",
-        "z": "c74ceced8c3687a1",
-        "name": "",
-        "props": [
-            {
-                "p": "payload"
-            },
-            {
-                "p": "topic",
-                "vt": "str"
-            }
-        ],
-        "repeat": "",
-        "crontab": "",
-        "once": false,
-        "onceDelay": 0.1,
-        "topic": "",
-        "payload": "",
-        "payloadType": "date",
-        "x": 160,
-        "y": 500,
-        "wires": [
-            [
-                "b118b96dcac8580e"
-            ]
-        ]
-    },
-    {
-        "id": "b118b96dcac8580e",
-        "type": "function",
-        "z": "c74ceced8c3687a1",
-        "name": "function 3",
-        "func": "const os = global.get(\"os\");\nmsg.payload = os.platform();\nreturn msg;",
-        "outputs": 1,
-        "timeout": 0,
-        "noerr": 0,
-        "initialize": "",
-        "finalize": "",
-        "libs": [],
-        "x": 380,
-        "y": 500,
-        "wires": [
-            [
-                "cc90b15d5b2ee908"
-            ]
-        ]
-    },
-    {
-        "id": "cc90b15d5b2ee908",
-        "type": "debug",
-        "z": "c74ceced8c3687a1",
-        "name": "debug 6",
-        "active": true,
-        "tosidebar": true,
-        "console": false,
-        "tostatus": false,
-        "complete": "false",
-        "statusVal": "",
-        "statusType": "auto",
-        "x": 590,
-        "y": 500,
-        "wires": []
-    },
-    {
-        "id": "8f267f752b686196",
-        "type": "debug",
-        "z": "c74ceced8c3687a1",
-        "name": "debug 7",
-        "active": true,
-        "tosidebar": true,
-        "console": false,
-        "tostatus": false,
-        "complete": "true",
-        "targetType": "full",
-        "statusVal": "",
-        "statusType": "auto",
-        "x": 780,
-        "y": 540,
-        "wires": []
-    },
-    {
-        "id": "1722428ed71a4c40",
-        "type": "inject",
-        "z": "c74ceced8c3687a1",
-        "name": "",
-        "props": [
-            {
-                "p": "payload"
-            },
-            {
-                "p": "topic",
-                "vt": "str"
-            }
-        ],
-        "repeat": "",
-        "crontab": "",
-        "once": false,
-        "onceDelay": 0.1,
-        "topic": "",
-        "payload": "",
-        "payloadType": "date",
-        "x": 120,
-        "y": 560,
-        "wires": [
-            [
-                "8f267f752b686196",
-                "f850f1b4e43d171b"
-            ]
-        ]
-    },
-    {
-        "id": "0593c53023e99d07",
-        "type": "function",
-        "z": "c74ceced8c3687a1",
-        "name": "function 4",
-        "func": "// Get required modules from global context (configured in settings.js)\nconst fs = global.get('fs');\nconst path = global.get('path');\nconst createReport = global.get('docx_templates').createReport;\n\n(async () => {\n    try {\n        const templatePath = \"/zenflowai/storage/templates/umowa-mazury.docx\";\n\n        if (!fs.existsSync(templatePath)) {\n            throw new Error(`Template nie istnieje: ${templatePath}`);\n        }\n\n        const template = fs.readFileSync(templatePath);\n\n        const data = {\n            nr_umowy: \"12/12\",\n            data_zawarcia: \"2025-05-24\",\n        };\n\n        console.log(\"Generowanie dokumentu...\");\n\n        const buffer = await createReport({\n            template,\n            data\n        });\n\n        msg.payload = buffer;\n\n        const outputPath = \"/zenflowai/storage/templates/umowa-mazury-wypelniona.docx\";\n        fs.writeFileSync(outputPath, buffer);\n\n        console.log(`Dokument zapisany: ${outputPath}`);\n\n        node.send(msg);\n\n    } catch (error) {\n        console.error(\"Błąd:\", error);\n        node.error(error.message, msg);\n    }\n})();",
-        "outputs": 1,
-        "timeout": 0,
-        "noerr": 0,
-        "initialize": "",
-        "finalize": "",
-        "libs": [],
-        "x": 420,
-        "y": 760,
-        "wires": [
-            [
-                "b06dcd616dd28661"
-            ]
-        ]
-    },
-    {
-        "id": "ef054bf8b4f4d793",
-        "type": "inject",
-        "z": "c74ceced8c3687a1",
-        "name": "",
-        "props": [
-            {
-                "p": "payload"
-            },
-            {
-                "p": "topic",
-                "vt": "str"
-            }
-        ],
-        "repeat": "",
-        "crontab": "",
-        "once": false,
-        "onceDelay": 0.1,
-        "topic": "",
-        "payload": "",
-        "payloadType": "date",
-        "x": 130,
-        "y": 740,
-        "wires": [
-            [
-                "0593c53023e99d07",
-                "b06dcd616dd28661"
-            ]
-        ]
-    },
-    {
-        "id": "b06dcd616dd28661",
-        "type": "debug",
-        "z": "c74ceced8c3687a1",
-        "name": "debug 8",
-        "active": true,
-        "tosidebar": true,
-        "console": false,
-        "tostatus": false,
-        "complete": "true",
-        "targetType": "full",
-        "statusVal": "",
-        "statusType": "auto",
-        "x": 690,
-        "y": 740,
-        "wires": []
-    },
-    {
-        "id": "39aa69ec25e10e77",
-        "type": "function",
-        "z": "c74ceced8c3687a1",
-        "name": "function 5",
-        "func": "console.log(\"fs z global:\", global.get(\"fs\"));\nconsole.log(\"Dostępne klucze w global:\", Object.keys(global.keys || {}));\nreturn msg;",
-        "outputs": 1,
-        "timeout": 0,
-        "noerr": 0,
-        "initialize": "",
-        "finalize": "",
-        "libs": [],
-        "x": 420,
-        "y": 840,
-        "wires": [
-            [
-                "6ec1c583de8e5378"
-            ]
-        ]
-    },
-    {
-        "id": "3eb17527ac4b17b4",
-        "type": "inject",
-        "z": "c74ceced8c3687a1",
-        "name": "",
-        "props": [
-            {
-                "p": "payload"
-            },
-            {
-                "p": "topic",
-                "vt": "str"
-            }
-        ],
-        "repeat": "",
-        "crontab": "",
-        "once": false,
-        "onceDelay": 0.1,
-        "topic": "",
-        "payload": "",
-        "payloadType": "date",
-        "x": 210,
-        "y": 820,
-        "wires": [
-            [
-                "39aa69ec25e10e77"
-            ]
-        ]
-    },
-    {
-        "id": "6ec1c583de8e5378",
-        "type": "debug",
-        "z": "c74ceced8c3687a1",
-        "name": "debug 9",
-        "active": true,
-        "tosidebar": true,
-        "console": false,
-        "tostatus": false,
-        "complete": "true",
-        "targetType": "full",
-        "statusVal": "",
-        "statusType": "auto",
-        "x": 730,
-        "y": 820,
-        "wires": []
-    },
-    {
-        "id": "0feee4d4edd3a765",
-        "type": "subflow:7a14c201fa805842",
-        "z": "7ac738eef3d259eb",
-        "name": "",
-        "x": 230,
-        "y": 560,
-        "wires": [
-            []
-        ]
-    },
-    {
-        "id": "e1c6dd31625d6476",
-        "type": "subflow:aa23e6e4889d7c8b",
-        "z": "7ac738eef3d259eb",
-        "name": "",
-        "x": 240,
-        "y": 640,
-        "wires": [
-            []
-        ]
-    },
-    {
-        "id": "a4e8d143cd70f13e",
-        "type": "subflow:c977f243f2f9f757",
-        "z": "7ac738eef3d259eb",
-        "name": "",
-        "x": 240,
-        "y": 720,
-        "wires": [
-            []
-        ]
-    },
-    {
-        "id": "5062fa87b6bfcd4b",
-        "type": "subflow:742f4a5525c4b3be",
-        "z": "7ac738eef3d259eb",
-        "name": "",
-        "x": 240,
-        "y": 480,
-        "wires": [
-            []
-        ]
-    },
-    {
-        "id": "0514578f98829e26",
-        "type": "subflow:03b285947d86a284",
-        "z": "7ac738eef3d259eb",
-        "name": "",
-        "x": 280,
-        "y": 260,
-        "wires": [
-            []
-        ]
-    },
-    {
-        "id": "33846803aebf9374",
-        "type": "inject",
-        "z": "7ac738eef3d259eb",
-        "name": "",
-        "props": [
-            {
-                "p": "payload"
-            },
-            {
-                "p": "topic",
-                "vt": "str"
-            }
-        ],
-        "repeat": "",
-        "crontab": "",
-        "once": false,
-        "onceDelay": 0.1,
-        "topic": "",
-        "payload": "",
-        "payloadType": "date",
-        "x": 580,
-        "y": 200,
-        "wires": [
-            [
-                "dcadc820f6d6ecee"
-            ]
-        ]
-    },
-    {
-        "id": "dcadc820f6d6ecee",
-        "type": "function",
-        "z": "7ac738eef3d259eb",
-        "name": "function 1",
-        "func": "const bwipjs = global.get('bwip-js');\nconst fs = global.get('fs');\nconst path = global.get('path');\n\n// Funkcja pomocnicza do daty w formacie: YYYYMMDDHHMMSS\nconst getTimestamp = () => {\n    const now = new Date();\n    const pad = (n) => n.toString().padStart(2, '0');\n    return `${now.getFullYear()}${pad(now.getMonth() + 1)}${pad(now.getDate())}${pad(now.getHours())}${pad(now.getMinutes())}${pad(now.getSeconds())}`;\n};\n\n// Tworzymy unikalną nazwę pliku\nconst filename = `barcode-${getTimestamp()}.png`;\nconst filepath = `/zenflowai/storage/tmp/${filename}`;\n\nbwipjs.toBuffer({\n    bcid: 'qrcode',\n    text: '123456789012',\n    scale: 4,\n    // height: 4,\n    includetext: true,\n    textxalign: 'center',\n}, function (err, png) {\n    if (err) {\n        node.error(\"Błąd generowania barcode\", err);\n    } else {\n        fs.writeFileSync(filepath, png);\n\n        msg.payload = png.toString('base64');\n        msg.barcode_filename = filename;\n        msg.barcode_path = filepath;\n        msg.barcode_mime = \"image/png\";\n\n        return node.send(msg);\n    }\n});",
-        "outputs": 1,
-        "timeout": 0,
-        "noerr": 0,
-        "initialize": "",
-        "finalize": "",
-        "libs": [],
-        "x": 780,
-        "y": 260,
-        "wires": [
-            [
-                "0f041c1641a0f5f1"
-            ]
-        ]
-    },
-    {
-        "id": "0f041c1641a0f5f1",
-        "type": "debug",
-        "z": "7ac738eef3d259eb",
-        "name": "debug 2",
-        "active": true,
-        "tosidebar": true,
-        "console": false,
-        "tostatus": false,
-        "complete": "false",
-        "statusVal": "",
-        "statusType": "auto",
-        "x": 950,
-        "y": 240,
-        "wires": []
-    },
-    {
         "id": "8416ddccd2a3af4b",
         "type": "inject",
         "z": "be1c3f3f839ca819",
@@ -5189,14 +4737,14 @@
                 "vt": "str"
             }
         ],
-        "repeat": "",
+        "repeat": "23",
         "crontab": "",
         "once": false,
         "onceDelay": 0.1,
         "topic": "",
         "payload": "",
         "payloadType": "date",
-        "x": 180,
+        "x": 190,
         "y": 100,
         "wires": [
             [
@@ -5257,7 +4805,6 @@
         "y": 100,
         "wires": [
             [
-                "179ae273d6c373f9",
                 "04ed4b3b6c47ab86"
             ]
         ]
@@ -5274,22 +4821,6 @@
                 "f12da4027c5395e9"
             ]
         ]
-    },
-    {
-        "id": "179ae273d6c373f9",
-        "type": "debug",
-        "z": "be1c3f3f839ca819",
-        "name": "debug 3",
-        "active": true,
-        "tosidebar": true,
-        "console": false,
-        "tostatus": false,
-        "complete": "false",
-        "statusVal": "",
-        "statusType": "auto",
-        "x": 860,
-        "y": 40,
-        "wires": []
     },
     {
         "id": "344f4fdbcc7aa161",
@@ -5543,7 +5074,7 @@
         "y": 180,
         "wires": [
             [
-                "344f4fdbcc7aa161"
+                "7e2415a1a8fb10f8"
             ]
         ]
     },
@@ -5798,7 +5329,7 @@
         "type": "function",
         "z": "be1c3f3f839ca819",
         "name": "checsume:sha256",
-        "func": "const path = global.get(\"path\");\n\nconst path_storage = global.get(\"storage\");\n// global.set(\"path_template_umowy\", \"teamplates/umowy/\")\nconst path_umowy = global.get(\"path_umowy\");\nconst path_email = global.get(\"path_email\");\n\n// global.set(\"path_tmp\", \"tmp/\")\n\nconst crypto = global.get(\"crypto\");  // musisz mieć `crypto` jako globalny moduł\nconst fs = global.get(\"fs\");\n\nconst path1 = msg.umowa.path_umowa_orginalna;  // ścieżka do oryginału\nconst path2 = path_storage + path_email + msg.email_find.attachments[0].patch; // ścieżka do rzekomo podpisanego pliku\n\nconst buffer1 = fs.readFileSync(path1);\nconst buffer2 = fs.readFileSync(path2);\n\nconst hash1 = crypto.createHash('sha256').update(buffer1).digest('hex');\nconst hash2 = crypto.createHash('sha256').update(buffer2).digest('hex');\n\nmsg.hash_diff = hash1 !== hash2;\nmsg.hash_input = hash1;\nmsg.hash_signed = hash2;\n\nmsg.source_path = path.dirname(path2) + path.sep;\nmsg.source_file = path.basename(path2);\nmsg.dest_path = path_storage + path_umowy + msg.umowa.umowa_year + \"/\" + msg.umowa.umowa_nr + \"/\";\nmsg.dest_file = \"podpisana\" + \"-\" + path.basename(path2);\n\nmsg.path_umowa_podpisana_email_pdf = msg.dest_path + msg.dest_file;\n\nnode.status({ fill: \"green\", shape: \"dot\", text: global.get(\"getDateTime\")() });\nreturn msg;",
+        "func": "const path = global.get(\"path\");\n\nconst path_storage = global.get(\"storage\");\n// global.set(\"path_template_umowy\", \"teamplates/umowy/\")\nconst path_umowy = global.get(\"path_umowy\");\nconst path_email = global.get(\"path_email\");\n\n// global.set(\"path_tmp\", \"tmp/\")\n\nconst crypto = global.get(\"crypto\");  // musisz mieć `crypto` jako globalny moduł\nconst fs = global.get(\"fs\");\n\nconst path1 = msg.umowa.path_umowa_orginalna;  // ścieżka do oryginału\nconst path2 = msg.email_find.attachments[0].patch; // ścieżka do rzekomo podpisanego pliku\n//path_storage + path_email + \nconst buffer1 = fs.readFileSync(path1);\nconst buffer2 = fs.readFileSync(path2);\n\nconst hash1 = crypto.createHash('sha256').update(buffer1).digest('hex');\nconst hash2 = crypto.createHash('sha256').update(buffer2).digest('hex');\n\nmsg.hash_diff = hash1 !== hash2;\nmsg.hash_input = hash1;\nmsg.hash_signed = hash2;\n\nmsg.source_path = path.dirname(path2) + path.sep;\nmsg.source_file = path.basename(path2);\nmsg.dest_path = path_storage + path_umowy + msg.umowa.umowa_year + \"/\" + msg.umowa.umowa_nr + \"/\";\nmsg.dest_file = \"podpisana\" + \"-\" + path.basename(path2);\n\nmsg.path_umowa_podpisana_email_pdf = msg.dest_path + msg.dest_file;\n\nnode.status({ fill: \"green\", shape: \"dot\", text: global.get(\"getDateTime\")() });\nreturn msg;",
         "outputs": 1,
         "timeout": 0,
         "noerr": 0,
@@ -6784,6 +6315,553 @@
         "statusType": "auto",
         "x": 2130,
         "y": 1100,
+        "wires": []
+    },
+    {
+        "id": "1f03db0d3558b040",
+        "type": "inject",
+        "z": "5e0f1a41e75562f7",
+        "name": "",
+        "props": [
+            {
+                "p": "payload"
+            },
+            {
+                "p": "topic",
+                "vt": "str"
+            }
+        ],
+        "repeat": "600",
+        "crontab": "",
+        "once": false,
+        "onceDelay": 0.1,
+        "topic": "",
+        "payload": "",
+        "payloadType": "date",
+        "x": 250,
+        "y": 80,
+        "wires": [
+            [
+                "6d29c326b6ee5d18"
+            ]
+        ]
+    },
+    {
+        "id": "6d29c326b6ee5d18",
+        "type": "function",
+        "z": "5e0f1a41e75562f7",
+        "name": "get:email",
+        "func": "msg.payload = ``;\nmsg.topic = \"get_email\";\nreturn msg;",
+        "outputs": 1,
+        "timeout": 0,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 440,
+        "y": 80,
+        "wires": [
+            [
+                "325b4eee5d4fe5f9"
+            ]
+        ]
+    },
+    {
+        "id": "325b4eee5d4fe5f9",
+        "type": "exec",
+        "z": "5e0f1a41e75562f7",
+        "command": "cd /zenflowai/mailgate && node /zenflowai/mailgate/check-inbox.js",
+        "addpay": "",
+        "append": "",
+        "useSpawn": "false",
+        "timer": "",
+        "winHide": false,
+        "oldrc": false,
+        "name": "Get Email",
+        "x": 640,
+        "y": 80,
+        "wires": [
+            [],
+            [],
+            [
+                "bbbdc0911fa1aa9a"
+            ]
+        ]
+    },
+    {
+        "id": "bbbdc0911fa1aa9a",
+        "type": "debug",
+        "z": "5e0f1a41e75562f7",
+        "name": "debug 25",
+        "active": true,
+        "tosidebar": true,
+        "console": false,
+        "tostatus": false,
+        "complete": "false",
+        "statusVal": "",
+        "statusType": "auto",
+        "x": 840,
+        "y": 140,
+        "wires": []
+    },
+    {
+        "id": "0feee4d4edd3a765",
+        "type": "subflow:7a14c201fa805842",
+        "z": "7ac738eef3d259eb",
+        "name": "",
+        "x": 230,
+        "y": 560,
+        "wires": [
+            []
+        ]
+    },
+    {
+        "id": "e1c6dd31625d6476",
+        "type": "subflow:aa23e6e4889d7c8b",
+        "z": "7ac738eef3d259eb",
+        "name": "",
+        "x": 240,
+        "y": 640,
+        "wires": [
+            []
+        ]
+    },
+    {
+        "id": "a4e8d143cd70f13e",
+        "type": "subflow:c977f243f2f9f757",
+        "z": "7ac738eef3d259eb",
+        "name": "",
+        "x": 240,
+        "y": 720,
+        "wires": [
+            []
+        ]
+    },
+    {
+        "id": "5062fa87b6bfcd4b",
+        "type": "subflow:742f4a5525c4b3be",
+        "z": "7ac738eef3d259eb",
+        "name": "",
+        "x": 240,
+        "y": 480,
+        "wires": [
+            []
+        ]
+    },
+    {
+        "id": "0514578f98829e26",
+        "type": "subflow:03b285947d86a284",
+        "z": "7ac738eef3d259eb",
+        "name": "",
+        "x": 280,
+        "y": 260,
+        "wires": [
+            []
+        ]
+    },
+    {
+        "id": "33846803aebf9374",
+        "type": "inject",
+        "z": "7ac738eef3d259eb",
+        "name": "",
+        "props": [
+            {
+                "p": "payload"
+            },
+            {
+                "p": "topic",
+                "vt": "str"
+            }
+        ],
+        "repeat": "",
+        "crontab": "",
+        "once": false,
+        "onceDelay": 0.1,
+        "topic": "",
+        "payload": "",
+        "payloadType": "date",
+        "x": 580,
+        "y": 200,
+        "wires": [
+            [
+                "dcadc820f6d6ecee"
+            ]
+        ]
+    },
+    {
+        "id": "dcadc820f6d6ecee",
+        "type": "function",
+        "z": "7ac738eef3d259eb",
+        "name": "function 1",
+        "func": "const bwipjs = global.get('bwip-js');\nconst fs = global.get('fs');\nconst path = global.get('path');\n\n// Funkcja pomocnicza do daty w formacie: YYYYMMDDHHMMSS\nconst getTimestamp = () => {\n    const now = new Date();\n    const pad = (n) => n.toString().padStart(2, '0');\n    return `${now.getFullYear()}${pad(now.getMonth() + 1)}${pad(now.getDate())}${pad(now.getHours())}${pad(now.getMinutes())}${pad(now.getSeconds())}`;\n};\n\n// Tworzymy unikalną nazwę pliku\nconst filename = `barcode-${getTimestamp()}.png`;\nconst filepath = `/zenflowai/storage/tmp/${filename}`;\n\nbwipjs.toBuffer({\n    bcid: 'qrcode',\n    text: '123456789012',\n    scale: 4,\n    // height: 4,\n    includetext: true,\n    textxalign: 'center',\n}, function (err, png) {\n    if (err) {\n        node.error(\"Błąd generowania barcode\", err);\n    } else {\n        fs.writeFileSync(filepath, png);\n\n        msg.payload = png.toString('base64');\n        msg.barcode_filename = filename;\n        msg.barcode_path = filepath;\n        msg.barcode_mime = \"image/png\";\n\n        return node.send(msg);\n    }\n});",
+        "outputs": 1,
+        "timeout": 0,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 780,
+        "y": 260,
+        "wires": [
+            [
+                "0f041c1641a0f5f1"
+            ]
+        ]
+    },
+    {
+        "id": "0f041c1641a0f5f1",
+        "type": "debug",
+        "z": "7ac738eef3d259eb",
+        "name": "debug 2",
+        "active": true,
+        "tosidebar": true,
+        "console": false,
+        "tostatus": false,
+        "complete": "false",
+        "statusVal": "",
+        "statusType": "auto",
+        "x": 950,
+        "y": 240,
+        "wires": []
+    },
+    {
+        "id": "a977c1487e0d24c5",
+        "type": "function",
+        "z": "c74ceced8c3687a1",
+        "name": "function 2",
+        "func": "// const fs = require(\"fs\");\n\n// const createReport = require(\"docx-templates\").default;\nconst createReport = global.get(\"docx-templates\");\n\nconst template = msg.payload;\n\n(async () => {\n    // const template = fs.readFileSync(\"/zewnflowai/umowy/szablon.docx\");\n    // const data = JSON.parse(fs.readFileSync(\"/tmp/dane.json\"));\n\n    const data = {\n        nr_umowy: \"12/12\",\n        data_zawarcia: \"2025-05-24\",\n    };\n\n    const buffer = await createReport({\n        template,\n        data\n    });\n\n    msg.payload = buffer;\n    // fs.writeFileSync(\"/zewnflowai/umowy/wypelniona.docx\", buffer);\n})();",
+        "outputs": 1,
+        "timeout": 0,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 780,
+        "y": 620,
+        "wires": [
+            [
+                "6aadcda335adcd24",
+                "aa20ba6ab7f01f61"
+            ]
+        ]
+    },
+    {
+        "id": "6aadcda335adcd24",
+        "type": "debug",
+        "z": "c74ceced8c3687a1",
+        "name": "debug 4",
+        "active": true,
+        "tosidebar": true,
+        "console": false,
+        "tostatus": false,
+        "complete": "true",
+        "targetType": "full",
+        "statusVal": "",
+        "statusType": "auto",
+        "x": 1000,
+        "y": 540,
+        "wires": []
+    },
+    {
+        "id": "f850f1b4e43d171b",
+        "type": "file in",
+        "z": "c74ceced8c3687a1",
+        "name": "",
+        "filename": "/zenflowai/storage/templates/umowa-mazury.docx",
+        "filenameType": "str",
+        "format": "utf8",
+        "chunk": false,
+        "sendError": false,
+        "encoding": "none",
+        "allProps": false,
+        "x": 450,
+        "y": 620,
+        "wires": [
+            [
+                "a977c1487e0d24c5",
+                "8f267f752b686196"
+            ]
+        ]
+    },
+    {
+        "id": "aa20ba6ab7f01f61",
+        "type": "file",
+        "z": "c74ceced8c3687a1",
+        "name": "",
+        "filename": "/zenflowai/storage/templates/gotowe.docx",
+        "filenameType": "str",
+        "appendNewline": true,
+        "createDir": false,
+        "overwriteFile": "true",
+        "encoding": "none",
+        "x": 1090,
+        "y": 620,
+        "wires": [
+            [
+                "48d0564e608f78b1"
+            ]
+        ]
+    },
+    {
+        "id": "48d0564e608f78b1",
+        "type": "debug",
+        "z": "c74ceced8c3687a1",
+        "name": "debug 5",
+        "active": true,
+        "tosidebar": true,
+        "console": false,
+        "tostatus": false,
+        "complete": "true",
+        "targetType": "full",
+        "statusVal": "",
+        "statusType": "auto",
+        "x": 1290,
+        "y": 540,
+        "wires": []
+    },
+    {
+        "id": "579358545ee05ab1",
+        "type": "inject",
+        "z": "c74ceced8c3687a1",
+        "name": "",
+        "props": [
+            {
+                "p": "payload"
+            },
+            {
+                "p": "topic",
+                "vt": "str"
+            }
+        ],
+        "repeat": "",
+        "crontab": "",
+        "once": false,
+        "onceDelay": 0.1,
+        "topic": "",
+        "payload": "",
+        "payloadType": "date",
+        "x": 160,
+        "y": 500,
+        "wires": [
+            [
+                "b118b96dcac8580e"
+            ]
+        ]
+    },
+    {
+        "id": "b118b96dcac8580e",
+        "type": "function",
+        "z": "c74ceced8c3687a1",
+        "name": "function 3",
+        "func": "const os = global.get(\"os\");\nmsg.payload = os.platform();\nreturn msg;",
+        "outputs": 1,
+        "timeout": 0,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 380,
+        "y": 500,
+        "wires": [
+            [
+                "cc90b15d5b2ee908"
+            ]
+        ]
+    },
+    {
+        "id": "cc90b15d5b2ee908",
+        "type": "debug",
+        "z": "c74ceced8c3687a1",
+        "name": "debug 6",
+        "active": true,
+        "tosidebar": true,
+        "console": false,
+        "tostatus": false,
+        "complete": "false",
+        "statusVal": "",
+        "statusType": "auto",
+        "x": 590,
+        "y": 500,
+        "wires": []
+    },
+    {
+        "id": "8f267f752b686196",
+        "type": "debug",
+        "z": "c74ceced8c3687a1",
+        "name": "debug 7",
+        "active": true,
+        "tosidebar": true,
+        "console": false,
+        "tostatus": false,
+        "complete": "true",
+        "targetType": "full",
+        "statusVal": "",
+        "statusType": "auto",
+        "x": 780,
+        "y": 540,
+        "wires": []
+    },
+    {
+        "id": "1722428ed71a4c40",
+        "type": "inject",
+        "z": "c74ceced8c3687a1",
+        "name": "",
+        "props": [
+            {
+                "p": "payload"
+            },
+            {
+                "p": "topic",
+                "vt": "str"
+            }
+        ],
+        "repeat": "",
+        "crontab": "",
+        "once": false,
+        "onceDelay": 0.1,
+        "topic": "",
+        "payload": "",
+        "payloadType": "date",
+        "x": 120,
+        "y": 560,
+        "wires": [
+            [
+                "8f267f752b686196",
+                "f850f1b4e43d171b"
+            ]
+        ]
+    },
+    {
+        "id": "0593c53023e99d07",
+        "type": "function",
+        "z": "c74ceced8c3687a1",
+        "name": "function 4",
+        "func": "// Get required modules from global context (configured in settings.js)\nconst fs = global.get('fs');\nconst path = global.get('path');\nconst createReport = global.get('docx_templates').createReport;\n\n(async () => {\n    try {\n        const templatePath = \"/zenflowai/storage/templates/umowa-mazury.docx\";\n\n        if (!fs.existsSync(templatePath)) {\n            throw new Error(`Template nie istnieje: ${templatePath}`);\n        }\n\n        const template = fs.readFileSync(templatePath);\n\n        const data = {\n            nr_umowy: \"12/12\",\n            data_zawarcia: \"2025-05-24\",\n        };\n\n        console.log(\"Generowanie dokumentu...\");\n\n        const buffer = await createReport({\n            template,\n            data\n        });\n\n        msg.payload = buffer;\n\n        const outputPath = \"/zenflowai/storage/templates/umowa-mazury-wypelniona.docx\";\n        fs.writeFileSync(outputPath, buffer);\n\n        console.log(`Dokument zapisany: ${outputPath}`);\n\n        node.send(msg);\n\n    } catch (error) {\n        console.error(\"Błąd:\", error);\n        node.error(error.message, msg);\n    }\n})();",
+        "outputs": 1,
+        "timeout": 0,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 420,
+        "y": 760,
+        "wires": [
+            [
+                "b06dcd616dd28661"
+            ]
+        ]
+    },
+    {
+        "id": "ef054bf8b4f4d793",
+        "type": "inject",
+        "z": "c74ceced8c3687a1",
+        "name": "",
+        "props": [
+            {
+                "p": "payload"
+            },
+            {
+                "p": "topic",
+                "vt": "str"
+            }
+        ],
+        "repeat": "",
+        "crontab": "",
+        "once": false,
+        "onceDelay": 0.1,
+        "topic": "",
+        "payload": "",
+        "payloadType": "date",
+        "x": 130,
+        "y": 740,
+        "wires": [
+            [
+                "0593c53023e99d07",
+                "b06dcd616dd28661"
+            ]
+        ]
+    },
+    {
+        "id": "b06dcd616dd28661",
+        "type": "debug",
+        "z": "c74ceced8c3687a1",
+        "name": "debug 8",
+        "active": true,
+        "tosidebar": true,
+        "console": false,
+        "tostatus": false,
+        "complete": "true",
+        "targetType": "full",
+        "statusVal": "",
+        "statusType": "auto",
+        "x": 690,
+        "y": 740,
+        "wires": []
+    },
+    {
+        "id": "39aa69ec25e10e77",
+        "type": "function",
+        "z": "c74ceced8c3687a1",
+        "name": "function 5",
+        "func": "console.log(\"fs z global:\", global.get(\"fs\"));\nconsole.log(\"Dostępne klucze w global:\", Object.keys(global.keys || {}));\nreturn msg;",
+        "outputs": 1,
+        "timeout": 0,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 420,
+        "y": 840,
+        "wires": [
+            [
+                "6ec1c583de8e5378"
+            ]
+        ]
+    },
+    {
+        "id": "3eb17527ac4b17b4",
+        "type": "inject",
+        "z": "c74ceced8c3687a1",
+        "name": "",
+        "props": [
+            {
+                "p": "payload"
+            },
+            {
+                "p": "topic",
+                "vt": "str"
+            }
+        ],
+        "repeat": "",
+        "crontab": "",
+        "once": false,
+        "onceDelay": 0.1,
+        "topic": "",
+        "payload": "",
+        "payloadType": "date",
+        "x": 210,
+        "y": 820,
+        "wires": [
+            [
+                "39aa69ec25e10e77"
+            ]
+        ]
+    },
+    {
+        "id": "6ec1c583de8e5378",
+        "type": "debug",
+        "z": "c74ceced8c3687a1",
+        "name": "debug 9",
+        "active": true,
+        "tosidebar": true,
+        "console": false,
+        "tostatus": false,
+        "complete": "true",
+        "targetType": "full",
+        "statusVal": "",
+        "statusType": "auto",
+        "x": 730,
+        "y": 820,
         "wires": []
     }
 ]
