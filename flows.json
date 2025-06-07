@@ -414,12 +414,15 @@
             "6fdc192e553c1f08",
             "735f7d3bd2c17e95",
             "cc7083de28d2431d",
-            "b7688480.6338"
+            "b7688480.6338",
+            "aeefc12bab89217d",
+            "e8a87fd21d80a914",
+            "2e4b1b679b6a73c1"
         ],
         "x": 34,
-        "y": 179,
+        "y": 139,
         "w": 792,
-        "h": 302
+        "h": 402
     },
     {
         "id": "4f2350069ea4f77b",
@@ -588,11 +591,37 @@
         "h": 222
     },
     {
+        "id": "a27a260c5543dd9b",
+        "type": "group",
+        "z": "8a595db6babaf80e",
+        "name": "send email confirmation email",
+        "style": {
+            "label": true
+        },
+        "nodes": [
+            "23bc26edc4890059",
+            "45ddc02187c0cca4",
+            "45f34c55d1865088",
+            "adff4f876ee6b8db",
+            "193521fa10b04844",
+            "7e71c160d6b3bdef",
+            "1438e47a6d3d8d47",
+            "ac8cbb807a19bde8",
+            "21e185dded19e0ef",
+            "f4e3c0bd70abe439",
+            "7a0422b57c8d6b62"
+        ],
+        "x": 24,
+        "y": 579,
+        "w": 1232,
+        "h": 182
+    },
+    {
         "id": "b53d3e27e0d7792d",
         "type": "function",
         "z": "03b285947d86a284",
         "name": "Init - ZenFlowAI",
-        "func": "\n// const uuidv4 = () => {\n//     return 'xxxxxxxx-xxxx-4xxx-yxxx-xxxxxxxxxxxx'.replace(/[xy]/g, function (c) {\n//         let r = Math.random() * 16 | 0, v = c === 'x' ? r : (r & 0x3 | 0x8);\n//         return v.toString(16);\n//     });\n// };\n\nglobal.set(\"uuidv4\", function () {\n    return 'xxxxxxxx-xxxx-4xxx-yxxx-xxxxxxxxxxxx'.replace(/[xy]/g, function (c) {\n        let r = Math.random() * 16 | 0;\n        let v = (c === 'x') ? r : ((r & 0x3) | 0x8);\n        return v.toString(16);\n    });\n});\n\nglobal.set(\"getDateTime\", function () {\n    const now = new Date();\n    const pad = (n) => n.toString().padStart(2, '0');\n\n    const year = now.getFullYear();\n    const month = pad(now.getMonth() + 1);\n    const day = pad(now.getDate());\n    const hours = pad(now.getHours());\n    const minutes = pad(now.getMinutes());\n    const seconds = pad(now.getSeconds());\n\n    return `${year}-${month}-${day} ${hours}:${minutes}:${seconds}`;\n});\n\nglobal.set(\"getTimeStamp\", function () {\n    const now = new Date();\n    const pad = (a) => a.toString().padStart(2, '0');\n    const ts = `${now.getFullYear()}-${pad(now.getMonth() + 1)}-${pad(now.getDate())}_${pad(now.getHours())}-${pad(now.getMinutes())}-${pad(now.getSeconds())}`;\n\n    return ts;\n});\n\nflow.set(\"uuid_global\", global.get(\"uuidv4\")());\n\nglobal.set(\"storage\", \"/zenflowai/storage/\");\nglobal.set(\"path_template_umowy\", \"teamplates/umowy/\")\nglobal.set(\"path_umowy\", \"umowy/\");\nglobal.set(\"path_tmp\", \"tmp/\")\nglobal.set(\"path_email\", \"email/\")\nglobal.set(\"path_email_attachment\", \"attachment/\")\n\nglobal.set(\"url_form_public\", \"https://kwatermistrz.dev.zenflowai.net/\")\n\nmsg.uuid = global.get(\"uuidv4\")();\n\nnode.status({ fill: \"green\", shape: \"dot\", text: global.get(\"getDateTime\")() }); // STATUS\nreturn msg;",
+        "func": "\n// const uuidv4 = () => {\n//     return 'xxxxxxxx-xxxx-4xxx-yxxx-xxxxxxxxxxxx'.replace(/[xy]/g, function (c) {\n//         let r = Math.random() * 16 | 0, v = c === 'x' ? r : (r & 0x3 | 0x8);\n//         return v.toString(16);\n//     });\n// };\n\nglobal.set(\"uuidv4\", function () {\n    return 'xxxxxxxx-xxxx-4xxx-yxxx-xxxxxxxxxxxx'.replace(/[xy]/g, function (c) {\n        let r = Math.random() * 16 | 0;\n        let v = (c === 'x') ? r : ((r & 0x3) | 0x8);\n        return v.toString(16);\n    });\n});\n\nglobal.set(\"getDateTime\", function () {\n    const now = new Date();\n    const pad = (n) => n.toString().padStart(2, '0');\n\n    const year = now.getFullYear();\n    const month = pad(now.getMonth() + 1);\n    const day = pad(now.getDate());\n    const hours = pad(now.getHours());\n    const minutes = pad(now.getMinutes());\n    const seconds = pad(now.getSeconds());\n\n    return `${year}-${month}-${day} ${hours}:${minutes}:${seconds}`;\n});\n\nglobal.set(\"getTimeStamp\", function () {\n    const now = new Date();\n    const pad = (a) => a.toString().padStart(2, '0');\n    const ts = `${now.getFullYear()}-${pad(now.getMonth() + 1)}-${pad(now.getDate())}_${pad(now.getHours())}-${pad(now.getMinutes())}-${pad(now.getSeconds())}`;\n\n    return ts;\n});\n\nflow.set(\"uuid_global\", global.get(\"uuidv4\")());\n\nglobal.set(\"storage\", \"/zenflowai/storage/\");\nglobal.set(\"path_template_umowy\", \"teamplates/umowy/\")\nglobal.set(\"path_umowy\", \"umowy/\");\nglobal.set(\"path_tmp\", \"tmp/\")\nglobal.set(\"path_email\", \"email/\")\nglobal.set(\"path_email_attachment\", \"attachment/\")\n\nglobal.set(\"url_form_public\", global.get('env').URL_FORM_PUBLIC)\n\nmsg.uuid = global.get(\"uuidv4\")();\n\nnode.status({ fill: \"green\", shape: \"dot\", text: global.get(\"getDateTime\")() }); // STATUS\nreturn msg;",
         "outputs": 1,
         "timeout": 0,
         "noerr": 0,
@@ -632,7 +661,7 @@
         "type": "function",
         "z": "03b285947d86a284",
         "name": "smtp-config",
-        "func": "\nconst smtpUser = \"kwatermistrz@zenflowai.net\";\nconst smtpPass = \"8ZEwvwirdrwZYaPCRmBe\";\nconst smtpHost = \"mail.zenflowai.net\";\nconst smtpPort = 465; // SSL\n\n// konfiguracja SMTP\nmsg.smtp = {\n    host: smtpHost,\n    port: smtpPort,\n    secure: true,\n    auth: {\n        user: smtpUser,\n        pass: smtpPass\n    },\n    tls: {\n        rejectUnauthorized: false // Setze auf true, wenn du eine Zertifikatsüberprüfung erzwingen möchtest\n    }\n};\n\nreturn msg;",
+        "func": "\nglobal.set('chatgpt_api', );\nconst smtpUser = global.get('env').SMTP_USER;\nconst smtpPass = global.get('env').SMTP_PASS;\nconst smtpHost = global.get('env').SMTP_HOST;\nconst smtpPort = global.get('env').SMTP_PORT; // SSL\n\n// konfiguracja SMTP\nmsg.smtp = {\n    host: smtpHost,\n    port: smtpPort,\n    secure: true,\n    auth: {\n        user: smtpUser,\n        pass: smtpPass\n    },\n    tls: {\n        rejectUnauthorized: false // Setze auf true, wenn du eine Zertifikatsüberprüfung erzwingen möchtest\n    }\n};\n\nreturn msg;",
         "outputs": 1,
         "timeout": 0,
         "noerr": 0,
@@ -2143,6 +2172,7 @@
         "id": "23bc26edc4890059",
         "type": "function",
         "z": "8a595db6babaf80e",
+        "g": "a27a260c5543dd9b",
         "name": "email:template:confirm-email",
         "func": "var data = msg.payload;\n\nconst fs = global.get('fs');\nconst path = global.get('path');\n\n// Ścieżki do plików (dostosuj według potrzeb)\nconst htmlPath = global.get('storage') + \"/teamplates/html/email_verify.html\";\nconst cssPath = global.get('storage') + \"/teamplates/html/email-style.css\";\n\nlet html = fs.readFileSync(htmlPath, \"utf8\");\nconst css = fs.readFileSync(cssPath, \"utf8\");\n\nconst formdata = {\n    \"osoba_name\": data.osoby.imie,\n    \"confirm_email_link\": global.get(\"url_form_public\") + \"confirm_email/\" + data.uuid\n}\n\n// Wstawienie stylu inline w miejsce <link rel=\"stylesheet\"...>\nhtml = html.replace(\n    /<link\\s+rel=[\"']stylesheet[\"']\\s+href=[\"'][^\"']+[\"']\\s*\\/?>/,\n    `<style>\\n${css}\\n</style>`\n);\n\n// Zamiana znaczników {{...}} dynamicznie z msg.payload\nhtml = html\n    .replace(/{{osoba_name}}/g, formdata.osoba_name)\n    .replace(/{{confirm_email_link}}/g,formdata.confirm_email_link);\n\nmsg.payload = html;\nmsg.to = `${data.osoby.email}`;\nmsg.from = \"kwatermistrz@zenflowai.net\";\nmsg.subject = \"Potwierdzenie adresu e-mail - Kapitan Bastek\";\nmsg.headers = {\n    \"Content-Type\": \"text/html\"\n};\n\nmsg.umowa = data;\nmsg.html = html;\n\nnode.status({ fill: \"green\", shape: \"dot\", text: global.get(\"getDateTime\")() });\nreturn msg;",
         "outputs": 1,
@@ -2152,7 +2182,7 @@
         "finalize": "",
         "libs": [],
         "x": 260,
-        "y": 660,
+        "y": 620,
         "wires": [
             [
                 "adff4f876ee6b8db"
@@ -2173,7 +2203,7 @@
         "finalize": "",
         "libs": [],
         "x": 410,
-        "y": 220,
+        "y": 320,
         "wires": [
             [
                 "7eb560b5c3a4cab1"
@@ -2191,7 +2221,7 @@
             "bffe11eda272cf24"
         ],
         "x": 485,
-        "y": 280,
+        "y": 380,
         "wires": [
             [
                 "7eb560b5c3a4cab1"
@@ -2208,7 +2238,7 @@
             "45f34c55d1865088"
         ],
         "x": 160,
-        "y": 340,
+        "y": 440,
         "wires": [
             [
                 "f7b559c39a8a4937"
@@ -2230,7 +2260,7 @@
         "finalize": "",
         "libs": [],
         "x": 420,
-        "y": 340,
+        "y": 440,
         "wires": [
             [
                 "5c20d9e3f4361aa9"
@@ -2248,7 +2278,7 @@
             "d76b89fea3b3511f"
         ],
         "x": 700,
-        "y": 340,
+        "y": 440,
         "wires": [],
         "l": true
     },
@@ -2262,7 +2292,7 @@
             "7eb560b5c3a4cab1"
         ],
         "x": 120,
-        "y": 440,
+        "y": 500,
         "wires": [
             [
                 "66a4803a3bc0c120"
@@ -2275,7 +2305,7 @@
         "z": "8a595db6babaf80e",
         "g": "7918a80261c18fd1",
         "name": "check if first in q",
-        "func": "const statusText = msg.status.text;\nlet processing = flow.get(\"processing\") || false;\nconst q = flow.get('q');\n\n// Dopasuj liczbę po \"queuing:\"\nconst match = statusText.match(/queuing:\\s*(\\d+)/);\n\nif (match) {\n    const queuingCount = parseInt(match[1], 10);\n    node.status({ fill: \"gray\", shape: \"ring\", text: queuingCount });\n    const timestamp = global.get(\"getDateTime\")();\n\n    // Ustaw status węzła\n    node.status({\n        fill: queuingCount > 0 ? \"yellow\" : \"green\",\n        shape: \"dot\",\n        text: `${timestamp} | queuing: ${queuingCount}`\n    });\n\n    if (queuingCount == 0) {\n        flow.set(\"processing\", false);\n        msg.payload = \"end\";\n        node.status({ fill: \"gray\", shape: \"dot\", text: \"processing end\"  });\n        return msg;\n    }\n\n    \n        \n        if (queuingCount > 0) {\n\n            if (!processing) {\n                flow.set(\"processing\", true);\n                msg.topic = q.ct;\n                msg.payload = \"peek\";\n                node.status({ fill: \"gray\", shape: \"dot\", text: \"od true\" });\n                return msg;\n            } else {\n                node.status({ fill: \"gray\", shape: \"dot\", text: \"od false\" });\n            }\n\n            // msg.payload = {\n            //     queuing: queuingCount,\n            //     time: timestamp, peek\n            //     rawStatus: statusText\n            // };\n            node.status({ fill: \"gray\", shape: \"dot\", text: processing });\n            // return msg;\n        \n    } else {\n        node.status({ fill: \"green\", shape: \"dot\", text: \"processing ...\" });\n    }\n}\n\n// Jeśli nie pasuje – wyczyść status i nic nie wysyłaj\nnode.status({ fill: \"gray\", shape: \"ring\", text: \"no match or queuing ≤ 1\" });\n// node.status({ fill: \"gray\", shape: \"ring\", text: match });\n\nreturn null;",
+        "func": "const statusText = msg.status.text;\nconst processing_tag = \"processing05\";\nlet processing = flow.get(processing_tag) || false;\nconst q = flow.get('q');\n\n// Dopasuj liczbę po \"queuing:\"\nconst match = statusText.match(/queuing:\\s*(\\d+)/);\n\nif (match) {\n    const queuingCount = parseInt(match[1], 10);\n    node.status({ fill: \"gray\", shape: \"ring\", text: queuingCount });\n    const timestamp = global.get(\"getDateTime\")();\n\n    // Ustaw status węzła\n    node.status({\n        fill: queuingCount > 0 ? \"yellow\" : \"green\",\n        shape: \"dot\",\n        text: `${timestamp} | queuing: ${queuingCount}`\n    });\n\n    if (queuingCount == 0) {\n        flow.set(processing_tag, false);\n        msg.payload = \"end\";\n        node.status({ fill: \"gray\", shape: \"dot\", text: \"processing end\" });\n        return msg;\n    }\n\n\n\n    if (queuingCount > 0) {\n\n        if (!processing) {\n            flow.set(processing_tag, true);\n            msg.topic = q.ct;\n            msg.payload = \"peek\";\n            node.status({ fill: \"gray\", shape: \"dot\", text: \"od true\" });\n            return msg;\n        } else {\n            node.status({ fill: \"gray\", shape: \"dot\", text: \"od false\" });\n        }\n\n        // msg.payload = {\n        //     queuing: queuingCount,\n        //     time: timestamp, peek\n        //     rawStatus: statusText\n        // };\n        node.status({ fill: \"gray\", shape: \"dot\", text: processing });\n        // return msg;\n\n    } else {\n        node.status({ fill: \"green\", shape: \"dot\", text: \"processing ...\" });\n    }\n}\n\n// Jeśli nie pasuje – wyczyść status i nic nie wysyłaj\nnode.status({ fill: \"gray\", shape: \"ring\", text: \"no match or queuing ≤ 1\" });\n// node.status({ fill: \"gray\", shape: \"ring\", text: match });\n\nreturn null;",
         "outputs": 1,
         "timeout": 0,
         "noerr": 0,
@@ -2283,7 +2313,7 @@
         "finalize": "",
         "libs": [],
         "x": 300,
-        "y": 440,
+        "y": 500,
         "wires": [
             [
                 "cb758e32c8fde973"
@@ -2301,7 +2331,7 @@
             "d76b89fea3b3511f"
         ],
         "x": 785,
-        "y": 400,
+        "y": 500,
         "wires": []
     },
     {
@@ -2323,7 +2353,7 @@
         "allowrate": false,
         "outputs": 1,
         "x": 660,
-        "y": 400,
+        "y": 500,
         "wires": [
             [
                 "bffe11eda272cf24"
@@ -2354,7 +2384,7 @@
         "repair": false,
         "outputs": 2,
         "x": 470,
-        "y": 440,
+        "y": 500,
         "wires": [
             [
                 "76342c885c64be03"
@@ -2376,10 +2406,10 @@
         "finalize": "",
         "libs": [],
         "x": 200,
-        "y": 220,
+        "y": 180,
         "wires": [
             [
-                "ae66d354533891ae"
+                "aeefc12bab89217d"
             ]
         ]
     },
@@ -2406,7 +2436,7 @@
             "8be11d0711271c4f"
         ],
         "x": 75,
-        "y": 220,
+        "y": 180,
         "wires": [
             [
                 "6fdc192e553c1f08"
@@ -2424,7 +2454,7 @@
             "45ddc02187c0cca4"
         ],
         "x": 785,
-        "y": 220,
+        "y": 320,
         "wires": []
     },
     {
@@ -2450,8 +2480,8 @@
         "topic": "",
         "payload": "reset",
         "payloadType": "str",
-        "x": 650,
-        "y": 280,
+        "x": 610,
+        "y": 380,
         "wires": [
             [
                 "7eb560b5c3a4cab1"
@@ -2462,12 +2492,13 @@
         "id": "45ddc02187c0cca4",
         "type": "link in",
         "z": "8a595db6babaf80e",
+        "g": "a27a260c5543dd9b",
         "name": "link in 2",
         "links": [
             "cc7083de28d2431d"
         ],
         "x": 65,
-        "y": 660,
+        "y": 620,
         "wires": [
             [
                 "23bc26edc4890059"
@@ -2478,19 +2509,21 @@
         "id": "45f34c55d1865088",
         "type": "link out",
         "z": "8a595db6babaf80e",
+        "g": "a27a260c5543dd9b",
         "name": "link out 4",
         "mode": "link",
         "links": [
             "fab7b4e4e51382e7"
         ],
         "x": 1215,
-        "y": 760,
+        "y": 720,
         "wires": []
     },
     {
         "id": "adff4f876ee6b8db",
         "type": "function",
         "z": "8a595db6babaf80e",
+        "g": "a27a260c5543dd9b",
         "name": "NocoDB:post:osoba",
         "func": "msg.nocodb_t_active = msg.nocodb_t.messages;\n\n// const uploadedFile = msg.payload[0];\n\nconst now = new Date();\nconst pad = (n) => n.toString().padStart(2, '0');\n\nconst year = now.getFullYear();\nconst month = pad(now.getMonth() + 1);\nconst day = pad(now.getDate());\nconst hours = pad(now.getHours());\nconst minutes = pad(now.getMinutes());\nconst seconds = pad(now.getSeconds());\n\nconst uuid = global.get(\"uuidv4\")();\n\n// Prepare the update payload for the record\nmsg.payload = {\n    \"name\": year+month+day+hours+minutes+seconds+\" confirm-email \" + msg.to,\n    \"status\": \"new\",\n    \"type\": \"email\",\n    \"msg_to\": msg.to,\n    \"msg_subject\": msg.subject,\n    \"msg_body\": msg.html,\n    uuid: msg.uuid\n};\nmsg.method = \"POST\";\n\n\nnode.status({ fill: \"green\", shape: \"dot\", text: global.get(\"getDateTime\")() });\nreturn msg;",
         "outputs": 1,
@@ -2500,7 +2533,7 @@
         "finalize": "",
         "libs": [],
         "x": 540,
-        "y": 660,
+        "y": 620,
         "wires": [
             [
                 "193521fa10b04844"
@@ -2511,6 +2544,7 @@
         "id": "193521fa10b04844",
         "type": "http request",
         "z": "8a595db6babaf80e",
+        "g": "a27a260c5543dd9b",
         "name": "NocoDB - ALL",
         "method": "use",
         "ret": "obj",
@@ -2537,7 +2571,7 @@
             }
         ],
         "x": 760,
-        "y": 660,
+        "y": 620,
         "wires": [
             [
                 "7e71c160d6b3bdef"
@@ -2548,6 +2582,7 @@
         "id": "7e71c160d6b3bdef",
         "type": "function",
         "z": "8a595db6babaf80e",
+        "g": "a27a260c5543dd9b",
         "name": "get:id:msg",
         "func": "msg.msg_id = msg.payload.Id\nnode.status({ fill: \"green\", shape: \"dot\", text: global.get(\"getDateTime\")() }); //STATUS\nreturn msg;\n",
         "outputs": 1,
@@ -2557,7 +2592,7 @@
         "finalize": "",
         "libs": [],
         "x": 950,
-        "y": 660,
+        "y": 620,
         "wires": [
             [
                 "21e185dded19e0ef"
@@ -2568,6 +2603,7 @@
         "id": "1438e47a6d3d8d47",
         "type": "http request",
         "z": "8a595db6babaf80e",
+        "g": "a27a260c5543dd9b",
         "name": "NocoDB - ALL",
         "method": "use",
         "ret": "obj",
@@ -2594,7 +2630,7 @@
             }
         ],
         "x": 620,
-        "y": 760,
+        "y": 720,
         "wires": [
             [
                 "f4e3c0bd70abe439"
@@ -2605,6 +2641,7 @@
         "id": "ac8cbb807a19bde8",
         "type": "function",
         "z": "8a595db6babaf80e",
+        "g": "a27a260c5543dd9b",
         "name": "NocoDB:patch:msg",
         "func": "msg.nocodb_t_active = msg.nocodb_t.messages;\nmsg.method = \"PATCH\";\n\n// Domyślny status\nlet status = \"pending\";\n\n// Sprawdzenie pól accepted/rejected\nif (msg.payload.accepted && msg.payload.accepted.length > 0) {\n    status = \"send\";\n} else if (msg.payload.rejected && msg.payload.rejected.length > 0) {\n    status = \"error\";\n}\n\nmsg.payload = {\n    Id: msg.msg_id,   // klucz podstawowy w Twojej tabeli\n    status: status\n};\n\n\nmsg.send_status = status;\n\nnode.status({\n    fill: \"green\",\n    shape: \"dot\",\n    text: `${global.get(\"getDateTime\")()}`\n});\n\nreturn msg;",
         "outputs": 1,
@@ -2614,7 +2651,7 @@
         "finalize": "",
         "libs": [],
         "x": 390,
-        "y": 760,
+        "y": 720,
         "wires": [
             [
                 "1438e47a6d3d8d47"
@@ -2646,7 +2683,7 @@
         "persist": false,
         "storeName": "memory",
         "x": 640,
-        "y": 220,
+        "y": 320,
         "wires": [
             [
                 "cc7083de28d2431d"
@@ -2657,6 +2694,7 @@
         "id": "21e185dded19e0ef",
         "type": "email-dynamic",
         "z": "8a595db6babaf80e",
+        "g": "a27a260c5543dd9b",
         "name": "",
         "smtpServer": "",
         "smtpPort": "",
@@ -2665,7 +2703,7 @@
         "secure": false,
         "tlsRejectUnauthorized": false,
         "x": 160,
-        "y": 760,
+        "y": 720,
         "wires": [
             [
                 "ac8cbb807a19bde8"
@@ -2676,6 +2714,7 @@
         "id": "f4e3c0bd70abe439",
         "type": "function",
         "z": "8a595db6babaf80e",
+        "g": "a27a260c5543dd9b",
         "name": "umowa:status:patch",
         "func": "msg.nocodb_t_active = msg.nocodb_t.umowy;\nmsg.method = \"PATCH\";\n\nif ( msg.send_status == \"send\") {\n    \n    msg.payload = {\n        Id: msg.umowa.Id,   // klucz podstawowy w Twojej tabeli\n        status: \"03 email-send\"\n    };\n\n} else {\n\n    msg.payload = {\n        Id: msg.umowa.Id,   // klucz podstawowy w Twojej tabeli\n        status: \"02 email-send-error\"\n    };\n}\n\n\nnode.status({\n    fill: \"green\",\n    shape: \"dot\",\n    text: `${global.get(\"getDateTime\")()}`\n});\nreturn msg;",
         "outputs": 1,
@@ -2685,7 +2724,7 @@
         "finalize": "",
         "libs": [],
         "x": 860,
-        "y": 760,
+        "y": 720,
         "wires": [
             [
                 "7a0422b57c8d6b62"
@@ -2696,6 +2735,7 @@
         "id": "7a0422b57c8d6b62",
         "type": "http request",
         "z": "8a595db6babaf80e",
+        "g": "a27a260c5543dd9b",
         "name": "NocoDB - ALL",
         "method": "use",
         "ret": "obj",
@@ -2722,10 +2762,90 @@
             }
         ],
         "x": 1080,
-        "y": 760,
+        "y": 720,
         "wires": [
             [
                 "45f34c55d1865088"
+            ]
+        ]
+    },
+    {
+        "id": "aeefc12bab89217d",
+        "type": "function",
+        "z": "8a595db6babaf80e",
+        "g": "7918a80261c18fd1",
+        "name": "up:status:new_to_queue",
+        "func": "let rows = msg.payload.list;\n\nmsg.method = \"PATCH\";\nmsg.payload = rows.map(row => {\n    let singleMsg = {\n        \"Id\": row.Id,\n        \"status\": \"queue\"\n    };\n\n    return singleMsg;\n});\n\nnode.status({ fill: \"green\", shape: \"dot\", text: global.get(\"getDateTime\")() });\nreturn msg;",
+        "outputs": 1,
+        "timeout": 0,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 170,
+        "y": 240,
+        "wires": [
+            [
+                "e8a87fd21d80a914"
+            ]
+        ]
+    },
+    {
+        "id": "e8a87fd21d80a914",
+        "type": "http request",
+        "z": "8a595db6babaf80e",
+        "g": "7918a80261c18fd1",
+        "name": "NocoDB - ALL",
+        "method": "use",
+        "ret": "obj",
+        "paytoqs": "ignore",
+        "url": "http://{{nocodb_host}}/api/v2/tables/{{nocodb_t_active}}/records",
+        "tls": "",
+        "persist": false,
+        "proxy": "",
+        "insecureHTTPParser": false,
+        "authType": "",
+        "senderr": false,
+        "headers": [
+            {
+                "keyType": "other",
+                "keyValue": "xc-token",
+                "valueType": "msg",
+                "valueValue": "xc_token"
+            },
+            {
+                "keyType": "Content-Type",
+                "keyValue": "",
+                "valueType": "application/json",
+                "valueValue": ""
+            }
+        ],
+        "x": 400,
+        "y": 240,
+        "wires": [
+            [
+                "2e4b1b679b6a73c1"
+            ]
+        ]
+    },
+    {
+        "id": "2e4b1b679b6a73c1",
+        "type": "function",
+        "z": "8a595db6babaf80e",
+        "g": "7918a80261c18fd1",
+        "name": "NocoDB - analize save",
+        "func": "if (msg.payload && msg.payload.length > 0) {\n    node.status({ fill: \"grey\", shape: \"ring\", text: `update rows: ${msg.payload.length}` });\n    msg.statusText = `update rows: ${msg.payload.length}`;\n    return msg;\n}\n\n\nnode.status({ fill: \"yellow\", shape: \"dot\", text: \"Brak danych\" });\nmsg.statusText = \"no records update\";\nreturn msg;",
+        "outputs": 1,
+        "timeout": 0,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 660,
+        "y": 240,
+        "wires": [
+            [
+                "ae66d354533891ae"
             ]
         ]
     },
