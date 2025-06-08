@@ -480,12 +480,15 @@
             "d747d5ba3cbab626",
             "24362b7ab3a611b8",
             "8aff7492ecde8657",
-            "dfbd52e418f9fe83"
+            "dfbd52e418f9fe83",
+            "dc114f2912e02c94",
+            "37e28c92b2c5de6a",
+            "3b04fab737edca4b"
         ],
         "x": 34,
         "y": 39,
-        "w": 1052,
-        "h": 362
+        "w": 872,
+        "h": 522
     },
     {
         "id": "49c2be5b620ebeda",
@@ -590,8 +593,7 @@
             "fd42845d2e4811c2",
             "2820d7330d92ab47",
             "637ef8f0903ac97f",
-            "86183fdac91b6d57",
-            "12cdc8782fc3c323"
+            "86183fdac91b6d57"
         ],
         "x": 54,
         "y": 1619,
@@ -629,7 +631,7 @@
         "type": "function",
         "z": "03b285947d86a284",
         "name": "Init - ZenFlowAI",
-        "func": "\n// const uuidv4 = () => {\n//     return 'xxxxxxxx-xxxx-4xxx-yxxx-xxxxxxxxxxxx'.replace(/[xy]/g, function (c) {\n//         let r = Math.random() * 16 | 0, v = c === 'x' ? r : (r & 0x3 | 0x8);\n//         return v.toString(16);\n//     });\n// };\n\nglobal.set(\"uuidv4\", function () {\n    return 'xxxxxxxx-xxxx-4xxx-yxxx-xxxxxxxxxxxx'.replace(/[xy]/g, function (c) {\n        let r = Math.random() * 16 | 0;\n        let v = (c === 'x') ? r : ((r & 0x3) | 0x8);\n        return v.toString(16);\n    });\n});\n\nglobal.set(\"getDateTime\", function () {\n    const now = new Date();\n    const pad = (n) => n.toString().padStart(2, '0');\n\n    const year = now.getFullYear();\n    const month = pad(now.getMonth() + 1);\n    const day = pad(now.getDate());\n    const hours = pad(now.getHours());\n    const minutes = pad(now.getMinutes());\n    const seconds = pad(now.getSeconds());\n\n    return `${year}-${month}-${day} ${hours}:${minutes}:${seconds}`;\n});\n\nglobal.set(\"getTimeStamp\", function () {\n    const now = new Date();\n    const pad = (a) => a.toString().padStart(2, '0');\n    const ts = `${now.getFullYear()}-${pad(now.getMonth() + 1)}-${pad(now.getDate())}_${pad(now.getHours())}-${pad(now.getMinutes())}-${pad(now.getSeconds())}`;\n\n    return ts;\n});\n\nflow.set(\"uuid_global\", global.get(\"uuidv4\")());\n\nglobal.set(\"storage\", \"/zenflowai/storage/\");\nglobal.set(\"path_template_umowy\", \"teamplates/umowy/\")\nglobal.set(\"path_umowy\", \"umowy/\");\nglobal.set(\"path_tmp\", \"tmp/\")\nglobal.set(\"path_email\", \"email/\")\nglobal.set(\"path_email_attachment\", \"attachment/\")\n\nglobal.set(\"url_form_public\", global.get('env').URL_FORM_PUBLIC)\n\nmsg.uuid = global.get(\"uuidv4\")();\n\nnode.status({ fill: \"green\", shape: \"dot\", text: global.get(\"getDateTime\")() }); // STATUS\nreturn msg;",
+        "func": "\n// const uuidv4 = () => {\n//     return 'xxxxxxxx-xxxx-4xxx-yxxx-xxxxxxxxxxxx'.replace(/[xy]/g, function (c) {\n//         let r = Math.random() * 16 | 0, v = c === 'x' ? r : (r & 0x3 | 0x8);\n//         return v.toString(16);\n//     });\n// };\n\nglobal.set(\"uuidv4\", function () {\n    return 'xxxxxxxx-xxxx-4xxx-yxxx-xxxxxxxxxxxx'.replace(/[xy]/g, function (c) {\n        let r = Math.random() * 16 | 0;\n        let v = (c === 'x') ? r : ((r & 0x3) | 0x8);\n        return v.toString(16);\n    });\n});\n\nglobal.set(\"getDateTime\", function () {\n    const now = new Date();\n    const pad = (n) => n.toString().padStart(2, '0');\n\n    const year = now.getFullYear();\n    const month = pad(now.getMonth() + 1);\n    const day = pad(now.getDate());\n    const hours = pad(now.getHours());\n    const minutes = pad(now.getMinutes());\n    const seconds = pad(now.getSeconds());\n\n    return `${year}-${month}-${day} ${hours}:${minutes}:${seconds}`;\n});\n\nglobal.set(\"getTimeStamp\", function () {\n    const now = new Date();\n    const pad = (a) => a.toString().padStart(2, '0');\n    const ts = `${now.getFullYear()}-${pad(now.getMonth() + 1)}-${pad(now.getDate())}_${pad(now.getHours())}-${pad(now.getMinutes())}-${pad(now.getSeconds())}`;\n\n    return ts;\n});\n\nflow.set(\"uuid_global\", global.get(\"uuidv4\")());\n\nglobal.set(\"storage\", \"/zenflowai/storage/\");\nglobal.set(\"path_template_umowy\", \"teamplates/umowy/\")\nglobal.set(\"path_umowy\", \"umowy/\");\nglobal.set(\"path_tmp\", \"tmp/\")\nglobal.set(\"path_email\", \"email/\")\nglobal.set(\"path_email_attachment\", \"attachment/\")\n\nglobal.set(\"cf_turnstile_secret\", global.get('env').CLOUDFLARE_SECRET)\nglobal.set(\"url_form_public\", global.get('env').URL_FORM_PUBLIC)\n\nmsg.uuid = global.get(\"uuidv4\")();\n\nnode.status({ fill: \"green\", shape: \"dot\", text: global.get(\"getDateTime\")() }); // STATUS\nreturn msg;",
         "outputs": 1,
         "timeout": 0,
         "noerr": 0,
@@ -2992,7 +2994,6 @@
         "y": 800,
         "wires": [
             [
-                "95e693f57eca5b12",
                 "1fecc97559a778e5"
             ]
         ]
@@ -4049,23 +4050,6 @@
         ]
     },
     {
-        "id": "95e693f57eca5b12",
-        "type": "debug",
-        "z": "bf6e5312884e6967",
-        "name": "debug 1",
-        "active": true,
-        "tosidebar": true,
-        "console": false,
-        "tostatus": false,
-        "complete": "true",
-        "targetType": "full",
-        "statusVal": "",
-        "statusType": "auto",
-        "x": 290,
-        "y": 900,
-        "wires": []
-    },
-    {
         "id": "1fecc97559a778e5",
         "type": "function",
         "z": "bf6e5312884e6967",
@@ -4081,27 +4065,9 @@
         "y": 780,
         "wires": [
             [
-                "d3849b6988415d4c",
-                "0a7b196524a64b5e"
+                "d3849b6988415d4c"
             ]
         ]
-    },
-    {
-        "id": "0a7b196524a64b5e",
-        "type": "debug",
-        "z": "bf6e5312884e6967",
-        "name": "debug 14",
-        "active": true,
-        "tosidebar": true,
-        "console": false,
-        "tostatus": false,
-        "complete": "true",
-        "targetType": "full",
-        "statusVal": "",
-        "statusType": "auto",
-        "x": 570,
-        "y": 880,
-        "wires": []
     },
     {
         "id": "353379d5bcdeee09",
@@ -4248,7 +4214,7 @@
         "method": "post",
         "upload": false,
         "swaggerDoc": "",
-        "x": 360,
+        "x": 160,
         "y": 160,
         "wires": [
             [
@@ -4265,7 +4231,7 @@
         "statusCode": "200",
         "headers": {},
         "x": 760,
-        "y": 360,
+        "y": 520,
         "wires": []
     },
     {
@@ -4274,15 +4240,15 @@
         "z": "7f8edcc91438aff6",
         "g": "de07ac967b5ab328",
         "name": "NocoDB:post:osoba",
-        "func": "msg.nocodb_t_active = msg.nocodb_t.osoby;\n\n// const uploadedFile = msg.payload[0];\n\nconst now = new Date();\nconst pad = (n) => n.toString().padStart(2, '0');\n\nconst year = now.getFullYear();\nconst month = pad(now.getMonth() + 1);\nconst day = pad(now.getDate());\nconst hours = pad(now.getHours());\nconst minutes = pad(now.getMinutes());\nconst seconds = pad(now.getSeconds());\n\n// const uuid = global.get(\"uuidv4\")();\n\nmsg.form = {\n    \"liczbaOsob\": msg.payload.data.liczbaOsob,\n    \"rejsId\": msg.payload.data.rejsId,\n}\n\n// Prepare the update payload for the record\nmsg.payload = {\n    \"cj5mwpsab4bh5zv\": msg.payload.data.imie,\n    \"cm1fyirgmdcemtv\": msg.payload.data.nazwisko,\n    \"c5hrv18inqamu4d\": msg.payload.data.email,\n    \"co7qha0ikufbnjx\": msg.payload.data.telefon,\n    \"cb0a24v6fm28sj0\": msg.payload.data.miejsceUrodzenia,\n    \"c77doycdzvddszv\": msg.payload.data.dataUrodzenia ,\n    \"ca42qwypv1kcyh7\": msg.payload.data.adresZamieszkania ,\n    \"cioe98sbu9qwxjg\": msg.payload.data.nrDokumentu ,\n    \"cp07bymy87xk9qf\": msg.payload.data.uprawnienia ,\n    \"cfihnz9e66moiug\": msg.payload.data.rozmiarKoszulki ,\n    \"cfewcth4yte2zhr\": msg.payload.data.osobaKontaktowaImieNazwisko + ' ' + msg.payload.data.osobaKontaktowaTelefon ,\n    uuid: msg.uuid,\n    \"rodo\": msg.payload.data.regulamin,\n    \"oswiadczenie\": msg.payload.data.oswiadczenie,\n    \"umie_plywac\": msg.payload.data.plywanie\n};\nmsg.method = \"POST\";\n\n\nnode.status({ fill: \"green\", shape: \"dot\", text: global.get(\"getDateTime\")() });\nreturn msg;",
+        "func": "delete msg.headers;\ndelete msg.method;\ndelete msg.responseCookies;\n\nmsg.nocodb_t_active = msg.nocodb_t.osoby;\n\nmsg.payload = msg.data_form;\n\n// const uploadedFile = msg.payload[0];\n\nconst now = new Date();\nconst pad = (n) => n.toString().padStart(2, '0');\n\nconst year = now.getFullYear();\nconst month = pad(now.getMonth() + 1);\nconst day = pad(now.getDate());\nconst hours = pad(now.getHours());\nconst minutes = pad(now.getMinutes());\nconst seconds = pad(now.getSeconds());\n\n// const uuid = global.get(\"uuidv4\")();\n\nmsg.form = {\n    \"liczbaOsob\": msg.payload.data.liczbaOsob,\n    \"rejsId\": msg.payload.data.rejsId,\n}\n\n// Prepare the update payload for the record\nmsg.payload = {\n    \"cj5mwpsab4bh5zv\": msg.payload.data.imie,\n    \"cm1fyirgmdcemtv\": msg.payload.data.nazwisko,\n    \"c5hrv18inqamu4d\": msg.payload.data.email,\n    \"co7qha0ikufbnjx\": msg.payload.data.telefon,\n    \"cb0a24v6fm28sj0\": msg.payload.data.miejsceUrodzenia,\n    \"c77doycdzvddszv\": msg.payload.data.dataUrodzenia ,\n    \"ca42qwypv1kcyh7\": msg.payload.data.adresZamieszkania ,\n    \"cioe98sbu9qwxjg\": msg.payload.data.nrDokumentu ,\n    \"cp07bymy87xk9qf\": msg.payload.data.uprawnienia ,\n    \"cfihnz9e66moiug\": msg.payload.data.rozmiarKoszulki ,\n    \"cfewcth4yte2zhr\": msg.payload.data.osobaKontaktowaImieNazwisko + ' ' + msg.payload.data.osobaKontaktowaTelefon ,\n    uuid: msg.uuid,\n    \"rodo\": msg.payload.data.regulamin,\n    \"oswiadczenie\": msg.payload.data.oswiadczenie,\n    \"umie_plywac\": msg.payload.data.plywanie\n};\nmsg.method = \"POST\";\n\n\nnode.status({ fill: \"green\", shape: \"dot\", text: global.get(\"getDateTime\")() });\nreturn msg;",
         "outputs": 1,
         "timeout": 0,
         "noerr": 0,
         "initialize": "",
         "finalize": "",
         "libs": [],
-        "x": 760,
-        "y": 160,
+        "x": 360,
+        "y": 320,
         "wires": [
             [
                 "050dabcd08732f94"
@@ -4319,8 +4285,8 @@
                 "valueValue": ""
             }
         ],
-        "x": 980,
-        "y": 160,
+        "x": 580,
+        "y": 320,
         "wires": [
             [
                 "24362b7ab3a611b8"
@@ -4333,11 +4299,11 @@
         "z": "7f8edcc91438aff6",
         "g": "de07ac967b5ab328",
         "name": "",
-        "x": 560,
+        "x": 340,
         "y": 160,
         "wires": [
             [
-                "8b0f70caea35ed13"
+                "dc114f2912e02c94"
             ]
         ]
     },
@@ -4347,7 +4313,7 @@
         "z": "7f8edcc91438aff6",
         "g": "de07ac967b5ab328",
         "name": "NocoDB:post:umowy",
-        "func": "msg.nocodb_t_active = msg.nocodb_t.umowy;\nconst rejs = msg.payload.list[0];\n\nconst now = new Date();\nconst pad = (n) => n.toString().padStart(2, '0');\n\nconst year = now.getFullYear();\nconst month = pad(now.getMonth() + 1);\nconst day = pad(now.getDate());\nconst hours = pad(now.getHours());\nconst minutes = pad(now.getMinutes());\nconst seconds = pad(now.getSeconds());\n\nconst uuid = global.get(\"uuidv4\")();\n\nconst rezerwacja_cena = rejs.cena * msg.form.liczbaOsob;\nconst rezerwacja_cena_rata1 = Math.floor(rezerwacja_cena * 0.3);\nconst rezerwacja_cena_rata2 = rezerwacja_cena - rezerwacja_cena_rata1; \nconst cena_wydatki = rejs.cena_wydatki * msg.form.liczbaOsob;\nconst cena_zaokretowania = rejs.cena_zaokretowania * msg.form.liczbaOsob;\n\nmsg.payload = {\n    \"nc_5cf7__osoby_id\": msg.osoba_id,\n    \"cdp5l9hs8gbe7kn\": msg.form.liczbaOsob,\n    \"nc_5cf7___rejsy_id\": msg.form.rejsId,\n    uuid: uuid,\n    \"nazwa\": \"Umowa - wait for confirm\",\n    \"rezerwacja_cena\": rezerwacja_cena,\n    \"rezerwacja_cena_rata1\": rezerwacja_cena_rata1,\n    \"rezerwacja_cena_rata2\": rezerwacja_cena_rata2,\n    \"cena_wydatki\": cena_wydatki,\n    \"cena_zaokretowania\": cena_zaokretowania\n}\n\nmsg.method = \"POST\";\n\nnode.status({ fill: \"green\", shape: \"dot\", text: global.get(\"getDateTime\")() });\nreturn msg;",
+        "func": "delete msg.headers;\ndelete msg.method;\ndelete msg.responseCookies;\n\nmsg.nocodb_t_active = msg.nocodb_t.umowy;\nconst rejs = msg.payload.list[0];\n\nconst now = new Date();\nconst pad = (n) => n.toString().padStart(2, '0');\n\nconst year = now.getFullYear();\nconst month = pad(now.getMonth() + 1);\nconst day = pad(now.getDate());\nconst hours = pad(now.getHours());\nconst minutes = pad(now.getMinutes());\nconst seconds = pad(now.getSeconds());\n\nconst uuid = global.get(\"uuidv4\")();\n\nconst rezerwacja_cena = rejs.cena * msg.form.liczbaOsob;\nconst rezerwacja_cena_rata1 = Math.floor(rezerwacja_cena * 0.3);\nconst rezerwacja_cena_rata2 = rezerwacja_cena - rezerwacja_cena_rata1; \nconst cena_wydatki = rejs.cena_wydatki * msg.form.liczbaOsob;\nconst cena_zaokretowania = rejs.cena_zaokretowania * msg.form.liczbaOsob;\n\nmsg.payload = {\n    \"nc_5cf7__osoby_id\": msg.osoba_id,\n    \"cdp5l9hs8gbe7kn\": msg.form.liczbaOsob,\n    \"nc_5cf7___rejsy_id\": msg.form.rejsId,\n    uuid: uuid,\n    \"nazwa\": \"Umowa - wait for confirm\",\n    \"rezerwacja_cena\": rezerwacja_cena,\n    \"rezerwacja_cena_rata1\": rezerwacja_cena_rata1,\n    \"rezerwacja_cena_rata2\": rezerwacja_cena_rata2,\n    \"cena_wydatki\": cena_wydatki,\n    \"cena_zaokretowania\": cena_zaokretowania\n}\n\nmsg.method = \"POST\";\n\nnode.status({ fill: \"green\", shape: \"dot\", text: global.get(\"getDateTime\")() });\nreturn msg;",
         "outputs": 1,
         "timeout": 0,
         "noerr": 0,
@@ -4355,7 +4321,7 @@
         "finalize": "",
         "libs": [],
         "x": 360,
-        "y": 360,
+        "y": 520,
         "wires": [
             [
                 "d747d5ba3cbab626"
@@ -4393,7 +4359,7 @@
             }
         ],
         "x": 580,
-        "y": 360,
+        "y": 520,
         "wires": [
             [
                 "c9199959da0f2652"
@@ -4406,7 +4372,7 @@
         "z": "7f8edcc91438aff6",
         "g": "de07ac967b5ab328",
         "name": "NocoDB - rejsy:get:Id",
-        "func": "msg.nocodb_t_active = msg.nocodb_t.rejsy;\n\nmsg.osoba_id = msg.payload.Id;\n\nmsg.payload = {\n    offset: '0',\n    limit: '1',\n    viewId: msg.nocodb_t.rejsy_view,\n    where: `(Id,eq,${msg.form.rejsId})`,\n};\n\nnode.status({ fill: \"green\", shape: \"dot\", text: global.get(\"getDateTime\")() });\n\nreturn msg;",
+        "func": "delete msg.headers;\ndelete msg.method;\ndelete msg.responseCookies;\n\nmsg.nocodb_t_active = msg.nocodb_t.rejsy;\n\nmsg.osoba_id = msg.payload.Id;\n\nmsg.payload = {\n    offset: '0',\n    limit: '1',\n    viewId: msg.nocodb_t.rejsy_view,\n    where: `(Id,eq,${msg.form.rejsId})`,\n};\n\nnode.status({ fill: \"green\", shape: \"dot\", text: global.get(\"getDateTime\")() });\n\nreturn msg;",
         "outputs": 1,
         "timeout": 0,
         "noerr": 0,
@@ -4414,7 +4380,7 @@
         "finalize": "",
         "libs": [],
         "x": 360,
-        "y": 260,
+        "y": 420,
         "wires": [
             [
                 "8aff7492ecde8657"
@@ -4452,7 +4418,7 @@
             }
         ],
         "x": 580,
-        "y": 260,
+        "y": 420,
         "wires": [
             [
                 "388e845554a0cdbb"
@@ -4469,6 +4435,75 @@
         "x": 120,
         "y": 80,
         "wires": []
+    },
+    {
+        "id": "dc114f2912e02c94",
+        "type": "function",
+        "z": "7f8edcc91438aff6",
+        "g": "de07ac967b5ab328",
+        "name": "check:Cloudflare",
+        "func": "delete msg.headers;\ndelete msg.method;\ndelete msg.responseCookies;\n\nconst token = msg.payload.turnstileToken;\nmsg.data_form = msg.payload;\n\nconst ip = msg.req?.ip || \"\";  // opcjonalnie IP klienta, jeśli chcesz\n\nif (!token) {\n    node.status({ fill: \"red\", shape: \"dot\", text: global.get(\"getDateTime\")() });\n\n    return [null, { payload: \"Brak tokenu Cloudflare Turnstile\", statusCode: 400 }];\n}\n\n// przygotuj zapytanie do Cloudflare\nmsg.method = \"POST\";\nmsg.url = \"https://challenges.cloudflare.com/turnstile/v0/siteverify\";\nmsg.headers = {\n    \"Content-Type\": \"application/x-www-form-urlencoded\"\n};\nmsg.payload = `secret=${encodeURIComponent(global.get(\"cf_turnstile_secret\"))}&response=${encodeURIComponent(token)}&remoteip=${ip}`;\n\nnode.status({ fill: \"green\", shape: \"dot\", text: global.get(\"getDateTime\")() });\nreturn msg;",
+        "outputs": 2,
+        "timeout": 0,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 550,
+        "y": 160,
+        "wires": [
+            [
+                "37e28c92b2c5de6a"
+            ],
+            []
+        ]
+    },
+    {
+        "id": "37e28c92b2c5de6a",
+        "type": "http request",
+        "z": "7f8edcc91438aff6",
+        "g": "de07ac967b5ab328",
+        "name": "",
+        "method": "POST",
+        "ret": "txt",
+        "paytoqs": "ignore",
+        "url": "",
+        "tls": "",
+        "persist": false,
+        "proxy": "",
+        "insecureHTTPParser": false,
+        "authType": "",
+        "senderr": false,
+        "headers": [],
+        "x": 810,
+        "y": 160,
+        "wires": [
+            [
+                "3b04fab737edca4b"
+            ]
+        ]
+    },
+    {
+        "id": "3b04fab737edca4b",
+        "type": "function",
+        "z": "7f8edcc91438aff6",
+        "g": "de07ac967b5ab328",
+        "name": "veryfi:recapcha",
+        "func": "try {\n    if (typeof msg.payload === \"string\") {\n        msg.payload = JSON.parse(msg.payload);\n    }\n} catch (e) {\n    node.status({ fill: \"red\", shape: \"dot\", text: global.get(\"getDateTime\")() });\n\n    return [null, { payload: \"Niepoprawna odpowiedź z Cloudflare\", statusCode: 500 }];\n}\n\nif (!msg.payload.success) {\n    node.status({ fill: \"red\", shape: \"dot\", text: global.get(\"getDateTime\")() });\n\n    return [null, { payload: \"Weryfikacja Turnstile nie powiodła się\", statusCode: 403 }];\n}\n\n// OK — token zweryfikowany\nnode.status({ fill: \"green\", shape: \"dot\", text: global.get(\"getDateTime\")() });\n\nreturn [msg, null];",
+        "outputs": 2,
+        "timeout": 0,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 340,
+        "y": 240,
+        "wires": [
+            [
+                "8b0f70caea35ed13"
+            ],
+            []
+        ]
     },
     {
         "id": "0ad1c2e33d36b2e2",
@@ -5203,23 +5238,6 @@
         "wires": []
     },
     {
-        "id": "7704455dea750a69",
-        "type": "debug",
-        "z": "be1c3f3f839ca819",
-        "name": "debug 11",
-        "active": true,
-        "tosidebar": true,
-        "console": false,
-        "tostatus": false,
-        "complete": "true",
-        "targetType": "full",
-        "statusVal": "",
-        "statusType": "auto",
-        "x": 1400,
-        "y": 780,
-        "wires": []
-    },
-    {
         "id": "e088baaede4c8f3c",
         "type": "switch",
         "z": "be1c3f3f839ca819",
@@ -5258,11 +5276,9 @@
         "y": 940,
         "wires": [
             [
-                "0a9bd45f1d1b05f1",
-                "7704455dea750a69"
+                "0a9bd45f1d1b05f1"
             ],
             [
-                "cd43186167406e89",
                 "c5a5fb7b9de73e41"
             ],
             [
@@ -5407,7 +5423,6 @@
         "y": 720,
         "wires": [
             [
-                "7d7cbef9141e85c2",
                 "53e6c5b86871d08b"
             ]
         ]
@@ -5451,22 +5466,6 @@
                 "bf60fb51fb38b989"
             ]
         ]
-    },
-    {
-        "id": "7d7cbef9141e85c2",
-        "type": "debug",
-        "z": "be1c3f3f839ca819",
-        "name": "debug 12",
-        "active": true,
-        "tosidebar": true,
-        "console": false,
-        "tostatus": false,
-        "complete": "false",
-        "statusVal": "",
-        "statusType": "auto",
-        "x": 1310,
-        "y": 640,
-        "wires": []
     },
     {
         "id": "53e6c5b86871d08b",
@@ -5788,8 +5787,7 @@
         "y": 1720,
         "wires": [
             [
-                "86183fdac91b6d57",
-                "12cdc8782fc3c323"
+                "86183fdac91b6d57"
             ]
         ]
     },
@@ -5862,8 +5860,7 @@
         "y": 1480,
         "wires": [
             [
-                "7e2f867ede23e703",
-                "2fcf53c5bddf3933"
+                "7e2f867ede23e703"
             ]
         ]
     },
@@ -6024,41 +6021,6 @@
         ]
     },
     {
-        "id": "12cdc8782fc3c323",
-        "type": "debug",
-        "z": "be1c3f3f839ca819",
-        "g": "24acd2baaff30f4c",
-        "name": "debug 18",
-        "active": true,
-        "tosidebar": true,
-        "console": false,
-        "tostatus": false,
-        "complete": "true",
-        "targetType": "full",
-        "statusVal": "",
-        "statusType": "auto",
-        "x": 1340,
-        "y": 1660,
-        "wires": []
-    },
-    {
-        "id": "cd43186167406e89",
-        "type": "debug",
-        "z": "be1c3f3f839ca819",
-        "name": "debug 19",
-        "active": true,
-        "tosidebar": true,
-        "console": false,
-        "tostatus": false,
-        "complete": "true",
-        "targetType": "full",
-        "statusVal": "",
-        "statusType": "auto",
-        "x": 1430,
-        "y": 960,
-        "wires": []
-    },
-    {
         "id": "7e2f867ede23e703",
         "type": "link out",
         "z": "be1c3f3f839ca819",
@@ -6083,8 +6045,7 @@
         "y": 1480,
         "wires": [
             [
-                "0379e85ef16424bc",
-                "d2cc40f15037896e"
+                "0379e85ef16424bc"
             ]
         ]
     },
@@ -6131,7 +6092,6 @@
         "y": 1480,
         "wires": [
             [
-                "3414a54310b77c3b",
                 "130b6b391a470d25"
             ]
         ]
@@ -6194,23 +6154,6 @@
         ]
     },
     {
-        "id": "3414a54310b77c3b",
-        "type": "debug",
-        "z": "be1c3f3f839ca819",
-        "name": "debug 17",
-        "active": true,
-        "tosidebar": true,
-        "console": false,
-        "tostatus": false,
-        "complete": "true",
-        "targetType": "full",
-        "statusVal": "",
-        "statusType": "auto",
-        "x": 1170,
-        "y": 1400,
-        "wires": []
-    },
-    {
         "id": "8521c39907b05f75",
         "type": "function",
         "z": "be1c3f3f839ca819",
@@ -6263,59 +6206,9 @@
         "y": 1180,
         "wires": [
             [
-                "4376394ee780c7ec",
-                "cca677982da884c4"
+                "4376394ee780c7ec"
             ]
         ]
-    },
-    {
-        "id": "2fcf53c5bddf3933",
-        "type": "debug",
-        "z": "be1c3f3f839ca819",
-        "name": "debug 15",
-        "active": true,
-        "tosidebar": true,
-        "console": false,
-        "tostatus": false,
-        "complete": "true",
-        "targetType": "full",
-        "statusVal": "",
-        "statusType": "auto",
-        "x": 560,
-        "y": 1380,
-        "wires": []
-    },
-    {
-        "id": "d2cc40f15037896e",
-        "type": "debug",
-        "z": "be1c3f3f839ca819",
-        "name": "debug 16",
-        "active": true,
-        "tosidebar": true,
-        "console": false,
-        "tostatus": false,
-        "complete": "false",
-        "statusVal": "",
-        "statusType": "auto",
-        "x": 830,
-        "y": 1360,
-        "wires": []
-    },
-    {
-        "id": "cca677982da884c4",
-        "type": "debug",
-        "z": "be1c3f3f839ca819",
-        "name": "debug 20",
-        "active": true,
-        "tosidebar": true,
-        "console": false,
-        "tostatus": false,
-        "complete": "false",
-        "statusVal": "",
-        "statusType": "auto",
-        "x": 2130,
-        "y": 1100,
-        "wires": []
     },
     {
         "id": "1f03db0d3558b040",
