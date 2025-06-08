@@ -4,6 +4,10 @@ Kwatermistrz
 Kwatermistrz dla Kapitana Bastka
 
 ### About
+0.3.3
+- ceny z waluta
+- dynamiczne nr konta
+
 0.3.2 
 - opd na emaile bez umowy
 
