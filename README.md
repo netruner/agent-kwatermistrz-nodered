@@ -4,6 +4,8 @@ Kwatermistrz
 Kwatermistrz dla Kapitana Bastka
 
 ### About
+0.3.2 
+- opd na emaile bez umowy
 
 0.3.0
 - produkcja
