@@ -4,6 +4,10 @@ Kwatermistrz
 Kwatermistrz dla Kapitana Bastka
 
 ### About
+0.3.4
+- EUR PLN w api GET
+- prefix A/ w umowach
+
 0.3.3
 - ceny z waluta
 - dynamiczne nr konta
