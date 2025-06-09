@@ -4,6 +4,9 @@ Kwatermistrz
 Kwatermistrz dla Kapitana Bastka
 
 ### About
+0.3.5
+- poprawki analizy nowy kod
+
 0.3.4
 - EUR PLN w api GET
 - prefix A/ w umowach
