@@ -593,7 +593,8 @@
             "fd42845d2e4811c2",
             "2820d7330d92ab47",
             "637ef8f0903ac97f",
-            "86183fdac91b6d57"
+            "86183fdac91b6d57",
+            "49fad7c4acefac24"
         ],
         "x": 54,
         "y": 1819,
@@ -640,11 +641,12 @@
             "24ada9ad71fb27e5",
             "3948f3ca7ad74cf8",
             "b38108020e6fc6dd",
-            "1f33ac787fa27bb8"
+            "1f33ac787fa27bb8",
+            "985d625385b7399d"
         ],
         "x": 54,
         "y": 1499,
-        "w": 1052,
+        "w": 1412,
         "h": 142
     },
     {
@@ -5335,7 +5337,7 @@
         "type": "function",
         "z": "be1c3f3f839ca819",
         "name": "check:email:find",
-        "func": "msg.email = msg.payload;\n\nlet email = msg.email;\nlet email_find = {\n    nr_umowy: null,\n    uuid: null,\n    attachments: [],\n    probably_contract: false\n};\n\n// 1. Szukamy numeru umowy w temacie, np. \"25/69\"\nlet nr_umowy_match = email.subject?.match(/\\b[A-Z]+-\\d{2,}\\/\\d{2,}\\b/);\nif (nr_umowy_match) {\n    email_find.nr_umowy = nr_umowy_match[0];\n}\n\n// 2. Szukamy UUID w treści wiadomości: uuid:xxxxxxxx-xxxx-4xxx-yxxx-xxxxxxxxxxxx\nlet uuid_match = email.body?.match(/uuid:([0-9a-f]{8}-[0-9a-f]{4}-4[0-9a-f]{3}-[89ab][0-9a-f]{3}-[0-9a-f]{12})/i);\nif (uuid_match) {\n    email_find.uuid = uuid_match[1];\n}\n\n// 3. Parsowanie załączników — jeśli jako string oddzielony przecinkami\nlet raw_attachments = typeof email.attachments === \"string\" ? email.attachments.split(\",\") : [];\n\nlet found_pdf_with_nr = false;\nlet found_image_non_barcode = false;\n\nraw_attachments.forEach(path => {\n    const filename = path.split(\"/\").pop();\n    if (filename === \"barcode.png\") {\n        // Pomijamy plik barcode.png\n        return;\n    }\n\n    const ext = filename.toLowerCase().split(\".\").pop();\n\n    let kind = null;\n    if ([\"pdf\"].includes(ext)) kind = \"pdf\";\n    else if ([\"jpg\", \"jpeg\", \"png\", \"bmp\", \"tiff\", \"webp\"].includes(ext)) kind = \"image\";\n\n    let nr_umowy_from_filename = null;\n    let match_prefix = filename.match(/^(\\d{2})-(\\d{2})_/);\n    if (match_prefix) {\n        nr_umowy_from_filename = `${match_prefix[1]}/${match_prefix[2]}`;\n    }\n\n    // warunki do oznaczenia jako prawdopodobna umowa\n    if (kind === \"pdf\" && nr_umowy_from_filename === email_find.nr_umowy) {\n        found_pdf_with_nr = true;\n    }\n\n    if (kind === \"image\") {\n        found_image_non_barcode = true;\n    }\n\n    email_find.attachments.push({\n        patch: path,\n        filename: filename,\n        kind: kind,\n        nr_umowy: nr_umowy_from_filename\n    });\n});\n\n// 4. Warunek prawdopodobieństwa umowy\nif ((email_find.nr_umowy || email_find.uuid) && (found_pdf_with_nr || found_image_non_barcode)) {\n    email_find.probably_contract = true;\n    node.status({ fill: \"green\", shape: \"dot\", text: \"OK \" + global.get(\"getDateTime\")() });\n} else {\n    node.status({ fill: \"green\", shape: \"dot\", text: global.get(\"getDateTime\")() });\n}\n\nmsg.email_find = email_find;\nreturn msg;",
+        "func": "msg.email = msg.payload;\n\nlet email = msg.email;\nlet email_find = {\n    nr_umowy: null,\n    uuid: null,\n    attachments: [],\n    probably_contract: false\n};\n\n// 1. Szukamy numeru umowy w temacie, np. \"25/69\"\nlet nr_umowy_match = email.subject?.match(/\\b[A-Z]+-\\d{2,}\\/\\d{2,}\\b/);\nif (nr_umowy_match) {\n    email_find.nr_umowy = nr_umowy_match[0];\n}\n\n// 2. Szukamy UUID w treści wiadomości: uuid:xxxxxxxx-xxxx-4xxx-yxxx-xxxxxxxxxxxx\nlet uuid_match = email.body?.match(/uuid:([0-9a-f]{8}-[0-9a-f]{4}-4[0-9a-f]{3}-[89ab][0-9a-f]{3}-[0-9a-f]{12})/i);\nif (uuid_match) {\n    email_find.uuid = uuid_match[1];\n}\n\n// 3. Parsowanie załączników — jeśli jako string oddzielony przecinkami\nlet raw_attachments = typeof email.attachments === \"string\" ? email.attachments.split(\",\") : [];\n\nlet found_pdf_with_nr = false;\nlet found_image_non_barcode = false;\n\nraw_attachments.forEach(path => {\n    const filename = path.split(\"/\").pop();\n    if (filename === \"barcode.png\") {\n        // Pomijamy plik barcode.png\n        return;\n    }\n\n    const ext = filename.toLowerCase().split(\".\").pop();\n\n    let kind = null;\n    if ([\"pdf\"].includes(ext)) kind = \"pdf\";\n    else if ([\"jpg\", \"jpeg\", \"png\", \"bmp\", \"tiff\", \"webp\"].includes(ext)) kind = \"image\";\n\n    let nr_umowy_from_filename = null;\n    let match_prefix = filename.match(/([A-Z])-(\\d{2})-(\\d{3})/)\n    if (match_prefix) {\n        nr_umowy_from_filename = `${match_prefix[1]}-${match_prefix[2]}/${match_prefix[3]}`;\n    }\n\n    // warunki do oznaczenia jako prawdopodobna umowa\n    if (kind === \"pdf\" && nr_umowy_from_filename === email_find.nr_umowy) {\n        found_pdf_with_nr = true;\n    }\n\n    if (kind === \"image\") {\n        found_image_non_barcode = true;\n    }\n\n    email_find.attachments.push({\n        patch: path,\n        filename: filename,\n        kind: kind,\n        nr_umowy: nr_umowy_from_filename\n    });\n});\n\n// 4. Warunek prawdopodobieństwa umowy\nif ((email_find.nr_umowy || email_find.uuid) && (found_pdf_with_nr || found_image_non_barcode)) {\n    email_find.probably_contract = true;\n    node.status({ fill: \"green\", shape: \"dot\", text: \"OK \" + global.get(\"getDateTime\")() });\n} else {\n    node.status({ fill: \"green\", shape: \"dot\", text: global.get(\"getDateTime\")() });\n}\n\nmsg.email_find = email_find;\nreturn msg;",
         "outputs": 1,
         "timeout": 0,
         "noerr": 0,
@@ -5375,7 +5377,7 @@
         "links": [
             "432f72cad7c993b3"
         ],
-        "x": 2175,
+        "x": 2455,
         "y": 1180,
         "wires": []
     },
@@ -5418,19 +5420,24 @@
         "y": 940,
         "wires": [
             [
-                "0a9bd45f1d1b05f1"
+                "0a9bd45f1d1b05f1",
+                "cca9f20dddf2c2d3"
             ],
             [
-                "c5a5fb7b9de73e41"
+                "c5a5fb7b9de73e41",
+                "cca9f20dddf2c2d3"
             ],
             [
-                "8521c39907b05f75"
+                "8521c39907b05f75",
+                "d1c5c394741f15ae"
             ],
             [
-                "8521c39907b05f75"
+                "8521c39907b05f75",
+                "d1c5c394741f15ae"
             ],
             [
-                "8521c39907b05f75"
+                "8521c39907b05f75",
+                "d1c5c394741f15ae"
             ]
         ]
     },
@@ -5439,7 +5446,7 @@
         "type": "function",
         "z": "be1c3f3f839ca819",
         "name": "analize:route",
-        "func": "let find = msg.email_find;\nlet attachments = Array.isArray(find.attachments) ? find.attachments : [];\n\n// Filtrowanie bezpieczne, ignorujące puste/nulowe typy\nlet imageCount = attachments.filter(a => a.kind === \"image\").length;\nlet pdfWithNrCount = attachments.filter(a => a.kind === \"pdf\" && a.nr_umowy === find.nr_umowy).length;\n\nlet route = \"brak_danych\";\n\nif (find.probably_contract) {\n    if (pdfWithNrCount > 0) {\n        route = \"pdf_z_nr_umowy\";\n    } else if (imageCount > 0) {\n        route = \"wiele_obrazow\";\n    } else {\n        route = \"inne_probably_contract\";\n    }\n} else if (find.uuid && !find.nr_umowy) {\n    route = \"uuid_only\";\n}\n\n// <- Tutaj poprawka: dane są w msg.q.list a nie msg.payload.list\nif (msg.q && Array.isArray(msg.q.list) && msg.q.list.length > 0) {\n    msg.umowa = msg.q.list[0];  // to np. wiadomość email\n} else {\n    msg.umowa = null;\n}\n\nmsg.route = route;\nreturn msg;",
+        "func": "let find = msg.email_find;\nlet attachments = Array.isArray(find.attachments) ? find.attachments : [];\n\n// Filtrowanie bezpieczne, ignorujące puste/nulowe typy\nlet imageCount = attachments.filter(a => a.kind === \"image\").length;\nlet pdfWithNrCount = attachments.filter(a => a.kind === \"pdf\" && a.nr_umowy === find.nr_umowy).length;\n\nlet route = \"brak_danych\";\n\nif (find.probably_contract) {\n    if (pdfWithNrCount > 0) {\n        route = \"pdf_z_nr_umowy\";\n    } else if (imageCount > 0) {\n        route = \"wiele_obrazow\";\n    } else {\n        route = \"inne_probably_contract\";\n    }\n} else if (find.uuid && !find.nr_umowy) {\n    route = \"uuid_only\";\n}\n\n// <- Tutaj poprawka: dane są w msg.q.list a nie msg.payload.list\n// if (msg.q && Array.isArray(msg.q.list) && msg.q.list.length > 0) {\n//     msg.umowa = msg.q.list[0];  // to np. wiadomość email\n// } else {\n//     msg.umowa = null;\n// }\n\nmsg.route = route;\nreturn msg;",
         "outputs": 1,
         "timeout": 0,
         "noerr": 0,
@@ -5512,7 +5519,6 @@
                 "9ba915fac081c1ff"
             ],
             [
-                "f6b6f42eaaa61aee",
                 "210f906ede8ee242"
             ]
         ]
@@ -5599,7 +5605,7 @@
         "type": "function",
         "z": "be1c3f3f839ca819",
         "name": "function 7",
-        "func": "\nreturn msg;",
+        "func": "msg.umowa = msg.payload.list[0];\nreturn msg;",
         "outputs": 1,
         "timeout": 0,
         "noerr": 0,
@@ -5708,7 +5714,7 @@
         "initialize": "",
         "finalize": "",
         "libs": [],
-        "x": 780,
+        "x": 1160,
         "y": 1600,
         "wires": [
             [
@@ -5746,7 +5752,7 @@
                 "valueValue": ""
             }
         ],
-        "x": 1000,
+        "x": 1360,
         "y": 1600,
         "wires": [
             [
@@ -5802,7 +5808,7 @@
         "y": 1600,
         "wires": [
             [
-                "24ada9ad71fb27e5"
+                "985d625385b7399d"
             ]
         ]
     },
@@ -5902,7 +5908,8 @@
         "y": 1920,
         "wires": [
             [
-                "86183fdac91b6d57"
+                "86183fdac91b6d57",
+                "49fad7c4acefac24"
             ]
         ]
     },
@@ -5964,7 +5971,7 @@
         "type": "function",
         "z": "be1c3f3f839ca819",
         "name": "attach:from:email to list",
-        "func": "const basePath = \"/zenflowai/storage/email/\";\n// const fileString = msg.file_string || \"\";\n// const fileString = 'attachment/27/image0.jpeg,attachment/27/image1.jpeg,attachment/27/image2.jpeg,attachment/27/image3.jpeg';\n\n// msg.files = fileString\n//     .split(\",\")\n//     .map(p => p.trim())\n//     .filter(p => p.length > 0)\n//     .map(relPath => {\n//         return {\n//             filename: relPath.split(\"/\").pop(),\n//             path: basePath + relPath\n//         };\n//     });\n\n// return msg;\n\n\nmsg.files = (msg.email_find.attachments || [])\n    .filter(a => a.patch && a.patch.length > 0)\n    .map(a => {\n        return {\n            filename: a.filename,\n            path: basePath + a.patch\n        };\n    });\n\nreturn msg;",
+        "func": "// const basePath = \"/zenflowai/storage/email/\";\n// const fileString = msg.file_string || \"\";\n// const fileString = 'attachment/27/image0.jpeg,attachment/27/image1.jpeg,attachment/27/image2.jpeg,attachment/27/image3.jpeg';\n\n// msg.files = fileString\n//     .split(\",\")\n//     .map(p => p.trim())\n//     .filter(p => p.length > 0)\n//     .map(relPath => {\n//         return {\n//             filename: relPath.split(\"/\").pop(),\n//             path: basePath + relPath\n//         };\n//     });\n\n// return msg;\n\n\nmsg.files = (msg.email_find.attachments || [])\n    .filter(a => a.patch && a.patch.length > 0)\n    .map(a => {\n        return {\n            filename: a.filename,\n            path: a.patch\n        };\n    });\n\nreturn msg;",
         "outputs": 1,
         "timeout": 0,
         "noerr": 0,
@@ -6044,7 +6051,8 @@
         "y": 1780,
         "wires": [
             [
-                "8bbe0f756fef0ef6"
+                "8bbe0f756fef0ef6",
+                "3f80a813ff9a9363"
             ],
             []
         ]
@@ -6054,7 +6062,7 @@
         "type": "function",
         "z": "be1c3f3f839ca819",
         "name": "copy:makepdf:umowa",
-        "func": "const fs = global.get(\"fs\");\nconst path = global.get(\"path\");\nconst PDFDocument = global.get(\"pdfkit\");  // dodaj do settings.js jeśli nie ma\nconst A4_LANDSCAPE = [841.89, 595.28];\n\nconst path_storage = global.get(\"storage\");\nconst path_umowy = global.get(\"path_umowy\");\nconst path_email = global.get(\"path_email\");\n\nconst attachments = msg.email_find.attachments || [];\nconst umowa_folder = `${path_storage}${path_umowy}${msg.umowa.umowa_year}/${msg.umowa.umowa_nr}/`;\nconst email_folder = `${path_storage}${path_email}`;\nconst path1 = msg.umowa.path_umowa_orginalna;\nmsg.source_file = path.basename(path1);\n\nif (!fs.existsSync(umowa_folder)) {\n    fs.mkdirSync(umowa_folder, { recursive: true });\n}\n\nconst copied_files = [];\n\nfor (const att of attachments) {\n    const src = path.join(email_folder, att.patch); // np. /zenflowai/storage/inbox/attachment/27/image0.jpeg\n    const dest = path.join(umowa_folder, att.filename);\n\n    if (fs.existsSync(src)) {\n        fs.copyFileSync(src, dest);\n        copied_files.push(dest);\n    } else {\n        node.warn(`Plik nie istnieje: ${src}`);\n        node.status({ fill: \"red\", shape: \"dot\", text: `Plik nie istnieje: ${src}` });\n\n    }\n}\n\n// Tworzenie PDF z obrazków\nif (copied_files.length > 0) {\n    const pdfPath = path.join(umowa_folder, \"podpisana-e-\"+msg.source_file);\n    const doc = new PDFDocument({ autoFirstPage: false });\n\n    const writeStream = fs.createWriteStream(pdfPath);\n    doc.pipe(writeStream);\n\n    for (const imgPath of copied_files) {\n        // const { width, height } = doc.openImage(imgPath);\n        // doc.addPage({ size: [width, height] });\n        // doc.image(imgPath, 0, 0);\n\n        // const img = doc.openImage(imgPath);\n        // const width = img.width;\n        // const height = img.height;\n\n        // doc.addPage({ size: [width, height] });\n        // doc.image(img, 0, 0, { width, height: height - 1 }); // delikatna korekta\n\n        const img = doc.openImage(imgPath);\n        doc.addPage({ size: A4_LANDSCAPE });\n\n        doc.image(img, 0, 0, {\n            fit: A4_LANDSCAPE,\n            align: 'center',\n            valign: 'center'\n        });\n        \n    }\n\n    doc.end();\n\n    msg.umowa.path_pdf_zalaczniki = pdfPath;\n    msg.payload = {\n        status: \"ok\",\n        pdf: pdfPath,\n        kopie: copied_files\n    };\n    node.status({ fill: \"green\", shape: \"dot\", text: pdfPath });\n} else {\n    msg.payload = { status: \"brak plików do kopiowania\" };\n    node.status({ fill: \"red\", shape: \"dot\", text: \"brak plików do kopiowania\" });\n}\n\nreturn msg;",
+        "func": "const fs = global.get(\"fs\");\nconst path = global.get(\"path\");\nconst PDFDocument = global.get(\"pdfkit\");  // dodaj do settings.js jeśli nie ma\nconst A4_LANDSCAPE = [841.89, 595.28];\n\nconst path_storage = global.get(\"storage\");\nconst path_umowy = global.get(\"path_umowy\");\nconst path_email = global.get(\"path_email\");\n\nconst attachments = msg.email_find.attachments || [];\nconst umowa_folder = `${path_storage}${path_umowy}${msg.umowa.umowa_year}/${msg.umowa.umowa_nr}/`;\nconst email_folder = `${path_storage}${path_email}`;\nconst path1 = msg.umowa.path_umowa_orginalna;\nmsg.source_file = path.basename(path1);\nmsg.dest_file = \"podpisana-e-\" + msg.source_file;\n\nif (!fs.existsSync(umowa_folder)) {\n    fs.mkdirSync(umowa_folder, { recursive: true });\n}\n\nconst copied_files = [];\n\nfor (const att of attachments) {\n    const src = att.patch; //path.join(email_folder, ); // np. /zenflowai/storage/inbox/attachment/27/image0.jpeg\n    const dest = path.join(umowa_folder, att.filename);\n\n    if (fs.existsSync(src)) {\n        fs.copyFileSync(src, dest);\n        copied_files.push(dest);\n    } else {\n        node.warn(`Plik nie istnieje: ${src}`);\n        node.status({ fill: \"red\", shape: \"dot\", text: `Plik nie istnieje: ${src}` });\n\n    }\n}\n\n// Tworzenie PDF z obrazków\nif (copied_files.length > 0) {\n    const pdfPath = path.join(umowa_folder, msg.dest_file);\n    const doc = new PDFDocument({ autoFirstPage: false });\n\n    const writeStream = fs.createWriteStream(pdfPath);\n    doc.pipe(writeStream);\n\n    for (const imgPath of copied_files) {\n        // const { width, height } = doc.openImage(imgPath);\n        // doc.addPage({ size: [width, height] });\n        // doc.image(imgPath, 0, 0);\n\n        // const img = doc.openImage(imgPath);\n        // const width = img.width;\n        // const height = img.height;\n\n        // doc.addPage({ size: [width, height] });\n        // doc.image(img, 0, 0, { width, height: height - 1 }); // delikatna korekta\n\n        const img = doc.openImage(imgPath);\n        doc.addPage({ size: A4_LANDSCAPE });\n\n        doc.image(img, 0, 0, {\n            fit: A4_LANDSCAPE,\n            align: 'center',\n            valign: 'center'\n        });\n        \n    }\n\n    doc.end();\n\n    msg.umowa.path_pdf_zalaczniki = pdfPath;\n    msg.payload = {\n        status: \"ok\",\n        pdf: pdfPath,\n        kopie: copied_files\n    };\n    node.status({ fill: \"green\", shape: \"dot\", text: pdfPath });\n} else {\n    msg.payload = { status: \"brak plików do kopiowania\" };\n    node.status({ fill: \"red\", shape: \"dot\", text: \"brak plików do kopiowania\" });\n}\n\nreturn msg;",
         "outputs": 1,
         "timeout": 0,
         "noerr": 0,
@@ -6065,7 +6073,8 @@
         "y": 1780,
         "wires": [
             [
-                "130b6b391a470d25"
+                "613e610cc3a835e4",
+                "169430d5a6c292d8"
             ]
         ]
     },
@@ -6074,18 +6083,19 @@
         "type": "function",
         "z": "be1c3f3f839ca819",
         "name": "up:umowa_podpisana",
-        "func": "delete msg.headers;\ndelete msg.method;\ndelete msg.responseCookies;\n\nmsg.method = \"PATCH\";\n\nmsg.payload = {\n        \"Id\": msg.umowa.Id,\n        \"status\": \"25 contract-ok\",\n        \"umowa_podpisana\": true,\n        \"umowa_podpisana_why\": \"chatgpt\",\n        \"path_umowa_podpisana\": msg.umowa.path_pdf_zalaczniki\n    };\n\nnode.status({ fill: \"green\", shape: \"dot\", text: global.get(\"getDateTime\")() });\nreturn msg;",
+        "func": "delete msg.headers;\ndelete msg.method;\ndelete msg.responseCookies;\n\nmsg.method = \"PATCH\";\n\nconst uploadedFile = msg.payload[0];\n\nmsg.payload = {\n        \"Id\": msg.kind.Id,\n        \"status\": msg.kind.status,\n        \"umowa_podpisana\": msg.kind.status.umowa_podpisana,\n        \"umowa_podpisana_why\": msg.kind.umowa_podpisana_why,\n        \"path_umowa_podpisana\": msg.kind.path_file,\n        \"umowa_podpisana_file\": JSON.stringify([{\n            path: uploadedFile.path,\n            title: uploadedFile.title,\n            mimetype: uploadedFile.mimetype,\n            size: uploadedFile.size,\n        }])\n    };\n\nnode.status({ fill: \"green\", shape: \"dot\", text: global.get(\"getDateTime\")() });\nreturn msg;",
         "outputs": 1,
         "timeout": 0,
         "noerr": 0,
         "initialize": "",
         "finalize": "",
         "libs": [],
-        "x": 1480,
-        "y": 1480,
+        "x": 1940,
+        "y": 1520,
         "wires": [
             [
-                "eb1fa11e2db45bd9"
+                "eb1fa11e2db45bd9",
+                "36b09dfb5bfdca64"
             ]
         ]
     },
@@ -6118,8 +6128,8 @@
                 "valueValue": ""
             }
         ],
-        "x": 1700,
-        "y": 1480,
+        "x": 2140,
+        "y": 1440,
         "wires": [
             [
                 "8521c39907b05f75"
@@ -6138,7 +6148,7 @@
         "initialize": "",
         "finalize": "",
         "libs": [],
-        "x": 1780,
+        "x": 2060,
         "y": 1180,
         "wires": [
             [
@@ -6176,7 +6186,7 @@
                 "valueValue": ""
             }
         ],
-        "x": 2040,
+        "x": 2320,
         "y": 1180,
         "wires": [
             [
@@ -6208,7 +6218,7 @@
         "z": "be1c3f3f839ca819",
         "g": "5a48da093318a6e2",
         "name": "attach:from:email to list",
-        "func": "const basePath = \"/zenflowai/storage/email/\";\n// const fileString = msg.file_string || \"\";\n// const fileString = 'attachment/27/image0.jpeg,attachment/27/image1.jpeg,attachment/27/image2.jpeg,attachment/27/image3.jpeg';\n\n// msg.files = fileString\n//     .split(\",\")\n//     .map(p => p.trim())\n//     .filter(p => p.length > 0)\n//     .map(relPath => {\n//         return {\n//             filename: relPath.split(\"/\").pop(),\n//             path: basePath + relPath\n//         };\n//     });\n\n// return msg;\n\n\nmsg.files = (msg.email_find.attachments || [])\n    .filter(a => a.patch && a.patch.length > 0)\n    .map(a => {\n        return {\n            filename: a.filename,\n            path: basePath + a.patch\n        };\n    });\n\nreturn msg;",
+        "func": "const basePath = \"/zenflowai/storage/email/\";\n// const fileString = msg.file_string || \"\";\n// const fileString = 'attachment/27/image0.jpeg,attachment/27/image1.jpeg,attachment/27/image2.jpeg,attachment/27/image3.jpeg';\n\n// msg.files = fileString\n//     .split(\",\")\n//     .map(p => p.trim())\n//     .filter(p => p.length > 0)\n//     .map(relPath => {\n//         return {\n//             filename: relPath.split(\"/\").pop(),\n//             path: basePath + relPath\n//         };\n//     });\n\n// return msg;\n\n\nmsg.files = (msg.email_find.attachments || [])\n    .filter(a => a.patch && a.patch.length > 0)\n    .map(a => {\n        return {\n            filename: a.filename,\n            path: a.patch\n        };\n    });\n\nreturn msg;",
         "outputs": 1,
         "timeout": 0,
         "noerr": 0,
@@ -6229,7 +6239,7 @@
         "z": "be1c3f3f839ca819",
         "g": "5a48da093318a6e2",
         "name": "Prepare",
-        "func": "node.status({ fill: \"green\", shape: \"dot\", text: global.get(\"getDateTime\")() }); // STATUS\n\nmsg.email_template_response = \"chatgpt_email_answer.html\";\n\nmsg.chatgpt_kind = \"brak_danych\";\nmsg.chatgpt_asst = global.get('chatgpt_asst_email');\nmsg.question = `\nAnalizuj poniższą wiadomość e-mail i zakwalifikuj ją zgodnie z ustalonym schematem JSON.\n\nDane e-maila:\n- Nadawca: ${msg.email.from}\n- Temat: ${msg.email.subject}\n- Treść: ${msg.email.body}\n\nWstępna analiza:\n${JSON.stringify(msg.email_find, null, 2)}\n\nDostępne rejsy (skrócone):\n${msg.rejsy.map(r => `- ${r.nazwa} [${r.termin_od} - ${r.termin_do}], cena: ${r.cena} PLN`).join('\\n')}\n\nZwróć wynik w formacie JSON zgodnym ze zdefiniowanym schematem odpowiedzi.\n`;\n\ndelete msg.headers;\ndelete msg.url;\ndelete msg.method;\ndelete msg.statusCode;\ndelete msg.responseUrl;\ndelete msg.redirectList;\n\nnode.status({ fill: \"gray\", shape: \"dot\", text: global.get(\"getDateTime\")() }); // STATUS\nreturn msg;",
+        "func": "node.status({ fill: \"green\", shape: \"dot\", text: global.get(\"getDateTime\")() }); // STATUS\n\nmsg.email_template_response = \"chatgpt_email_answer.html\";\n\nmsg.chatgpt_kind = \"brak_danych\";\nmsg.chatgpt_asst = global.get('chatgpt_asst_email');\nmsg.question = `\nAnalizuj poniższą wiadomość e-mail i zakwalifikuj ją zgodnie z ustalonym schematem JSON.\n\nDane e-maila:\n- Nadawca: ${msg.email.from}\n- Temat: ${msg.email.subject}\n- Treść: ${msg.email.body}\n\nWstępna analiza:\n${JSON.stringify(msg.email_find, null, 2)}\n\nDostępne rejsy (skrócone):\n${msg.rejsy.map(r => `- ${r.nazwa} [${r.termin_od} - ${r.termin_do}], cena: ${r.cena} ${r.cena_c}`).join('\\n')}\n\nZwróć wynik w formacie JSON zgodnym ze zdefiniowanym schematem odpowiedzi.\n`;\n\ndelete msg.headers;\ndelete msg.url;\ndelete msg.method;\ndelete msg.statusCode;\ndelete msg.responseUrl;\ndelete msg.redirectList;\n\nnode.status({ fill: \"gray\", shape: \"dot\", text: global.get(\"getDateTime\")() }); // STATUS\nreturn msg;",
         "outputs": 1,
         "timeout": "",
         "noerr": 0,
@@ -6584,7 +6594,7 @@
         "targetType": "full",
         "statusVal": "",
         "statusType": "auto",
-        "x": 1950,
+        "x": 2230,
         "y": 1100,
         "wires": []
     },
@@ -6600,7 +6610,7 @@
         "complete": "false",
         "statusVal": "",
         "statusType": "auto",
-        "x": 2130,
+        "x": 2410,
         "y": 1080,
         "wires": []
     },
@@ -6872,6 +6882,338 @@
         "x": 390,
         "y": 980,
         "wires": []
+    },
+    {
+        "id": "cca9f20dddf2c2d3",
+        "type": "debug",
+        "z": "be1c3f3f839ca819",
+        "name": "debug 15",
+        "active": true,
+        "tosidebar": true,
+        "console": false,
+        "tostatus": false,
+        "complete": "false",
+        "statusVal": "",
+        "statusType": "auto",
+        "x": 1550,
+        "y": 900,
+        "wires": []
+    },
+    {
+        "id": "d1c5c394741f15ae",
+        "type": "debug",
+        "z": "be1c3f3f839ca819",
+        "name": "debug 16",
+        "active": true,
+        "tosidebar": true,
+        "console": false,
+        "tostatus": false,
+        "complete": "false",
+        "statusVal": "",
+        "statusType": "auto",
+        "x": 1540,
+        "y": 940,
+        "wires": []
+    },
+    {
+        "id": "3f80a813ff9a9363",
+        "type": "debug",
+        "z": "be1c3f3f839ca819",
+        "name": "debug 17",
+        "active": true,
+        "tosidebar": true,
+        "console": false,
+        "tostatus": false,
+        "complete": "true",
+        "targetType": "full",
+        "statusVal": "",
+        "statusType": "auto",
+        "x": 910,
+        "y": 1700,
+        "wires": []
+    },
+    {
+        "id": "49fad7c4acefac24",
+        "type": "debug",
+        "z": "be1c3f3f839ca819",
+        "g": "24acd2baaff30f4c",
+        "name": "debug 18",
+        "active": true,
+        "tosidebar": true,
+        "console": false,
+        "tostatus": false,
+        "complete": "false",
+        "statusVal": "",
+        "statusType": "auto",
+        "x": 1130,
+        "y": 2000,
+        "wires": []
+    },
+    {
+        "id": "613e610cc3a835e4",
+        "type": "debug",
+        "z": "be1c3f3f839ca819",
+        "name": "debug 19",
+        "active": true,
+        "tosidebar": true,
+        "console": false,
+        "tostatus": false,
+        "complete": "true",
+        "targetType": "full",
+        "statusVal": "",
+        "statusType": "auto",
+        "x": 1160,
+        "y": 1680,
+        "wires": []
+    },
+    {
+        "id": "ba6ca4a312bb18eb",
+        "type": "file in",
+        "z": "be1c3f3f839ca819",
+        "name": "read:PDF",
+        "filename": "kind.path_file",
+        "filenameType": "msg",
+        "format": "",
+        "chunk": false,
+        "sendError": false,
+        "allProps": false,
+        "x": 1780,
+        "y": 1600,
+        "wires": [
+            [
+                "0984a229cf13b354"
+            ]
+        ]
+    },
+    {
+        "id": "0984a229cf13b354",
+        "type": "function",
+        "z": "be1c3f3f839ca819",
+        "name": "Format the header",
+        "func": "msg.payload = {\n    file: {\n        value: msg.payload,  // The Buffer from the read file node\n        options: {\n            filename: msg.dest_file,\n            contentType: 'application/pdf'\n        }\n    }\n};\n\nnode.status({ fill: \"green\", shape: \"dot\", text: global.get(\"getDateTime\")() });\nreturn msg;",
+        "outputs": 1,
+        "timeout": "",
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 1890,
+        "y": 1660,
+        "wires": [
+            [
+                "f1aa88b8166cdd9d",
+                "547a5646cae0a0d8"
+            ]
+        ]
+    },
+    {
+        "id": "f1aa88b8166cdd9d",
+        "type": "http request",
+        "z": "be1c3f3f839ca819",
+        "name": "NocoDB - UPLOAD",
+        "method": "POST",
+        "ret": "obj",
+        "paytoqs": "ignore",
+        "url": "http://{{nocodb_host}}/api/v2/storage/upload",
+        "tls": "",
+        "persist": false,
+        "proxy": "",
+        "insecureHTTPParser": false,
+        "authType": "",
+        "senderr": false,
+        "headers": [
+            {
+                "keyType": "other",
+                "keyValue": "xc-token",
+                "valueType": "msg",
+                "valueValue": "xc_token"
+            },
+            {
+                "keyType": "Content-Type",
+                "keyValue": "",
+                "valueType": "multipart/form-data",
+                "valueValue": ""
+            }
+        ],
+        "x": 2150,
+        "y": 1660,
+        "wires": [
+            [
+                "130b6b391a470d25",
+                "3c999acd4c1e0c07"
+            ]
+        ]
+    },
+    {
+        "id": "8443397ed8c14803",
+        "type": "function",
+        "z": "be1c3f3f839ca819",
+        "name": "NocoDB - prepare Upload",
+        "func": "msg.nocodb_t_active = msg.nocodb_t.przelewy;\n// msg.nocodb_t_active = msg.nocodb_t.przelewy;\n// msg.nocodb_collumn_attach = \"cnu1b7m584tv4sz\";\n// msg.path = msg.oldPath;\n\nconst uploadedFile = msg.payload[0];\n\nconst now = new Date();\nconst pad = (n) => n.toString().padStart(2, '0');\n\nconst year = now.getFullYear();\nconst month = pad(now.getMonth() + 1);\nconst day = pad(now.getDate());\nconst hours = pad(now.getHours());\nconst minutes = pad(now.getMinutes());\nconst seconds = pad(now.getSeconds());\n\n\n// Prepare the update payload for the record\nmsg.payload = {\n    \"title\": `przelew CSV ${year}-${month}-${day} ${hours}:${minutes}`,\n    \"data\": `${year}-${month}-${day} ${hours}:${minutes}:${seconds}` ,\n    \"rok\": year,\n    \"miesiąc\": month,\n    \"uuid\": msg.uuidv4.status,\n    \"plik\": JSON.stringify([{\n        path: uploadedFile.path,\n        title: uploadedFile.title,\n        mimetype: uploadedFile.mimetype,\n        size: uploadedFile.size,\n    }])\n};\n// msg.nocodb_table = msg.nocodb_table_documents;\nmsg.method = \"POST\";\n\n\nnode.status({ fill: \"green\", shape: \"dot\", text: global.get(\"getDateTime\")() });\nreturn msg;",
+        "outputs": 1,
+        "timeout": 0,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 2440,
+        "y": 1660,
+        "wires": [
+            [
+                "c4589669fbc4dba3"
+            ]
+        ]
+    },
+    {
+        "id": "c4589669fbc4dba3",
+        "type": "http request",
+        "z": "be1c3f3f839ca819",
+        "name": "NocoDB - ALL",
+        "method": "use",
+        "ret": "obj",
+        "paytoqs": "ignore",
+        "url": "http://{{nocodb_host}}/api/v2/tables/{{nocodb_t_active}}/records",
+        "tls": "",
+        "persist": false,
+        "proxy": "",
+        "insecureHTTPParser": false,
+        "authType": "",
+        "senderr": false,
+        "headers": [
+            {
+                "keyType": "other",
+                "keyValue": "xc-token",
+                "valueType": "msg",
+                "valueValue": "xc_token"
+            },
+            {
+                "keyType": "Content-Type",
+                "keyValue": "",
+                "valueType": "application/json",
+                "valueValue": ""
+            }
+        ],
+        "x": 2680,
+        "y": 1660,
+        "wires": [
+            []
+        ]
+    },
+    {
+        "id": "547a5646cae0a0d8",
+        "type": "debug",
+        "z": "be1c3f3f839ca819",
+        "name": "debug 20",
+        "active": true,
+        "tosidebar": true,
+        "console": false,
+        "tostatus": false,
+        "complete": "true",
+        "targetType": "full",
+        "statusVal": "",
+        "statusType": "auto",
+        "x": 2010,
+        "y": 1840,
+        "wires": []
+    },
+    {
+        "id": "36b09dfb5bfdca64",
+        "type": "debug",
+        "z": "be1c3f3f839ca819",
+        "name": "debug 21",
+        "active": true,
+        "tosidebar": true,
+        "console": false,
+        "tostatus": false,
+        "complete": "true",
+        "targetType": "full",
+        "statusVal": "",
+        "statusType": "auto",
+        "x": 1980,
+        "y": 1380,
+        "wires": []
+    },
+    {
+        "id": "3c999acd4c1e0c07",
+        "type": "debug",
+        "z": "be1c3f3f839ca819",
+        "name": "debug 22",
+        "active": true,
+        "tosidebar": true,
+        "console": false,
+        "tostatus": false,
+        "complete": "false",
+        "statusVal": "",
+        "statusType": "auto",
+        "x": 2270,
+        "y": 1520,
+        "wires": []
+    },
+    {
+        "id": "817eac3f892f84f9",
+        "type": "delay",
+        "z": "be1c3f3f839ca819",
+        "name": "",
+        "pauseType": "delay",
+        "timeout": "2",
+        "timeoutUnits": "seconds",
+        "rate": "1",
+        "nbRateUnits": "1",
+        "rateUnits": "second",
+        "randomFirst": "1",
+        "randomLast": "5",
+        "randomUnits": "seconds",
+        "drop": false,
+        "allowrate": false,
+        "outputs": 1,
+        "x": 1640,
+        "y": 1700,
+        "wires": [
+            [
+                "ba6ca4a312bb18eb"
+            ]
+        ]
+    },
+    {
+        "id": "985d625385b7399d",
+        "type": "function",
+        "z": "be1c3f3f839ca819",
+        "g": "863158746555e7a5",
+        "name": "kind:check",
+        "func": "\nmsg.kind = {\n    \"Id\": msg.umowa.Id,\n    \"status\": \"25 contract-ok\",\n    \"umowa_podpisana\": true,\n    \"path_file\": msg.path_umowa_podpisana_email_pdf,\n    \"umowa_podpisana_why\": \"sh256\"\n}\n\nreturn msg;",
+        "outputs": 1,
+        "timeout": 0,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 750,
+        "y": 1600,
+        "wires": [
+            [
+                "817eac3f892f84f9"
+            ]
+        ]
+    },
+    {
+        "id": "169430d5a6c292d8",
+        "type": "function",
+        "z": "be1c3f3f839ca819",
+        "name": "kind:check",
+        "func": "\nmsg.kind = {\n    \"Id\": msg.umowa.Id,\n    \"status\": \"25 contract-ok\",\n    \"umowa_podpisana\": true,\n    \"path_file\": msg.umowa.path_pdf_zalaczniki,\n    \"umowa_podpisana_why\": \"chatgpt\"\n}\n\nreturn msg;",
+        "outputs": 1,
+        "timeout": 0,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 1270,
+        "y": 1780,
+        "wires": [
+            [
+                "817eac3f892f84f9"
+            ]
+        ]
     },
     {
         "id": "1f03db0d3558b040",
