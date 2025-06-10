@@ -4,6 +4,10 @@ Kwatermistrz
 Kwatermistrz dla Kapitana Bastka
 
 ### About
+
+0.3.6
+- poprawa detekcji podpisu 
+
 0.3.5
 - poprawki analizy nowy kod
 
