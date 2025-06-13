@@ -16,6 +16,22 @@
         "env": []
     },
     {
+        "id": "5e0f1a41e75562f7",
+        "type": "tab",
+        "label": "03 - Email:New:Check",
+        "disabled": false,
+        "info": "",
+        "env": []
+    },
+    {
+        "id": "be1c3f3f839ca819",
+        "type": "tab",
+        "label": "04 - Email:Processing",
+        "disabled": false,
+        "info": "",
+        "env": []
+    },
+    {
         "id": "6ef65b964aaf43e6",
         "type": "tab",
         "label": "API:GET",
@@ -40,17 +56,9 @@
         "env": []
     },
     {
-        "id": "be1c3f3f839ca819",
+        "id": "77589ba277290912",
         "type": "tab",
-        "label": "Email:Processing",
-        "disabled": false,
-        "info": "",
-        "env": []
-    },
-    {
-        "id": "5e0f1a41e75562f7",
-        "type": "tab",
-        "label": "Email:New:Check",
+        "label": "monitoring",
         "disabled": false,
         "info": "",
         "env": []
@@ -67,6 +75,22 @@
         "id": "c74ceced8c3687a1",
         "type": "tab",
         "label": "Flow 1",
+        "disabled": false,
+        "info": "",
+        "env": []
+    },
+    {
+        "id": "63acb26d6d62c6a7",
+        "type": "tab",
+        "label": "Telegram:cmd",
+        "disabled": false,
+        "info": "",
+        "env": []
+    },
+    {
+        "id": "96f32cdb01714498",
+        "type": "tab",
+        "label": "Flow 2",
         "disabled": false,
         "info": "",
         "env": []
@@ -400,6 +424,84 @@
         ]
     },
     {
+        "id": "c223930924320350",
+        "type": "subflow",
+        "name": "Telegram",
+        "info": "",
+        "category": "",
+        "in": [
+            {
+                "x": 40,
+                "y": 40,
+                "wires": [
+                    {
+                        "id": "telegram_out"
+                    }
+                ]
+            }
+        ],
+        "out": [],
+        "env": [],
+        "meta": {},
+        "color": "#DDAA99",
+        "status": {
+            "x": 300,
+            "y": 40,
+            "wires": [
+                {
+                    "id": "telegram_out",
+                    "port": 0
+                }
+            ]
+        }
+    },
+    {
+        "id": "54b98742948036f5",
+        "type": "subflow",
+        "name": "get config",
+        "info": "",
+        "category": "ZFAI",
+        "in": [
+            {
+                "x": 60,
+                "y": 180,
+                "wires": [
+                    {
+                        "id": "a6cdbcc189e7eec4"
+                    }
+                ]
+            }
+        ],
+        "out": [
+            {
+                "x": 1460,
+                "y": 180,
+                "wires": [
+                    {
+                        "id": "0207b2cca5960203",
+                        "port": 0
+                    }
+                ]
+            }
+        ],
+        "env": [],
+        "meta": {
+            "module": "ZFAI",
+            "version": "0.0.1"
+        },
+        "color": "#E7E7AE",
+        "status": {
+            "x": 1460,
+            "y": 40,
+            "wires": [
+                {
+                    "id": "15f5c6d0d8dae181",
+                    "port": 0
+                }
+            ]
+        }
+    },
+    {
         "id": "7918a80261c18fd1",
         "type": "group",
         "z": "8a595db6babaf80e",
@@ -694,6 +796,88 @@
         "h": 142
     },
     {
+        "id": "afb7c1b9d75a1d7b",
+        "type": "group",
+        "z": "7ac738eef3d259eb",
+        "style": {
+            "stroke": "#2c4d57",
+            "stroke-opacity": "1",
+            "fill": "#002b36",
+            "fill-opacity": "0.5",
+            "label": true,
+            "label-position": "nw",
+            "color": "#839496"
+        },
+        "nodes": [
+            "e81cb002303588d9",
+            "f92073c1ae7b626e",
+            "693346b671c873f0",
+            "aebed975845883a8",
+            "e4bca57cc91d4c9b",
+            "0d345205ede42bdb",
+            "5eda4e8a93923ba6"
+        ],
+        "x": 494,
+        "y": 419,
+        "w": 672,
+        "h": 222
+    },
+    {
+        "id": "4f84417ea22d54a2",
+        "type": "group",
+        "z": "7ac738eef3d259eb",
+        "name": "send email confirmation email",
+        "style": {
+            "label": true
+        },
+        "nodes": [
+            "b38c6c11d0212c18",
+            "05787fdb9e24909d",
+            "a11e422b6114d822",
+            "331f8aac05af3f84",
+            "4052c790d3e279e9",
+            "cb8bf8e488c1a183",
+            "cb62cc24fb94ce57",
+            "59bbb540505cd062",
+            "ad22c65f984b2fa7",
+            "9eaf057bbd22b391",
+            "efd2c3e56d49ea9a",
+            "5ed9f39bab8aac16",
+            "c80e33e6bba36bf8",
+            "ff22d8d375026584",
+            "eb18773d9e26b539"
+        ],
+        "x": 114,
+        "y": 1319,
+        "w": 1422,
+        "h": 462
+    },
+    {
+        "id": "telegram_bot",
+        "type": "telegram bot",
+        "botname": "Kwatermistrz",
+        "usernames": "",
+        "chatids": "",
+        "baseapiurl": "",
+        "testenvironment": false,
+        "pollinterval": "300",
+        "usesocks": false,
+        "sockshost": "",
+        "socksport": "6667",
+        "socksusername": "",
+        "sockspassword": "",
+        "bothost": "",
+        "botpath": "",
+        "localbothost": "",
+        "localbotport": "",
+        "publicbotport": "",
+        "privatekey": "",
+        "certificate": "",
+        "useselfsignedcertificate": false,
+        "sslterminated": false,
+        "verboselogging": false
+    },
+    {
         "id": "b53d3e27e0d7792d",
         "type": "function",
         "z": "03b285947d86a284",
@@ -718,7 +902,7 @@
         "type": "function",
         "z": "03b285947d86a284",
         "name": "tables - ZenFlowAI",
-        "func": "msg.nocodb_host = global.get('env').NOCODB_HOST;\nflow.set('xc-token', global.get('env').NOCODB_KEY) // NocoDB token\nmsg.xc_token = flow.get(\"xc-token\");\n\nmsg.nocodb_t = {\n    osoby: \"mbe32zcic0pndmu\",\n    osoby_view: \"vwh8lh3uhiwcczp0\",\n    rejsy: \"m39ru683xn4zzq2\",\n    rejsy_view: \"vwa56ad99xpcnv5c\",\n    umowy: \"m65niapemqndt0y\",\n    umowy_view: \"vwex9b96thj0h0ef\",\n    messages: \"mqghtzopkll6zjc\",\n    messages_view: \"vwe9peexvucdnp9p\",\n    app_queue: \"mmqs1jtawvqm3kw\",\n    app_queue_view: \"vwxyx1j609yaquzk\",\n    app_mail_inbox: \"mpctanl7dubh7wi\",\n    app_mail_inbox_view: \"vww1vda54exa9tje\",\n};\n\nnode.status({ fill: \"green\", shape: \"dot\", text: global.get(\"getDateTime\")() });\nreturn msg;",
+        "func": "msg.nocodb_host = global.get('env').NOCODB_HOST;\nflow.set('xc-token', global.get('env').NOCODB_KEY) // NocoDB token\nmsg.xc_token = flow.get(\"xc-token\");\n\nmsg.nocodb_t = {\n    osoby: \"mbe32zcic0pndmu\",\n    osoby_view: \"vwh8lh3uhiwcczp0\",\n    rejsy: \"m39ru683xn4zzq2\",\n    rejsy_view: \"vwa56ad99xpcnv5c\",\n    umowy: \"m65niapemqndt0y\",\n    umowy_view: \"vwex9b96thj0h0ef\",\n    messages: \"mqghtzopkll6zjc\",\n    messages_view: \"vwe9peexvucdnp9p\",\n    app_queue: \"mmqs1jtawvqm3kw\",\n    app_queue_view: \"vwxyx1j609yaquzk\",\n    app_mail_inbox: \"mpctanl7dubh7wi\",\n    app_mail_inbox_view: \"vww1vda54exa9tje\",\n    app_config: \"m7fccx06vjy69o8\",\n    app_config_view: \"vw763kzgx77xd8dq\",\n};\n\nnode.status({ fill: \"green\", shape: \"dot\", text: global.get(\"getDateTime\")() });\nreturn msg;",
         "outputs": 1,
         "timeout": 0,
         "noerr": 0,
@@ -2147,6 +2331,145 @@
         ]
     },
     {
+        "id": "telegram_out",
+        "type": "telegram sender",
+        "z": "c223930924320350",
+        "name": "Kwatermistrz",
+        "bot": "telegram_bot",
+        "haserroroutput": false,
+        "outputs": 1,
+        "x": 170,
+        "y": 40,
+        "wires": [
+            []
+        ]
+    },
+    {
+        "id": "a6cdbcc189e7eec4",
+        "type": "function",
+        "z": "54b98742948036f5",
+        "name": "NocoDB - get app_config parametr:kind",
+        "func": "msg.nocodb_t_active = msg.nocodb_t.app_config;\n\n// Budowanie warunku where\nlet conditions = [];\n\nif (msg.config.parametr && msg.config.parametr !== \"*\") {\n    conditions.push(`(parametr,eq,${msg.config.parametr})`);\n}\nconditions.push(`(kind,eq,${msg.config.kind})`);\n\nif (msg.config.value && msg.config.value !== \"\") {\n    conditions.push(`(value,eq,${msg.config.value})`);\n}\n\nlet where = conditions.join(\"~and\");\n\n// Budowanie payloadu\nmsg.payload = {\n    offset: '0',\n    limit: msg.config.limit,\n    viewId: msg.nocodb_t.app_config_view,\n    where: where\n};\n\n// Status\nnode.status({ fill: \"green\", shape: \"dot\", text: global.get(\"getDateTime\")() });\nmsg.statusText = \"search in config ...\";\n\nreturn msg;",
+        "outputs": 1,
+        "timeout": 0,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 360,
+        "y": 180,
+        "wires": [
+            [
+                "15f5c6d0d8dae181",
+                "c397e119640213f5"
+            ]
+        ]
+    },
+    {
+        "id": "15f5c6d0d8dae181",
+        "type": "change",
+        "z": "54b98742948036f5",
+        "name": "",
+        "rules": [
+            {
+                "t": "set",
+                "p": "payload",
+                "pt": "msg",
+                "to": "statusText",
+                "tot": "msg"
+            }
+        ],
+        "action": "",
+        "property": "",
+        "from": "",
+        "to": "",
+        "reg": false,
+        "x": 1280,
+        "y": 40,
+        "wires": [
+            []
+        ]
+    },
+    {
+        "id": "9d1723e40fb93c1e",
+        "type": "function",
+        "z": "54b98742948036f5",
+        "name": "NocoDB - analize get",
+        "func": "if (msg.payload.list && msg.payload.list.length > 0) {\n    msg.id = msg.payload.list[0].Id;\n    node.status({ fill: \"grey\", shape: \"ring\", text: `ID: ${msg.id}` });\n    msg.statusText = `find ID: ${msg.id}`;\n    return [null,msg];\n}\n\n\nnode.status({ fill: \"yellow\", shape: \"dot\", text: \"Brak danych — utworzono pusty rekord\" });\nmsg.statusText = \"no record ...\";\nreturn [msg,null];",
+        "outputs": 2,
+        "timeout": 0,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 1000,
+        "y": 180,
+        "wires": [
+            [
+                "15f5c6d0d8dae181"
+            ],
+            [
+                "15f5c6d0d8dae181",
+                "0207b2cca5960203"
+            ]
+        ]
+    },
+    {
+        "id": "0207b2cca5960203",
+        "type": "function",
+        "z": "54b98742948036f5",
+        "name": "ret all",
+        "func": "if (msg.payload.list && msg.payload.list.length > 0) {\n    if (msg.config && msg.config.limit === 1) {\n        msg.payload = msg.payload.list[0];\n        node.status({ fill: \"grey\", shape: \"ring\", text: `get ID: ${msg.payload.id || msg.payload.uuid || \"?\"}` });\n        msg.statusText = `get ID: ${msg.payload.id || msg.payload.uuid || \"?\"}`;\n    } else {\n        msg.payload = msg.payload.list;\n        node.status({ fill: \"blue\", shape: \"dot\", text: `list length: ${msg.payload.length}` });\n        msg.statusText = `list length: ${msg.payload.length}`;\n    }\n}\n\nreturn msg;",
+        "outputs": 1,
+        "timeout": 0,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 1250,
+        "y": 180,
+        "wires": [
+            []
+        ]
+    },
+    {
+        "id": "c397e119640213f5",
+        "type": "http request",
+        "z": "54b98742948036f5",
+        "name": "NocoDB - GET",
+        "method": "GET",
+        "ret": "obj",
+        "paytoqs": "query",
+        "url": "http://{{nocodb_host}}/api/v2/tables/{{nocodb_t_active}}/records",
+        "tls": "",
+        "persist": false,
+        "proxy": "",
+        "insecureHTTPParser": false,
+        "authType": "",
+        "senderr": false,
+        "headers": [
+            {
+                "keyType": "other",
+                "keyValue": "xc-token",
+                "valueType": "msg",
+                "valueValue": "xc_token"
+            },
+            {
+                "keyType": "Content-Type",
+                "keyValue": "",
+                "valueType": "application/json",
+                "valueValue": ""
+            }
+        ],
+        "x": 700,
+        "y": 180,
+        "wires": [
+            [
+                "9d1723e40fb93c1e"
+            ]
+        ]
+    },
+    {
         "id": "bc8a691041330981",
         "type": "subflow:03b285947d86a284",
         "z": "8a595db6babaf80e",
@@ -3501,7 +3824,7 @@
         "type": "function",
         "z": "bf6e5312884e6967",
         "name": "email:template:umowa-email",
-        "func": "const content = msg.payload; //file data\n\nconst fs = global.get('fs');\nconst path = global.get('path');\n\n// Ścieżki do plików (dostosuj według potrzeb)\nconst htmlPath = global.get('storage') + \"/teamplates/html/email_umowa.html\";\nconst cssPath = global.get('storage') + \"/teamplates/html/email-style.css\";\n\nlet html = fs.readFileSync(htmlPath, \"utf8\");\nconst css = fs.readFileSync(cssPath, \"utf8\");\n\nconst formdata = {\n    \"osoba_name\": msg.umowa.imie,\n    \"umowa_przedmiot\": msg.umowa.umowa_przedmiot,\n    \"termin_od\": msg.umowa.termin_od,\n    \"termin_do\": msg.umowa.termin_do,\n    \"nr_umowy\": msg.umowa.nr_umowy,\n    \"rezerwacja_cena_rata1\": msg.umowa.rezerwacja_cena_rata1, \n    \"przelew_nazwa\": msg.umowa.przelew_nazwa,\n    \"uuid\": msg.umowa_get.uuid,\n    \"cena_c\": msg.umowa.cena_c,\n}   \n\n// Wstawienie stylu inline w miejsce <link rel=\"stylesheet\"...>\nhtml = html.replace(\n    /<link\\s+rel=[\"']stylesheet[\"']\\s+href=[\"'][^\"']+[\"']\\s*\\/?>/,\n    `<style>\\n${css}\\n</style>`\n);\n\nlet is_pln_qr_code = \"\";\nlet is_nr_bank = \"\";\n\nif (formdata.cena_c == \"PLN\") {\n    is_nr_bank = `Numer rachunku PLN - <strong>${msg.firma.nr_konta_pln}</strong><br>`;\n    is_pln_qr_code = \"<p>Jeszcze przygotowałem dla Ciebie ułatwienie jeżeli używasz aplikacji mobilnej banku. Możesz zeskanować qrcode i wszystkie dane się uzupełnią samoistnie.</p><p><img src=\\\"cid:barcode.png\\\" alt=\\\"QR Code do przelewu\\\" class=\\\"qr-code\\\"></p>\"\n} else {\n    is_nr_bank = `Numer rachunku EUR - <strong>${msg.firma.nr_konta_eur}</strong><br>`;\n}\n\n// Zamiana znaczników {{...}} dynamicznie z msg.payload\nhtml = html\n    .replace(/{{osoba_name}}/g, formdata.osoba_name)\n    .replace(/{{umowa_przedmiot}}/g, formdata.umowa_przedmiot)\n    .replace(/{{termin_od}}/g, formdata.termin_od)\n    .replace(/{{termin_do}}/g, formdata.termin_do)\n    .replace(/{{nr_umowy}}/g, formdata.nr_umowy)\n    .replace(/{{rezerwacja_cena_rata1}}/g, formdata.rezerwacja_cena_rata1)\n    .replace(/{{przelew_nazwa}}/g, formdata.przelew_nazwa)\n    .replace(/{{uuid}}/g, formdata.uuid)\n    .replace(/{{firma_nr_konta_pln}}/g, msg.firma.nr_konta_pln)\n    .replace(/{{firma_nr_konta_eur}}/g, msg.firma.nr_konta_eur)\n    .replace(/{{firma_bank}}/g, msg.firma.bank)\n    .replace(/{{cena_c}}/g, formdata.cena_c)\n    .replace(/{{is_pln_qr_code}}/g, is_pln_qr_code)\n    .replace(/{{is_nr_bank}}/g, is_nr_bank)\n    ;\n\n\n\nmsg.payload = html;\nmsg.to = `${msg.umowa.email}`;\n// msg.from = \"kwatermistrz@zenflowai.net\";\nmsg.from = msg.smtp.auth.user;\nmsg.subject = `Umowa Rejsu - ${msg.umowa.nr_umowy} - Kapitan Bastek`;\nmsg.headers = {\n    \"Content-Type\": \"text/html\"\n};\n\nif (formdata.cena_c == \"PLN\") {\n    msg.attachments = [\n    {\n        \"filename\": msg.umowa_pdf_file_name,\n        \"content\": content,\n        // \"encoding\": \"base64\"\n    }, {\n        filename: \"barcode.png\",\n        content: msg.barcode,\n        encoding: \"base64\",\n        cid: \"barcode.png\"\n    }\n    ];\n} else {\n    msg.attachments = [\n    {\n        \"filename\": msg.umowa_pdf_file_name,\n        \"content\": content,\n        // \"encoding\": \"base64\"\n    }];\n}\n\nmsg.html = html;\n\nnode.status({ fill: \"green\", shape: \"dot\", text: global.get(\"getDateTime\")() });\nreturn msg;",
+        "func": "const content = msg.payload; //file data\n\nconst fs = global.get('fs');\nconst path = global.get('path');\n\n// Ścieżki do plików (dostosuj według potrzeb)\nconst htmlPath = global.get('storage') + \"/teamplates/html/email_umowa.html\";\nconst cssPath = global.get('storage') + \"/teamplates/html/email-style.css\";\n\nlet html = fs.readFileSync(htmlPath, \"utf8\");\nconst css = fs.readFileSync(cssPath, \"utf8\");\n\nconst formdata = {\n    \"osoba_name\": msg.umowa.imie,\n    \"umowa_przedmiot\": msg.umowa.umowa_przedmiot,\n    \"termin_od\": msg.umowa.termin_od,\n    \"termin_do\": msg.umowa.termin_do,\n    \"nr_umowy\": msg.umowa.nr_umowy,\n    \"rezerwacja_cena_rata1\": msg.umowa.rezerwacja_cena_rata1, \n    \"przelew_nazwa\": msg.umowa.przelew_nazwa,\n    \"uuid\": msg.umowa_get.uuid,\n    \"cena_c\": msg.umowa.cena_c,\n}   \n\n// Wstawienie stylu inline w miejsce <link rel=\"stylesheet\"...>\nhtml = html.replace(\n    /<link\\s+rel=[\"']stylesheet[\"']\\s+href=[\"'][^\"']+[\"']\\s*\\/?>/,\n    `<style>\\n${css}\\n</style>`\n);\n\nlet is_pln_qr_code = \"\";\nlet is_nr_bank = \"\";\n\nif (formdata.cena_c == \"PLN\") {\n    is_nr_bank = `Numer rachunku PLN - <strong>${msg.firma.nr_konta_pln}</strong><br>`;\n    is_pln_qr_code = \"<p>Jeszcze przygotowałem dla Ciebie ułatwienie jeżeli używasz aplikacji mobilnej banku. Możesz zeskanować qrcode i wszystkie dane się uzupełnią samoistnie.</p><p><img src=\\\"cid:barcode.png\\\" alt=\\\"QR Code do przelewu\\\" class=\\\"qr-code\\\"></p>\"\n} else {\n    is_nr_bank = `Numer rachunku EUR - <strong>${msg.firma.nr_konta_eur}</strong><br>`;\n}\n\n// Zamiana znaczników {{...}} dynamicznie z msg.payload\nhtml = html\n    .replace(/{{osoba_name}}/g, formdata.osoba_name)\n    .replace(/{{umowa_przedmiot}}/g, formdata.umowa_przedmiot)\n    .replace(/{{termin_od}}/g, formdata.termin_od)\n    .replace(/{{termin_do}}/g, formdata.termin_do)\n    .replace(/{{nr_umowy}}/g, formdata.nr_umowy)\n    .replace(/{{rezerwacja_cena_rata1}}/g, formdata.rezerwacja_cena_rata1)\n    .replace(/{{przelew_nazwa}}/g, formdata.przelew_nazwa)\n    .replace(/{{uuid}}/g, formdata.uuid)\n    .replace(/{{firma_nr_konta_pln}}/g, msg.firma.nr_konta_pln)\n    .replace(/{{firma_nr_konta_eur}}/g, msg.firma.nr_konta_eur)\n    .replace(/{{firma_bank}}/g, msg.firma.bank)\n    .replace(/{{cena_c}}/g, formdata.cena_c)\n    .replace(/{{is_pln_qr_code}}/g, is_pln_qr_code)\n    .replace(/{{is_nr_bank}}/g, is_nr_bank)\n    ;\n\n\n\nmsg.payload = html;\nmsg.to = `${msg.umowa.email}`;\n// msg.from = \"kwatermistrz@zenflowai.net\";\nmsg.from = msg.smtp.auth.user;\nmsg.subject = `Umowa Rejsu - ${msg.umowa.nr_umowy} - Kapitan Bastek`;\nmsg.headers = {\n    \"Content-Type\": \"text/html\"\n};\n\nif (formdata.cena_c == \"PLN\") {\n    msg.attachments = [\n    {\n        \"filename\": msg.umowa_pdf_file_name,\n        \"content\": content,\n        // \"encoding\": \"base64\"\n    }, {\n        filename: \"barcode.png\",\n        content: msg.barcode,\n        encoding: \"base64\",\n        cid: \"barcode.png\"\n    }\n    ];\n} else {\n    msg.attachments = [\n    {\n        \"filename\": msg.umowa_pdf_file_name,\n        \"content\": content,\n        // \"encoding\": \"base64\"\n    }];\n}\n\nmsg.html = html;\nmsg.umowa_pdf_binary = content;\n\nnode.status({ fill: \"green\", shape: \"dot\", text: global.get(\"getDateTime\")() });\nreturn msg;",
         "outputs": 1,
         "timeout": 0,
         "noerr": 0,
@@ -3665,7 +3988,7 @@
         "y": 1560,
         "wires": [
             [
-                "41d85efdfdc2b98b"
+                "062bae33bf60cb6c"
             ]
         ]
     },
@@ -3890,7 +4213,7 @@
         "type": "function",
         "z": "bf6e5312884e6967",
         "name": "umowa:status:10 send-contract",
-        "func": "msg.nocodb_t_active = msg.nocodb_t.umowy;\nmsg.method = \"PATCH\";\n\nmsg.payload = {\n    Id: msg.umowa_get.Id,   // klucz podstawowy w Twojej tabeli\n    status: \"10 send-contract\",\n    path_umowa_orginalna: msg.umowa_pdf_file\n};\n\n\nnode.status({\n    fill: \"green\",\n    shape: \"dot\",\n    text: `${global.get(\"getDateTime\")()}`\n});\nreturn msg;",
+        "func": "msg.nocodb_t_active = msg.nocodb_t.umowy;\nmsg.method = \"PATCH\";\n\nconst uploadedFile = msg.payload[0];\n\nmsg.payload = {\n    Id: msg.umowa_get.Id,   // klucz podstawowy w Twojej tabeli\n    status: \"10 send-contract\",\n    path_umowa_orginalna: msg.umowa_pdf_file,\n    \"umowa_orginalna_file\": JSON.stringify([{\n        path: uploadedFile.path,\n        title: uploadedFile.title,\n        mimetype: uploadedFile.mimetype,\n        size: uploadedFile.size,\n    }])\n};\n\n\nnode.status({\n    fill: \"green\",\n    shape: \"dot\",\n    text: `${global.get(\"getDateTime\")()}`\n});\nreturn msg;",
         "outputs": 1,
         "timeout": 0,
         "noerr": 0,
@@ -3898,10 +4221,11 @@
         "finalize": "",
         "libs": [],
         "x": 210,
-        "y": 1680,
+        "y": 1800,
         "wires": [
             [
-                "37d6a6fc56adeb94"
+                "37d6a6fc56adeb94",
+                "cff26d82490c14be"
             ]
         ]
     },
@@ -3934,8 +4258,8 @@
                 "valueValue": ""
             }
         ],
-        "x": 500,
-        "y": 1680,
+        "x": 520,
+        "y": 1760,
         "wires": [
             [
                 "c9e62eaccd0241cc"
@@ -3947,7 +4271,7 @@
         "type": "function",
         "z": "bf6e5312884e6967",
         "name": "rejs:ilosc_wyk:ilosc_osob",
-        "func": "msg.nocodb_t_active = msg.nocodb_t.rejsy;\nmsg.method = \"PATCH\";\n\nconst wyk = parseInt(msg.payload.list[0].ilosc_wyk, 10) + parseInt(msg.umowa_get.ile_osob,10);\n\nmsg.payload = {\n    Id: msg.umowa_get.rejsy.Id,   // klucz podstawowy w Twojej tabeli\n    // status: \"07 generate-contract\",\n    // data_umowy: msg.umowa.data_umowy,\n    // nazwa: msg.umowa.nr_umowy\n    ilosc_wyk: wyk\n};\n\n\nnode.status({\n    fill: \"green\",\n    shape: \"dot\",\n    text: `${global.get(\"getDateTime\")()}`\n});\nreturn msg;",
+        "func": "msg.nocodb_t_active = msg.nocodb_t.rejsy;\nmsg.method = \"PATCH\";\nmsg.rejs = msg.payload.list[0];\nconst wyk = parseInt(msg.payload.list[0].ilosc_wyk, 10) + parseInt(msg.umowa_get.ile_osob,10);\n\nmsg.payload = {\n    Id: msg.umowa_get.rejsy.Id,   // klucz podstawowy w Twojej tabeli\n    // status: \"07 generate-contract\",\n    // data_umowy: msg.umowa.data_umowy,\n    // nazwa: msg.umowa.nr_umowy\n    ilosc_wyk: wyk\n};\n\n\nnode.status({\n    fill: \"green\",\n    shape: \"dot\",\n    text: `${global.get(\"getDateTime\")()}`\n});\nreturn msg;",
         "outputs": 1,
         "timeout": 0,
         "noerr": 0,
@@ -4214,504 +4538,67 @@
         ]
     },
     {
-        "id": "353379d5bcdeee09",
-        "type": "http in",
-        "z": "6ef65b964aaf43e6",
-        "g": "49c2be5b620ebeda",
-        "name": "",
-        "url": "/api/rejsy/get",
-        "method": "get",
-        "upload": false,
-        "swaggerDoc": "",
-        "x": 330,
-        "y": 160,
+        "id": "cff26d82490c14be",
+        "type": "function",
+        "z": "bf6e5312884e6967",
+        "name": "msg:telegram",
+        "func": "const template_data = {\n    rejs_name: msg.rejs.nazwa,\n    umowa_nr: msg.umowa.nr_umowy\n};\n\nmsg.message = {\n    template_in_row: \"Umowa o nr *{{umowa_nr}}* na **rejs**: *{{rejs_name}}* została wysłana.  \",\n    template_data: template_data,\n    kind: \"telegram\",\n    to_group: \"admin\",\n    to: \"admin\",\n\n    // to: msg.payload.value  // np. \"234242,23424234,24\"\n};\n\nnode.status({ fill: \"green\", shape: \"dot\", text: global.get(\"getDateTime\")() });\nreturn msg;",
+        "outputs": 1,
+        "timeout": 0,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 520,
+        "y": 1820,
         "wires": [
             [
-                "9a824614bd5da150"
+                "0944d6334829fb66"
             ]
         ]
     },
     {
-        "id": "b8e46ab11cd82e31",
-        "type": "http response",
-        "z": "6ef65b964aaf43e6",
-        "g": "49c2be5b620ebeda",
-        "name": "",
-        "statusCode": "200",
-        "headers": {},
-        "x": 560,
-        "y": 240,
+        "id": "0944d6334829fb66",
+        "type": "link out",
+        "z": "bf6e5312884e6967",
+        "name": "link out 18",
+        "mode": "link",
+        "links": [
+            "b38c6c11d0212c18"
+        ],
+        "x": 745,
+        "y": 1820,
         "wires": []
     },
     {
-        "id": "e2ee6162640b5a29",
+        "id": "062bae33bf60cb6c",
         "type": "function",
-        "z": "6ef65b964aaf43e6",
-        "g": "49c2be5b620ebeda",
-        "name": "prepare:response",
-        "func": "let output = [];\n\nif (msg.payload && Array.isArray(msg.payload.list)) {\n    for (let item of msg.payload.list) {\n        const free_space = (item.ilosc_max || 0) - (item.ilosc_wyk || 0);\n        const termin_od = (item.termin_od || \"\").replaceAll(\"-\", \".\");\n        const termin_do = (item.termin_do || \"\").replaceAll(\"-\", \".\");\n\n        let name = `${item.nazwa} [${termin_od} - ${termin_do}]`;\n        if (free_space <= 0) {\n            name += \" BRAK MIEJSC\";\n        }\n\n        output.push({\n            name: name,\n            value: item.Id,\n            free_space: free_space,\n            cena: item.cena || 0,\n            czym: item.czym,\n            brak_miejsc: free_space <= 0,\n            cena_c: item.cena_c || \"PLN\"\n        });\n    }\n}\n\nmsg.payload = output;\nreturn msg;",
+        "z": "bf6e5312884e6967",
+        "name": "Format the header",
+        "func": "msg.payload = {\n    file: {\n        value: msg.umowa_pdf_binary,  // The Buffer from the read file node\n        options: {\n            filename: msg.umowa_pdf_file_name,\n            contentType: 'application/pdf'\n        }\n    }\n};\n\nnode.status({ fill: \"green\", shape: \"dot\", text: global.get(\"getDateTime\")() });\nreturn msg;",
         "outputs": 1,
-        "timeout": 0,
+        "timeout": "",
         "noerr": 0,
         "initialize": "",
         "finalize": "",
         "libs": [],
-        "x": 330,
-        "y": 240,
+        "x": 190,
+        "y": 1680,
         "wires": [
             [
-                "b8e46ab11cd82e31"
+                "8b054a622228d1b6"
             ]
         ]
     },
     {
-        "id": "9a824614bd5da150",
-        "type": "subflow:03b285947d86a284",
-        "z": "6ef65b964aaf43e6",
-        "g": "49c2be5b620ebeda",
-        "name": "",
-        "x": 540,
-        "y": 160,
-        "wires": [
-            [
-                "5c111b1ca0dd686e"
-            ]
-        ]
-    },
-    {
-        "id": "5c111b1ca0dd686e",
-        "type": "function",
-        "z": "6ef65b964aaf43e6",
-        "g": "49c2be5b620ebeda",
-        "name": "NocoDB - rejsy:get",
-        "func": "msg.nocodb_t_active = msg.nocodb_t.rejsy;\n\nlet nr_k = msg.payload.nr_k;\n\nmsg.form_data = msg.payload;\n\nmsg.payload = {\n    offset: '0',\n    limit: '25',\n    viewId: msg.nocodb_t.rejsy_view,\n    where: `(status,eq,active)`\n};\n//${nr_k}\nnode.status({ fill: \"green\", shape: \"dot\", text: global.get(\"getDateTime\")() });\n\nreturn msg;",
-        "outputs": 1,
-        "timeout": 0,
-        "noerr": 0,
-        "initialize": "",
-        "finalize": "",
-        "libs": [],
-        "x": 770,
-        "y": 160,
-        "wires": [
-            [
-                "f6fc7c875e15e454"
-            ]
-        ]
-    },
-    {
-        "id": "f6fc7c875e15e454",
+        "id": "8b054a622228d1b6",
         "type": "http request",
-        "z": "6ef65b964aaf43e6",
-        "g": "49c2be5b620ebeda",
-        "name": "NocoDB - GET",
-        "method": "GET",
-        "ret": "obj",
-        "paytoqs": "query",
-        "url": "http://{{nocodb_host}}/api/v2/tables/{{nocodb_t_active}}/records",
-        "tls": "",
-        "persist": false,
-        "proxy": "",
-        "insecureHTTPParser": false,
-        "authType": "",
-        "senderr": false,
-        "headers": [
-            {
-                "keyType": "other",
-                "keyValue": "xc-token",
-                "valueType": "msg",
-                "valueValue": "xc_token"
-            },
-            {
-                "keyType": "Content-Type",
-                "keyValue": "",
-                "valueType": "application/json",
-                "valueValue": ""
-            }
-        ],
-        "x": 1000,
-        "y": 160,
-        "wires": [
-            [
-                "e2ee6162640b5a29"
-            ]
-        ]
-    },
-    {
-        "id": "d9b3f86bef90891d",
-        "type": "comment",
-        "z": "6ef65b964aaf43e6",
-        "g": "49c2be5b620ebeda",
-        "name": "Respone Json",
-        "info": "Zwraca rejsy do formularza w formie jsona.",
-        "x": 130,
-        "y": 80,
-        "wires": []
-    },
-    {
-        "id": "e9c1304f5f90927e",
-        "type": "http in",
-        "z": "7f8edcc91438aff6",
-        "g": "de07ac967b5ab328",
-        "name": "",
-        "url": "/api/rejsy/zapisz",
-        "method": "post",
-        "upload": false,
-        "swaggerDoc": "",
-        "x": 160,
-        "y": 160,
-        "wires": [
-            [
-                "eb069a6838953468"
-            ]
-        ]
-    },
-    {
-        "id": "c9199959da0f2652",
-        "type": "http response",
-        "z": "7f8edcc91438aff6",
-        "g": "de07ac967b5ab328",
-        "name": "",
-        "statusCode": "200",
-        "headers": {},
-        "x": 760,
-        "y": 520,
-        "wires": []
-    },
-    {
-        "id": "8b0f70caea35ed13",
-        "type": "function",
-        "z": "7f8edcc91438aff6",
-        "g": "de07ac967b5ab328",
-        "name": "NocoDB:post:osoba",
-        "func": "delete msg.headers;\ndelete msg.method;\ndelete msg.responseCookies;\n\nmsg.nocodb_t_active = msg.nocodb_t.osoby;\n\nmsg.payload = msg.data_form;\n\n// const uploadedFile = msg.payload[0];\n\nconst now = new Date();\nconst pad = (n) => n.toString().padStart(2, '0');\n\nconst year = now.getFullYear();\nconst month = pad(now.getMonth() + 1);\nconst day = pad(now.getDate());\nconst hours = pad(now.getHours());\nconst minutes = pad(now.getMinutes());\nconst seconds = pad(now.getSeconds());\n\n// const uuid = global.get(\"uuidv4\")();\n\nmsg.form = {\n    \"liczbaOsob\": msg.payload.data.liczbaOsob,\n    \"rejsId\": msg.payload.data.rejsId,\n}\n\n// Prepare the update payload for the record\nmsg.payload = {\n    \"cj5mwpsab4bh5zv\": msg.payload.data.imie,\n    \"cm1fyirgmdcemtv\": msg.payload.data.nazwisko,\n    \"c5hrv18inqamu4d\": msg.payload.data.email,\n    \"co7qha0ikufbnjx\": msg.payload.data.telefon,\n    \"cb0a24v6fm28sj0\": msg.payload.data.miejsceUrodzenia,\n    \"c77doycdzvddszv\": msg.payload.data.dataUrodzenia ,\n    \"ca42qwypv1kcyh7\": msg.payload.data.adresZamieszkania ,\n    \"cioe98sbu9qwxjg\": msg.payload.data.nrDokumentu ,\n    \"cp07bymy87xk9qf\": msg.payload.data.uprawnienia ,\n    \"cfihnz9e66moiug\": msg.payload.data.rozmiarKoszulki ,\n    \"cfewcth4yte2zhr\": msg.payload.data.osobaKontaktowaImieNazwisko + ' ' + msg.payload.data.osobaKontaktowaTelefon ,\n    uuid: msg.uuid,\n    \"rodo\": msg.payload.data.regulamin,\n    \"oswiadczenie\": msg.payload.data.oswiadczenie,\n    \"umie_plywac\": msg.payload.data.plywanie\n};\nmsg.method = \"POST\";\n\n\nnode.status({ fill: \"green\", shape: \"dot\", text: global.get(\"getDateTime\")() });\nreturn msg;",
-        "outputs": 1,
-        "timeout": 0,
-        "noerr": 0,
-        "initialize": "",
-        "finalize": "",
-        "libs": [],
-        "x": 360,
-        "y": 320,
-        "wires": [
-            [
-                "050dabcd08732f94"
-            ]
-        ]
-    },
-    {
-        "id": "050dabcd08732f94",
-        "type": "http request",
-        "z": "7f8edcc91438aff6",
-        "g": "de07ac967b5ab328",
-        "name": "NocoDB - ALL",
-        "method": "use",
-        "ret": "obj",
-        "paytoqs": "ignore",
-        "url": "http://{{nocodb_host}}/api/v2/tables/{{nocodb_t_active}}/records",
-        "tls": "",
-        "persist": false,
-        "proxy": "",
-        "insecureHTTPParser": false,
-        "authType": "",
-        "senderr": false,
-        "headers": [
-            {
-                "keyType": "other",
-                "keyValue": "xc-token",
-                "valueType": "msg",
-                "valueValue": "xc_token"
-            },
-            {
-                "keyType": "Content-Type",
-                "keyValue": "",
-                "valueType": "application/json",
-                "valueValue": ""
-            }
-        ],
-        "x": 580,
-        "y": 320,
-        "wires": [
-            [
-                "24362b7ab3a611b8"
-            ]
-        ]
-    },
-    {
-        "id": "eb069a6838953468",
-        "type": "subflow:03b285947d86a284",
-        "z": "7f8edcc91438aff6",
-        "g": "de07ac967b5ab328",
-        "name": "",
-        "x": 340,
-        "y": 160,
-        "wires": [
-            [
-                "dc114f2912e02c94"
-            ]
-        ]
-    },
-    {
-        "id": "388e845554a0cdbb",
-        "type": "function",
-        "z": "7f8edcc91438aff6",
-        "g": "de07ac967b5ab328",
-        "name": "NocoDB:post:umowy",
-        "func": "delete msg.headers;\ndelete msg.method;\ndelete msg.responseCookies;\n\nmsg.nocodb_t_active = msg.nocodb_t.umowy;\nconst rejs = msg.payload.list[0];\n\nconst now = new Date();\nconst pad = (n) => n.toString().padStart(2, '0');\n\nconst year = now.getFullYear();\nconst month = pad(now.getMonth() + 1);\nconst day = pad(now.getDate());\nconst hours = pad(now.getHours());\nconst minutes = pad(now.getMinutes());\nconst seconds = pad(now.getSeconds());\n\nconst uuid = global.get(\"uuidv4\")();\n\nconst rezerwacja_cena = rejs.cena * msg.form.liczbaOsob;\nconst rezerwacja_cena_rata1 = Math.floor(rezerwacja_cena * 0.3);\nconst rezerwacja_cena_rata2 = rezerwacja_cena - rezerwacja_cena_rata1; \nconst cena_wydatki = rejs.cena_wydatki * msg.form.liczbaOsob;\nconst cena_zaokretowania = rejs.cena_zaokretowania * msg.form.liczbaOsob;\n\nmsg.payload = {\n    \"nc_5cf7__osoby_id\": msg.osoba_id,\n    \"cdp5l9hs8gbe7kn\": msg.form.liczbaOsob,\n    \"nc_5cf7___rejsy_id\": msg.form.rejsId,\n    uuid: uuid,\n    \"nazwa\": \"Umowa - wait for confirm\",\n    \"rezerwacja_cena\": rezerwacja_cena,\n    \"rezerwacja_cena_rata1\": rezerwacja_cena_rata1,\n    \"rezerwacja_cena_rata2\": rezerwacja_cena_rata2,\n    \"cena_wydatki\": cena_wydatki,\n    \"cena_zaokretowania\": cena_zaokretowania\n}\n\nmsg.method = \"POST\";\n\nnode.status({ fill: \"green\", shape: \"dot\", text: global.get(\"getDateTime\")() });\nreturn msg;",
-        "outputs": 1,
-        "timeout": 0,
-        "noerr": 0,
-        "initialize": "",
-        "finalize": "",
-        "libs": [],
-        "x": 360,
-        "y": 520,
-        "wires": [
-            [
-                "d747d5ba3cbab626"
-            ]
-        ]
-    },
-    {
-        "id": "d747d5ba3cbab626",
-        "type": "http request",
-        "z": "7f8edcc91438aff6",
-        "g": "de07ac967b5ab328",
-        "name": "NocoDB - ALL",
-        "method": "use",
-        "ret": "obj",
-        "paytoqs": "ignore",
-        "url": "http://{{nocodb_host}}/api/v2/tables/{{nocodb_t_active}}/records",
-        "tls": "",
-        "persist": false,
-        "proxy": "",
-        "insecureHTTPParser": false,
-        "authType": "",
-        "senderr": false,
-        "headers": [
-            {
-                "keyType": "other",
-                "keyValue": "xc-token",
-                "valueType": "msg",
-                "valueValue": "xc_token"
-            },
-            {
-                "keyType": "Content-Type",
-                "keyValue": "",
-                "valueType": "application/json",
-                "valueValue": ""
-            }
-        ],
-        "x": 580,
-        "y": 520,
-        "wires": [
-            [
-                "c9199959da0f2652"
-            ]
-        ]
-    },
-    {
-        "id": "24362b7ab3a611b8",
-        "type": "function",
-        "z": "7f8edcc91438aff6",
-        "g": "de07ac967b5ab328",
-        "name": "NocoDB - rejsy:get:Id",
-        "func": "delete msg.headers;\ndelete msg.method;\ndelete msg.responseCookies;\n\nmsg.nocodb_t_active = msg.nocodb_t.rejsy;\n\nmsg.osoba_id = msg.payload.Id;\n\nmsg.payload = {\n    offset: '0',\n    limit: '1',\n    viewId: msg.nocodb_t.rejsy_view,\n    where: `(Id,eq,${msg.form.rejsId})`,\n};\n\nnode.status({ fill: \"green\", shape: \"dot\", text: global.get(\"getDateTime\")() });\n\nreturn msg;",
-        "outputs": 1,
-        "timeout": 0,
-        "noerr": 0,
-        "initialize": "",
-        "finalize": "",
-        "libs": [],
-        "x": 360,
-        "y": 420,
-        "wires": [
-            [
-                "8aff7492ecde8657"
-            ]
-        ]
-    },
-    {
-        "id": "8aff7492ecde8657",
-        "type": "http request",
-        "z": "7f8edcc91438aff6",
-        "g": "de07ac967b5ab328",
-        "name": "NocoDB - GET",
-        "method": "GET",
-        "ret": "obj",
-        "paytoqs": "query",
-        "url": "http://{{nocodb_host}}/api/v2/tables/{{nocodb_t_active}}/records",
-        "tls": "",
-        "persist": false,
-        "proxy": "",
-        "insecureHTTPParser": false,
-        "authType": "",
-        "senderr": false,
-        "headers": [
-            {
-                "keyType": "other",
-                "keyValue": "xc-token",
-                "valueType": "msg",
-                "valueValue": "xc_token"
-            },
-            {
-                "keyType": "Content-Type",
-                "keyValue": "",
-                "valueType": "application/json",
-                "valueValue": ""
-            }
-        ],
-        "x": 580,
-        "y": 420,
-        "wires": [
-            [
-                "388e845554a0cdbb"
-            ]
-        ]
-    },
-    {
-        "id": "dfbd52e418f9fe83",
-        "type": "comment",
-        "z": "7f8edcc91438aff6",
-        "g": "de07ac967b5ab328",
-        "name": "Save Form",
-        "info": "Przyjmuje dane z formularza i zapisuje je do NoCoDB.\n- do osoby\n- do umowy",
-        "x": 120,
-        "y": 80,
-        "wires": []
-    },
-    {
-        "id": "dc114f2912e02c94",
-        "type": "function",
-        "z": "7f8edcc91438aff6",
-        "g": "de07ac967b5ab328",
-        "name": "check:Cloudflare",
-        "func": "delete msg.headers;\ndelete msg.method;\ndelete msg.responseCookies;\n\nconst token = msg.payload.turnstileToken;\nmsg.data_form = msg.payload;\n\nconst ip = msg.req?.ip || \"\";  // opcjonalnie IP klienta, jeśli chcesz\n\nif (!token) {\n    node.status({ fill: \"red\", shape: \"dot\", text: global.get(\"getDateTime\")() });\n\n    return [null, { payload: \"Brak tokenu Cloudflare Turnstile\", statusCode: 400 }];\n}\n\n// przygotuj zapytanie do Cloudflare\nmsg.method = \"POST\";\nmsg.url = \"https://challenges.cloudflare.com/turnstile/v0/siteverify\";\nmsg.headers = {\n    \"Content-Type\": \"application/x-www-form-urlencoded\"\n};\nmsg.payload = `secret=${encodeURIComponent(global.get(\"cf_turnstile_secret\"))}&response=${encodeURIComponent(token)}&remoteip=${ip}`;\n\nnode.status({ fill: \"green\", shape: \"dot\", text: global.get(\"getDateTime\")() });\nreturn msg;",
-        "outputs": 2,
-        "timeout": 0,
-        "noerr": 0,
-        "initialize": "",
-        "finalize": "",
-        "libs": [],
-        "x": 550,
-        "y": 160,
-        "wires": [
-            [
-                "37e28c92b2c5de6a"
-            ],
-            []
-        ]
-    },
-    {
-        "id": "37e28c92b2c5de6a",
-        "type": "http request",
-        "z": "7f8edcc91438aff6",
-        "g": "de07ac967b5ab328",
-        "name": "",
+        "z": "bf6e5312884e6967",
+        "name": "NocoDB - UPLOAD",
         "method": "POST",
-        "ret": "txt",
-        "paytoqs": "ignore",
-        "url": "",
-        "tls": "",
-        "persist": false,
-        "proxy": "",
-        "insecureHTTPParser": false,
-        "authType": "",
-        "senderr": false,
-        "headers": [],
-        "x": 810,
-        "y": 160,
-        "wires": [
-            [
-                "3b04fab737edca4b"
-            ]
-        ]
-    },
-    {
-        "id": "3b04fab737edca4b",
-        "type": "function",
-        "z": "7f8edcc91438aff6",
-        "g": "de07ac967b5ab328",
-        "name": "veryfi:recapcha",
-        "func": "try {\n    if (typeof msg.payload === \"string\") {\n        msg.payload = JSON.parse(msg.payload);\n    }\n} catch (e) {\n    node.status({ fill: \"red\", shape: \"dot\", text: global.get(\"getDateTime\")() });\n\n    return [null, { payload: \"Niepoprawna odpowiedź z Cloudflare\", statusCode: 500 }];\n}\n\nif (!msg.payload.success) {\n    node.status({ fill: \"red\", shape: \"dot\", text: global.get(\"getDateTime\")() });\n\n    return [null, { payload: \"Weryfikacja Turnstile nie powiodła się\", statusCode: 403 }];\n}\n\n// OK — token zweryfikowany\nnode.status({ fill: \"green\", shape: \"dot\", text: global.get(\"getDateTime\")() });\n\nreturn [msg, null];",
-        "outputs": 2,
-        "timeout": 0,
-        "noerr": 0,
-        "initialize": "",
-        "finalize": "",
-        "libs": [],
-        "x": 340,
-        "y": 240,
-        "wires": [
-            [
-                "8b0f70caea35ed13"
-            ],
-            []
-        ]
-    },
-    {
-        "id": "0ad1c2e33d36b2e2",
-        "type": "http in",
-        "z": "8971cc29f27d4741",
-        "g": "4ee9ee381cb20b47",
-        "name": "",
-        "url": "/api/check/email",
-        "method": "post",
-        "upload": false,
-        "swaggerDoc": "",
-        "x": 360,
-        "y": 140,
-        "wires": [
-            [
-                "ee1d170117a16cb9"
-            ]
-        ]
-    },
-    {
-        "id": "ee1d170117a16cb9",
-        "type": "subflow:03b285947d86a284",
-        "z": "8971cc29f27d4741",
-        "g": "4ee9ee381cb20b47",
-        "name": "",
-        "x": 580,
-        "y": 140,
-        "wires": [
-            [
-                "92cf13ad610664b9"
-            ]
-        ]
-    },
-    {
-        "id": "92cf13ad610664b9",
-        "type": "function",
-        "z": "8971cc29f27d4741",
-        "g": "4ee9ee381cb20b47",
-        "name": "NocoDB - umowy:get:new",
-        "func": "msg.nocodb_t_active = msg.nocodb_t.umowy;\n\nmsg.form_data = msg.payload;\n\nmsg.payload = {\n    offset: '0',\n    limit: '25',\n    viewId: msg.nocodb_t.umowy_view,\n    where: `(status,eq,03 email-send)~and(uuid,eq,${msg.form_data.uuid})`,\n    \"nested[osoby][fields]\": \"*\"\n};\n\nnode.status({ fill: \"green\", shape: \"dot\", text: global.get(\"getDateTime\")() });\n\nreturn msg;",
-        "outputs": 1,
-        "timeout": 0,
-        "noerr": 0,
-        "initialize": "",
-        "finalize": "",
-        "libs": [],
-        "x": 880,
-        "y": 140,
-        "wires": [
-            [
-                "1843a6fb6ef174c8"
-            ]
-        ]
-    },
-    {
-        "id": "1843a6fb6ef174c8",
-        "type": "http request",
-        "z": "8971cc29f27d4741",
-        "g": "4ee9ee381cb20b47",
-        "name": "NocoDB - GET",
-        "method": "GET",
         "ret": "obj",
-        "paytoqs": "query",
-        "url": "http://{{nocodb_host}}/api/v2/tables/{{nocodb_t_active}}/records",
+        "paytoqs": "ignore",
+        "url": "http://{{nocodb_host}}/api/v2/storage/upload",
         "tls": "",
         "persist": false,
         "proxy": "",
@@ -4728,178 +4615,133 @@
             {
                 "keyType": "Content-Type",
                 "keyValue": "",
-                "valueType": "application/json",
+                "valueType": "multipart/form-data",
                 "valueValue": ""
             }
         ],
-        "x": 1160,
-        "y": 140,
+        "x": 450,
+        "y": 1680,
         "wires": [
             [
-                "2da5f5f1636f4f75"
+                "41d85efdfdc2b98b"
             ]
         ]
     },
     {
-        "id": "2da5f5f1636f4f75",
-        "type": "function",
-        "z": "8971cc29f27d4741",
-        "g": "4ee9ee381cb20b47",
-        "name": "NocoDB:patch:osoby",
-        "func": "msg.nocodb_t_active = msg.nocodb_t.osoby;\nmsg.umowa_data = msg.payload.list[0];\nmsg.method = \"PATCH\";\n// Domyślny status\n// let status = false;\n\n// // Sprawdzenie pól accepted/rejected\n// if (msg.payload.accepted && msg.payload.accepted.length > 0) {\n//     status = \"send\";\n// } else if (msg.payload.rejected && msg.payload.rejected.length > 0) {\n//     status = \"error\";\n// }\n\nmsg.payload = {\n    Id: msg.umowa_data.osoby.Id,   // klucz podstawowy w Twojej tabeli\n    email_confirmed: true\n};\n\n\n\nnode.status({\n    fill: \"green\",\n    shape: \"dot\",\n    text: `${global.get(\"getDateTime\")()}`\n});\n\nreturn msg;",
-        "outputs": 1,
-        "timeout": 0,
-        "noerr": 0,
-        "initialize": "",
-        "finalize": "",
-        "libs": [],
-        "x": 380,
-        "y": 280,
-        "wires": [
-            [
-                "64fb459404f1d9ec"
-            ]
-        ]
-    },
-    {
-        "id": "64fb459404f1d9ec",
-        "type": "http request",
-        "z": "8971cc29f27d4741",
-        "g": "4ee9ee381cb20b47",
-        "name": "NocoDB - ALL",
-        "method": "use",
-        "ret": "obj",
-        "paytoqs": "ignore",
-        "url": "http://{{nocodb_host}}/api/v2/tables/{{nocodb_t_active}}/records",
-        "tls": "",
-        "persist": false,
-        "proxy": "",
-        "insecureHTTPParser": false,
-        "authType": "",
-        "senderr": false,
-        "headers": [
-            {
-                "keyType": "other",
-                "keyValue": "xc-token",
-                "valueType": "msg",
-                "valueValue": "xc_token"
-            },
-            {
-                "keyType": "Content-Type",
-                "keyValue": "",
-                "valueType": "application/json",
-                "valueValue": ""
-            }
-        ],
-        "x": 720,
-        "y": 280,
-        "wires": [
-            [
-                "82659668adc9e858"
-            ]
-        ]
-    },
-    {
-        "id": "82659668adc9e858",
-        "type": "function",
-        "z": "8971cc29f27d4741",
-        "g": "4ee9ee381cb20b47",
-        "name": "NocoDB:patch:umowy",
-        "func": "msg.nocodb_t_active = msg.nocodb_t.umowy;\nmsg.method = \"PATCH\";\n\n// Domyślny status\n// let status = false;\n\n// // Sprawdzenie pól accepted/rejected\n// if (msg.payload.accepted && msg.payload.accepted.length > 0) {\n//     status = \"send\";\n// } else if (msg.payload.rejected && msg.payload.rejected.length > 0) {\n//     status = \"error\";\n// }\n\nmsg.payload = {\n    Id: msg.umowa_data.Id,   // klucz podstawowy w Twojej tabeli\n    email_confirmed: true,\n    status: \"05 email-confirmed\"\n};\n\n\n\nnode.status({\n    fill: \"green\",\n    shape: \"dot\",\n    text: `${global.get(\"getDateTime\")()}`\n});\n\nreturn msg;",
-        "outputs": 1,
-        "timeout": 0,
-        "noerr": 0,
-        "initialize": "",
-        "finalize": "",
-        "libs": [],
-        "x": 380,
-        "y": 360,
-        "wires": [
-            [
-                "6af24b5c04863e1b"
-            ]
-        ]
-    },
-    {
-        "id": "6af24b5c04863e1b",
-        "type": "http request",
-        "z": "8971cc29f27d4741",
-        "g": "4ee9ee381cb20b47",
-        "name": "NocoDB - ALL",
-        "method": "use",
-        "ret": "obj",
-        "paytoqs": "ignore",
-        "url": "http://{{nocodb_host}}/api/v2/tables/{{nocodb_t_active}}/records",
-        "tls": "",
-        "persist": false,
-        "proxy": "",
-        "insecureHTTPParser": false,
-        "authType": "",
-        "senderr": false,
-        "headers": [
-            {
-                "keyType": "other",
-                "keyValue": "xc-token",
-                "valueType": "msg",
-                "valueValue": "xc_token"
-            },
-            {
-                "keyType": "Content-Type",
-                "keyValue": "",
-                "valueType": "application/json",
-                "valueValue": ""
-            }
-        ],
-        "x": 720,
-        "y": 360,
-        "wires": [
-            [
-                "d675709b0a7d7e1c"
-            ]
-        ]
-    },
-    {
-        "id": "aafbd476563b4156",
-        "type": "http response",
-        "z": "8971cc29f27d4741",
-        "g": "4ee9ee381cb20b47",
+        "id": "1f03db0d3558b040",
+        "type": "inject",
+        "z": "5e0f1a41e75562f7",
         "name": "",
-        "statusCode": "200",
-        "headers": {},
-        "x": 740,
-        "y": 440,
-        "wires": []
-    },
-    {
-        "id": "d675709b0a7d7e1c",
-        "type": "function",
-        "z": "8971cc29f27d4741",
-        "g": "4ee9ee381cb20b47",
-        "name": "response:ok",
-        "func": "msg.payload = {\n    confirm: true\n};\nreturn msg;",
-        "outputs": 1,
-        "timeout": 0,
-        "noerr": 0,
-        "initialize": "",
-        "finalize": "",
-        "libs": [],
-        "x": 350,
-        "y": 440,
-        "wires": [
-            [
-                "aafbd476563b4156"
-            ]
-        ]
-    },
-    {
-        "id": "76b5da44be016767",
-        "type": "comment",
-        "z": "8971cc29f27d4741",
-        "g": "4ee9ee381cb20b47",
-        "name": "Email Verifi",
-        "info": "",
-        "x": 120,
+        "props": [
+            {
+                "p": "payload"
+            },
+            {
+                "p": "topic",
+                "vt": "str"
+            }
+        ],
+        "repeat": "300",
+        "crontab": "",
+        "once": false,
+        "onceDelay": 0.1,
+        "topic": "",
+        "payload": "",
+        "payloadType": "date",
+        "x": 250,
         "y": 80,
+        "wires": [
+            [
+                "6d29c326b6ee5d18"
+            ]
+        ]
+    },
+    {
+        "id": "6d29c326b6ee5d18",
+        "type": "function",
+        "z": "5e0f1a41e75562f7",
+        "name": "get:email",
+        "func": "msg.payload = ``;\nmsg.topic = \"get_email\";\nnode.status({ fill: \"green\", shape: \"dot\", text: global.get(\"getDateTime\")() });\nreturn msg;",
+        "outputs": 1,
+        "timeout": 0,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 440,
+        "y": 80,
+        "wires": [
+            [
+                "325b4eee5d4fe5f9"
+            ]
+        ]
+    },
+    {
+        "id": "325b4eee5d4fe5f9",
+        "type": "exec",
+        "z": "5e0f1a41e75562f7",
+        "command": "cd /zenflowai/mailgate && node /zenflowai/mailgate/check-inbox.js",
+        "addpay": "",
+        "append": "",
+        "useSpawn": "false",
+        "timer": "",
+        "winHide": false,
+        "oldrc": false,
+        "name": "Get Email",
+        "x": 640,
+        "y": 80,
+        "wires": [
+            [],
+            [],
+            [
+                "67181bed26d55ac5"
+            ]
+        ]
+    },
+    {
+        "id": "67181bed26d55ac5",
+        "type": "switch",
+        "z": "5e0f1a41e75562f7",
+        "name": "",
+        "property": "payload.code",
+        "propertyType": "msg",
+        "rules": [
+            {
+                "t": "eq",
+                "v": "0",
+                "vt": "str"
+            },
+            {
+                "t": "else"
+            }
+        ],
+        "checkall": "false",
+        "repair": false,
+        "outputs": 2,
+        "x": 830,
+        "y": 120,
+        "wires": [
+            [],
+            [
+                "0d089c28ebfd63c7"
+            ]
+        ]
+    },
+    {
+        "id": "0d089c28ebfd63c7",
+        "type": "debug",
+        "z": "5e0f1a41e75562f7",
+        "name": "GET EMAIL ERROR",
+        "active": true,
+        "tosidebar": true,
+        "console": false,
+        "tostatus": false,
+        "complete": "payload",
+        "targetType": "msg",
+        "statusVal": "",
+        "statusType": "auto",
+        "x": 1020,
+        "y": 200,
         "wires": []
     },
     {
@@ -7045,61 +6887,6 @@
         ]
     },
     {
-        "id": "8443397ed8c14803",
-        "type": "function",
-        "z": "be1c3f3f839ca819",
-        "name": "NocoDB - prepare Upload",
-        "func": "msg.nocodb_t_active = msg.nocodb_t.przelewy;\n// msg.nocodb_t_active = msg.nocodb_t.przelewy;\n// msg.nocodb_collumn_attach = \"cnu1b7m584tv4sz\";\n// msg.path = msg.oldPath;\n\nconst uploadedFile = msg.payload[0];\n\nconst now = new Date();\nconst pad = (n) => n.toString().padStart(2, '0');\n\nconst year = now.getFullYear();\nconst month = pad(now.getMonth() + 1);\nconst day = pad(now.getDate());\nconst hours = pad(now.getHours());\nconst minutes = pad(now.getMinutes());\nconst seconds = pad(now.getSeconds());\n\n\n// Prepare the update payload for the record\nmsg.payload = {\n    \"title\": `przelew CSV ${year}-${month}-${day} ${hours}:${minutes}`,\n    \"data\": `${year}-${month}-${day} ${hours}:${minutes}:${seconds}` ,\n    \"rok\": year,\n    \"miesiąc\": month,\n    \"uuid\": msg.uuidv4.status,\n    \"plik\": JSON.stringify([{\n        path: uploadedFile.path,\n        title: uploadedFile.title,\n        mimetype: uploadedFile.mimetype,\n        size: uploadedFile.size,\n    }])\n};\n// msg.nocodb_table = msg.nocodb_table_documents;\nmsg.method = \"POST\";\n\n\nnode.status({ fill: \"green\", shape: \"dot\", text: global.get(\"getDateTime\")() });\nreturn msg;",
-        "outputs": 1,
-        "timeout": 0,
-        "noerr": 0,
-        "initialize": "",
-        "finalize": "",
-        "libs": [],
-        "x": 2440,
-        "y": 1660,
-        "wires": [
-            [
-                "c4589669fbc4dba3"
-            ]
-        ]
-    },
-    {
-        "id": "c4589669fbc4dba3",
-        "type": "http request",
-        "z": "be1c3f3f839ca819",
-        "name": "NocoDB - ALL",
-        "method": "use",
-        "ret": "obj",
-        "paytoqs": "ignore",
-        "url": "http://{{nocodb_host}}/api/v2/tables/{{nocodb_t_active}}/records",
-        "tls": "",
-        "persist": false,
-        "proxy": "",
-        "insecureHTTPParser": false,
-        "authType": "",
-        "senderr": false,
-        "headers": [
-            {
-                "keyType": "other",
-                "keyValue": "xc-token",
-                "valueType": "msg",
-                "valueValue": "xc_token"
-            },
-            {
-                "keyType": "Content-Type",
-                "keyValue": "",
-                "valueType": "application/json",
-                "valueValue": ""
-            }
-        ],
-        "x": 2680,
-        "y": 1660,
-        "wires": [
-            []
-        ]
-    },
-    {
         "id": "547a5646cae0a0d8",
         "type": "debug",
         "z": "be1c3f3f839ca819",
@@ -7216,9 +7003,802 @@
         ]
     },
     {
-        "id": "1f03db0d3558b040",
+        "id": "353379d5bcdeee09",
+        "type": "http in",
+        "z": "6ef65b964aaf43e6",
+        "g": "49c2be5b620ebeda",
+        "name": "",
+        "url": "/api/rejsy/get",
+        "method": "get",
+        "upload": false,
+        "swaggerDoc": "",
+        "x": 330,
+        "y": 160,
+        "wires": [
+            [
+                "9a824614bd5da150"
+            ]
+        ]
+    },
+    {
+        "id": "b8e46ab11cd82e31",
+        "type": "http response",
+        "z": "6ef65b964aaf43e6",
+        "g": "49c2be5b620ebeda",
+        "name": "",
+        "statusCode": "200",
+        "headers": {},
+        "x": 560,
+        "y": 240,
+        "wires": []
+    },
+    {
+        "id": "e2ee6162640b5a29",
+        "type": "function",
+        "z": "6ef65b964aaf43e6",
+        "g": "49c2be5b620ebeda",
+        "name": "prepare:response",
+        "func": "let output = [];\n\nif (msg.payload && Array.isArray(msg.payload.list)) {\n    for (let item of msg.payload.list) {\n        const free_space = (item.ilosc_max || 0) - (item.ilosc_wyk || 0);\n        const termin_od = (item.termin_od || \"\").replaceAll(\"-\", \".\");\n        const termin_do = (item.termin_do || \"\").replaceAll(\"-\", \".\");\n\n        let name = `${item.nazwa} [${termin_od} - ${termin_do}]`;\n        if (free_space <= 0) {\n            name += \" BRAK MIEJSC\";\n        }\n\n        output.push({\n            name: name,\n            value: item.Id,\n            free_space: free_space,\n            cena: item.cena || 0,\n            czym: item.czym,\n            brak_miejsc: free_space <= 0,\n            cena_c: item.cena_c || \"PLN\"\n        });\n    }\n}\n\nmsg.payload = output;\nreturn msg;",
+        "outputs": 1,
+        "timeout": 0,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 330,
+        "y": 240,
+        "wires": [
+            [
+                "b8e46ab11cd82e31"
+            ]
+        ]
+    },
+    {
+        "id": "9a824614bd5da150",
+        "type": "subflow:03b285947d86a284",
+        "z": "6ef65b964aaf43e6",
+        "g": "49c2be5b620ebeda",
+        "name": "",
+        "x": 540,
+        "y": 160,
+        "wires": [
+            [
+                "5c111b1ca0dd686e"
+            ]
+        ]
+    },
+    {
+        "id": "5c111b1ca0dd686e",
+        "type": "function",
+        "z": "6ef65b964aaf43e6",
+        "g": "49c2be5b620ebeda",
+        "name": "NocoDB - rejsy:get",
+        "func": "msg.nocodb_t_active = msg.nocodb_t.rejsy;\n\nlet nr_k = msg.payload.nr_k;\n\nmsg.form_data = msg.payload;\n\nmsg.payload = {\n    offset: '0',\n    limit: '25',\n    viewId: msg.nocodb_t.rejsy_view,\n    where: `(status,eq,active)`\n};\n//${nr_k}\nnode.status({ fill: \"green\", shape: \"dot\", text: global.get(\"getDateTime\")() });\n\nreturn msg;",
+        "outputs": 1,
+        "timeout": 0,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 770,
+        "y": 160,
+        "wires": [
+            [
+                "f6fc7c875e15e454"
+            ]
+        ]
+    },
+    {
+        "id": "f6fc7c875e15e454",
+        "type": "http request",
+        "z": "6ef65b964aaf43e6",
+        "g": "49c2be5b620ebeda",
+        "name": "NocoDB - GET",
+        "method": "GET",
+        "ret": "obj",
+        "paytoqs": "query",
+        "url": "http://{{nocodb_host}}/api/v2/tables/{{nocodb_t_active}}/records",
+        "tls": "",
+        "persist": false,
+        "proxy": "",
+        "insecureHTTPParser": false,
+        "authType": "",
+        "senderr": false,
+        "headers": [
+            {
+                "keyType": "other",
+                "keyValue": "xc-token",
+                "valueType": "msg",
+                "valueValue": "xc_token"
+            },
+            {
+                "keyType": "Content-Type",
+                "keyValue": "",
+                "valueType": "application/json",
+                "valueValue": ""
+            }
+        ],
+        "x": 1000,
+        "y": 160,
+        "wires": [
+            [
+                "e2ee6162640b5a29"
+            ]
+        ]
+    },
+    {
+        "id": "d9b3f86bef90891d",
+        "type": "comment",
+        "z": "6ef65b964aaf43e6",
+        "g": "49c2be5b620ebeda",
+        "name": "Respone Json",
+        "info": "Zwraca rejsy do formularza w formie jsona.",
+        "x": 130,
+        "y": 80,
+        "wires": []
+    },
+    {
+        "id": "e9c1304f5f90927e",
+        "type": "http in",
+        "z": "7f8edcc91438aff6",
+        "g": "de07ac967b5ab328",
+        "name": "",
+        "url": "/api/rejsy/zapisz",
+        "method": "post",
+        "upload": false,
+        "swaggerDoc": "",
+        "x": 160,
+        "y": 160,
+        "wires": [
+            [
+                "eb069a6838953468"
+            ]
+        ]
+    },
+    {
+        "id": "c9199959da0f2652",
+        "type": "http response",
+        "z": "7f8edcc91438aff6",
+        "g": "de07ac967b5ab328",
+        "name": "",
+        "statusCode": "200",
+        "headers": {},
+        "x": 820,
+        "y": 520,
+        "wires": []
+    },
+    {
+        "id": "8b0f70caea35ed13",
+        "type": "function",
+        "z": "7f8edcc91438aff6",
+        "g": "de07ac967b5ab328",
+        "name": "NocoDB:post:osoba",
+        "func": "delete msg.headers;\ndelete msg.method;\ndelete msg.responseCookies;\n\nmsg.nocodb_t_active = msg.nocodb_t.osoby;\n\nmsg.payload = msg.data_form;\n\n// const uploadedFile = msg.payload[0];\n\nconst now = new Date();\nconst pad = (n) => n.toString().padStart(2, '0');\n\nconst year = now.getFullYear();\nconst month = pad(now.getMonth() + 1);\nconst day = pad(now.getDate());\nconst hours = pad(now.getHours());\nconst minutes = pad(now.getMinutes());\nconst seconds = pad(now.getSeconds());\n\n// const uuid = global.get(\"uuidv4\")();\n\nmsg.form = {\n    \"liczbaOsob\": msg.payload.data.liczbaOsob,\n    \"rejsId\": msg.payload.data.rejsId,\n}\n\n// Prepare the update payload for the record\nmsg.payload = {\n    \"cj5mwpsab4bh5zv\": msg.payload.data.imie,\n    \"cm1fyirgmdcemtv\": msg.payload.data.nazwisko,\n    \"c5hrv18inqamu4d\": msg.payload.data.email,\n    \"co7qha0ikufbnjx\": msg.payload.data.telefon,\n    \"cb0a24v6fm28sj0\": msg.payload.data.miejsceUrodzenia,\n    \"c77doycdzvddszv\": msg.payload.data.dataUrodzenia ,\n    \"ca42qwypv1kcyh7\": msg.payload.data.adresZamieszkania ,\n    \"cioe98sbu9qwxjg\": msg.payload.data.nrDokumentu ,\n    \"cp07bymy87xk9qf\": msg.payload.data.uprawnienia ,\n    \"cfihnz9e66moiug\": msg.payload.data.rozmiarKoszulki ,\n    \"cfewcth4yte2zhr\": msg.payload.data.osobaKontaktowaImieNazwisko + ' ' + msg.payload.data.osobaKontaktowaTelefon ,\n    uuid: msg.uuid,\n    \"rodo\": msg.payload.data.regulamin,\n    \"oswiadczenie\": msg.payload.data.oswiadczenie,\n    \"umie_plywac\": msg.payload.data.plywanie\n};\nmsg.method = \"POST\";\n\n\nnode.status({ fill: \"green\", shape: \"dot\", text: global.get(\"getDateTime\")() });\nreturn msg;",
+        "outputs": 1,
+        "timeout": 0,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 360,
+        "y": 320,
+        "wires": [
+            [
+                "050dabcd08732f94"
+            ]
+        ]
+    },
+    {
+        "id": "050dabcd08732f94",
+        "type": "http request",
+        "z": "7f8edcc91438aff6",
+        "g": "de07ac967b5ab328",
+        "name": "NocoDB - ALL",
+        "method": "use",
+        "ret": "obj",
+        "paytoqs": "ignore",
+        "url": "http://{{nocodb_host}}/api/v2/tables/{{nocodb_t_active}}/records",
+        "tls": "",
+        "persist": false,
+        "proxy": "",
+        "insecureHTTPParser": false,
+        "authType": "",
+        "senderr": false,
+        "headers": [
+            {
+                "keyType": "other",
+                "keyValue": "xc-token",
+                "valueType": "msg",
+                "valueValue": "xc_token"
+            },
+            {
+                "keyType": "Content-Type",
+                "keyValue": "",
+                "valueType": "application/json",
+                "valueValue": ""
+            }
+        ],
+        "x": 580,
+        "y": 320,
+        "wires": [
+            [
+                "24362b7ab3a611b8"
+            ]
+        ]
+    },
+    {
+        "id": "eb069a6838953468",
+        "type": "subflow:03b285947d86a284",
+        "z": "7f8edcc91438aff6",
+        "g": "de07ac967b5ab328",
+        "name": "",
+        "x": 340,
+        "y": 160,
+        "wires": [
+            [
+                "dc114f2912e02c94"
+            ]
+        ]
+    },
+    {
+        "id": "388e845554a0cdbb",
+        "type": "function",
+        "z": "7f8edcc91438aff6",
+        "g": "de07ac967b5ab328",
+        "name": "NocoDB:post:umowy",
+        "func": "delete msg.headers;\ndelete msg.method;\ndelete msg.responseCookies;\n\nmsg.nocodb_t_active = msg.nocodb_t.umowy;\nconst rejs = msg.payload.list[0];\n\nconst now = new Date();\nconst pad = (n) => n.toString().padStart(2, '0');\n\nconst year = now.getFullYear();\nconst month = pad(now.getMonth() + 1);\nconst day = pad(now.getDate());\nconst hours = pad(now.getHours());\nconst minutes = pad(now.getMinutes());\nconst seconds = pad(now.getSeconds());\n\nconst uuid = global.get(\"uuidv4\")();\n\nconst rezerwacja_cena = rejs.cena * msg.form.liczbaOsob;\nconst rezerwacja_cena_rata1 = Math.floor(rezerwacja_cena * 0.3);\nconst rezerwacja_cena_rata2 = rezerwacja_cena - rezerwacja_cena_rata1; \nconst cena_wydatki = rejs.cena_wydatki * msg.form.liczbaOsob;\nconst cena_zaokretowania = rejs.cena_zaokretowania * msg.form.liczbaOsob;\n\nmsg.payload = {\n    \"nc_5cf7__osoby_id\": msg.osoba_id,\n    \"cdp5l9hs8gbe7kn\": msg.form.liczbaOsob,\n    \"nc_5cf7___rejsy_id\": msg.form.rejsId,\n    uuid: uuid,\n    \"nazwa\": \"Umowa - wait for confirm\",\n    \"rezerwacja_cena\": rezerwacja_cena,\n    \"rezerwacja_cena_rata1\": rezerwacja_cena_rata1,\n    \"rezerwacja_cena_rata2\": rezerwacja_cena_rata2,\n    \"cena_wydatki\": cena_wydatki,\n    \"cena_zaokretowania\": cena_zaokretowania\n}\n\nmsg.rejs = rejs;\n\nmsg.method = \"POST\";\n\nnode.status({ fill: \"green\", shape: \"dot\", text: global.get(\"getDateTime\")() });\nreturn msg;",
+        "outputs": 1,
+        "timeout": 0,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 360,
+        "y": 520,
+        "wires": [
+            [
+                "d747d5ba3cbab626"
+            ]
+        ]
+    },
+    {
+        "id": "d747d5ba3cbab626",
+        "type": "http request",
+        "z": "7f8edcc91438aff6",
+        "g": "de07ac967b5ab328",
+        "name": "NocoDB - ALL",
+        "method": "use",
+        "ret": "obj",
+        "paytoqs": "ignore",
+        "url": "http://{{nocodb_host}}/api/v2/tables/{{nocodb_t_active}}/records",
+        "tls": "",
+        "persist": false,
+        "proxy": "",
+        "insecureHTTPParser": false,
+        "authType": "",
+        "senderr": false,
+        "headers": [
+            {
+                "keyType": "other",
+                "keyValue": "xc-token",
+                "valueType": "msg",
+                "valueValue": "xc_token"
+            },
+            {
+                "keyType": "Content-Type",
+                "keyValue": "",
+                "valueType": "application/json",
+                "valueValue": ""
+            }
+        ],
+        "x": 580,
+        "y": 520,
+        "wires": [
+            [
+                "c9199959da0f2652",
+                "a0a5e4714542e56a"
+            ]
+        ]
+    },
+    {
+        "id": "24362b7ab3a611b8",
+        "type": "function",
+        "z": "7f8edcc91438aff6",
+        "g": "de07ac967b5ab328",
+        "name": "NocoDB - rejsy:get:Id",
+        "func": "delete msg.headers;\ndelete msg.method;\ndelete msg.responseCookies;\n\nmsg.nocodb_t_active = msg.nocodb_t.rejsy;\n\nmsg.osoba_id = msg.payload.Id;\n\nmsg.payload = {\n    offset: '0',\n    limit: '1',\n    viewId: msg.nocodb_t.rejsy_view,\n    where: `(Id,eq,${msg.form.rejsId})`,\n};\n\nnode.status({ fill: \"green\", shape: \"dot\", text: global.get(\"getDateTime\")() });\n\nreturn msg;",
+        "outputs": 1,
+        "timeout": 0,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 360,
+        "y": 420,
+        "wires": [
+            [
+                "8aff7492ecde8657"
+            ]
+        ]
+    },
+    {
+        "id": "8aff7492ecde8657",
+        "type": "http request",
+        "z": "7f8edcc91438aff6",
+        "g": "de07ac967b5ab328",
+        "name": "NocoDB - GET",
+        "method": "GET",
+        "ret": "obj",
+        "paytoqs": "query",
+        "url": "http://{{nocodb_host}}/api/v2/tables/{{nocodb_t_active}}/records",
+        "tls": "",
+        "persist": false,
+        "proxy": "",
+        "insecureHTTPParser": false,
+        "authType": "",
+        "senderr": false,
+        "headers": [
+            {
+                "keyType": "other",
+                "keyValue": "xc-token",
+                "valueType": "msg",
+                "valueValue": "xc_token"
+            },
+            {
+                "keyType": "Content-Type",
+                "keyValue": "",
+                "valueType": "application/json",
+                "valueValue": ""
+            }
+        ],
+        "x": 580,
+        "y": 420,
+        "wires": [
+            [
+                "388e845554a0cdbb"
+            ]
+        ]
+    },
+    {
+        "id": "dfbd52e418f9fe83",
+        "type": "comment",
+        "z": "7f8edcc91438aff6",
+        "g": "de07ac967b5ab328",
+        "name": "Save Form",
+        "info": "Przyjmuje dane z formularza i zapisuje je do NoCoDB.\n- do osoby\n- do umowy",
+        "x": 120,
+        "y": 80,
+        "wires": []
+    },
+    {
+        "id": "dc114f2912e02c94",
+        "type": "function",
+        "z": "7f8edcc91438aff6",
+        "g": "de07ac967b5ab328",
+        "name": "check:Cloudflare",
+        "func": "delete msg.headers;\ndelete msg.method;\ndelete msg.responseCookies;\n\nconst token = msg.payload.turnstileToken;\nmsg.data_form = msg.payload;\n\nconst ip = msg.req?.ip || \"\";  // opcjonalnie IP klienta, jeśli chcesz\n\nif (!token) {\n    node.status({ fill: \"red\", shape: \"dot\", text: global.get(\"getDateTime\")() });\n\n    return [null, { payload: \"Brak tokenu Cloudflare Turnstile\", statusCode: 400 }];\n}\n\n// przygotuj zapytanie do Cloudflare\nmsg.method = \"POST\";\nmsg.url = \"https://challenges.cloudflare.com/turnstile/v0/siteverify\";\nmsg.headers = {\n    \"Content-Type\": \"application/x-www-form-urlencoded\"\n};\nmsg.payload = `secret=${encodeURIComponent(global.get(\"cf_turnstile_secret\"))}&response=${encodeURIComponent(token)}&remoteip=${ip}`;\n\nnode.status({ fill: \"green\", shape: \"dot\", text: global.get(\"getDateTime\")() });\nreturn msg;",
+        "outputs": 2,
+        "timeout": 0,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 550,
+        "y": 160,
+        "wires": [
+            [
+                "37e28c92b2c5de6a"
+            ],
+            []
+        ]
+    },
+    {
+        "id": "37e28c92b2c5de6a",
+        "type": "http request",
+        "z": "7f8edcc91438aff6",
+        "g": "de07ac967b5ab328",
+        "name": "",
+        "method": "POST",
+        "ret": "txt",
+        "paytoqs": "ignore",
+        "url": "",
+        "tls": "",
+        "persist": false,
+        "proxy": "",
+        "insecureHTTPParser": false,
+        "authType": "",
+        "senderr": false,
+        "headers": [],
+        "x": 810,
+        "y": 160,
+        "wires": [
+            [
+                "3b04fab737edca4b"
+            ]
+        ]
+    },
+    {
+        "id": "3b04fab737edca4b",
+        "type": "function",
+        "z": "7f8edcc91438aff6",
+        "g": "de07ac967b5ab328",
+        "name": "veryfi:recapcha",
+        "func": "try {\n    if (typeof msg.payload === \"string\") {\n        msg.payload = JSON.parse(msg.payload);\n    }\n} catch (e) {\n    node.status({ fill: \"red\", shape: \"dot\", text: global.get(\"getDateTime\")() });\n\n    return [null, { payload: \"Niepoprawna odpowiedź z Cloudflare\", statusCode: 500 }];\n}\n\nif (!msg.payload.success) {\n    node.status({ fill: \"red\", shape: \"dot\", text: global.get(\"getDateTime\")() });\n\n    return [null, { payload: \"Weryfikacja Turnstile nie powiodła się\", statusCode: 403 }];\n}\n\n// OK — token zweryfikowany\nnode.status({ fill: \"green\", shape: \"dot\", text: global.get(\"getDateTime\")() });\n\nreturn [msg, null];",
+        "outputs": 2,
+        "timeout": 0,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 340,
+        "y": 240,
+        "wires": [
+            [
+                "8b0f70caea35ed13"
+            ],
+            []
+        ]
+    },
+    {
+        "id": "a0a5e4714542e56a",
+        "type": "function",
+        "z": "7f8edcc91438aff6",
+        "name": "msg:telegram",
+        "func": "const template_data = {\n    rejs_name: msg.rejs.nazwa\n};\n\nmsg.message = {\n    template_in_row: \"Nowa rejestracja na **rejs**: *{{rejs_name}}* \",\n    template_data: template_data,\n    kind: \"telegram\",\n    to_group: \"admin\",\n    to: \"admin\",\n\n    // to: msg.payload.value  // np. \"234242,23424234,24\"\n};\n\nnode.status({ fill: \"green\", shape: \"dot\", text: global.get(\"getDateTime\")() });\nreturn msg;",
+        "outputs": 1,
+        "timeout": 0,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 840,
+        "y": 660,
+        "wires": [
+            [
+                "64b8d814115c9512"
+            ]
+        ]
+    },
+    {
+        "id": "64b8d814115c9512",
+        "type": "link out",
+        "z": "7f8edcc91438aff6",
+        "name": "link out 17",
+        "mode": "link",
+        "links": [
+            "b38c6c11d0212c18"
+        ],
+        "x": 1065,
+        "y": 660,
+        "wires": []
+    },
+    {
+        "id": "0ad1c2e33d36b2e2",
+        "type": "http in",
+        "z": "8971cc29f27d4741",
+        "g": "4ee9ee381cb20b47",
+        "name": "",
+        "url": "/api/check/email",
+        "method": "post",
+        "upload": false,
+        "swaggerDoc": "",
+        "x": 360,
+        "y": 140,
+        "wires": [
+            [
+                "ee1d170117a16cb9"
+            ]
+        ]
+    },
+    {
+        "id": "ee1d170117a16cb9",
+        "type": "subflow:03b285947d86a284",
+        "z": "8971cc29f27d4741",
+        "g": "4ee9ee381cb20b47",
+        "name": "",
+        "x": 580,
+        "y": 140,
+        "wires": [
+            [
+                "92cf13ad610664b9"
+            ]
+        ]
+    },
+    {
+        "id": "92cf13ad610664b9",
+        "type": "function",
+        "z": "8971cc29f27d4741",
+        "g": "4ee9ee381cb20b47",
+        "name": "NocoDB - umowy:get:new",
+        "func": "msg.nocodb_t_active = msg.nocodb_t.umowy;\n\nmsg.form_data = msg.payload;\n\nmsg.payload = {\n    offset: '0',\n    limit: '25',\n    viewId: msg.nocodb_t.umowy_view,\n    where: `(status,eq,03 email-send)~and(uuid,eq,${msg.form_data.uuid})`,\n    \"nested[osoby][fields]\": \"*\"\n};\n\nnode.status({ fill: \"green\", shape: \"dot\", text: global.get(\"getDateTime\")() });\n\nreturn msg;",
+        "outputs": 1,
+        "timeout": 0,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 880,
+        "y": 140,
+        "wires": [
+            [
+                "1843a6fb6ef174c8"
+            ]
+        ]
+    },
+    {
+        "id": "1843a6fb6ef174c8",
+        "type": "http request",
+        "z": "8971cc29f27d4741",
+        "g": "4ee9ee381cb20b47",
+        "name": "NocoDB - GET",
+        "method": "GET",
+        "ret": "obj",
+        "paytoqs": "query",
+        "url": "http://{{nocodb_host}}/api/v2/tables/{{nocodb_t_active}}/records",
+        "tls": "",
+        "persist": false,
+        "proxy": "",
+        "insecureHTTPParser": false,
+        "authType": "",
+        "senderr": false,
+        "headers": [
+            {
+                "keyType": "other",
+                "keyValue": "xc-token",
+                "valueType": "msg",
+                "valueValue": "xc_token"
+            },
+            {
+                "keyType": "Content-Type",
+                "keyValue": "",
+                "valueType": "application/json",
+                "valueValue": ""
+            }
+        ],
+        "x": 1160,
+        "y": 140,
+        "wires": [
+            [
+                "2da5f5f1636f4f75"
+            ]
+        ]
+    },
+    {
+        "id": "2da5f5f1636f4f75",
+        "type": "function",
+        "z": "8971cc29f27d4741",
+        "g": "4ee9ee381cb20b47",
+        "name": "NocoDB:patch:osoby",
+        "func": "msg.nocodb_t_active = msg.nocodb_t.osoby;\nmsg.umowa_data = msg.payload.list[0];\nmsg.method = \"PATCH\";\n// Domyślny status\n// let status = false;\n\n// // Sprawdzenie pól accepted/rejected\n// if (msg.payload.accepted && msg.payload.accepted.length > 0) {\n//     status = \"send\";\n// } else if (msg.payload.rejected && msg.payload.rejected.length > 0) {\n//     status = \"error\";\n// }\n\nmsg.payload = {\n    Id: msg.umowa_data.osoby.Id,   // klucz podstawowy w Twojej tabeli\n    email_confirmed: true\n};\n\n\n\nnode.status({\n    fill: \"green\",\n    shape: \"dot\",\n    text: `${global.get(\"getDateTime\")()}`\n});\n\nreturn msg;",
+        "outputs": 1,
+        "timeout": 0,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 380,
+        "y": 280,
+        "wires": [
+            [
+                "64fb459404f1d9ec"
+            ]
+        ]
+    },
+    {
+        "id": "64fb459404f1d9ec",
+        "type": "http request",
+        "z": "8971cc29f27d4741",
+        "g": "4ee9ee381cb20b47",
+        "name": "NocoDB - ALL",
+        "method": "use",
+        "ret": "obj",
+        "paytoqs": "ignore",
+        "url": "http://{{nocodb_host}}/api/v2/tables/{{nocodb_t_active}}/records",
+        "tls": "",
+        "persist": false,
+        "proxy": "",
+        "insecureHTTPParser": false,
+        "authType": "",
+        "senderr": false,
+        "headers": [
+            {
+                "keyType": "other",
+                "keyValue": "xc-token",
+                "valueType": "msg",
+                "valueValue": "xc_token"
+            },
+            {
+                "keyType": "Content-Type",
+                "keyValue": "",
+                "valueType": "application/json",
+                "valueValue": ""
+            }
+        ],
+        "x": 720,
+        "y": 280,
+        "wires": [
+            [
+                "82659668adc9e858"
+            ]
+        ]
+    },
+    {
+        "id": "82659668adc9e858",
+        "type": "function",
+        "z": "8971cc29f27d4741",
+        "g": "4ee9ee381cb20b47",
+        "name": "NocoDB:patch:umowy",
+        "func": "msg.nocodb_t_active = msg.nocodb_t.umowy;\nmsg.method = \"PATCH\";\n\n// Domyślny status\n// let status = false;\n\n// // Sprawdzenie pól accepted/rejected\n// if (msg.payload.accepted && msg.payload.accepted.length > 0) {\n//     status = \"send\";\n// } else if (msg.payload.rejected && msg.payload.rejected.length > 0) {\n//     status = \"error\";\n// }\n\nmsg.payload = {\n    Id: msg.umowa_data.Id,   // klucz podstawowy w Twojej tabeli\n    email_confirmed: true,\n    status: \"05 email-confirmed\"\n};\n\n\n\nnode.status({\n    fill: \"green\",\n    shape: \"dot\",\n    text: `${global.get(\"getDateTime\")()}`\n});\n\nreturn msg;",
+        "outputs": 1,
+        "timeout": 0,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 380,
+        "y": 360,
+        "wires": [
+            [
+                "6af24b5c04863e1b"
+            ]
+        ]
+    },
+    {
+        "id": "6af24b5c04863e1b",
+        "type": "http request",
+        "z": "8971cc29f27d4741",
+        "g": "4ee9ee381cb20b47",
+        "name": "NocoDB - ALL",
+        "method": "use",
+        "ret": "obj",
+        "paytoqs": "ignore",
+        "url": "http://{{nocodb_host}}/api/v2/tables/{{nocodb_t_active}}/records",
+        "tls": "",
+        "persist": false,
+        "proxy": "",
+        "insecureHTTPParser": false,
+        "authType": "",
+        "senderr": false,
+        "headers": [
+            {
+                "keyType": "other",
+                "keyValue": "xc-token",
+                "valueType": "msg",
+                "valueValue": "xc_token"
+            },
+            {
+                "keyType": "Content-Type",
+                "keyValue": "",
+                "valueType": "application/json",
+                "valueValue": ""
+            }
+        ],
+        "x": 720,
+        "y": 360,
+        "wires": [
+            [
+                "d675709b0a7d7e1c"
+            ]
+        ]
+    },
+    {
+        "id": "aafbd476563b4156",
+        "type": "http response",
+        "z": "8971cc29f27d4741",
+        "g": "4ee9ee381cb20b47",
+        "name": "",
+        "statusCode": "200",
+        "headers": {},
+        "x": 740,
+        "y": 440,
+        "wires": []
+    },
+    {
+        "id": "d675709b0a7d7e1c",
+        "type": "function",
+        "z": "8971cc29f27d4741",
+        "g": "4ee9ee381cb20b47",
+        "name": "response:ok",
+        "func": "msg.payload = {\n    confirm: true\n};\nreturn msg;",
+        "outputs": 1,
+        "timeout": 0,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 350,
+        "y": 440,
+        "wires": [
+            [
+                "aafbd476563b4156"
+            ]
+        ]
+    },
+    {
+        "id": "76b5da44be016767",
+        "type": "comment",
+        "z": "8971cc29f27d4741",
+        "g": "4ee9ee381cb20b47",
+        "name": "Email Verifi",
+        "info": "",
+        "x": 120,
+        "y": 80,
+        "wires": []
+    },
+    {
+        "id": "457e4508f7e0ebbb",
+        "type": "subflow:03b285947d86a284",
+        "z": "77589ba277290912",
+        "name": "",
+        "x": 280,
+        "y": 260,
+        "wires": [
+            [
+                "9a19d40e5b5b6fbc"
+            ]
+        ]
+    },
+    {
+        "id": "387b2915be89bbfe",
+        "type": "function",
+        "z": "77589ba277290912",
+        "name": "NocoDB - umowy:get:05 email-confirmed",
+        "func": "msg.nocodb_t_active = msg.nocodb_t.umowy;\n\nlet nr_k = msg.payload.nr_k;\n\nmsg.form_data = msg.payload;\n\nmsg.payload = {\n    offset: '0',\n    limit: '5',\n    viewId: msg.nocodb_t.umowy_view,\n    where: `(status,neq,50 end)`,\n    \"nested[osoby][fields]\": \"*\",\n    \"nested[rejsy][fields]\": \"*\"\n};\n\nnode.status({ fill: \"green\", shape: \"dot\", text: global.get(\"getDateTime\")() });\n\nreturn msg;",
+        "outputs": 1,
+        "timeout": 0,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 560,
+        "y": 80,
+        "wires": [
+            [
+                "b76e5b4d8214758a"
+            ]
+        ]
+    },
+    {
+        "id": "b76e5b4d8214758a",
+        "type": "http request",
+        "z": "77589ba277290912",
+        "name": "NocoDB - GET",
+        "method": "GET",
+        "ret": "obj",
+        "paytoqs": "query",
+        "url": "http://{{nocodb_host}}/api/v2/tables/{{nocodb_t_active}}/records",
+        "tls": "",
+        "persist": false,
+        "proxy": "",
+        "insecureHTTPParser": false,
+        "authType": "",
+        "senderr": false,
+        "headers": [
+            {
+                "keyType": "other",
+                "keyValue": "xc-token",
+                "valueType": "msg",
+                "valueValue": "xc_token"
+            },
+            {
+                "keyType": "Content-Type",
+                "keyValue": "",
+                "valueType": "application/json",
+                "valueValue": ""
+            }
+        ],
+        "x": 860,
+        "y": 80,
+        "wires": [
+            [
+                "a6064931dbf07112"
+            ]
+        ]
+    },
+    {
+        "id": "2447803b251a8a64",
         "type": "inject",
-        "z": "5e0f1a41e75562f7",
+        "z": "77589ba277290912",
         "name": "",
         "props": [
             {
@@ -7229,116 +7809,232 @@
                 "vt": "str"
             }
         ],
-        "repeat": "300",
+        "repeat": "",
         "crontab": "",
         "once": false,
         "onceDelay": 0.1,
         "topic": "",
         "payload": "",
         "payloadType": "date",
-        "x": 250,
-        "y": 80,
+        "x": 100,
+        "y": 260,
         "wires": [
             [
-                "6d29c326b6ee5d18"
+                "457e4508f7e0ebbb"
             ]
         ]
     },
     {
-        "id": "6d29c326b6ee5d18",
+        "id": "a6064931dbf07112",
+        "type": "debug",
+        "z": "77589ba277290912",
+        "name": "debug 29",
+        "active": true,
+        "tosidebar": true,
+        "console": false,
+        "tostatus": false,
+        "complete": "false",
+        "statusVal": "",
+        "statusType": "auto",
+        "x": 1190,
+        "y": 60,
+        "wires": []
+    },
+    {
+        "id": "9a19d40e5b5b6fbc",
         "type": "function",
-        "z": "5e0f1a41e75562f7",
-        "name": "get:email",
-        "func": "msg.payload = ``;\nmsg.topic = \"get_email\";\nnode.status({ fill: \"green\", shape: \"dot\", text: global.get(\"getDateTime\")() });\nreturn msg;",
+        "z": "77589ba277290912",
+        "name": "NocoDB - umowy:get:10 send-contract:3days",
+        "func": "msg.nocodb_t_active = msg.nocodb_t.umowy;\n\nmsg.payload = {\n    offset: '0',\n    limit: '5',\n    viewId: msg.nocodb_t.umowy_view,\n    where: `(status,eq,10 send-contract)~and(umowa_data,lt,daysAgo,3)`,\n    \"nested[osoby][fields]\": \"*\",\n    \"nested[rejsy][fields]\": \"*\"\n};\n\nnode.status({ fill: \"green\", shape: \"dot\", text: global.get(\"getDateTime\")() });\n\nreturn msg;",
         "outputs": 1,
         "timeout": 0,
         "noerr": 0,
         "initialize": "",
         "finalize": "",
         "libs": [],
-        "x": 440,
-        "y": 80,
+        "x": 580,
+        "y": 260,
         "wires": [
             [
-                "325b4eee5d4fe5f9"
+                "01ca15d6cff87c3c"
             ]
         ]
     },
     {
-        "id": "325b4eee5d4fe5f9",
-        "type": "exec",
-        "z": "5e0f1a41e75562f7",
-        "command": "cd /zenflowai/mailgate && node /zenflowai/mailgate/check-inbox.js",
-        "addpay": "",
-        "append": "",
-        "useSpawn": "false",
-        "timer": "",
-        "winHide": false,
-        "oldrc": false,
-        "name": "Get Email",
-        "x": 640,
-        "y": 80,
-        "wires": [
-            [],
-            [],
-            [
-                "67181bed26d55ac5"
-            ]
-        ]
-    },
-    {
-        "id": "67181bed26d55ac5",
-        "type": "switch",
-        "z": "5e0f1a41e75562f7",
-        "name": "",
-        "property": "payload.code",
-        "propertyType": "msg",
-        "rules": [
+        "id": "01ca15d6cff87c3c",
+        "type": "http request",
+        "z": "77589ba277290912",
+        "name": "NocoDB - GET",
+        "method": "GET",
+        "ret": "obj",
+        "paytoqs": "query",
+        "url": "http://{{nocodb_host}}/api/v2/tables/{{nocodb_t_active}}/records",
+        "tls": "",
+        "persist": false,
+        "proxy": "",
+        "insecureHTTPParser": false,
+        "authType": "",
+        "senderr": false,
+        "headers": [
             {
-                "t": "eq",
-                "v": "0",
-                "vt": "str"
+                "keyType": "other",
+                "keyValue": "xc-token",
+                "valueType": "msg",
+                "valueValue": "xc_token"
             },
             {
-                "t": "else"
+                "keyType": "Content-Type",
+                "keyValue": "",
+                "valueType": "application/json",
+                "valueValue": ""
             }
         ],
-        "checkall": "false",
-        "repair": false,
-        "outputs": 2,
-        "x": 830,
-        "y": 120,
+        "x": 880,
+        "y": 260,
         "wires": [
-            [],
             [
-                "0d089c28ebfd63c7"
+                "3b93e7e10e1c1044"
             ]
         ]
     },
     {
-        "id": "0d089c28ebfd63c7",
+        "id": "3b93e7e10e1c1044",
         "type": "debug",
-        "z": "5e0f1a41e75562f7",
-        "name": "GET EMAIL ERROR",
+        "z": "77589ba277290912",
+        "name": "debug 30",
         "active": true,
         "tosidebar": true,
         "console": false,
         "tostatus": false,
-        "complete": "payload",
-        "targetType": "msg",
+        "complete": "false",
         "statusVal": "",
         "statusType": "auto",
-        "x": 1020,
-        "y": 200,
+        "x": 1100,
+        "y": 260,
         "wires": []
+    },
+    {
+        "id": "40bb53708044b360",
+        "type": "debug",
+        "z": "77589ba277290912",
+        "name": "debug 31",
+        "active": true,
+        "tosidebar": true,
+        "console": false,
+        "tostatus": false,
+        "complete": "false",
+        "statusVal": "",
+        "statusType": "auto",
+        "x": 1100,
+        "y": 460,
+        "wires": []
+    },
+    {
+        "id": "49097134b356b2e0",
+        "type": "http request",
+        "z": "77589ba277290912",
+        "name": "NocoDB - GET",
+        "method": "GET",
+        "ret": "obj",
+        "paytoqs": "query",
+        "url": "http://{{nocodb_host}}/api/v2/tables/{{nocodb_t_active}}/records",
+        "tls": "",
+        "persist": false,
+        "proxy": "",
+        "insecureHTTPParser": false,
+        "authType": "",
+        "senderr": false,
+        "headers": [
+            {
+                "keyType": "other",
+                "keyValue": "xc-token",
+                "valueType": "msg",
+                "valueValue": "xc_token"
+            },
+            {
+                "keyType": "Content-Type",
+                "keyValue": "",
+                "valueType": "application/json",
+                "valueValue": ""
+            }
+        ],
+        "x": 880,
+        "y": 460,
+        "wires": [
+            [
+                "40bb53708044b360"
+            ]
+        ]
+    },
+    {
+        "id": "77e59c26a15a179d",
+        "type": "function",
+        "z": "77589ba277290912",
+        "name": "NocoDB - umowy:get:10 send-contract:2day",
+        "func": "msg.nocodb_t_active = msg.nocodb_t.umowy;\n\nmsg.payload = {\n    offset: '0',\n    limit: '5',\n    viewId: msg.nocodb_t.umowy_view,\n    where: `(status,eq,10 send-contract)~and(umowa_data,eq,daysAgo,2)`,\n    \"nested[osoby][fields]\": \"*\",\n    \"nested[rejsy][fields]\": \"*\"\n};\n\nnode.status({ fill: \"green\", shape: \"dot\", text: global.get(\"getDateTime\")() });\n\nreturn msg;",
+        "outputs": 1,
+        "timeout": 0,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 570,
+        "y": 460,
+        "wires": [
+            [
+                "49097134b356b2e0"
+            ]
+        ]
+    },
+    {
+        "id": "a7ea8748e9067d11",
+        "type": "subflow:03b285947d86a284",
+        "z": "77589ba277290912",
+        "name": "",
+        "x": 280,
+        "y": 460,
+        "wires": [
+            [
+                "77e59c26a15a179d"
+            ]
+        ]
+    },
+    {
+        "id": "b5a91360a8ac5138",
+        "type": "inject",
+        "z": "77589ba277290912",
+        "name": "",
+        "props": [
+            {
+                "p": "payload"
+            },
+            {
+                "p": "topic",
+                "vt": "str"
+            }
+        ],
+        "repeat": "",
+        "crontab": "",
+        "once": false,
+        "onceDelay": 0.1,
+        "topic": "",
+        "payload": "",
+        "payloadType": "date",
+        "x": 100,
+        "y": 460,
+        "wires": [
+            [
+                "a7ea8748e9067d11"
+            ]
+        ]
     },
     {
         "id": "0feee4d4edd3a765",
         "type": "subflow:7a14c201fa805842",
         "z": "7ac738eef3d259eb",
         "name": "",
-        "x": 230,
-        "y": 560,
+        "x": 310,
+        "y": 420,
         "wires": [
             []
         ]
@@ -7348,8 +8044,8 @@
         "type": "subflow:aa23e6e4889d7c8b",
         "z": "7ac738eef3d259eb",
         "name": "",
-        "x": 240,
-        "y": 640,
+        "x": 320,
+        "y": 500,
         "wires": [
             []
         ]
@@ -7359,8 +8055,8 @@
         "type": "subflow:c977f243f2f9f757",
         "z": "7ac738eef3d259eb",
         "name": "",
-        "x": 240,
-        "y": 720,
+        "x": 320,
+        "y": 580,
         "wires": [
             []
         ]
@@ -7370,8 +8066,8 @@
         "type": "subflow:742f4a5525c4b3be",
         "z": "7ac738eef3d259eb",
         "name": "",
-        "x": 240,
-        "y": 480,
+        "x": 320,
+        "y": 340,
         "wires": [
             []
         ]
@@ -7451,6 +8147,703 @@
         "x": 950,
         "y": 240,
         "wires": []
+    },
+    {
+        "id": "e81cb002303588d9",
+        "type": "function",
+        "z": "7ac738eef3d259eb",
+        "g": "afb7c1b9d75a1d7b",
+        "name": "generate msg telegram",
+        "func": "node.status({ fill: \"green\", shape: \"dot\", text: global.get(\"getDateTime\")() }); // STATUS\n\nlet dane = JSON.parse(msg.responseChatGPT);\n\nlet fileName = msg.file || \"nowy plik\";\nlet fileUrl = msg.fileUrl || \"#\";\nlet jsonPath = msg.filename || \"brak ścieżki JSON\";\n\nlet typ = dane.typ_dokumentu || \"dokument\";\nlet data = dane.data || \"nieznana data\";\nlet osoba = dane.osoba || \"\";\nlet nazwa = dane.pozycje_zakupu?.nazwa || \"brak pozycji\";\nlet kwota = dane.dane_paragonu_faktury?.kwota || \"0,00\";\nlet podsumowanie = dane.podsumowanie || \"\";\nlet urlRepoNocoDB = `https://doc.pacyga.net/dashboard/#/nc/pne9vwh67rf4iym/${msg.nocodb_table_documents}?rowId=${msg.nocodb_record_id}`;\n\nlet chatId = -4632801018;\n\nlet content = `💌📄 ${typ.charAt(0).toUpperCase() + typ.slice(1)} - ${data} \n\nCześć! 😊 Właśnie pojawił się nowy plik już go opisałam:\n\n📎 *Plik w repozytorium*: [Zobacz Kartoteke](${urlRepoNocoDB})\n📄 *Typ dokumentu*: ${typ.charAt(0).toUpperCase() + typ.slice(1)}\n📆 *Data*: ${data}\n\n`;\n\nif (typ === \"faktura\" || typ === \"paragon\") {\n    content += `🛒 *Zakup*: ${nazwa}\n💰 *Kwota*: ${kwota} PLN\n`;\n}\n\nif (osoba.trim() !== \"\") {\n    content += `👤 *Dotyczy osoby*: ${osoba}\n`;\n}\n\nif (podsumowanie.trim() !== \"\") {\n    content += `📝 *Podsumowanie*: ${podsumowanie}\n`;\n}\n\ncontent += `\n🔗 *Plik źródłowy*: [Zobacz plik](${fileUrl})\n\nJeśli potrzebujesz czegoś więcej, daj znać!\nZawsze tu jestem, gotowa pomóc 🌸\n*Twoja Lucy* 💁‍♀️`;\n\nmsg.payload = {\n    chatId: chatId,\n    type: \"message\",\n    content: content,\n    options: {\n        parse_mode: \"Markdown\",\n        disable_web_page_preview: true\n    }\n};\n\n\nnode.status({ fill: \"gray\", shape: \"dot\", text: global.get(\"getDateTime\")() }); // STATUS\nreturn msg;",
+        "outputs": 1,
+        "timeout": 0,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 830,
+        "y": 460,
+        "wires": [
+            []
+        ]
+    },
+    {
+        "id": "f92073c1ae7b626e",
+        "type": "subflow:c223930924320350",
+        "z": "7ac738eef3d259eb",
+        "g": "afb7c1b9d75a1d7b",
+        "name": "",
+        "x": 1080,
+        "y": 520,
+        "wires": []
+    },
+    {
+        "id": "693346b671c873f0",
+        "type": "comment",
+        "z": "7ac738eef3d259eb",
+        "g": "afb7c1b9d75a1d7b",
+        "name": "Chat",
+        "info": "",
+        "x": 570,
+        "y": 520,
+        "wires": []
+    },
+    {
+        "id": "aebed975845883a8",
+        "type": "link in",
+        "z": "7ac738eef3d259eb",
+        "g": "afb7c1b9d75a1d7b",
+        "name": "start-telegram",
+        "links": [],
+        "x": 590,
+        "y": 460,
+        "wires": [
+            [
+                "e81cb002303588d9",
+                "e4bca57cc91d4c9b"
+            ]
+        ],
+        "l": true
+    },
+    {
+        "id": "e4bca57cc91d4c9b",
+        "type": "function",
+        "z": "7ac738eef3d259eb",
+        "g": "afb7c1b9d75a1d7b",
+        "name": "function 11",
+        "func": "node.status({ fill: \"green\", shape: \"dot\", text: \"Dodano wiadomość: \" + global.get(\"getDateTime\")() });\n\nlet dane = JSON.parse(msg.responseChatGPT);\n\nlet buffer = global.get(\"telegramBuffer\") || [];\nbuffer.push({\n    fileName: msg.file || \"nowy plik\",\n    typ: dane.typ_dokumentu || \"dokument\",\n    nr: dane.nr || \"\",\n    data: dane.data || \"nieznana data\",\n    osoba: dane.osoba || \"\",\n    nazwa: dane.pozycje_zakupu?.nazwa || \"brak pozycji\",\n    kwota: dane.dane_paragonu_faktury?.kwota || \"0,00\",\n    podsumowanie: dane.podsumowanie || \"\",\n    fileUrl: msg.fileUrl || \"#\",\n    tags: dane.tags || \"\",\n    urlRepoNocoDB: `https://doc.pacyga.net/dashboard/#/nc/pne9vwh67rf4iym/${msg.nocodb_t.documents}?rowId=${msg.nocodb_record_id}`\n});\nglobal.set(\"telegramBuffer\", buffer);\nglobal.set(\"telegramBufferLastMsg\", Date.now());\n\nnode.status({ fill: \"yellow\", shape: \"dot\", text: `Bufor: ${buffer.length} elementów` });\n\n// // Watchdog - działa tylko jeden raz\n// if (!global.get(\"telegramBufferWatchdog\")) {\n//     node.status({ fill: \"blue\", shape: \"dot\", text: \"Watchdog uruchomiony\" });\n\n//     let watchdog = setInterval(() => {\n\n//         // --- NAJWAŻNIEJSZE: pobieramy GLOBALNIE tu, a nie z zamknięcia ---\n//         let buf = global.get(\"telegramBuffer\") || [];\n//         let last = global.get(\"telegramBufferLastMsg\") || 0;\n\n//         if (buf.length === 0) {\n//             node.status({ fill: \"gray\", shape: \"ring\", text: \"Bufor pusty - oczekiwanie\" });\n//             return;\n//         }\n\n//         let diff = Date.now() - last;\n\n//         node.status({ fill: \"yellow\", shape: \"dot\", text: `Bufor: ${buf.length}, Ostatnia wiadomość ${Math.round(diff / 1000)}s temu` });\n\n//         if (diff >= 45000) {\n//             // 30 sekund ciszy => WYŚLIJ bufor\n//             let content = \"\";\n\n//             if (buf.length === 1) {\n//                 let w = buf[0];\n//                 content = `💌📄 *${w.typ}* - ${w.data}\\n\\n[Zobacz Kartoteke](${w.urlRepoNocoDB})\\n\\n${w.podsumowanie}\\n\\n[Zobacz plik](${w.fileUrl})`;\n//             } else {\n//                 content = `📦 *Podsumowanie ostatnich plików (${buf.length})*\\n\\n`;\n//                 content += `| Typ | Data | Osoba | Zakup | Kwota |\\n`;\n//                 content += `| --- | ---- | ----- | ----- | ----- |\\n`;\n\n//                 buf.forEach(w => {\n//                     content += `| ${w.typ} | ${w.data} | ${w.osoba} | ${w.nazwa} | ${w.kwota} PLN |\\n`;\n//                 });\n\n//                 content += `\\n🧹 *Szczegóły znajdziesz w repozytorium.*`;\n//             }\n\n//             let outMsg = {\n//                 payload: {\n//                     chatId: -4632801018,\n//                     type: \"message\",\n//                     content: content,\n//                     options: {\n//                         parse_mode: \"Markdown\",\n//                         disable_web_page_preview: true\n//                     }\n//                 }\n//             };\n\n//             global.set(\"telegramBuffer\", []);\n//             global.set(\"telegramBufferLastMsg\", 0);\n\n//             node.status({ fill: \"green\", shape: \"dot\", text: \"Bufor wysłany: \" + global.get(\"getDateTime\")() });\n//             node.send(outMsg);\n//         }\n\n//     }, 5000);\n\n//     global.set(\"telegramBufferWatchdog\", watchdog);\n// }\n\nreturn null;",
+        "outputs": 1,
+        "timeout": 0,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 790,
+        "y": 520,
+        "wires": [
+            [
+                "f92073c1ae7b626e"
+            ]
+        ]
+    },
+    {
+        "id": "0d345205ede42bdb",
+        "type": "function",
+        "z": "7ac738eef3d259eb",
+        "g": "afb7c1b9d75a1d7b",
+        "name": "function 14",
+        "func": "// ─── PARAMETRY KONFIGURACJI ───────────────────────────────────────────\nconst MAX_MSG = 10;       // wysyłaj od razu przy ≥10 wiadomościach\nconst MIN_DELAY = 45_000;   // min. odstęp czasu (ms) od ostatniego zapisu\n// ──────────────────────────────────────────────────────────────────────\n\nlet buf = global.get(\"telegramBuffer\") || [];\nlet last = global.get(\"telegramBufferLastMsg\") || 0;\n\nif (buf.length === 0) {\n    node.status({\n        fill: \"gray\", shape: \"ring\",\n        text: \"Bufor pusty – nic do wysłania\"\n    });\n    return null;\n}\n\nlet diff = Date.now() - last;\nnode.status({\n    fill: \"yellow\", shape: \"dot\",\n    text: `Bufor: ${buf.length}, ostatnia ${Math.round(diff / 1000)} s temu`\n});\n\n// ─── WARUNEK BLOKUJĄCY ────────────────────────────────────────────────\n// Czekaj, gdy bufor jest MAŁY (<MAX_MSG) **i** nie upłynęło jeszcze\n// MIN_DELAY od ostatniego dopisanego wpisu\nif (buf.length < MAX_MSG && diff < MIN_DELAY) {\n    return null;\n}\n// ──────────────────────────────────────────────────────────────────────\n// w przeciwnym razie (bufor duży LUB minął czas) – wysyłamy\n//-----------------------------------------------------------------------\n\nlet content = \"\";\n\nif (buf.length === 1) {\n    // pojedynczy dokument\n    let w = buf[0];\n    content = `💌📄 *${w.typ}* - ${w.data}\\n\\n[Zobacz Kartotekę](${w.urlRepoNocoDB})\\n\\n${w.podsumowanie}\\n\\n${w.tags}\\n\\n[Zobacz plik](${w.fileUrl})`;\n} else {\n    // wiele dokumentów\n    content = `📦 *Podsumowanie ostatnich plików (${buf.length})*\\n\\n`;\n    buf.forEach(w => {\n        content += `• [📄 ${w.typ}](${w.urlRepoNocoDB}) | ${w.data} | ${w.osoba} | ${w.tags} | ${w.nr} \\n`;\n        content += `${w.podsumowanie.replace(/\\n/g, '\\n    ')}\\n`;\n    });\n    content += `\\n🧹 *Szczegóły znajdziesz w repozytorium.*`;\n}\n\nlet outMsg = {\n    payload: {\n        chatId: -4632801018,\n        type: \"message\",\n        content: content,\n        options: {\n            parse_mode: \"Markdown\",\n            disable_web_page_preview: true\n        }\n    }\n};\n\n// opróżnij bufor i zresetuj licznik czasu\nglobal.set(\"telegramBuffer\", []);\nglobal.set(\"telegramBufferLastMsg\", 0);\n\nnode.status({\n    fill: \"green\", shape: \"dot\",\n    text: \"Bufor wysłany: \" + global.get(\"getDateTime\")()\n});\n\nreturn outMsg;",
+        "outputs": 1,
+        "timeout": 0,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 790,
+        "y": 600,
+        "wires": [
+            [
+                "f92073c1ae7b626e"
+            ]
+        ]
+    },
+    {
+        "id": "5eda4e8a93923ba6",
+        "type": "inject",
+        "z": "7ac738eef3d259eb",
+        "g": "afb7c1b9d75a1d7b",
+        "name": "",
+        "props": [
+            {
+                "p": "payload"
+            },
+            {
+                "p": "topic",
+                "vt": "str"
+            }
+        ],
+        "repeat": "5",
+        "crontab": "",
+        "once": false,
+        "onceDelay": 0.1,
+        "topic": "",
+        "payload": "",
+        "payloadType": "date",
+        "x": 610,
+        "y": 600,
+        "wires": [
+            [
+                "0d345205ede42bdb"
+            ]
+        ]
+    },
+    {
+        "id": "53d7ace4727dad6a",
+        "type": "debug",
+        "z": "7ac738eef3d259eb",
+        "name": "debug 23",
+        "active": true,
+        "tosidebar": true,
+        "console": false,
+        "tostatus": false,
+        "complete": "true",
+        "targetType": "full",
+        "statusVal": "",
+        "statusType": "auto",
+        "x": 850,
+        "y": 820,
+        "wires": []
+    },
+    {
+        "id": "0c18ef29c0d4bf3a",
+        "type": "debug",
+        "z": "7ac738eef3d259eb",
+        "name": "debug 24",
+        "active": true,
+        "tosidebar": true,
+        "console": false,
+        "tostatus": false,
+        "complete": "false",
+        "statusVal": "",
+        "statusType": "auto",
+        "x": 870,
+        "y": 880,
+        "wires": []
+    },
+    {
+        "id": "cf32c788f13dbcbf",
+        "type": "debug",
+        "z": "7ac738eef3d259eb",
+        "name": "debug 25",
+        "active": true,
+        "tosidebar": true,
+        "console": false,
+        "tostatus": false,
+        "complete": "false",
+        "statusVal": "",
+        "statusType": "auto",
+        "x": 690,
+        "y": 940,
+        "wires": []
+    },
+    {
+        "id": "e5b11073b2af2c5e",
+        "type": "debug",
+        "z": "7ac738eef3d259eb",
+        "name": "debug 26",
+        "active": true,
+        "tosidebar": true,
+        "console": false,
+        "tostatus": false,
+        "complete": "false",
+        "statusVal": "",
+        "statusType": "auto",
+        "x": 710,
+        "y": 1040,
+        "wires": []
+    },
+    {
+        "id": "56bb418616ec2464",
+        "type": "debug",
+        "z": "7ac738eef3d259eb",
+        "name": "debug 27",
+        "active": true,
+        "tosidebar": true,
+        "console": false,
+        "tostatus": false,
+        "complete": "false",
+        "statusVal": "",
+        "statusType": "auto",
+        "x": 750,
+        "y": 1140,
+        "wires": []
+    },
+    {
+        "id": "b38c6c11d0212c18",
+        "type": "link in",
+        "z": "7ac738eef3d259eb",
+        "g": "4f84417ea22d54a2",
+        "name": "start-msg-send",
+        "links": [
+            "64b8d814115c9512",
+            "0944d6334829fb66",
+            "a7d36146b2282a7c",
+            "3acfa58cf1e285d8",
+            "799e576850c2a16c"
+        ],
+        "x": 155,
+        "y": 1360,
+        "wires": [
+            [
+                "ff22d8d375026584"
+            ]
+        ]
+    },
+    {
+        "id": "05787fdb9e24909d",
+        "type": "link out",
+        "z": "7ac738eef3d259eb",
+        "g": "4f84417ea22d54a2",
+        "name": "link out 16",
+        "mode": "link",
+        "links": [],
+        "x": 1315,
+        "y": 1740,
+        "wires": []
+    },
+    {
+        "id": "a11e422b6114d822",
+        "type": "function",
+        "z": "7ac738eef3d259eb",
+        "g": "4f84417ea22d54a2",
+        "name": "NocoDB:store:message",
+        "func": "msg.nocodb_t_active = msg.nocodb_t.messages;\nlet m = msg.message;\n// const uploadedFile = msg.payload[0];\n\nconst now = new Date();\nconst pad = (n) => n.toString().padStart(2, '0');\n\nconst year = now.getFullYear();\nconst month = pad(now.getMonth() + 1);\nconst day = pad(now.getDate());\nconst hours = pad(now.getHours());\nconst minutes = pad(now.getMinutes());\nconst seconds = pad(now.getSeconds());\n\nconst uuid = global.get(\"uuidv4\")();\n\n// Prepare the update payload for the record\nmsg.payload = {\n    \"name\": year+month+day+hours+minutes+seconds + \" \" + m.kind + \" \" + msg.to,\n    \"status\": \"new\",\n    \"type\": m.kind,\n    \"msg_to\": m.to,\n    \"msg_subject\": m.subject,\n    \"msg_body\": m.body,\n    uuid: msg.uuid\n};\nmsg.method = \"POST\";\n\n\nnode.status({ fill: \"green\", shape: \"dot\", text: global.get(\"getDateTime\")() });\nreturn msg;",
+        "outputs": 1,
+        "timeout": 0,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 650,
+        "y": 1540,
+        "wires": [
+            [
+                "331f8aac05af3f84"
+            ]
+        ]
+    },
+    {
+        "id": "331f8aac05af3f84",
+        "type": "http request",
+        "z": "7ac738eef3d259eb",
+        "g": "4f84417ea22d54a2",
+        "name": "NocoDB - ALL",
+        "method": "use",
+        "ret": "obj",
+        "paytoqs": "ignore",
+        "url": "http://{{nocodb_host}}/api/v2/tables/{{nocodb_t_active}}/records",
+        "tls": "",
+        "persist": false,
+        "proxy": "",
+        "insecureHTTPParser": false,
+        "authType": "",
+        "senderr": false,
+        "headers": [
+            {
+                "keyType": "other",
+                "keyValue": "xc-token",
+                "valueType": "msg",
+                "valueValue": "xc_token"
+            },
+            {
+                "keyType": "Content-Type",
+                "keyValue": "",
+                "valueType": "application/json",
+                "valueValue": ""
+            }
+        ],
+        "x": 920,
+        "y": 1540,
+        "wires": [
+            [
+                "4052c790d3e279e9"
+            ]
+        ]
+    },
+    {
+        "id": "4052c790d3e279e9",
+        "type": "function",
+        "z": "7ac738eef3d259eb",
+        "g": "4f84417ea22d54a2",
+        "name": "get:id:msg",
+        "func": "msg.msg_id = msg.payload.Id\nnode.status({ fill: \"green\", shape: \"dot\", text: global.get(\"getDateTime\")() }); //STATUS\nreturn msg;\n",
+        "outputs": 1,
+        "timeout": 0,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 1130,
+        "y": 1540,
+        "wires": [
+            [
+                "ad22c65f984b2fa7"
+            ]
+        ]
+    },
+    {
+        "id": "cb8bf8e488c1a183",
+        "type": "http request",
+        "z": "7ac738eef3d259eb",
+        "g": "4f84417ea22d54a2",
+        "name": "NocoDB - ALL",
+        "method": "use",
+        "ret": "obj",
+        "paytoqs": "ignore",
+        "url": "http://{{nocodb_host}}/api/v2/tables/{{nocodb_t_active}}/records",
+        "tls": "",
+        "persist": false,
+        "proxy": "",
+        "insecureHTTPParser": false,
+        "authType": "",
+        "senderr": false,
+        "headers": [
+            {
+                "keyType": "other",
+                "keyValue": "xc-token",
+                "valueType": "msg",
+                "valueValue": "xc_token"
+            },
+            {
+                "keyType": "Content-Type",
+                "keyValue": "",
+                "valueType": "application/json",
+                "valueValue": ""
+            }
+        ],
+        "x": 720,
+        "y": 1740,
+        "wires": [
+            [
+                "05787fdb9e24909d"
+            ]
+        ]
+    },
+    {
+        "id": "cb62cc24fb94ce57",
+        "type": "function",
+        "z": "7ac738eef3d259eb",
+        "g": "4f84417ea22d54a2",
+        "name": "NocoDB:patch:msg",
+        "func": "msg.nocodb_t_active = msg.nocodb_t.messages;\nmsg.method = \"PATCH\";\n\n// Domyślny status\nlet status = \"pending\";\n\n// Sprawdzenie pól accepted/rejected\nif (msg.payload.sentMessageId && msg.payload.sentMessageId.length > 0) {\n    status = \"send\";\n}\n//  else if (msg.payload.rejected && msg.payload.rejected.length > 0) {\n//     status = \"error\";\n// }\n\nmsg.payload = {\n    Id: msg.msg_id,   // klucz podstawowy w Twojej tabeli\n    status: status\n};\n\n\nmsg.send_status = status;\n\nnode.status({\n    fill: \"green\",\n    shape: \"dot\",\n    text: `${global.get(\"getDateTime\")()}`\n});\n\nreturn msg;",
+        "outputs": 1,
+        "timeout": 0,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 490,
+        "y": 1740,
+        "wires": [
+            [
+                "cb8bf8e488c1a183"
+            ]
+        ]
+    },
+    {
+        "id": "59bbb540505cd062",
+        "type": "function",
+        "z": "7ac738eef3d259eb",
+        "g": "4f84417ea22d54a2",
+        "name": "message:template:telegram",
+        "func": "var data = msg.payload;\n\nconst fs = global.get('fs');\nconst path = global.get('path');\n\nlet cssPath = \"\";\nlet css = \"\";\nlet html = \"\";\n\nlet m = msg.message;\n\nnode.status({ fill: \"blue\", shape: \"dot\", text: m.kind });\n\n\nif (m.kind == \"email\") {\n    cssPath = global.get('storage') + \"/teamplates/html/email-style.css\";\n    css = fs.readFileSync(cssPath, \"utf8\");\n}\n\nif (m.template_in_row) {\n    html = m.template_in_row;\n} else {\n    const htmlPath = global.get('storage') + \"/teamplates/html/\" + msg.message.template;\n    html = fs.readFileSync(htmlPath, \"utf8\");\n\n    if (m.kind == \"email\") {\n        // Wstawienie stylu inline w miejsce <link rel=\"stylesheet\"...>\n        html = html.replace(\n            /<link\\s+rel=[\"']stylesheet[\"']\\s+href=[\"'][^\"']+[\"']\\s*\\/?>/,\n            `<style>\\n${css}\\n</style>`\n        );\n    }\n}\n\nconst template_data = m.template_data;\n\n// Dynamiczna zamiana {{klucz}} na wartość z template_data\nfor (const key in template_data) {\n    const regex = new RegExp(`{{${key}}}`, 'g');\n    html = html.replace(regex, template_data[key]);\n}\n\n// msg.payload = html;\n// msg.to = `${msg.email.from}`;\n// msg.from = msg.smtp.auth.user;\n// msg.subject = \"Odp: \" + msg.email.subject;\n// msg.headers = {\n//     \"Content-Type\": \"text/html\"\n// };\n\n\nmsg.message.from = \"Kwatermistrz\";\nmsg.message.subject = \"Info\";\nmsg.message.body = html;\nif (msg.message.to_group == \"admin\") {\n    msg.message.to = msg.payload.value;\n} \n\n\n// msg.umowa = data;\n// msg.html = html;\n\nnode.status({ fill: \"green\", shape: \"dot\", text: global.get(\"getDateTime\")() });\nreturn msg;",
+        "outputs": 1,
+        "timeout": 0,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 380,
+        "y": 1540,
+        "wires": [
+            [
+                "a11e422b6114d822"
+            ]
+        ]
+    },
+    {
+        "id": "8ad5a2c7423db039",
+        "type": "function",
+        "z": "7ac738eef3d259eb",
+        "name": "msg:telegram",
+        "func": "const template_data = {\n    asd: \"Fajne\"\n};\n\n// Jeśli lista znajduje się w `msg.payload`, a nie `msg.payload.list`\n// const list = msg.payload.list || msg.payload;\n\n// Zbuduj ciąg stringów z wartości `value`, oddzielonych przecinkiem\n// const valuesString = list.map(item => item.value).join(',');\n\n// Wstaw jako pole do dalszego wykorzystania, np. do msg.message.to\nmsg.message = {\n    template_in_row: \"Super templaste {{asd}} \",\n    template_data: template_data,\n    kind: \"telegram\",\n    to: msg.payload.value  // np. \"234242,23424234,24\"\n};\n\nnode.status({ fill: \"green\", shape: \"dot\", text: global.get(\"getDateTime\")() });\nreturn msg;",
+        "outputs": 1,
+        "timeout": 0,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 140,
+        "y": 1280,
+        "wires": [
+            []
+        ]
+    },
+    {
+        "id": "94bdaca900e7a2d6",
+        "type": "subflow:03b285947d86a284",
+        "z": "7ac738eef3d259eb",
+        "name": "",
+        "x": 160,
+        "y": 1180,
+        "wires": [
+            [
+                "393949ea3ebd5868"
+            ]
+        ]
+    },
+    {
+        "id": "06c1cf372ae658b2",
+        "type": "inject",
+        "z": "7ac738eef3d259eb",
+        "name": "",
+        "props": [
+            {
+                "p": "payload"
+            },
+            {
+                "p": "topic",
+                "vt": "str"
+            }
+        ],
+        "repeat": "",
+        "crontab": "",
+        "once": false,
+        "onceDelay": 0.1,
+        "topic": "",
+        "payload": "",
+        "payloadType": "date",
+        "x": 90,
+        "y": 1080,
+        "wires": [
+            [
+                "94bdaca900e7a2d6"
+            ]
+        ]
+    },
+    {
+        "id": "d314a3be28118721",
+        "type": "subflow:54b98742948036f5",
+        "z": "7ac738eef3d259eb",
+        "name": "",
+        "x": 740,
+        "y": 1240,
+        "wires": [
+            [
+                "8e2c3d376a3d3b60"
+            ]
+        ]
+    },
+    {
+        "id": "596b2d93d069161d",
+        "type": "function",
+        "z": "7ac738eef3d259eb",
+        "name": "get:config",
+        "func": "msg.config = {};\nmsg.config.limit = 20;\nmsg.config.parametr = \"*\"\nmsg.config.kind = \"telegram_admin\";\nnode.status({ fill: \"green\", shape: \"dot\", text: global.get(\"getDateTime\")() });\nreturn msg;",
+        "outputs": 1,
+        "timeout": 0,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 600,
+        "y": 1220,
+        "wires": [
+            [
+                "d314a3be28118721"
+            ]
+        ]
+    },
+    {
+        "id": "9eaf057bbd22b391",
+        "type": "telegram sender",
+        "z": "7ac738eef3d259eb",
+        "g": "4f84417ea22d54a2",
+        "name": "",
+        "bot": "telegram_bot",
+        "haserroroutput": false,
+        "outputs": 1,
+        "x": 1280,
+        "y": 1600,
+        "wires": [
+            [
+                "cb62cc24fb94ce57",
+                "eb18773d9e26b539"
+            ]
+        ]
+    },
+    {
+        "id": "ad22c65f984b2fa7",
+        "type": "function",
+        "z": "7ac738eef3d259eb",
+        "g": "4f84417ea22d54a2",
+        "name": "prepare:telegram:message",
+        "func": "msg.payload = {\n    chatId: msg.message.to,\n    content: msg.message.body,\n    type: \"message\",\n    options: {\n        parse_mode: \"Markdown\",\n        disable_web_page_preview: true\n    }\n}\nreturn msg;",
+        "outputs": 1,
+        "timeout": 0,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 1040,
+        "y": 1600,
+        "wires": [
+            [
+                "9eaf057bbd22b391"
+            ]
+        ]
+    },
+    {
+        "id": "8e2c3d376a3d3b60",
+        "type": "function",
+        "z": "7ac738eef3d259eb",
+        "name": "value:clone",
+        "func": "let rows = msg.payload;\n\nmsg.payload = rows.map(row => {\n    let singleMsg = RED.util.cloneMessage(msg); // duplikujemy oryginalny msg\n    singleMsg.payload = row;\n    return singleMsg;\n});\n\nnode.status({ fill: \"green\", shape: \"dot\", text: global.get(\"getDateTime\")() }); //STATUS\nreturn [msg.payload]; ",
+        "outputs": 1,
+        "timeout": 0,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 970,
+        "y": 1220,
+        "wires": [
+            []
+        ]
+    },
+    {
+        "id": "efd2c3e56d49ea9a",
+        "type": "function",
+        "z": "7ac738eef3d259eb",
+        "g": "4f84417ea22d54a2",
+        "name": "get:config",
+        "func": "msg.config = {};\nmsg.config.limit = 20;\nmsg.config.parametr = \"*\"\nmsg.config.kind = \"telegram_admin\";\nnode.status({ fill: \"green\", shape: \"dot\", text: global.get(\"getDateTime\")() });\nreturn msg;",
+        "outputs": 1,
+        "timeout": 0,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 500,
+        "y": 1400,
+        "wires": [
+            [
+                "5ed9f39bab8aac16"
+            ]
+        ]
+    },
+    {
+        "id": "5ed9f39bab8aac16",
+        "type": "subflow:54b98742948036f5",
+        "z": "7ac738eef3d259eb",
+        "g": "4f84417ea22d54a2",
+        "name": "",
+        "x": 680,
+        "y": 1400,
+        "wires": [
+            [
+                "c80e33e6bba36bf8"
+            ]
+        ]
+    },
+    {
+        "id": "c80e33e6bba36bf8",
+        "type": "function",
+        "z": "7ac738eef3d259eb",
+        "g": "4f84417ea22d54a2",
+        "name": "value:clone",
+        "func": "let rows = msg.payload;\n\nmsg.payload = rows.map(row => {\n    let singleMsg = RED.util.cloneMessage(msg); // duplikujemy oryginalny msg\n    singleMsg.payload = row;\n    return singleMsg;\n});\n\nnode.status({ fill: \"green\", shape: \"dot\", text: global.get(\"getDateTime\")() }); //STATUS\nreturn [msg.payload]; ",
+        "outputs": 1,
+        "timeout": 0,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 870,
+        "y": 1400,
+        "wires": [
+            [
+                "59bbb540505cd062"
+            ]
+        ]
+    },
+    {
+        "id": "ff22d8d375026584",
+        "type": "switch",
+        "z": "7ac738eef3d259eb",
+        "g": "4f84417ea22d54a2",
+        "name": "",
+        "property": "message.to_group",
+        "propertyType": "msg",
+        "rules": [
+            {
+                "t": "eq",
+                "v": "admin",
+                "vt": "str"
+            },
+            {
+                "t": "else"
+            }
+        ],
+        "checkall": "true",
+        "repair": false,
+        "outputs": 2,
+        "x": 330,
+        "y": 1400,
+        "wires": [
+            [
+                "efd2c3e56d49ea9a"
+            ],
+            [
+                "59bbb540505cd062"
+            ]
+        ]
+    },
+    {
+        "id": "393949ea3ebd5868",
+        "type": "function",
+        "z": "7ac738eef3d259eb",
+        "name": "msg:telegram",
+        "func": "const template_data = {\n    rejs_name: \"adad\"\n};\n\nmsg.message = {\n    template_in_row: \"Nowa rejestracja na **rejs**: *{{rejs_name}}* \",\n    template_data: template_data,\n    kind: \"telegram\",\n    to_group: \"admin\",\n    to: \"admin\",\n\n    // to: msg.payload.value  // np. \"234242,23424234,24\"\n};\n\nnode.status({ fill: \"green\", shape: \"dot\", text: global.get(\"getDateTime\")() });\nreturn msg;",
+        "outputs": 1,
+        "timeout": 0,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 340,
+        "y": 1260,
+        "wires": [
+            [
+                "ff22d8d375026584"
+            ]
+        ]
+    },
+    {
+        "id": "eb18773d9e26b539",
+        "type": "debug",
+        "z": "7ac738eef3d259eb",
+        "g": "4f84417ea22d54a2",
+        "name": "debug 28",
+        "active": true,
+        "tosidebar": true,
+        "console": false,
+        "tostatus": false,
+        "complete": "false",
+        "statusVal": "",
+        "statusType": "auto",
+        "x": 1430,
+        "y": 1540,
+        "wires": []
+    },
+    {
+        "id": "83b82b2b9c91af90",
+        "type": "telegram receiver",
+        "z": "7ac738eef3d259eb",
+        "name": "",
+        "bot": "telegram_bot",
+        "saveDataDir": "",
+        "filterCommands": false,
+        "x": 560,
+        "y": 840,
+        "wires": [
+            [
+                "53d7ace4727dad6a"
+            ],
+            [
+                "0c18ef29c0d4bf3a"
+            ]
+        ]
     },
     {
         "id": "a977c1487e0d24c5",
@@ -7791,5 +9184,795 @@
         "x": 730,
         "y": 820,
         "wires": []
+    },
+    {
+        "id": "0553c056fd52bef6",
+        "type": "telegram command",
+        "z": "63acb26d6d62c6a7",
+        "name": "",
+        "command": "/help",
+        "description": "",
+        "registercommand": false,
+        "language": "",
+        "scope": "default",
+        "bot": "telegram_bot",
+        "strict": false,
+        "hasresponse": true,
+        "useregex": false,
+        "removeregexcommand": false,
+        "outputs": 2,
+        "x": 70,
+        "y": 80,
+        "wires": [
+            [
+                "9cd6e401c88a4ea3"
+            ],
+            [
+                "d5080d546f5000c8"
+            ]
+        ]
+    },
+    {
+        "id": "d5080d546f5000c8",
+        "type": "debug",
+        "z": "63acb26d6d62c6a7",
+        "name": "debug 33",
+        "active": true,
+        "tosidebar": true,
+        "console": false,
+        "tostatus": false,
+        "complete": "false",
+        "statusVal": "",
+        "statusType": "auto",
+        "x": 240,
+        "y": 140,
+        "wires": []
+    },
+    {
+        "id": "d826163ff57b1f9a",
+        "type": "subflow:03b285947d86a284",
+        "z": "63acb26d6d62c6a7",
+        "name": "",
+        "x": 480,
+        "y": 80,
+        "wires": [
+            [
+                "1e83de49104afef7"
+            ]
+        ]
+    },
+    {
+        "id": "571c54a6d40c0903",
+        "type": "subflow:54b98742948036f5",
+        "z": "63acb26d6d62c6a7",
+        "name": "",
+        "x": 920,
+        "y": 80,
+        "wires": [
+            [
+                "089abbe4a8575aa3"
+            ]
+        ]
+    },
+    {
+        "id": "1e83de49104afef7",
+        "type": "function",
+        "z": "63acb26d6d62c6a7",
+        "name": "get:config:telegram_admin",
+        "func": "msg.config = {};\nmsg.config.limit = 20;\nmsg.config.parametr = \"*\"\nmsg.config.kind = \"telegram_admin\";\nmsg.config.value = msg.payload.chatId;\nnode.status({ fill: \"green\", shape: \"dot\", text: global.get(\"getDateTime\")() });\nreturn msg;",
+        "outputs": 1,
+        "timeout": 0,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 700,
+        "y": 80,
+        "wires": [
+            [
+                "571c54a6d40c0903"
+            ]
+        ]
+    },
+    {
+        "id": "089abbe4a8575aa3",
+        "type": "function",
+        "z": "63acb26d6d62c6a7",
+        "name": "check:exist:user",
+        "func": "if (Array.isArray(msg.payload) && msg.payload.length > 0 && msg.payload[0].kind === \"telegram_admin\") {\n    msg.telegram_admin = msg.payload[0];\n\n    node.status({ fill: \"green\", shape: \"dot\", text: global.get(\"getDateTime\")() });\n    return msg;\n} else {\n    node.status({ fill: \"red\", shape: \"dot\", text: \"No Admin Found \" + global.get(\"getDateTime\")() });\n    return null;  // kończy przetwarzanie\n}",
+        "outputs": 1,
+        "timeout": 0,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 1100,
+        "y": 80,
+        "wires": [
+            [
+                "e7547e052ad0742d"
+            ]
+        ]
+    },
+    {
+        "id": "9cd6e401c88a4ea3",
+        "type": "function",
+        "z": "63acb26d6d62c6a7",
+        "name": "store:to:telegram_cmd",
+        "func": "msg.telegram_cmd = msg.payload;\nreturn msg;",
+        "outputs": 1,
+        "timeout": 0,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 280,
+        "y": 80,
+        "wires": [
+            [
+                "d826163ff57b1f9a"
+            ]
+        ]
+    },
+    {
+        "id": "e7547e052ad0742d",
+        "type": "function",
+        "z": "63acb26d6d62c6a7",
+        "name": "msg:telegram",
+        "func": "const template_data = {\n    rejs_name: \"adad\"\n};\n\nmsg.message = {\n    template_in_row: \"Dostępne polecenia \\n /u <nr> - informacja o umoweie <nr> numer umowy z tego roku \\n /l <ile> - wysli info o <ile> ostatnich umowach  \",\n    template_data: template_data,\n    kind: \"telegram\",\n    // to_group: \"admin\",\n    to: msg.telegram_admin.value,\n\n    // to: msg.payload.value  // np. \"234242,23424234,24\"\n};\n\nnode.status({ fill: \"green\", shape: \"dot\", text: global.get(\"getDateTime\")() });\nreturn msg;",
+        "outputs": 1,
+        "timeout": 0,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 1300,
+        "y": 80,
+        "wires": [
+            [
+                "a7d36146b2282a7c"
+            ]
+        ]
+    },
+    {
+        "id": "a7d36146b2282a7c",
+        "type": "link out",
+        "z": "63acb26d6d62c6a7",
+        "name": "link out 19",
+        "mode": "link",
+        "links": [
+            "b38c6c11d0212c18"
+        ],
+        "x": 1445,
+        "y": 80,
+        "wires": []
+    },
+    {
+        "id": "cc8434dc2f151dc3",
+        "type": "telegram command",
+        "z": "63acb26d6d62c6a7",
+        "name": "",
+        "command": "/u",
+        "description": "",
+        "registercommand": false,
+        "language": "",
+        "scope": "default",
+        "bot": "telegram_bot",
+        "strict": false,
+        "hasresponse": true,
+        "useregex": false,
+        "removeregexcommand": false,
+        "outputs": 2,
+        "x": 70,
+        "y": 200,
+        "wires": [
+            [
+                "20c122696ef0bc4e",
+                "2b12046f787f8301"
+            ],
+            [
+                "7d17c56e56404b9e"
+            ]
+        ]
+    },
+    {
+        "id": "20c122696ef0bc4e",
+        "type": "function",
+        "z": "63acb26d6d62c6a7",
+        "name": "store:to:telegram_cmd",
+        "func": "msg.telegram_cmd = msg.payload;\n\nlet rawContent = msg.telegram_cmd.content?.trim() || \"\";\n\nmsg.cmd_str = rawContent;\nmsg.cmd_int = parseInt(rawContent, 10);\n\n// Jeśli nie jest liczbą, usuń\nif (isNaN(msg.cmd_int)) {\n    delete msg.cmd_int;\n}\n\nnode.status({ fill: \"green\", shape: \"dot\", text: msg.cmd_str });\nreturn msg;",
+        "outputs": 1,
+        "timeout": 0,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 280,
+        "y": 200,
+        "wires": [
+            [
+                "8bb0752e96f183d0"
+            ]
+        ]
+    },
+    {
+        "id": "8bb0752e96f183d0",
+        "type": "subflow:03b285947d86a284",
+        "z": "63acb26d6d62c6a7",
+        "name": "",
+        "x": 480,
+        "y": 200,
+        "wires": [
+            [
+                "aae0e6e5b141fbe5"
+            ]
+        ]
+    },
+    {
+        "id": "aae0e6e5b141fbe5",
+        "type": "function",
+        "z": "63acb26d6d62c6a7",
+        "name": "get:config:telegram_admin",
+        "func": "msg.config = {};\nmsg.config.limit = 20;\nmsg.config.parametr = \"*\"\nmsg.config.kind = \"telegram_admin\";\nmsg.config.value = msg.payload.chatId;\nnode.status({ fill: \"green\", shape: \"dot\", text: global.get(\"getDateTime\")() });\nreturn msg;",
+        "outputs": 1,
+        "timeout": 0,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 700,
+        "y": 200,
+        "wires": [
+            [
+                "c7a0324304b3b041"
+            ]
+        ]
+    },
+    {
+        "id": "c7a0324304b3b041",
+        "type": "subflow:54b98742948036f5",
+        "z": "63acb26d6d62c6a7",
+        "name": "",
+        "x": 920,
+        "y": 200,
+        "wires": [
+            [
+                "301484661c74561e"
+            ]
+        ]
+    },
+    {
+        "id": "301484661c74561e",
+        "type": "function",
+        "z": "63acb26d6d62c6a7",
+        "name": "check:exist:user",
+        "func": "if (Array.isArray(msg.payload) && msg.payload.length > 0 && msg.payload[0].kind === \"telegram_admin\") {\n    msg.telegram_admin = msg.payload[0];\n\n    node.status({ fill: \"green\", shape: \"dot\", text: global.get(\"getDateTime\")() });\n    return msg;\n} else {\n    node.status({ fill: \"red\", shape: \"dot\", text: \"No Admin Found \" + global.get(\"getDateTime\")() });\n    return null;  // kończy przetwarzanie\n}",
+        "outputs": 1,
+        "timeout": 0,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 1100,
+        "y": 200,
+        "wires": [
+            [
+                "2b4a8d9db9d46d6e"
+            ]
+        ]
+    },
+    {
+        "id": "7d17c56e56404b9e",
+        "type": "debug",
+        "z": "63acb26d6d62c6a7",
+        "name": "debug 32",
+        "active": true,
+        "tosidebar": true,
+        "console": false,
+        "tostatus": false,
+        "complete": "false",
+        "statusVal": "",
+        "statusType": "auto",
+        "x": 240,
+        "y": 260,
+        "wires": []
+    },
+    {
+        "id": "2b4a8d9db9d46d6e",
+        "type": "function",
+        "z": "63acb26d6d62c6a7",
+        "name": "umowa_prefix:get",
+        "func": "msg.queue = {};\nmsg.queue.kind = \"umowa_prefix\";\nmsg.queue.uuid = \"global\"\nnode.status({ fill: \"green\", shape: \"dot\", text: global.get(\"getDateTime\")() });\nreturn msg;",
+        "outputs": 1,
+        "timeout": 0,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 270,
+        "y": 320,
+        "wires": [
+            [
+                "3aca31d79f028e08"
+            ]
+        ]
+    },
+    {
+        "id": "3aca31d79f028e08",
+        "type": "subflow:7a14c201fa805842",
+        "z": "63acb26d6d62c6a7",
+        "name": "",
+        "x": 510,
+        "y": 320,
+        "wires": [
+            [
+                "f4884138272fb87e"
+            ]
+        ]
+    },
+    {
+        "id": "f4884138272fb87e",
+        "type": "function",
+        "z": "63acb26d6d62c6a7",
+        "name": "store:to::umowa_prefix",
+        "func": "msg.umowa_prefix = msg.payload.status;\nnode.status({ fill: \"green\", shape: \"dot\", text: global.get(\"getDateTime\")() });\n\nreturn msg;",
+        "outputs": 1,
+        "timeout": 0,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 740,
+        "y": 320,
+        "wires": [
+            [
+                "d7b4a24b096e0d4e"
+            ]
+        ]
+    },
+    {
+        "id": "d7b4a24b096e0d4e",
+        "type": "function",
+        "z": "63acb26d6d62c6a7",
+        "name": "NocoDB - umowy:get:by_nr",
+        "func": "msg.nocodb_t_active = msg.nocodb_t.umowy;\n\nmsg.payload = {\n    offset: '0',\n    limit: '1',\n    viewId: msg.nocodb_t.umowy_view,\n    where: `(umowa_year,eq,${msg.umowa_prefix})~and(umowa_nr,eq,${msg.cmd_int})`,\n    \"nested[osoby][fields]\": \"*\",\n    \"nested[rejsy][fields]\": \"*\"\n};\n\nnode.status({ fill: \"green\", shape: \"dot\", text: global.get(\"getDateTime\")() });\n\nreturn msg;",
+        "outputs": 1,
+        "timeout": 0,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 300,
+        "y": 380,
+        "wires": [
+            [
+                "4f5e3bf13f7afea8",
+                "119fc93fa53f4542"
+            ]
+        ]
+    },
+    {
+        "id": "4f5e3bf13f7afea8",
+        "type": "http request",
+        "z": "63acb26d6d62c6a7",
+        "name": "NocoDB - GET",
+        "method": "GET",
+        "ret": "obj",
+        "paytoqs": "query",
+        "url": "http://{{nocodb_host}}/api/v2/tables/{{nocodb_t_active}}/records",
+        "tls": "",
+        "persist": false,
+        "proxy": "",
+        "insecureHTTPParser": false,
+        "authType": "",
+        "senderr": false,
+        "headers": [
+            {
+                "keyType": "other",
+                "keyValue": "xc-token",
+                "valueType": "msg",
+                "valueValue": "xc_token"
+            },
+            {
+                "keyType": "Content-Type",
+                "keyValue": "",
+                "valueType": "application/json",
+                "valueValue": ""
+            }
+        ],
+        "x": 660,
+        "y": 380,
+        "wires": [
+            [
+                "6864c44392bd2e0c"
+            ]
+        ]
+    },
+    {
+        "id": "2b12046f787f8301",
+        "type": "debug",
+        "z": "63acb26d6d62c6a7",
+        "name": "debug 34",
+        "active": true,
+        "tosidebar": true,
+        "console": false,
+        "tostatus": false,
+        "complete": "false",
+        "statusVal": "",
+        "statusType": "auto",
+        "x": 130,
+        "y": 480,
+        "wires": []
+    },
+    {
+        "id": "b4634423d32be79e",
+        "type": "debug",
+        "z": "63acb26d6d62c6a7",
+        "name": "debug 35",
+        "active": true,
+        "tosidebar": true,
+        "console": false,
+        "tostatus": false,
+        "complete": "true",
+        "targetType": "full",
+        "statusVal": "",
+        "statusType": "auto",
+        "x": 1200,
+        "y": 440,
+        "wires": []
+    },
+    {
+        "id": "119fc93fa53f4542",
+        "type": "debug",
+        "z": "63acb26d6d62c6a7",
+        "name": "debug 36",
+        "active": true,
+        "tosidebar": true,
+        "console": false,
+        "tostatus": false,
+        "complete": "false",
+        "statusVal": "",
+        "statusType": "auto",
+        "x": 530,
+        "y": 500,
+        "wires": []
+    },
+    {
+        "id": "6864c44392bd2e0c",
+        "type": "function",
+        "z": "63acb26d6d62c6a7",
+        "name": "prepare mesage",
+        "func": "const umowa = msg.payload.list[0];\n\nconst nazwa_umowy = umowa.nazwa || '';\nconst ilosc_osob = umowa.ile_osob || 0;\nconst rejs = umowa.rejsy?.nazwa || 'brak danych';\nconst termin_od = umowa.rejsy?.termin_od || '';\nconst termin_do = umowa.rejsy?.termin_do || '';\nconst port_start = umowa.rejsy?.port_start || '';\nconst port_koniec = umowa.rejsy?.port_koniec || '';\n\nconst podpisana = umowa.umowa_podpisana ? \"✅ Tak\" : \"❌ Nie\";\nconst rata1 = umowa.oplacone_rata1 ? \"✅ Tak\" : \"❌ Nie\";\nconst rata2 = umowa.oplacone_rata2 ? \"✅ Tak\" : \"❌ Nie\";\n\nconst message = `📄 *Umowa*: \\`${nazwa_umowy}\\`\n🧭 *Rejs*: *${rejs}*\n📅 *Termin*: ${termin_od} – ${termin_do}\n👥 *Liczba osób*: *${ilosc_osob}*\n\n📬 *Umowa podpisana*: ${podpisana}\n💸 *Rata 1 zapłacona*: ${rata1}\n💰 *Rata 2 zapłacona*: ${rata2}\n`;\n//⚓ *Porty*: ${port_start} → ${port_koniec}\nmsg.payload = {\n    chatId: msg.telegram_cmd.chatId,\n    type: \"message\",\n    content: message,\n    options: {\n        parse_mode: \"Markdown\"\n    }\n};\nnode.status({ fill: \"green\", shape: \"dot\", text: global.get(\"getDateTime\")() });\n\nreturn msg;",
+        "outputs": 1,
+        "timeout": 0,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 900,
+        "y": 380,
+        "wires": [
+            [
+                "b4634423d32be79e",
+                "3ed7aebfddb1fed8"
+            ]
+        ]
+    },
+    {
+        "id": "3acfa58cf1e285d8",
+        "type": "link out",
+        "z": "63acb26d6d62c6a7",
+        "name": "link out 20",
+        "mode": "link",
+        "links": [
+            "b38c6c11d0212c18"
+        ],
+        "x": 1015,
+        "y": 500,
+        "wires": []
+    },
+    {
+        "id": "3ed7aebfddb1fed8",
+        "type": "function",
+        "z": "63acb26d6d62c6a7",
+        "name": "msg:telegram",
+        "func": "const template_data = {\n    none: \"none\"\n};\n\nmsg.message = {\n    template_in_row: msg.payload.content,\n    template_data: template_data,\n    kind: \"telegram\",\n    // to_group: \"admin\",\n    to: msg.telegram_admin.value,\n\n    // to: msg.payload.value  // np. \"234242,23424234,24\"\n};\n\nnode.status({ fill: \"green\", shape: \"dot\", text: global.get(\"getDateTime\")() });\nreturn msg;",
+        "outputs": 1,
+        "timeout": 0,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 870,
+        "y": 500,
+        "wires": [
+            [
+                "3acfa58cf1e285d8"
+            ]
+        ]
+    },
+    {
+        "id": "7df1d82535ca7da6",
+        "type": "telegram command",
+        "z": "63acb26d6d62c6a7",
+        "name": "",
+        "command": "/l",
+        "description": "",
+        "registercommand": false,
+        "language": "",
+        "scope": "default",
+        "bot": "telegram_bot",
+        "strict": false,
+        "hasresponse": true,
+        "useregex": false,
+        "removeregexcommand": false,
+        "outputs": 2,
+        "x": 70,
+        "y": 560,
+        "wires": [
+            [
+                "c6ecda197f2c7756"
+            ],
+            []
+        ]
+    },
+    {
+        "id": "c6ecda197f2c7756",
+        "type": "function",
+        "z": "63acb26d6d62c6a7",
+        "name": "store:to:telegram_cmd",
+        "func": "msg.telegram_cmd = msg.payload;\n\nlet rawContent = msg.telegram_cmd.content?.trim() || \"\";\n\nmsg.cmd_str = rawContent;\nmsg.cmd_int = parseInt(rawContent, 10);\n\n// Jeśli nie jest liczbą, usuń\nif (isNaN(msg.cmd_int)) {\n    delete msg.cmd_int;\n}\n\nnode.status({ fill: \"green\", shape: \"dot\", text: msg.cmd_str });\nreturn msg;",
+        "outputs": 1,
+        "timeout": 0,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 280,
+        "y": 580,
+        "wires": [
+            [
+                "cac96696c131113d"
+            ]
+        ]
+    },
+    {
+        "id": "cac96696c131113d",
+        "type": "subflow:03b285947d86a284",
+        "z": "63acb26d6d62c6a7",
+        "name": "",
+        "x": 480,
+        "y": 580,
+        "wires": [
+            [
+                "be164207f0fb422c"
+            ]
+        ]
+    },
+    {
+        "id": "be164207f0fb422c",
+        "type": "function",
+        "z": "63acb26d6d62c6a7",
+        "name": "get:config:telegram_admin",
+        "func": "msg.config = {};\nmsg.config.limit = 20;\nmsg.config.parametr = \"*\"\nmsg.config.kind = \"telegram_admin\";\nmsg.config.value = msg.payload.chatId;\nnode.status({ fill: \"green\", shape: \"dot\", text: global.get(\"getDateTime\")() });\nreturn msg;",
+        "outputs": 1,
+        "timeout": 0,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 700,
+        "y": 580,
+        "wires": [
+            [
+                "82222e3128714a37"
+            ]
+        ]
+    },
+    {
+        "id": "82222e3128714a37",
+        "type": "subflow:54b98742948036f5",
+        "z": "63acb26d6d62c6a7",
+        "name": "",
+        "x": 920,
+        "y": 580,
+        "wires": [
+            [
+                "dc6b3abdfbae4214"
+            ]
+        ]
+    },
+    {
+        "id": "dc6b3abdfbae4214",
+        "type": "function",
+        "z": "63acb26d6d62c6a7",
+        "name": "check:exist:user",
+        "func": "if (Array.isArray(msg.payload) && msg.payload.length > 0 && msg.payload[0].kind === \"telegram_admin\") {\n    msg.telegram_admin = msg.payload[0];\n\n    node.status({ fill: \"green\", shape: \"dot\", text: global.get(\"getDateTime\")() });\n    return msg;\n} else {\n    node.status({ fill: \"red\", shape: \"dot\", text: \"No Admin Found \" + global.get(\"getDateTime\")() });\n    return null;  // kończy przetwarzanie\n}",
+        "outputs": 1,
+        "timeout": 0,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 1100,
+        "y": 580,
+        "wires": [
+            [
+                "c4d1a145c8fd2071"
+            ]
+        ]
+    },
+    {
+        "id": "c4d1a145c8fd2071",
+        "type": "function",
+        "z": "63acb26d6d62c6a7",
+        "name": "NocoDB - umowy:get:by_nr",
+        "func": "msg.nocodb_t_active = msg.nocodb_t.umowy;\n\nmsg.payload = {\n    offset: '0',\n    limit: msg.cmd_int,\n    viewId: msg.nocodb_t.umowy_view,\n    sort: \"-umowa_nr\",\n    // where: `(umowa_year,eq,${msg.umowa_prefix})~and(umowa_nr,eq,${msg.cmd_int})`,\n    \"nested[osoby][fields]\": \"*\",\n    \"nested[rejsy][fields]\": \"*\"\n};\n\nnode.status({ fill: \"green\", shape: \"dot\", text: global.get(\"getDateTime\")() });\n\nreturn msg;",
+        "outputs": 1,
+        "timeout": 0,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 300,
+        "y": 660,
+        "wires": [
+            [
+                "b90fa9c387b19295"
+            ]
+        ]
+    },
+    {
+        "id": "b90fa9c387b19295",
+        "type": "http request",
+        "z": "63acb26d6d62c6a7",
+        "name": "NocoDB - GET",
+        "method": "GET",
+        "ret": "obj",
+        "paytoqs": "query",
+        "url": "http://{{nocodb_host}}/api/v2/tables/{{nocodb_t_active}}/records",
+        "tls": "",
+        "persist": false,
+        "proxy": "",
+        "insecureHTTPParser": false,
+        "authType": "",
+        "senderr": false,
+        "headers": [
+            {
+                "keyType": "other",
+                "keyValue": "xc-token",
+                "valueType": "msg",
+                "valueValue": "xc_token"
+            },
+            {
+                "keyType": "Content-Type",
+                "keyValue": "",
+                "valueType": "application/json",
+                "valueValue": ""
+            }
+        ],
+        "x": 660,
+        "y": 660,
+        "wires": [
+            [
+                "f6293d19b99386c4",
+                "c5cba888a5a53ac7"
+            ]
+        ]
+    },
+    {
+        "id": "71de6977e18c0bba",
+        "type": "function",
+        "z": "63acb26d6d62c6a7",
+        "name": "prepare mesage",
+        "func": "const umowa = msg.payload;\n\nconst nazwa_umowy = umowa.nazwa || '';\nconst ilosc_osob = umowa.ile_osob || 0;\nconst rejs = umowa.rejsy?.nazwa || 'brak danych';\nconst termin_od = umowa.rejsy?.termin_od || '';\nconst termin_do = umowa.rejsy?.termin_do || '';\nconst port_start = umowa.rejsy?.port_start || '';\nconst port_koniec = umowa.rejsy?.port_koniec || '';\n\nconst podpisana = umowa.umowa_podpisana ? \"✅ Tak\" : \"❌ Nie\";\nconst rata1 = umowa.oplacone_rata1 ? \"✅ Tak\" : \"❌ Nie\";\nconst rata2 = umowa.oplacone_rata2 ? \"✅ Tak\" : \"❌ Nie\";\n\nconst message = `📄 *Umowa*: \\`${nazwa_umowy}\\`\n🧭 *Rejs*: *${rejs}*\n📅 *Termin*: ${termin_od} – ${termin_do}\n👥 *Liczba osób*: *${ilosc_osob}*\n\n📬 *Umowa podpisana*: ${podpisana}\n💸 *Rata 1 zapłacona*: ${rata1}\n💰 *Rata 2 zapłacona*: ${rata2}\n- -- - - -- - - -- - - -- - - -- - - -- -`;\n//⚓ *Porty*: ${port_start} → ${port_koniec}\nmsg.payload = {\n    chatId: msg.telegram_cmd.chatId,\n    type: \"message\",\n    content: message,\n    options: {\n        parse_mode: \"Markdown\"\n    }\n};\nnode.status({ fill: \"green\", shape: \"dot\", text: global.get(\"getDateTime\")() });\n\nreturn msg;",
+        "outputs": 1,
+        "timeout": 0,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 1060,
+        "y": 780,
+        "wires": [
+            [
+                "96fe3b936394ce16"
+            ]
+        ]
+    },
+    {
+        "id": "96fe3b936394ce16",
+        "type": "function",
+        "z": "63acb26d6d62c6a7",
+        "name": "msg:telegram",
+        "func": "const template_data = {\n    none: \"none\"\n};\n\nmsg.message = {\n    template_in_row: msg.payload.content,\n    template_data: template_data,\n    kind: \"telegram\",\n    // to_group: \"admin\",\n    to: msg.telegram_admin.value,\n\n    // to: msg.payload.value  // np. \"234242,23424234,24\"\n};\n\nnode.status({ fill: \"green\", shape: \"dot\", text: global.get(\"getDateTime\")() });\nreturn msg;",
+        "outputs": 1,
+        "timeout": 0,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 1080,
+        "y": 860,
+        "wires": [
+            [
+                "799e576850c2a16c"
+            ]
+        ]
+    },
+    {
+        "id": "799e576850c2a16c",
+        "type": "link out",
+        "z": "63acb26d6d62c6a7",
+        "name": "link out 21",
+        "mode": "link",
+        "links": [
+            "b38c6c11d0212c18"
+        ],
+        "x": 1205,
+        "y": 860,
+        "wires": []
+    },
+    {
+        "id": "f6293d19b99386c4",
+        "type": "debug",
+        "z": "63acb26d6d62c6a7",
+        "name": "debug 37",
+        "active": true,
+        "tosidebar": true,
+        "console": false,
+        "tostatus": false,
+        "complete": "payload",
+        "targetType": "msg",
+        "statusVal": "",
+        "statusType": "auto",
+        "x": 730,
+        "y": 760,
+        "wires": []
+    },
+    {
+        "id": "c5cba888a5a53ac7",
+        "type": "function",
+        "z": "63acb26d6d62c6a7",
+        "name": "value:clone",
+        "func": "let rows = (msg.payload && msg.payload.list) ? msg.payload.list : [];\n\nif (!Array.isArray(rows) || rows.length === 0) {\n    node.status({ fill: \"red\", shape: \"ring\", text: \"Brak danych\" });\n    return null; // lub return []; jeśli chcesz zwrócić pusty wynik\n}\n\n// Tworzymy array wiadomości\nlet outMsgs = rows.map(row => {\n    let singleMsg = RED.util.cloneMessage(msg);\n    singleMsg.payload = row;\n    return singleMsg;\n});\n\nnode.status({ fill: \"green\", shape: \"dot\", text: global.get(\"getDateTime\")() });\nreturn [outMsgs]; // Uwaga: musi być opakowane w tablicę, bo to split node (1 output)",
+        "outputs": 1,
+        "timeout": 0,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 910,
+        "y": 660,
+        "wires": [
+            [
+                "0413ffbfda008984"
+            ]
+        ]
+    },
+    {
+        "id": "0413ffbfda008984",
+        "type": "delay",
+        "z": "63acb26d6d62c6a7",
+        "name": "",
+        "pauseType": "rate",
+        "timeout": "2",
+        "timeoutUnits": "seconds",
+        "rate": "1",
+        "nbRateUnits": "1",
+        "rateUnits": "second",
+        "randomFirst": "1",
+        "randomLast": "5",
+        "randomUnits": "seconds",
+        "drop": false,
+        "allowrate": false,
+        "outputs": 1,
+        "x": 1110,
+        "y": 660,
+        "wires": [
+            [
+                "71de6977e18c0bba"
+            ]
+        ]
     }
 ]

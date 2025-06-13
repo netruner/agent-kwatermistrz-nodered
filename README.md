@@ -5,6 +5,11 @@ Kwatermistrz dla Kapitana Bastka
 
 ### About
 
+0.4.0
+- upload pdf do bazy NoCoDB
+- telegram informmowanie 
+- telegram cmd /help /u /l 
+
 0.3.6
 - poprawa detekcji podpisu 
 
