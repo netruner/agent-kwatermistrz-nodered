@@ -1049,6 +1049,43 @@
         "h": 202
     },
     {
+        "id": "f8c622ed58f1f1af",
+        "type": "group",
+        "z": "63acb26d6d62c6a7",
+        "style": {
+            "stroke": "#2c4d57",
+            "stroke-opacity": "1",
+            "fill": "#002b36",
+            "fill-opacity": "0.5",
+            "label": true,
+            "label-position": "nw",
+            "color": "#839496"
+        },
+        "nodes": [
+            "c56d1030b010a33d",
+            "60b02b41a406f9a1",
+            "7a5460e190f6cd1a",
+            "ddc4eda71cdeb12a",
+            "d55e61242858b9b2",
+            "430ada3446244ea8",
+            "d5985ef0154fedb9",
+            "31cc3b927ec061f3",
+            "501ffba732296b03",
+            "68952e7603429f09",
+            "9826806d4f227dd8",
+            "7ac8669501eb3b35",
+            "61370446aa787625",
+            "42384abfb69ac6e6",
+            "03a2a3c321018e60",
+            "164c6854f9b77b79",
+            "73664b974a486325"
+        ],
+        "x": 14,
+        "y": 759,
+        "w": 1492,
+        "h": 362
+    },
+    {
         "id": "telegram_bot",
         "type": "telegram bot",
         "botname": "TelegramBot",
@@ -3571,7 +3608,7 @@
         "z": "bf6e5312884e6967",
         "g": "537ea4a677b95df8",
         "name": "prepare:umowa",
-        "func": "function slowniePL(kwota) {\n    const jednostki = [\"\", \"jeden\", \"dwa\", \"trzy\", \"cztery\", \"pięć\", \"sześć\", \"siedem\", \"osiem\", \"dziewięć\"];\n    const nascie = [\"dziesięć\", \"jedenaście\", \"dwanaście\", \"trzynaście\", \"czternaście\", \"piętnaście\", \"szesnaście\", \"siedemnaście\", \"osiemnaście\", \"dziewiętnaście\"];\n    const dziesiatki = [\"\", \"\", \"dwadzieścia\", \"trzydzieści\", \"czterdzieści\", \"pięćdziesiąt\", \"sześćdziesiąt\", \"siedemdziesiąt\", \"osiemdziesiąt\", \"dziewięćdziesiąt\"];\n    const setki = [\"\", \"sto\", \"dwieście\", \"trzysta\", \"czterysta\", \"pięćset\", \"sześćset\", \"siedemset\", \"osiemset\", \"dziewięćset\"];\n\n    const grupy = [\n        [\"\", \"\", \"\"],\n        [\"tysiąc\", \"tysiące\", \"tysięcy\"],\n        [\"milion\", \"miliony\", \"milionów\"],\n        [\"miliard\", \"miliardy\", \"miliardów\"]\n    ];\n\n    function odmiana(liczba, formy) {\n        if (liczba === 1) return formy[0];\n        if ([2, 3, 4].includes(liczba % 10) && !(liczba % 100 >= 10 && liczba % 100 <= 20)) return formy[1];\n        return formy[2];\n    }\n\n    function segment(n) {\n        const s = Math.floor(n / 100);\n        const d = Math.floor((n % 100) / 10);\n        const j = n % 10;\n\n        let wynik = [];\n\n        if (s) wynik.push(setki[s]);\n        if (d === 1) {\n            wynik.push(nascie[j]);\n        } else {\n            if (d > 1) wynik.push(dziesiatki[d]);\n            if (j > 0) wynik.push(jednostki[j]);\n        }\n\n        return wynik.join(\" \");\n    }\n\n    function liczbaNaSlowa(n) {\n        if (n === 0) return \"zero\";\n\n        let res = [];\n        let i = 0;\n\n        while (n > 0) {\n            let trzy = n % 1000;\n            if (trzy > 0) {\n                let seg = segment(trzy);\n                if (i > 0) {\n                    let formy = grupy[i];\n                    let odm = odmiana(trzy, formy);\n                    if (trzy === 1 && i === 1) {\n                        seg = odm; // tylko \"tysiąc\", bez \"jeden\"\n                    } else {\n                        seg += \" \" + odm;\n                    }\n                }\n                res.unshift(seg);\n            }\n            n = Math.floor(n / 1000);\n            i++;\n        }\n\n        return res.join(\" \");\n    }\n\n    let zl = Math.floor(kwota);\n    let gr = Math.round((kwota - zl) * 100);\n\n    let wynik = liczbaNaSlowa(zl);// + \" złotych\";\n    if (gr > 0) {\n        wynik += \" i \" + liczbaNaSlowa(gr) + \" groszy\";\n    }\n\n    return wynik;\n}\n\n\nconst now = new Date();\nconst pad = (n) => n.toString().padStart(2, '0');\n\nconst year = now.getFullYear();\nconst month = pad(now.getMonth() + 1);\nconst day = pad(now.getDate());\nconst hours = pad(now.getHours());\nconst minutes = pad(now.getMinutes());\nconst seconds = pad(now.getSeconds());\n\nconst data_zawarcia = `${year}-${month}-${day}`;\n\nconst umowa = msg.umowa_get;\nconst rejs = umowa.rejsy;\nconst osoba = umowa.osoby;\n\nconst storage = global.get(\"storage\");\nconst path_template_umowy = global.get(\"path_template_umowy\");\nconst path_umowy = global.get(\"path_umowy\");\nconst path_tmp = global.get(\"path_tmp\")\n\nlet nr_umowa_new = parseInt(msg.umowa_ostatni_nr, 10) + 1;\n\nlet nr_umowy = msg.umowa_prefix + \"/\" + nr_umowa_new;\nlet nr_umowy_file = msg.umowa_prefix + \"-\" + nr_umowa_new;\nlet umowa_name = nr_umowy_file + `_${month}${day}${hours}${minutes}`  ;\n\nlet osoba_umieplywac = osoba.umie_plywac\n    ? \"posiada umiejętność pływania wpław\"\n    : \"nie posiada umiejętności pływania wpław\";\n\nlet is_nr_bank = \"\";\n\nif (rejs.cena_c == \"PLN\") {\n    is_nr_bank = `Numer rachunku PLN - ${msg.firma.nr_konta_pln}`;\n} else {\n    is_nr_bank = `Numer rachunku EUR - ${msg.firma.nr_konta_eur}`;\n}\n\nmsg.umowa = {\n    \"nr_umowa_new\": nr_umowa_new,\n    \"umowa_year\": msg.umowa_prefix,\n    \"umowa_name\": umowa_name,\n    \"umowa_uuid\": umowa.uuid,\n    \"nr_umowy\": nr_umowy,\n    \"nr_umowy_file\": nr_umowy_file,\n    \"data_zawarcia\": data_zawarcia,\n    \"przelew_nazwa\": nr_umowy + \" \" + data_zawarcia,\n    \"path_umowa_template\": storage + path_template_umowy + rejs.umowa_template,\n    \"path_tmp\": storage + path_tmp,\n    \"path_umowa\": storage + path_umowy + msg.umowa_prefix + \"/\" + nr_umowa_new + \"/\",\n    \"imie\": osoba.imie,\n    \"imie_nazwisko\": osoba.imie + \" \" + osoba.nazwisko,\n    \"adres_zamieszkania\": osoba.adres_zamieszkania,\n    \"data_i_miejsce_urodzenia\": osoba.data_urodzenia + \" \" + osoba.miejsce_urodzenia,\n    \"email\": osoba.email,\n    \"nr_telefonu\": osoba.telefon,\n    \"nr_dokumentu\": osoba.nr_dowodu,\n    \"stopien\": osoba.uprawnienia,\n    \"rozmiar_koszulki\": osoba.rozmiar_koszulki,\n    \"eme_osoba\": osoba.eme_contact,\n    \"umowa_przedmiot\": rejs.umowa_przedmiot,\n    \"termin_od\": rejs.termin_od,\n    \"termin_do\": rejs.termin_do,\n    \"port_start\": rejs.port_start,\n    \"port_koniec\": rejs.port_koniec,\n    \"port_start_czas\": rejs.port_start_time,\n    \"port_koniec_czas\": rejs.port_koniec_time,\n    \"cena\": rejs.cena,\n    \"cena_c\": rejs.cena_c,\n    \"cena_slownie\": slowniePL(rejs.cena),\n    \"rezerwacja_ilosc\": umowa.ile_osob,\n    \"rezerwacja_ilosc_slownie\": slowniePL(umowa.ile_osob),\n    \"rezerwacja_cena\": umowa.rezerwacja_cena,\n    \"rezerwacja_cena_slownie\": slowniePL(umowa.rezerwacja_cena),\n    \"rezerwacja_cena_rata1\": umowa.rezerwacja_cena_rata1,\n    \"rezerwacja_cena_rata1_slownie\": slowniePL(umowa.rezerwacja_cena_rata1),\n    \"rezerwacja_cena_rata2\": umowa.rezerwacja_cena_rata2,\n    \"cena_wydatki\": rejs.cena_wydatki,\n    \"cena_wydatki_c\": rejs.cena_wydatki_c,\n    \"cena_zaokretowania\": rejs.cena_zaokretowania,\n    \"cena_zaokretowania_c\": rejs.cena_zaokretowania_c,\n    \"cena_wyzywienie\": rejs.cena_wyzywienie,\n    \"cena_wyzywienie_c\": rejs.cena_wyzywienie_c,\n    \"uuid\": umowa.uuid,\n    \"umie_plywac\": osoba_umieplywac,\n    \"czym\": rejs.czym,  \n    \"is_nr_bank\": is_nr_bank\n}\n\nfor (const [key, value] of Object.entries(msg.firma || {})) {\n    msg.umowa[\"firma_\" + key] = value;\n}\n\nnode.status({ fill: \"green\", shape: \"dot\", text: global.get(\"getDateTime\")() });\nreturn msg;",
+        "func": "function slowniePL(kwota) {\n    const jednostki = [\"\", \"jeden\", \"dwa\", \"trzy\", \"cztery\", \"pięć\", \"sześć\", \"siedem\", \"osiem\", \"dziewięć\"];\n    const nascie = [\"dziesięć\", \"jedenaście\", \"dwanaście\", \"trzynaście\", \"czternaście\", \"piętnaście\", \"szesnaście\", \"siedemnaście\", \"osiemnaście\", \"dziewiętnaście\"];\n    const dziesiatki = [\"\", \"\", \"dwadzieścia\", \"trzydzieści\", \"czterdzieści\", \"pięćdziesiąt\", \"sześćdziesiąt\", \"siedemdziesiąt\", \"osiemdziesiąt\", \"dziewięćdziesiąt\"];\n    const setki = [\"\", \"sto\", \"dwieście\", \"trzysta\", \"czterysta\", \"pięćset\", \"sześćset\", \"siedemset\", \"osiemset\", \"dziewięćset\"];\n\n    const grupy = [\n        [\"\", \"\", \"\"],\n        [\"tysiąc\", \"tysiące\", \"tysięcy\"],\n        [\"milion\", \"miliony\", \"milionów\"],\n        [\"miliard\", \"miliardy\", \"miliardów\"]\n    ];\n\n    function odmiana(liczba, formy) {\n        if (liczba === 1) return formy[0];\n        if ([2, 3, 4].includes(liczba % 10) && !(liczba % 100 >= 10 && liczba % 100 <= 20)) return formy[1];\n        return formy[2];\n    }\n\n    function segment(n) {\n        const s = Math.floor(n / 100);\n        const d = Math.floor((n % 100) / 10);\n        const j = n % 10;\n\n        let wynik = [];\n\n        if (s) wynik.push(setki[s]);\n        if (d === 1) {\n            wynik.push(nascie[j]);\n        } else {\n            if (d > 1) wynik.push(dziesiatki[d]);\n            if (j > 0) wynik.push(jednostki[j]);\n        }\n\n        return wynik.join(\" \");\n    }\n\n    function liczbaNaSlowa(n) {\n        if (n === 0) return \"zero\";\n\n        let res = [];\n        let i = 0;\n\n        while (n > 0) {\n            let trzy = n % 1000;\n            if (trzy > 0) {\n                let seg = segment(trzy);\n                if (i > 0) {\n                    let formy = grupy[i];\n                    let odm = odmiana(trzy, formy);\n                    if (trzy === 1 && i === 1) {\n                        seg = odm; // tylko \"tysiąc\", bez \"jeden\"\n                    } else {\n                        seg += \" \" + odm;\n                    }\n                }\n                res.unshift(seg);\n            }\n            n = Math.floor(n / 1000);\n            i++;\n        }\n\n        return res.join(\" \");\n    }\n\n    let zl = Math.floor(kwota);\n    let gr = Math.round((kwota - zl) * 100);\n\n    let wynik = liczbaNaSlowa(zl);// + \" złotych\";\n    if (gr > 0) {\n        wynik += \" i \" + liczbaNaSlowa(gr) + \" groszy\";\n    }\n\n    return wynik;\n}\n\n\nconst now = new Date();\nconst pad = (n) => n.toString().padStart(2, '0');\n\nconst year = now.getFullYear();\nconst month = pad(now.getMonth() + 1);\nconst day = pad(now.getDate());\nconst hours = pad(now.getHours());\nconst minutes = pad(now.getMinutes());\nconst seconds = pad(now.getSeconds());\n\nconst data_zawarcia = `${year}-${month}-${day}`;\n\nconst umowa = msg.umowa_get;\nconst rejs = umowa.rejsy;\nconst osoba = umowa.osoby;\n\nconst storage = global.get(\"storage\");\nconst path_template_umowy = global.get(\"path_template_umowy\");\nconst path_umowy = global.get(\"path_umowy\");\nconst path_tmp = global.get(\"path_tmp\")\n\nlet nr_umowa_new = parseInt(msg.umowa_ostatni_nr, 10) + 1;\n\nlet nr_umowy = msg.umowa_prefix + \"/\" + nr_umowa_new;\nlet nr_umowy_file = msg.umowa_prefix + \"-\" + nr_umowa_new;\nlet umowa_name = nr_umowy_file + `_${month}${day}${hours}${minutes}`  ;\n\nlet osoba_umieplywac = osoba.umie_plywac\n    ? \"posiada umiejętność pływania wpław\"\n    : \"nie posiada umiejętności pływania wpław\";\n\nlet is_nr_bank = \"\";\n\nif (rejs.cena_c == \"PLN\") {\n    is_nr_bank = `Numer rachunku PLN - ${msg.firma.nr_konta_pln}`;\n} else {\n    is_nr_bank = `Numer rachunku EUR - ${msg.firma.nr_konta_eur}`;\n}\n\nmsg.umowa = {\n    \"nr_umowa_new\": nr_umowa_new,\n    \"umowa_year\": msg.umowa_prefix,\n    \"umowa_name\": umowa_name,\n    \"umowa_uuid\": umowa.uuid,\n    \"nr_umowy\": nr_umowy,\n    \"nr_umowy_file\": nr_umowy_file,\n    \"data_zawarcia\": data_zawarcia,\n    \"przelew_nazwa\": nr_umowy + \" \" + data_zawarcia,\n    \"path_umowa_template\": storage + path_template_umowy + rejs.umowa_template,\n    \"path_tmp\": storage + path_tmp,\n    \"path_umowa\": storage + path_umowy + msg.umowa_prefix + \"/\" + nr_umowa_new + \"/\",\n    \"imie\": osoba.imie,\n    \"imie_nazwisko\": osoba.imie + \" \" + osoba.nazwisko,\n    \"adres_zamieszkania\": osoba.adres_zamieszkania,\n    \"data_i_miejsce_urodzenia\": osoba.data_urodzenia + \" \" + osoba.miejsce_urodzenia,\n    \"email\": osoba.email,\n    \"nr_telefonu\": osoba.telefon,\n    \"nr_dokumentu\": osoba.nr_dowodu,\n    \"stopien\": osoba.uprawnienia,\n    \"rozmiar_koszulki\": osoba.rozmiar_koszulki,\n    \"eme_osoba\": osoba.eme_contact,\n    \"umowa_przedmiot\": rejs.umowa_przedmiot,\n    \"termin_od\": rejs.termin_od,\n    \"termin_do\": rejs.termin_do,\n    \"port_start\": rejs.port_start,\n    \"port_koniec\": rejs.port_koniec,\n    \"port_start_czas\": rejs.port_start_time,\n    \"port_koniec_czas\": rejs.port_koniec_time,\n    \"cena\": rejs.cena,\n    \"cena_c\": rejs.cena_c,\n    \"cena_slownie\": slowniePL(rejs.cena),\n    \"rezerwacja_ilosc\": umowa.ile_osob,\n    \"rezerwacja_ilosc_slownie\": slowniePL(umowa.ile_osob),\n    \"rezerwacja_cena\": umowa.rezerwacja_cena,\n    \"rezerwacja_cena_slownie\": slowniePL(umowa.rezerwacja_cena),\n    \"rezerwacja_cena_rata1\": umowa.rezerwacja_cena_rata1,\n    \"rezerwacja_cena_rata1_slownie\": slowniePL(umowa.rezerwacja_cena_rata1),\n    \"rezerwacja_cena_rata2\": umowa.rezerwacja_cena_rata2,\n    \"cena_wydatki\": rejs.cena_wydatki,\n    \"cena_wydatki_c\": rejs.cena_wydatki_c,\n    \"cena_zaokretowania\": rejs.cena_zaokretowania,\n    \"cena_zaokretowania_c\": rejs.cena_zaokretowania_c,\n    \"cena_wyzywienie\": rejs.cena_wyzywienie,\n    \"cena_wyzywienie_c\": rejs.cena_wyzywienie_c,\n    \"uuid\": umowa.uuid,\n    \"umie_plywac\": osoba_umieplywac,\n    \"czym\": rejs.czym,  \n    \"is_nr_bank\": is_nr_bank,\n    \"armator\": rejs.armator\n}\n\nfor (const [key, value] of Object.entries(msg.firma || {})) {\n    msg.umowa[\"firma_\" + key] = value;\n}\n\nnode.status({ fill: \"green\", shape: \"dot\", text: global.get(\"getDateTime\")() });\nreturn msg;",
         "outputs": 1,
         "timeout": 0,
         "noerr": 0,
@@ -9040,8 +9077,8 @@
         "g": "98ebb837b0a8d454",
         "name": "",
         "command": "/help",
-        "description": "",
-        "registercommand": false,
+        "description": "Dostępne opcje ",
+        "registercommand": true,
         "language": "",
         "scope": "default",
         "bot": "telegram_bot",
@@ -9155,7 +9192,7 @@
         "z": "63acb26d6d62c6a7",
         "g": "98ebb837b0a8d454",
         "name": "store:to:telegram_cmd",
-        "func": "msg.telegram_cmd = msg.payload;\nreturn msg;",
+        "func": "msg.telegram_cmd = msg.payload;\nnode.status({ fill: \"green\", shape: \"dot\", text: global.get(\"getDateTime\")() });\nreturn msg;",
         "outputs": 1,
         "timeout": 0,
         "noerr": 0,
@@ -9813,6 +9850,362 @@
         "wires": []
     },
     {
+        "id": "c56d1030b010a33d",
+        "type": "telegram command",
+        "z": "63acb26d6d62c6a7",
+        "g": "f8c622ed58f1f1af",
+        "name": "",
+        "command": "/rejsy",
+        "description": "stan rejsów aktywnych.",
+        "registercommand": true,
+        "language": "",
+        "scope": "default",
+        "bot": "telegram_bot",
+        "strict": false,
+        "hasresponse": true,
+        "useregex": false,
+        "removeregexcommand": false,
+        "outputs": 2,
+        "x": 90,
+        "y": 800,
+        "wires": [
+            [
+                "60b02b41a406f9a1"
+            ],
+            [
+                "42384abfb69ac6e6"
+            ]
+        ]
+    },
+    {
+        "id": "60b02b41a406f9a1",
+        "type": "function",
+        "z": "63acb26d6d62c6a7",
+        "g": "f8c622ed58f1f1af",
+        "name": "store:to:telegram_cmd",
+        "func": "msg.telegram_cmd = msg.payload;\n\nlet rawContent = msg.telegram_cmd.content?.trim() || \"\";\n\nmsg.cmd_str = rawContent;\nmsg.cmd_int = parseInt(rawContent, 10);\n\n// Jeśli nie jest liczbą, usuń\nif (isNaN(msg.cmd_int)) {\n    delete msg.cmd_int;\n}\n\nnode.status({ fill: \"green\", shape: \"dot\", text: msg.cmd_str });\nreturn msg;",
+        "outputs": 1,
+        "timeout": 0,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 300,
+        "y": 800,
+        "wires": [
+            [
+                "7a5460e190f6cd1a"
+            ]
+        ]
+    },
+    {
+        "id": "7a5460e190f6cd1a",
+        "type": "subflow:03b285947d86a284",
+        "z": "63acb26d6d62c6a7",
+        "g": "f8c622ed58f1f1af",
+        "name": "",
+        "x": 500,
+        "y": 800,
+        "wires": [
+            [
+                "ddc4eda71cdeb12a"
+            ]
+        ]
+    },
+    {
+        "id": "ddc4eda71cdeb12a",
+        "type": "function",
+        "z": "63acb26d6d62c6a7",
+        "g": "f8c622ed58f1f1af",
+        "name": "get:config:telegram_admin",
+        "func": "msg.config = {};\nmsg.config.limit = 20;\nmsg.config.parametr = \"*\"\nmsg.config.kind = \"telegram_admin\";\nmsg.config.value = msg.payload.chatId;\nnode.status({ fill: \"green\", shape: \"dot\", text: global.get(\"getDateTime\")() });\nreturn msg;",
+        "outputs": 1,
+        "timeout": 0,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 720,
+        "y": 800,
+        "wires": [
+            [
+                "d55e61242858b9b2"
+            ]
+        ]
+    },
+    {
+        "id": "d55e61242858b9b2",
+        "type": "subflow:54b98742948036f5",
+        "z": "63acb26d6d62c6a7",
+        "g": "f8c622ed58f1f1af",
+        "name": "",
+        "x": 940,
+        "y": 800,
+        "wires": [
+            [
+                "430ada3446244ea8"
+            ]
+        ]
+    },
+    {
+        "id": "430ada3446244ea8",
+        "type": "function",
+        "z": "63acb26d6d62c6a7",
+        "g": "f8c622ed58f1f1af",
+        "name": "check:exist:user",
+        "func": "if (Array.isArray(msg.payload) && msg.payload.length > 0 && msg.payload[0].kind === \"telegram_admin\") {\n    msg.telegram_admin = msg.payload[0];\n\n    node.status({ fill: \"green\", shape: \"dot\", text: global.get(\"getDateTime\")() });\n    return msg;\n} else {\n    node.status({ fill: \"red\", shape: \"dot\", text: \"No Admin Found \" + global.get(\"getDateTime\")() });\n    return null;  // kończy przetwarzanie\n}",
+        "outputs": 1,
+        "timeout": 0,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 1120,
+        "y": 800,
+        "wires": [
+            [
+                "d5985ef0154fedb9"
+            ]
+        ]
+    },
+    {
+        "id": "d5985ef0154fedb9",
+        "type": "function",
+        "z": "63acb26d6d62c6a7",
+        "g": "f8c622ed58f1f1af",
+        "name": "NocoDB - umowy:get:by_nr",
+        "func": "msg.nocodb_t_active = msg.nocodb_t.rejsy;\n\nmsg.payload = {\n    offset: '0',\n    limit: msg.cmd_int,\n    viewId: msg.nocodb_t.rejsy_view,\n    sort: \"termin_od\",\n    where: `(status,eq,active)`,\n    // \"nested[osoby][fields]\": \"*\",\n    // \"nested[rejsy][fields]\": \"*\"\n};\n\nnode.status({ fill: \"green\", shape: \"dot\", text: global.get(\"getDateTime\")() });\n\nreturn msg;",
+        "outputs": 1,
+        "timeout": 0,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 320,
+        "y": 920,
+        "wires": [
+            [
+                "31cc3b927ec061f3"
+            ]
+        ]
+    },
+    {
+        "id": "31cc3b927ec061f3",
+        "type": "http request",
+        "z": "63acb26d6d62c6a7",
+        "g": "f8c622ed58f1f1af",
+        "name": "NocoDB - GET",
+        "method": "GET",
+        "ret": "obj",
+        "paytoqs": "query",
+        "url": "http://{{nocodb_host}}/api/v2/tables/{{nocodb_t_active}}/records",
+        "tls": "",
+        "persist": false,
+        "proxy": "",
+        "insecureHTTPParser": false,
+        "authType": "",
+        "senderr": false,
+        "headers": [
+            {
+                "keyType": "other",
+                "keyValue": "xc-token",
+                "valueType": "msg",
+                "valueValue": "xc_token"
+            },
+            {
+                "keyType": "Content-Type",
+                "keyValue": "",
+                "valueType": "application/json",
+                "valueValue": ""
+            }
+        ],
+        "x": 560,
+        "y": 920,
+        "wires": [
+            [
+                "501ffba732296b03",
+                "73664b974a486325"
+            ]
+        ]
+    },
+    {
+        "id": "501ffba732296b03",
+        "type": "function",
+        "z": "63acb26d6d62c6a7",
+        "g": "f8c622ed58f1f1af",
+        "name": "prepare mesage",
+        "func": "const rejsy = msg.payload.list;\n\nconst pad = (v, l) => String(v).padStart(l, ' ');\nconst formatDate = (d) => {\n    const [yyyy, mm, dd] = d.split('-');\n    return `${pad(mm, 2)}.${pad(dd, 2)}`;\n};\n\nconst lines = rejsy.map(rejs => {\n    const data = formatDate(rejs.termin_od || '----');\n    const max = pad(rejs.ilosc_max ?? 0, 2);\n    const zaj = pad(rejs.ilosc_wyk ?? 0, 2);\n    const wol = pad((rejs.ilosc_max ?? 0) - (rejs.ilosc_wyk ?? 0), 2);\n    // const nazwa = rejs.nazwa || 'brak';\n    const nazwa = (rejs.nazwa || 'brak').slice(-20).padEnd(20, ' ');\n    return `${data} | ${max} | ${zaj} | ${wol} |..${nazwa}`;\n});\n\nconst header = `📜 *Dostępne rejsy* 📅 :\nData| Max| Zaj| Wol| Nazwa\n-----------------------------------------`;\n\n\nconst message = [\"```\", header , ...lines, \"```\" ].join('\\n');\n\nmsg.payload = {\n    chatId: msg.telegram_cmd.chatId,\n    type: \"message\",\n    content: message,\n    options: {\n        parse_mode: \"Markdown\"\n    }\n};\n\nreturn msg;",
+        "outputs": 1,
+        "timeout": 0,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 1120,
+        "y": 920,
+        "wires": [
+            [
+                "68952e7603429f09",
+                "03a2a3c321018e60"
+            ]
+        ]
+    },
+    {
+        "id": "68952e7603429f09",
+        "type": "function",
+        "z": "63acb26d6d62c6a7",
+        "g": "f8c622ed58f1f1af",
+        "name": "msg:telegram",
+        "func": "const template_data = {\n    none: \"none\"\n};\n\nmsg.message = {\n    template_in_row: msg.payload.content,\n    template_data: template_data,\n    kind: \"telegram\",\n    // to_group: \"admin\",\n    to: msg.telegram_admin.value,\n\n    // to: msg.payload.value  // np. \"234242,23424234,24\"\n};\n\nnode.status({ fill: \"green\", shape: \"dot\", text: global.get(\"getDateTime\")() });\nreturn msg;",
+        "outputs": 1,
+        "timeout": 0,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 1320,
+        "y": 920,
+        "wires": [
+            [
+                "9826806d4f227dd8"
+            ]
+        ]
+    },
+    {
+        "id": "9826806d4f227dd8",
+        "type": "link out",
+        "z": "63acb26d6d62c6a7",
+        "g": "f8c622ed58f1f1af",
+        "name": "link out 27",
+        "mode": "link",
+        "links": [
+            "b38c6c11d0212c18"
+        ],
+        "x": 1465,
+        "y": 920,
+        "wires": []
+    },
+    {
+        "id": "7ac8669501eb3b35",
+        "type": "function",
+        "z": "63acb26d6d62c6a7",
+        "g": "f8c622ed58f1f1af",
+        "name": "value:clone",
+        "func": "let rows = (msg.payload && msg.payload.list) ? msg.payload.list : [];\n\nif (!Array.isArray(rows) || rows.length === 0) {\n    node.status({ fill: \"red\", shape: \"ring\", text: \"Brak danych\" });\n    return null; // lub return []; jeśli chcesz zwrócić pusty wynik\n}\n\n// Tworzymy array wiadomości\nlet outMsgs = rows.map(row => {\n    let singleMsg = RED.util.cloneMessage(msg);\n    singleMsg.payload = row;\n    return singleMsg;\n});\n\nnode.status({ fill: \"green\", shape: \"dot\", text: global.get(\"getDateTime\")() });\nreturn [outMsgs]; // Uwaga: musi być opakowane w tablicę, bo to split node (1 output)",
+        "outputs": 1,
+        "timeout": 0,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 750,
+        "y": 880,
+        "wires": [
+            [
+                "61370446aa787625"
+            ]
+        ]
+    },
+    {
+        "id": "61370446aa787625",
+        "type": "delay",
+        "z": "63acb26d6d62c6a7",
+        "g": "f8c622ed58f1f1af",
+        "name": "",
+        "pauseType": "rate",
+        "timeout": "2",
+        "timeoutUnits": "seconds",
+        "rate": "1",
+        "nbRateUnits": "1",
+        "rateUnits": "second",
+        "randomFirst": "1",
+        "randomLast": "5",
+        "randomUnits": "seconds",
+        "drop": false,
+        "allowrate": false,
+        "outputs": 1,
+        "x": 930,
+        "y": 880,
+        "wires": [
+            [
+                "501ffba732296b03",
+                "164c6854f9b77b79"
+            ]
+        ]
+    },
+    {
+        "id": "42384abfb69ac6e6",
+        "type": "debug",
+        "z": "63acb26d6d62c6a7",
+        "g": "f8c622ed58f1f1af",
+        "name": "telegram:debug-cmd-rejsy",
+        "active": true,
+        "tosidebar": true,
+        "console": false,
+        "tostatus": false,
+        "complete": "payload",
+        "targetType": "msg",
+        "statusVal": "",
+        "statusType": "auto",
+        "x": 320,
+        "y": 860,
+        "wires": []
+    },
+    {
+        "id": "03a2a3c321018e60",
+        "type": "debug",
+        "z": "63acb26d6d62c6a7",
+        "g": "f8c622ed58f1f1af",
+        "name": "debug 2",
+        "active": true,
+        "tosidebar": true,
+        "console": false,
+        "tostatus": false,
+        "complete": "payload",
+        "targetType": "msg",
+        "statusVal": "",
+        "statusType": "auto",
+        "x": 1210,
+        "y": 1080,
+        "wires": []
+    },
+    {
+        "id": "164c6854f9b77b79",
+        "type": "debug",
+        "z": "63acb26d6d62c6a7",
+        "g": "f8c622ed58f1f1af",
+        "name": "debug 23",
+        "active": true,
+        "tosidebar": true,
+        "console": false,
+        "tostatus": false,
+        "complete": "true",
+        "targetType": "full",
+        "statusVal": "",
+        "statusType": "auto",
+        "x": 1010,
+        "y": 1080,
+        "wires": []
+    },
+    {
+        "id": "73664b974a486325",
+        "type": "debug",
+        "z": "63acb26d6d62c6a7",
+        "g": "f8c622ed58f1f1af",
+        "name": "debug 24",
+        "active": true,
+        "tosidebar": true,
+        "console": false,
+        "tostatus": false,
+        "complete": "true",
+        "targetType": "full",
+        "statusVal": "",
+        "statusType": "auto",
+        "x": 680,
+        "y": 1040,
+        "wires": []
+    },
+    {
         "id": "b38c6c11d0212c18",
         "type": "link in",
         "z": "7ac738eef3d259eb",
@@ -9823,7 +10216,8 @@
             "3acfa58cf1e285d8",
             "64b8d814115c9512",
             "799e576850c2a16c",
-            "a7d36146b2282a7c"
+            "a7d36146b2282a7c",
+            "9826806d4f227dd8"
         ],
         "x": 170,
         "y": 80,
