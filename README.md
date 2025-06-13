@@ -4,6 +4,8 @@ Kwatermistrz
 Kwatermistrz dla Kapitana Bastka
 
 ### About
+0.5.0
+- powiadomienie o umowie z 2 nie odeslanej
 
 0.4.0
 - upload pdf do bazy NoCoDB
