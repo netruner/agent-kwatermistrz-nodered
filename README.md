@@ -4,6 +4,9 @@ Kwatermistrz
 Kwatermistrz dla Kapitana Bastka
 
 ### About
+0.5.2
+- armator
+
 0.5.1
 - dodanie do .env tabel i api telegram bot
 
