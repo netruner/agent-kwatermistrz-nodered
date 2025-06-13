@@ -4,6 +4,9 @@ Kwatermistrz
 Kwatermistrz dla Kapitana Bastka
 
 ### About
+0.5.1
+- dodanie do .env tabel i api telegram bot
+
 0.5.0
 - powiadomienie o umowie z 2 nie odeslanej
 
