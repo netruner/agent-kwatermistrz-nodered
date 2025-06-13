@@ -10013,14 +10013,15 @@
         "g": "4f84417ea22d54a2",
         "name": "",
         "bot": "telegram_bot",
-        "haserroroutput": false,
-        "outputs": 1,
+        "haserroroutput": true,
+        "outputs": 2,
         "x": 500,
         "y": 260,
         "wires": [
             [
                 "cb62cc24fb94ce57"
-            ]
+            ],
+            []
         ]
     },
     {
