@@ -88,6 +88,14 @@
         "env": []
     },
     {
+        "id": "7314cbba718b913d",
+        "type": "tab",
+        "label": "Raporty",
+        "disabled": false,
+        "info": "",
+        "env": []
+    },
+    {
         "id": "03b285947d86a284",
         "type": "subflow",
         "name": "ZFAI - Init",
@@ -809,12 +817,13 @@
             "efd2c3e56d49ea9a",
             "5ed9f39bab8aac16",
             "c80e33e6bba36bf8",
-            "ff22d8d375026584"
+            "ff22d8d375026584",
+            "517f9e00e31abb1f"
         ],
         "x": 34,
         "y": 39,
         "w": 1092,
-        "h": 262
+        "h": 322
     },
     {
         "id": "f9bbfc32157cdb86",
@@ -5438,7 +5447,7 @@
         "type": "function",
         "z": "be1c3f3f839ca819",
         "name": "check:email:find",
-        "func": "msg.email = msg.payload;\n\nlet email = msg.email;\nlet email_find = {\n    nr_umowy: null,\n    uuid: null,\n    attachments: [],\n    probably_contract: false\n};\n\n// 1. Szukamy numeru umowy w temacie, np. \"25/69\"\nlet nr_umowy_match = email.subject?.match(/\\b[A-Z]+-\\d{2,}\\/\\d{2,}\\b/);\nif (nr_umowy_match) {\n    email_find.nr_umowy = nr_umowy_match[0];\n}\n\n// 2. Szukamy UUID w treści wiadomości: uuid:xxxxxxxx-xxxx-4xxx-yxxx-xxxxxxxxxxxx\nlet uuid_match = email.body?.match(/uuid:([0-9a-f]{8}-[0-9a-f]{4}-4[0-9a-f]{3}-[89ab][0-9a-f]{3}-[0-9a-f]{12})/i);\nif (uuid_match) {\n    email_find.uuid = uuid_match[1];\n}\n\n// 3. Parsowanie załączników — jeśli jako string oddzielony przecinkami\nlet raw_attachments = typeof email.attachments === \"string\" ? email.attachments.split(\",\") : [];\n\nlet found_pdf_with_nr = false;\nlet found_image_non_barcode = false;\n\nraw_attachments.forEach(path => {\n    const filename = path.split(\"/\").pop();\n    if (filename === \"barcode.png\") {\n        // Pomijamy plik barcode.png\n        return;\n    }\n\n    const ext = filename.toLowerCase().split(\".\").pop();\n\n    let kind = null;\n    if ([\"pdf\"].includes(ext)) kind = \"pdf\";\n    else if ([\"jpg\", \"jpeg\", \"png\", \"bmp\", \"tiff\", \"webp\"].includes(ext)) kind = \"image\";\n\n    let nr_umowy_from_filename = null;\n    let match_prefix = filename.match(/([A-Z])-(\\d{2})-(\\d{3})/)\n    if (match_prefix) {\n        nr_umowy_from_filename = `${match_prefix[1]}-${match_prefix[2]}/${match_prefix[3]}`;\n    }\n\n    // warunki do oznaczenia jako prawdopodobna umowa\n    if (kind === \"pdf\" && nr_umowy_from_filename === email_find.nr_umowy) {\n        found_pdf_with_nr = true;\n    }\n\n    if (kind === \"image\") {\n        found_image_non_barcode = true;\n    }\n\n    email_find.attachments.push({\n        patch: path,\n        filename: filename,\n        kind: kind,\n        nr_umowy: nr_umowy_from_filename\n    });\n});\n\n// 4. Warunek prawdopodobieństwa umowy\nif ((email_find.nr_umowy || email_find.uuid) && (found_pdf_with_nr || found_image_non_barcode)) {\n    email_find.probably_contract = true;\n    node.status({ fill: \"green\", shape: \"dot\", text: \"OK \" + global.get(\"getDateTime\")() });\n} else {\n    node.status({ fill: \"green\", shape: \"dot\", text: global.get(\"getDateTime\")() });\n}\n\nmsg.email_find = email_find;\nreturn msg;",
+        "func": "msg.email = msg.payload;\n\nlet email = msg.email;\nlet email_find = {\n    nr_umowy: null,\n    nr_umowy_from_filename: null,\n    uuid: null,\n    attachments: [],\n    probably_contract: false,\n    mail_delivery_failed: false,\n    mail_delivery_failed_email: null,\n    no_contract_found: false,\n};\n\nconst bounce_patterns = [\n    /550\\s5\\.1\\.1/i,\n    /Undelivered Mail Returned to Sender/i,\n    /delivery[ -]status notification/i,\n    /recipient address rejected/i,\n    /mailbox unavailable/i\n];\n\nconst failed_email_pattern = /<([^>]+@[^>]+)>/;\n\nif (bounce_patterns.some(pattern => pattern.test(email.subject) || pattern.test(email.body))) {\n    email_find.mail_delivery_failed = true;\n    const failed_match = email.body?.match(failed_email_pattern);\n    if (failed_match) {\n        email_find.mail_delivery_failed_email = failed_match[1];\n    }\n}\n\n// 1. Szukamy numeru umowy w temacie\nlet nr_umowy_match = email.subject?.match(/\\b[A-Z]+-\\d{1,}\\/\\d{1,}\\b/);\nif (nr_umowy_match) {\n    email_find.nr_umowy = nr_umowy_match[0];\n}\n\n// 2. Szukamy UUID w treści\nlet uuid_match = email.body?.match(/uuid:([0-9a-f]{8}-[0-9a-f]{4}-4[0-9a-f]{3}-[89ab][0-9a-f]{3}-[0-9a-f]{12})/i);\nif (uuid_match) {\n    email_find.uuid = uuid_match[1];\n}\n\n// 3. Parsowanie załączników\nlet raw_attachments = typeof email.attachments === \"string\" ? email.attachments.split(\",\") : [];\n\nlet found_any_pdf = false;\nlet found_pdf_with_nr_from_filename = false;\nlet found_image_non_barcode = false;\n\nraw_attachments.forEach(path => {\n    const filename = path.split(\"/\").pop();\n    if (filename === \"barcode.png\") return;\n\n    const ext = filename.toLowerCase().split(\".\").pop();\n    let kind = null;\n    if ([\"pdf\"].includes(ext)) kind = \"pdf\";\n    else if ([\"jpg\", \"jpeg\", \"png\", \"bmp\", \"tiff\", \"webp\"].includes(ext)) kind = \"image\";\n\n    let nr_umowy_from_filename = null;\n    let match_prefix = filename.match(/([A-Z])-(\\d{1,})-(\\d{1,})/);\n    if (match_prefix) {\n        nr_umowy_from_filename = `${match_prefix[1]}-${match_prefix[2]}/${match_prefix[3]}`;\n        // jeśli nie było w mailu, a znaleźliśmy w nazwie pliku — ustawiamy\n        if (!email_find.nr_umowy) {\n            email_find.nr_umowy = nr_umowy_from_filename;\n            email_find.nr_umowy_from_filename = nr_umowy_from_filename;\n        }\n        found_pdf_with_nr_from_filename = true;\n    }\n\n    if (kind === \"pdf\") {\n        found_any_pdf = true;\n    }\n\n    if (kind === \"image\") {\n        found_image_non_barcode = true;\n    }\n\n    email_find.attachments.push({\n        patch: path,\n        filename: filename,\n        kind: kind,\n        nr_umowy_from_filename: nr_umowy_from_filename\n    });\n});\n\n// 4. Ustalenie probably_contract wg 2 zasad\nif (\n    (email_find.nr_umowy && found_any_pdf) ||      // nr umowy z maila + jakiś PDF\n    (!nr_umowy_match && found_pdf_with_nr_from_filename)  // brak nr w mailu, ale PDF z numerem\n) {\n    email_find.probably_contract = true;\n}\n\nnode.status({ fill: \"green\", shape: \"dot\", text: global.get(\"getDateTime\")() });\nmsg.email_find = email_find;\nreturn msg;",
         "outputs": 1,
         "timeout": 0,
         "noerr": 0,
@@ -5478,7 +5487,7 @@
         "links": [
             "432f72cad7c993b3"
         ],
-        "x": 2455,
+        "x": 3015,
         "y": 1180,
         "wires": []
     },
@@ -5497,6 +5506,11 @@
             },
             {
                 "t": "eq",
+                "v": "nr_i_pdf",
+                "vt": "str"
+            },
+            {
+                "t": "eq",
                 "v": "wiele_obrazow",
                 "vt": "str"
             },
@@ -5511,34 +5525,48 @@
                 "vt": "str"
             },
             {
+                "t": "eq",
+                "v": "mail_delivery_failed",
+                "vt": "str"
+            },
+            {
+                "t": "eq",
+                "v": "no_contract_found",
+                "vt": "str"
+            },
+            {
                 "t": "else"
             }
         ],
         "checkall": "true",
         "repair": false,
-        "outputs": 5,
-        "x": 1230,
+        "outputs": 8,
+        "x": 1210,
         "y": 940,
         "wires": [
             [
-                "0a9bd45f1d1b05f1",
-                "cca9f20dddf2c2d3"
+                "0a9bd45f1d1b05f1"
             ],
             [
-                "c5a5fb7b9de73e41",
-                "cca9f20dddf2c2d3"
+                "0a9bd45f1d1b05f1"
             ],
             [
-                "8521c39907b05f75",
-                "d1c5c394741f15ae"
+                "c5a5fb7b9de73e41"
             ],
             [
-                "8521c39907b05f75",
-                "d1c5c394741f15ae"
+                "c12e78b134f4567c"
             ],
             [
-                "8521c39907b05f75",
-                "d1c5c394741f15ae"
+                "c2d4ce240f9aadde"
+            ],
+            [
+                "b7fa61b324b55bb0"
+            ],
+            [
+                "73c9a19a3a3e4a70"
+            ],
+            [
+                "8813c5dd42b8ad16"
             ]
         ]
     },
@@ -5547,7 +5575,7 @@
         "type": "function",
         "z": "be1c3f3f839ca819",
         "name": "analize:route",
-        "func": "let find = msg.email_find;\nlet attachments = Array.isArray(find.attachments) ? find.attachments : [];\n\n// Filtrowanie bezpieczne, ignorujące puste/nulowe typy\nlet imageCount = attachments.filter(a => a.kind === \"image\").length;\nlet pdfWithNrCount = attachments.filter(a => a.kind === \"pdf\" && a.nr_umowy === find.nr_umowy).length;\n\nlet route = \"brak_danych\";\n\nif (find.probably_contract) {\n    if (pdfWithNrCount > 0) {\n        route = \"pdf_z_nr_umowy\";\n    } else if (imageCount > 0) {\n        route = \"wiele_obrazow\";\n    } else {\n        route = \"inne_probably_contract\";\n    }\n} else if (find.uuid && !find.nr_umowy) {\n    route = \"uuid_only\";\n}\n\n// <- Tutaj poprawka: dane są w msg.q.list a nie msg.payload.list\n// if (msg.q && Array.isArray(msg.q.list) && msg.q.list.length > 0) {\n//     msg.umowa = msg.q.list[0];  // to np. wiadomość email\n// } else {\n//     msg.umowa = null;\n// }\n\nmsg.route = route;\nreturn msg;",
+        "func": "let find = msg.email_find;\nlet attachments = Array.isArray(find.attachments) ? find.attachments : [];\n\nlet imageCount = attachments.filter(a => a.kind === \"image\").length;\nlet pdfWithNrCount = attachments.filter(a => a.kind === \"pdf\" && a.nr_umowy === find.nr_umowy).length;\nlet pdfWithoutNrCount = attachments.filter(a => a.kind === \"pdf\" && (!a.nr_umowy && !a.nr_umowy_from_filename)).length;\n\nlet route = \"brak_danych\";\n\n// Priorytet 1: Wiadomość niedostarczona\nif (find.mail_delivery_failed) {\n    route = \"mail_delivery_failed\";\n\n    // Priorytet 2: Prawdopodobna umowa\n} else if (find.probably_contract) {\n    if (pdfWithNrCount > 0) {\n        route = \"pdf_z_nr_umowy\";\n    } else if (pdfWithoutNrCount > 0) {\n        route = \"nr_i_pdf\"; // NOWY przypadek\n    } else if (imageCount > 0) {\n        route = \"wiele_obrazow\";\n    } else {\n        route = \"inne_probably_contract\";\n    }\n\n    // Priorytet 3: Jest UUID, ale brak numeru umowy\n} else if (find.uuid && !find.nr_umowy) {\n    route = \"uuid_only\";\n}\n\n// Priorytet 4: Nie znaleziono umowy\nif (find.no_contract_found) {\n    route = \"no_contract_found\";\n}\n\nmsg.route = route;\nnode.status({ fill: \"green\", shape: \"dot\", text: route + \" \" + global.get(\"getDateTime\")() });\nreturn msg;",
         "outputs": 1,
         "timeout": 0,
         "noerr": 0,
@@ -5558,8 +5586,7 @@
         "y": 940,
         "wires": [
             [
-                "e088baaede4c8f3c",
-                "6a03d924611dfa9c"
+                "e088baaede4c8f3c"
             ]
         ]
     },
@@ -5580,7 +5607,7 @@
         "z": "be1c3f3f839ca819",
         "g": "863158746555e7a5",
         "name": "checsume:sha256",
-        "func": "const path = global.get(\"path\");\n\nconst path_storage = global.get(\"storage\");\n// global.set(\"path_template_umowy\", \"teamplates/umowy/\")\nconst path_umowy = global.get(\"path_umowy\");\nconst path_email = global.get(\"path_email\");\n\n// global.set(\"path_tmp\", \"tmp/\")\n\nconst crypto = global.get(\"crypto\");  // musisz mieć `crypto` jako globalny moduł\nconst fs = global.get(\"fs\");\n\nconst path1 = msg.umowa.path_umowa_orginalna;  // ścieżka do oryginału\nconst path2 = msg.email_find.attachments[0].patch; // ścieżka do rzekomo podpisanego pliku\n//path_storage + path_email + \nconst buffer1 = fs.readFileSync(path1);\nconst buffer2 = fs.readFileSync(path2);\n\nconst hash1 = crypto.createHash('sha256').update(buffer1).digest('hex');\nconst hash2 = crypto.createHash('sha256').update(buffer2).digest('hex');\n\nmsg.hash_diff = hash1 !== hash2;\nmsg.hash_input = hash1;\nmsg.hash_signed = hash2;\n\nmsg.source_path = path.dirname(path2) + path.sep;\nmsg.source_file = path.basename(path2);\nmsg.dest_path = path_storage + path_umowy + msg.umowa.umowa_year + \"/\" + msg.umowa.umowa_nr + \"/\";\nmsg.dest_file = \"podpisana\" + \"-\" + path.basename(path2);\n\nmsg.path_umowa_podpisana_email_pdf = msg.dest_path + msg.dest_file;\n\nnode.status({ fill: \"green\", shape: \"dot\", text: global.get(\"getDateTime\")() });\nreturn msg;",
+        "func": "const path = global.get(\"path\");\nconst crypto = global.get(\"crypto\");\nconst fs = global.get(\"fs\");\n\nconst path_storage = global.get(\"storage\");\nconst path_umowy = global.get(\"path_umowy\");\nconst path_email = global.get(\"path_email\");\n\n// Ścieżka do oryginalnej umowy\nconst path1 = msg.umowa.path_umowa_orginalna;\n\n// Filtrujemy tylko PDF-y z załączników\nconst attachments = (msg.email_find.attachments || []).filter(a => a.kind === \"pdf\");\n\n// Jeśli brak plików PDF – kończymy\nif (attachments.length === 0) {\n    node.status({ fill: \"red\", shape: \"dot\", text: \"Brak PDF w załącznikach\" });\n    return null;\n}\n\n// Bierzemy pierwszy plik PDF\nconst path2 = attachments[0].patch;\n\n// Czytanie zawartości\nconst buffer1 = fs.readFileSync(path1);\nconst buffer2 = fs.readFileSync(path2);\n\n// Porównanie hashów\nconst hash1 = crypto.createHash('sha256').update(buffer1).digest('hex');\nconst hash2 = crypto.createHash('sha256').update(buffer2).digest('hex');\n\nmsg.hash_diff = hash1 !== hash2;\nmsg.hash_input = hash1;\nmsg.hash_signed = hash2;\n\n// Ścieżki do kopiowania\nmsg.source_path = path.dirname(path2) + path.sep;\nmsg.source_file = path.basename(path2);\nmsg.dest_path = path_storage + path_umowy + msg.umowa.umowa_year + \"/\" + msg.umowa.umowa_nr + \"/\";\nmsg.dest_file = \"podpisana-\" + path.basename(path2);\n\nmsg.path_umowa_podpisana_email_pdf = msg.dest_path + msg.dest_file;\n\nnode.status({ fill: \"green\", shape: \"dot\", text: global.get(\"getDateTime\")() });\nreturn msg;",
         "outputs": 1,
         "timeout": 0,
         "noerr": 0,
@@ -5666,7 +5693,7 @@
         "type": "function",
         "z": "be1c3f3f839ca819",
         "name": "umowa:get:by_uuid",
-        "func": "msg.nocodb_t_active = msg.nocodb_t.umowy;\n\ndelete msg.heders;\ndelete msg.method;\n\nmsg.payload = {\n    offset: '0',\n    limit: '1',\n    viewId: msg.nocodb_t.umowy_view,\n    where: msg.nocodb_query.where,\n};\n\nnode.status({ fill: \"green\", shape: \"dot\", text: global.get(\"getDateTime\")() });\n\nreturn msg;",
+        "func": "msg.nocodb_t_active = msg.nocodb_t.umowy;\n\ndelete msg.heders;\ndelete msg.method;\n\nmsg.payload = {\n    offset: '0',\n    limit: '1',\n    viewId: msg.nocodb_t.umowy_view,\n    where: msg.nocodb_query.where,\n    \"nested[osoby][fields]\": \"*\",\n    \"nested[rejsy][fields]\": \"*\"\n};\n\nnode.status({ fill: \"green\", shape: \"dot\", text: global.get(\"getDateTime\")() });\n\nreturn msg;",
         "outputs": 1,
         "timeout": 0,
         "noerr": 0,
@@ -5686,7 +5713,7 @@
         "type": "function",
         "z": "be1c3f3f839ca819",
         "name": "build:where",
-        "func": "let find = msg.email_find || {};\nlet where = \"\";\n\nif (find.uuid) {\n    where = `(uuid,eq,${find.uuid})`;\n} else if (find.nr_umowy) {\n    let parts = find.nr_umowy.split(\"/\");\n    if (parts.length === 2) {\n        let year = parts[0];\n        let umowa_nr = parts[1];\n        where = `(umowa_year,eq,${year})~and(umowa_nr,eq,${umowa_nr})`;\n    }\n}\n\nmsg.nocodb_query = {\n    where: where\n};\n\nreturn msg;\n",
+        "func": "let find = msg.email_find || {};\nlet where = \"\";\n\n// Najpierw UUID\nif (find.uuid) {\n    where = `(uuid,eq,${find.uuid})`;\n} else {\n    // Ustal źródło numeru umowy\n    let umowa = find.nr_umowy || find.nr_umowy_from_filename;\n\n    if (umowa) {\n        let parts = umowa.split(\"/\");\n        if (parts.length === 2) {\n            let year = parts[0];\n            let umowa_nr = parts[1];\n            where = `(umowa_year,eq,${year})~and(umowa_nr,eq,${umowa_nr})`;\n        }\n    }\n}\n\nmsg.nocodb_query = {\n    where: where\n};\n\nnode.status({ fill: \"green\", shape: \"dot\", text: where });\n\nreturn msg;",
         "outputs": 1,
         "timeout": 0,
         "noerr": 0,
@@ -5706,7 +5733,7 @@
         "type": "function",
         "z": "be1c3f3f839ca819",
         "name": "function 7",
-        "func": "msg.umowa = msg.payload.list[0];\nreturn msg;",
+        "func": "msg.umowa = msg.payload.list?.[0] || null;\n\nif (!msg.umowa) {\n    // msg.email_find = msg.email_find || {};\n    msg.email_find.no_contract_found = true;\n}\n\nnode.status({ fill: \"green\", shape: \"dot\", text: global.get(\"getDateTime\")() });\nreturn msg;",
         "outputs": 1,
         "timeout": 0,
         "noerr": 0,
@@ -6191,12 +6218,13 @@
         "initialize": "",
         "finalize": "",
         "libs": [],
-        "x": 1940,
-        "y": 1520,
+        "x": 2500,
+        "y": 1660,
         "wires": [
             [
                 "eb1fa11e2db45bd9",
-                "36b09dfb5bfdca64"
+                "36b09dfb5bfdca64",
+                "30146bbb67aa2593"
             ]
         ]
     },
@@ -6229,8 +6257,8 @@
                 "valueValue": ""
             }
         ],
-        "x": 2140,
-        "y": 1440,
+        "x": 2740,
+        "y": 1660,
         "wires": [
             [
                 "8521c39907b05f75"
@@ -6242,14 +6270,14 @@
         "type": "function",
         "z": "be1c3f3f839ca819",
         "name": "email:set:processed",
-        "func": "msg.nocodb_t_active = msg.nocodb_t.app_mail_inbox;\nnode.status({ fill: \"blue\", shape: \"dot\", text: global.get(\"getDateTime\")() });\n\ndelete msg.headers;\ndelete msg.method;\ndelete msg.responseCookies;\n\nmsg.method = \"PATCH\";\n\nlet comment = msg.umowa?.nazwa || msg.responseChatGPT?.notes || \"\";\n\nmsg.payload = {\n        \"Id\": msg.email.Id,\n        \"status\": \"processed\",\n        \"comment\": comment\n    };\n\nnode.status({ fill: \"green\", shape: \"dot\", text: global.get(\"getDateTime\")() });\nreturn msg;",
+        "func": "msg.nocodb_t_active = msg.nocodb_t.app_mail_inbox;\nnode.status({ fill: \"blue\", shape: \"dot\", text: global.get(\"getDateTime\")() });\n\n// Usuwanie zbędnych danych\ndelete msg.headers;\ndelete msg.method;\ndelete msg.responseCookies;\n\n// Metoda PATCH\nmsg.method = \"PATCH\";\n\n// Komentarz opisujący sytuację\nlet comment = `route: ${msg.route}\nnazwa_umowy: ${msg.umowa?.nazwa || \"brak\"}\nchatgpt: ${msg.responseChatGPT?.notes || \"brak\"}\n`;\n\n// Konwersja debug_json do stringa JSON\nlet debug_json;\ntry {\n    debug_json = JSON.stringify(msg.email_find, null, 2); // formatowany JSON\n} catch (e) {\n    debug_json = JSON.stringify({ error: \"Błąd przy konwersji email_find\", raw: String(msg.email_find) });\n}\n\n// Payload do NoCoDB\nmsg.payload = {\n    \"Id\": msg.email.Id,\n    \"status\": \"processed\",\n    \"comment\": comment,\n    \"debug_json\": debug_json\n};\n\n// Finalny status\nnode.status({ fill: \"green\", shape: \"dot\", text: global.get(\"getDateTime\")() });\nreturn msg;",
         "outputs": 1,
         "timeout": 0,
         "noerr": 0,
         "initialize": "",
         "finalize": "",
         "libs": [],
-        "x": 2060,
+        "x": 2620,
         "y": 1180,
         "wires": [
             [
@@ -6287,7 +6315,7 @@
                 "valueValue": ""
             }
         ],
-        "x": 2320,
+        "x": 2880,
         "y": 1180,
         "wires": [
             [
@@ -6521,7 +6549,7 @@
         "checkall": "true",
         "repair": false,
         "outputs": 3,
-        "x": 1690,
+        "x": 2030,
         "y": 820,
         "wires": [
             [
@@ -6545,7 +6573,7 @@
         "links": [
             "959a28fdc68c6fd3"
         ],
-        "x": 1545,
+        "x": 1885,
         "y": 820,
         "wires": [
             [
@@ -6565,7 +6593,7 @@
         "complete": "false",
         "statusVal": "",
         "statusType": "auto",
-        "x": 1860,
+        "x": 2200,
         "y": 820,
         "wires": []
     },
@@ -6581,7 +6609,7 @@
         "complete": "false",
         "statusVal": "",
         "statusType": "auto",
-        "x": 1860,
+        "x": 2200,
         "y": 860,
         "wires": []
     },
@@ -6669,7 +6697,7 @@
         "id": "90ce2f0ac1466479",
         "type": "debug",
         "z": "be1c3f3f839ca819",
-        "name": "debug 3",
+        "name": "brakdanych",
         "active": true,
         "tosidebar": true,
         "console": false,
@@ -6678,8 +6706,8 @@
         "targetType": "full",
         "statusVal": "",
         "statusType": "auto",
-        "x": 1860,
-        "y": 780,
+        "x": 2230,
+        "y": 700,
         "wires": []
     },
     {
@@ -6695,8 +6723,8 @@
         "targetType": "full",
         "statusVal": "",
         "statusType": "auto",
-        "x": 2230,
-        "y": 1100,
+        "x": 2660,
+        "y": 1240,
         "wires": []
     },
     {
@@ -6711,8 +6739,8 @@
         "complete": "false",
         "statusVal": "",
         "statusType": "auto",
-        "x": 2410,
-        "y": 1080,
+        "x": 2900,
+        "y": 1240,
         "wires": []
     },
     {
@@ -6900,8 +6928,8 @@
         "initialize": "",
         "finalize": "",
         "libs": [],
-        "x": 2130,
-        "y": 800,
+        "x": 2280,
+        "y": 660,
         "wires": [
             [
                 "e1ac35e424150a0b"
@@ -6934,8 +6962,8 @@
         "links": [
             "c762bac562c97480"
         ],
-        "x": 2325,
-        "y": 800,
+        "x": 2445,
+        "y": 660,
         "wires": []
     },
     {
@@ -6957,64 +6985,20 @@
         "z": "be1c3f3f839ca819",
         "name": "start-email:set:processed",
         "links": [
-            "6da7b5a7f804c679"
+            "6da7b5a7f804c679",
+            "b7fa61b324b55bb0",
+            "73c9a19a3a3e4a70",
+            "8813c5dd42b8ad16",
+            "c12e78b134f4567c",
+            "c2d4ce240f9aadde"
         ],
-        "x": 1605,
-        "y": 1020,
+        "x": 2285,
+        "y": 1180,
         "wires": [
             [
                 "8521c39907b05f75"
             ]
         ]
-    },
-    {
-        "id": "6a03d924611dfa9c",
-        "type": "debug",
-        "z": "be1c3f3f839ca819",
-        "name": "debug 14",
-        "active": true,
-        "tosidebar": true,
-        "console": false,
-        "tostatus": false,
-        "complete": "true",
-        "targetType": "full",
-        "statusVal": "",
-        "statusType": "auto",
-        "x": 390,
-        "y": 980,
-        "wires": []
-    },
-    {
-        "id": "cca9f20dddf2c2d3",
-        "type": "debug",
-        "z": "be1c3f3f839ca819",
-        "name": "debug 15",
-        "active": true,
-        "tosidebar": true,
-        "console": false,
-        "tostatus": false,
-        "complete": "false",
-        "statusVal": "",
-        "statusType": "auto",
-        "x": 1550,
-        "y": 900,
-        "wires": []
-    },
-    {
-        "id": "d1c5c394741f15ae",
-        "type": "debug",
-        "z": "be1c3f3f839ca819",
-        "name": "debug 16",
-        "active": true,
-        "tosidebar": true,
-        "console": false,
-        "tostatus": false,
-        "complete": "false",
-        "statusVal": "",
-        "statusType": "auto",
-        "x": 1540,
-        "y": 940,
-        "wires": []
     },
     {
         "id": "3f80a813ff9a9363",
@@ -7078,8 +7062,8 @@
         "chunk": false,
         "sendError": false,
         "allProps": false,
-        "x": 1780,
-        "y": 1600,
+        "x": 1800,
+        "y": 1660,
         "wires": [
             [
                 "0984a229cf13b354"
@@ -7098,7 +7082,7 @@
         "initialize": "",
         "finalize": "",
         "libs": [],
-        "x": 1890,
+        "x": 1990,
         "y": 1660,
         "wires": [
             [
@@ -7136,7 +7120,7 @@
                 "valueValue": ""
             }
         ],
-        "x": 2150,
+        "x": 2230,
         "y": 1660,
         "wires": [
             [
@@ -7158,8 +7142,8 @@
         "targetType": "full",
         "statusVal": "",
         "statusType": "auto",
-        "x": 2010,
-        "y": 1840,
+        "x": 2000,
+        "y": 1720,
         "wires": []
     },
     {
@@ -7175,8 +7159,8 @@
         "targetType": "full",
         "statusVal": "",
         "statusType": "auto",
-        "x": 1980,
-        "y": 1380,
+        "x": 2520,
+        "y": 1720,
         "wires": []
     },
     {
@@ -7191,8 +7175,8 @@
         "complete": "false",
         "statusVal": "",
         "statusType": "auto",
-        "x": 2270,
-        "y": 1520,
+        "x": 2260,
+        "y": 1720,
         "wires": []
     },
     {
@@ -7213,7 +7197,7 @@
         "allowrate": false,
         "outputs": 1,
         "x": 1640,
-        "y": 1700,
+        "y": 1660,
         "wires": [
             [
                 "ba6ca4a312bb18eb"
@@ -7258,6 +7242,371 @@
         "wires": [
             [
                 "817eac3f892f84f9"
+            ]
+        ]
+    },
+    {
+        "id": "073079b90e2b805f",
+        "type": "comment",
+        "z": "be1c3f3f839ca819",
+        "name": "jezel mial wyzszy stan naprzyklad zaplacil nie zmieniac ",
+        "info": "",
+        "x": 2720,
+        "y": 1140,
+        "wires": []
+    },
+    {
+        "id": "30146bbb67aa2593",
+        "type": "function",
+        "z": "be1c3f3f839ca819",
+        "name": "msg:telegram",
+        "func": "let umowa_nr = msg.email_find.nr_umowy || msg.email_find.nr_umowy_from_filename;\n\nconst template_data = {\n    rejs_name: msg.umowa.rejsy.nazwa,\n    umowa_nr: umowa_nr\n};\n\nmsg.message = {\n    template_in_row: \"📧: Dotarła podpisana umowa {{umowa_nr}} na rejs {{rejs_name}}\",\n    template_data: template_data,\n    kind: \"telegram\",\n    to_group: \"admin\",\n    to: \"admin\",\n\n    // to: msg.payload.value  // np. \"234242,23424234,24\"\n};\n\nnode.status({ fill: \"green\", shape: \"dot\", text: global.get(\"getDateTime\")() });\nreturn msg;",
+        "outputs": 1,
+        "timeout": 0,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 2740,
+        "y": 1720,
+        "wires": [
+            [
+                "94b362f32fa52ed8"
+            ]
+        ]
+    },
+    {
+        "id": "94b362f32fa52ed8",
+        "type": "link out",
+        "z": "be1c3f3f839ca819",
+        "name": "link out 28",
+        "mode": "link",
+        "links": [
+            "b38c6c11d0212c18"
+        ],
+        "x": 2965,
+        "y": 1720,
+        "wires": []
+    },
+    {
+        "id": "7a894a5a3b5e9620",
+        "type": "function",
+        "z": "be1c3f3f839ca819",
+        "name": "msg:telegram: mail_delivery_failed",
+        "func": "const template_data = {\n    data: \"data\"\n};\n\nmsg.message = {\n    template_in_row: \"📧 Zły email przy rejestracji. Nie mogłem wysłać emaila.\",\n    template_data: template_data,\n    kind: \"telegram\",\n    to_group: \"dev\",\n    to: \"admin\",\n\n    // to: msg.payload.value  // np. \"234242,23424234,24\"\n};\n\nnode.status({ fill: \"green\", shape: \"dot\", text: global.get(\"getDateTime\")() });\nreturn msg;",
+        "outputs": 1,
+        "timeout": 0,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 1960,
+        "y": 320,
+        "wires": [
+            [
+                "d7dd5f2f89bb925e"
+            ]
+        ]
+    },
+    {
+        "id": "d7dd5f2f89bb925e",
+        "type": "link out",
+        "z": "be1c3f3f839ca819",
+        "name": "link out 29",
+        "mode": "link",
+        "links": [
+            "b38c6c11d0212c18"
+        ],
+        "x": 2255,
+        "y": 320,
+        "wires": []
+    },
+    {
+        "id": "b7fa61b324b55bb0",
+        "type": "link out",
+        "z": "be1c3f3f839ca819",
+        "name": "mail_delivery_failed",
+        "mode": "link",
+        "links": [
+            "2939d454d30f1e52",
+            "834376900a7555b1"
+        ],
+        "x": 1570,
+        "y": 960,
+        "wires": [],
+        "l": true
+    },
+    {
+        "id": "834376900a7555b1",
+        "type": "link in",
+        "z": "be1c3f3f839ca819",
+        "name": "link in 11",
+        "links": [
+            "b7fa61b324b55bb0"
+        ],
+        "x": 1755,
+        "y": 320,
+        "wires": [
+            [
+                "7a894a5a3b5e9620"
+            ]
+        ]
+    },
+    {
+        "id": "73c9a19a3a3e4a70",
+        "type": "link out",
+        "z": "be1c3f3f839ca819",
+        "name": "no_contract_found",
+        "mode": "link",
+        "links": [
+            "2939d454d30f1e52",
+            "69f5bd99f87c877c"
+        ],
+        "x": 1570,
+        "y": 1000,
+        "wires": [],
+        "l": true
+    },
+    {
+        "id": "a1d5047fa8a97cdc",
+        "type": "link out",
+        "z": "be1c3f3f839ca819",
+        "name": "link out 30",
+        "mode": "link",
+        "links": [
+            "b38c6c11d0212c18"
+        ],
+        "x": 2255,
+        "y": 380,
+        "wires": []
+    },
+    {
+        "id": "3075918d085ebabe",
+        "type": "function",
+        "z": "be1c3f3f839ca819",
+        "name": "msg:telegram: no_contract_found",
+        "func": "let umowa_nr = msg.email_find.nr_umowy || msg.email_find.nr_umowy_from_filename;\n\nconst template_data = {\n    rejs_name: msg.umowa.rejsy.nazwa,\n    umowa_nr: umowa_nr\n};\n\nmsg.message = {\n    template_in_row: \"📧 Zły email przy rejestracji. Nie mogłem wysłać emaila.\",\n    template_data: template_data,\n    kind: \"telegram\",\n    to_group: \"dev\",\n    to: \"dev\",\n\n    // to: msg.payload.value  // np. \"234242,23424234,24\"\n};\n\nnode.status({ fill: \"green\", shape: \"dot\", text: global.get(\"getDateTime\")() });\nreturn msg;",
+        "outputs": 1,
+        "timeout": 0,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 1960,
+        "y": 380,
+        "wires": [
+            [
+                "a1d5047fa8a97cdc"
+            ]
+        ]
+    },
+    {
+        "id": "69f5bd99f87c877c",
+        "type": "link in",
+        "z": "be1c3f3f839ca819",
+        "name": "link in 12",
+        "links": [
+            "73c9a19a3a3e4a70"
+        ],
+        "x": 1755,
+        "y": 380,
+        "wires": [
+            [
+                "3075918d085ebabe"
+            ]
+        ]
+    },
+    {
+        "id": "8813c5dd42b8ad16",
+        "type": "link out",
+        "z": "be1c3f3f839ca819",
+        "name": "brak_danych",
+        "mode": "link",
+        "links": [
+            "2939d454d30f1e52",
+            "bce1e1481b12fda2"
+        ],
+        "x": 1550,
+        "y": 1040,
+        "wires": [],
+        "l": true
+    },
+    {
+        "id": "1e344fabe6b4e291",
+        "type": "link out",
+        "z": "be1c3f3f839ca819",
+        "name": "link out 31",
+        "mode": "link",
+        "links": [
+            "b38c6c11d0212c18"
+        ],
+        "x": 2255,
+        "y": 440,
+        "wires": []
+    },
+    {
+        "id": "3b74e06482d83045",
+        "type": "function",
+        "z": "be1c3f3f839ca819",
+        "name": "msg:telegram: brak_danych",
+        "func": "const template_data = {\n    subject: msg.email.subject\n};\n\nmsg.message = {\n    template_in_row: `[dev] 📧 brak_danych \n    subject: {{subject}}\n`,\n    template_data: template_data,\n    kind: \"telegram\",\n    to_group: \"dev\",\n    to: \"dev\",\n\n    // to: msg.payload.value  // np. \"234242,23424234,24\"\n};\n\nnode.status({ fill: \"green\", shape: \"dot\", text: global.get(\"getDateTime\")() });\nreturn msg;",
+        "outputs": 1,
+        "timeout": 0,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 1940,
+        "y": 440,
+        "wires": [
+            [
+                "1e344fabe6b4e291"
+            ]
+        ]
+    },
+    {
+        "id": "bce1e1481b12fda2",
+        "type": "link in",
+        "z": "be1c3f3f839ca819",
+        "name": "link in 13",
+        "links": [
+            "8813c5dd42b8ad16"
+        ],
+        "x": 1755,
+        "y": 440,
+        "wires": [
+            [
+                "3b74e06482d83045"
+            ]
+        ]
+    },
+    {
+        "id": "c12e78b134f4567c",
+        "type": "link out",
+        "z": "be1c3f3f839ca819",
+        "name": "inne_probably_contract",
+        "mode": "link",
+        "links": [
+            "2939d454d30f1e52",
+            "254532dd82375f54"
+        ],
+        "x": 1590,
+        "y": 880,
+        "wires": [],
+        "l": true
+    },
+    {
+        "id": "c2d4ce240f9aadde",
+        "type": "link out",
+        "z": "be1c3f3f839ca819",
+        "name": "uuid_only",
+        "mode": "link",
+        "links": [
+            "2939d454d30f1e52",
+            "a31fa2b34cd15b69",
+            "254532dd82375f54"
+        ],
+        "x": 1540,
+        "y": 920,
+        "wires": [],
+        "l": true
+    },
+    {
+        "id": "1d1046a9ec0eb8fa",
+        "type": "link out",
+        "z": "be1c3f3f839ca819",
+        "name": "link out 32",
+        "mode": "link",
+        "links": [
+            "b38c6c11d0212c18"
+        ],
+        "x": 2255,
+        "y": 260,
+        "wires": []
+    },
+    {
+        "id": "c4548b582caafa0f",
+        "type": "function",
+        "z": "be1c3f3f839ca819",
+        "name": "msg:telegram: uuid_only",
+        "func": "const template_data = {\n    subject: msg.email.subject\n};\n\nmsg.message = {\n    template_in_row: `[dev] 📧 uuid_only\n    subject: {{subject}}\n`,\n    template_data: template_data,\n    kind: \"telegram\",\n    to_group: \"dev\",\n    to: \"dev\",\n\n    // to: msg.payload.value  // np. \"234242,23424234,24\"\n};\n\nnode.status({ fill: \"green\", shape: \"dot\", text: global.get(\"getDateTime\")() });\nreturn msg;",
+        "outputs": 1,
+        "timeout": 0,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 1930,
+        "y": 260,
+        "wires": [
+            [
+                "1d1046a9ec0eb8fa"
+            ]
+        ]
+    },
+    {
+        "id": "a31fa2b34cd15b69",
+        "type": "link in",
+        "z": "be1c3f3f839ca819",
+        "name": "link in 14",
+        "links": [
+            "c2d4ce240f9aadde"
+        ],
+        "x": 1755,
+        "y": 260,
+        "wires": [
+            [
+                "c4548b582caafa0f"
+            ]
+        ]
+    },
+    {
+        "id": "716b8a5fab1f1112",
+        "type": "link out",
+        "z": "be1c3f3f839ca819",
+        "name": "link out 33",
+        "mode": "link",
+        "links": [
+            "b38c6c11d0212c18"
+        ],
+        "x": 2255,
+        "y": 200,
+        "wires": []
+    },
+    {
+        "id": "f8bf790d315c5a9a",
+        "type": "function",
+        "z": "be1c3f3f839ca819",
+        "name": "msg:telegram: inne_probably_contract",
+        "func": "const template_data = {\n    subject: msg.email.subject\n};\n\nmsg.message = {\n    template_in_row: `[dev] 📧 inne_probably_contract\n    subject: {{subject}}\n`,\n    template_data: template_data,\n    kind: \"telegram\",\n    to_group: \"dev\",\n    to: \"dev\",\n\n    // to: msg.payload.value  // np. \"234242,23424234,24\"\n};\n\nnode.status({ fill: \"green\", shape: \"dot\", text: global.get(\"getDateTime\")() });\nreturn msg;",
+        "outputs": 1,
+        "timeout": 0,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 1970,
+        "y": 200,
+        "wires": [
+            [
+                "716b8a5fab1f1112"
+            ]
+        ]
+    },
+    {
+        "id": "254532dd82375f54",
+        "type": "link in",
+        "z": "be1c3f3f839ca819",
+        "name": "link in 15",
+        "links": [
+            "c2d4ce240f9aadde",
+            "c12e78b134f4567c"
+        ],
+        "x": 1755,
+        "y": 200,
+        "wires": [
+            [
+                "f8bf790d315c5a9a"
             ]
         ]
     },
@@ -7505,7 +7854,7 @@
         "z": "7f8edcc91438aff6",
         "g": "de07ac967b5ab328",
         "name": "NocoDB:post:umowy",
-        "func": "delete msg.headers;\ndelete msg.method;\ndelete msg.responseCookies;\n\nmsg.nocodb_t_active = msg.nocodb_t.umowy;\nconst rejs = msg.payload.list[0];\n\nconst now = new Date();\nconst pad = (n) => n.toString().padStart(2, '0');\n\nconst year = now.getFullYear();\nconst month = pad(now.getMonth() + 1);\nconst day = pad(now.getDate());\nconst hours = pad(now.getHours());\nconst minutes = pad(now.getMinutes());\nconst seconds = pad(now.getSeconds());\n\nconst uuid = global.get(\"uuidv4\")();\n\nconst rezerwacja_cena = rejs.cena * msg.form.liczbaOsob;\nconst rezerwacja_cena_rata1 = Math.floor(rezerwacja_cena * 0.3);\nconst rezerwacja_cena_rata2 = rezerwacja_cena - rezerwacja_cena_rata1; \nconst cena_wydatki = rejs.cena_wydatki * msg.form.liczbaOsob;\nconst cena_zaokretowania = rejs.cena_zaokretowania * msg.form.liczbaOsob;\n\nmsg.payload = {\n    \"nc_5cf7__osoby_id\": msg.osoba_id,\n    \"cdp5l9hs8gbe7kn\": msg.form.liczbaOsob,\n    \"nc_5cf7___rejsy_id\": msg.form.rejsId,\n    uuid: uuid,\n    \"nazwa\": \"Umowa - wait for confirm\",\n    \"rezerwacja_cena\": rezerwacja_cena,\n    \"rezerwacja_cena_rata1\": rezerwacja_cena_rata1,\n    \"rezerwacja_cena_rata2\": rezerwacja_cena_rata2,\n    \"cena_wydatki\": cena_wydatki,\n    \"cena_zaokretowania\": cena_zaokretowania\n}\n\nmsg.rejs = rejs;\n\nmsg.method = \"POST\";\n\nnode.status({ fill: \"green\", shape: \"dot\", text: global.get(\"getDateTime\")() });\nreturn msg;",
+        "func": "delete msg.headers;\ndelete msg.method;\ndelete msg.responseCookies;\n\nmsg.nocodb_t_active = msg.nocodb_t.umowy;\nconst rejs = msg.payload.list[0];\n\nconst now = new Date();\nconst pad = (n) => n.toString().padStart(2, '0');\n\nconst year = now.getFullYear();\nconst month = pad(now.getMonth() + 1);\nconst day = pad(now.getDate());\nconst hours = pad(now.getHours());\nconst minutes = pad(now.getMinutes());\nconst seconds = pad(now.getSeconds());\n\nconst uuid = global.get(\"uuidv4\")();\n\nconst rezerwacja_cena = rejs.cena * msg.form.liczbaOsob;\nconst rezerwacja_cena_rata1 = Math.floor(rezerwacja_cena * 0.3);\nconst rezerwacja_cena_rata2 = rezerwacja_cena - rezerwacja_cena_rata1; \nconst cena_wydatki = rejs.cena_wydatki * msg.form.liczbaOsob;\nconst cena_zaokretowania = rejs.cena_zaokretowania * msg.form.liczbaOsob;\n\nmsg.payload = {\n    \"nc_5cf7__osoby_id\": msg.osoba_id,\n    \"cdp5l9hs8gbe7kn\": msg.form.liczbaOsob,\n    \"nc_5cf7___rejsy_id\": msg.form.rejsId,\n    uuid: uuid,\n    \"nazwa\": \"Umowa - wait for confirm\",\n    \"rezerwacja_cena\": rezerwacja_cena,\n    \"rezerwacja_cena_rata1\": rezerwacja_cena_rata1,\n    \"rezerwacja_cena_rata2\": rezerwacja_cena_rata2,\n    \"cena_wydatki\": cena_wydatki,\n    \"cena_zaokretowania\": cena_zaokretowania,\n    app_year: year,\n    app_month: month\n}\n\nmsg.rejs = rejs;\n\nmsg.method = \"POST\";\n\nnode.status({ fill: \"green\", shape: \"dot\", text: global.get(\"getDateTime\")() });\nreturn msg;",
         "outputs": 1,
         "timeout": 0,
         "noerr": 0,
@@ -10217,7 +10566,13 @@
             "64b8d814115c9512",
             "799e576850c2a16c",
             "a7d36146b2282a7c",
-            "9826806d4f227dd8"
+            "9826806d4f227dd8",
+            "94b362f32fa52ed8",
+            "d7dd5f2f89bb925e",
+            "a1d5047fa8a97cdc",
+            "1e344fabe6b4e291",
+            "1d1046a9ec0eb8fa",
+            "716b8a5fab1f1112"
         ],
         "x": 170,
         "y": 80,
@@ -10385,7 +10740,7 @@
         "z": "7ac738eef3d259eb",
         "g": "4f84417ea22d54a2",
         "name": "message:template:telegram",
-        "func": "var data = msg.payload;\n\nconst fs = global.get('fs');\nconst path = global.get('path');\n\nlet cssPath = \"\";\nlet css = \"\";\nlet html = \"\";\n\nlet m = msg.message;\n\nnode.status({ fill: \"blue\", shape: \"dot\", text: m.kind });\n\n\nif (m.kind == \"email\") {\n    cssPath = global.get('storage') + \"/teamplates/html/email-style.css\";\n    css = fs.readFileSync(cssPath, \"utf8\");\n}\n\nif (m.template_in_row) {\n    html = m.template_in_row;\n} else {\n    const htmlPath = global.get('storage') + \"/teamplates/html/\" + msg.message.template;\n    html = fs.readFileSync(htmlPath, \"utf8\");\n\n    if (m.kind == \"email\") {\n        // Wstawienie stylu inline w miejsce <link rel=\"stylesheet\"...>\n        html = html.replace(\n            /<link\\s+rel=[\"']stylesheet[\"']\\s+href=[\"'][^\"']+[\"']\\s*\\/?>/,\n            `<style>\\n${css}\\n</style>`\n        );\n    }\n}\n\nconst template_data = m.template_data;\n\n// Dynamiczna zamiana {{klucz}} na wartość z template_data\nfor (const key in template_data) {\n    const regex = new RegExp(`{{${key}}}`, 'g');\n    html = html.replace(regex, template_data[key]);\n}\n\n// msg.payload = html;\n// msg.to = `${msg.email.from}`;\n// msg.from = msg.smtp.auth.user;\n// msg.subject = \"Odp: \" + msg.email.subject;\n// msg.headers = {\n//     \"Content-Type\": \"text/html\"\n// };\n\n\nmsg.message.from = \"Kwatermistrz\";\nmsg.message.subject = \"Info\";\nmsg.message.body = html;\nif (msg.message.to_group == \"admin\") {\n    msg.message.to = msg.payload.value;\n} \n\n\n// msg.umowa = data;\n// msg.html = html;\n\nnode.status({ fill: \"green\", shape: \"dot\", text: global.get(\"getDateTime\")() });\nreturn msg;",
+        "func": "var data = msg.payload;\n\nconst fs = global.get('fs');\nconst path = global.get('path');\n\nlet cssPath = \"\";\nlet css = \"\";\nlet html = \"\";\n\nlet m = msg.message;\n\nnode.status({ fill: \"blue\", shape: \"dot\", text: m.kind });\n\n\nif (m.kind == \"email\") {\n    cssPath = global.get('storage') + \"/teamplates/html/email-style.css\";\n    css = fs.readFileSync(cssPath, \"utf8\");\n}\n\nif (m.template_in_row) {\n    html = m.template_in_row;\n} else {\n    const htmlPath = global.get('storage') + \"/teamplates/html/\" + msg.message.template;\n    html = fs.readFileSync(htmlPath, \"utf8\");\n\n    if (m.kind == \"email\") {\n        // Wstawienie stylu inline w miejsce <link rel=\"stylesheet\"...>\n        html = html.replace(\n            /<link\\s+rel=[\"']stylesheet[\"']\\s+href=[\"'][^\"']+[\"']\\s*\\/?>/,\n            `<style>\\n${css}\\n</style>`\n        );\n    }\n}\n\nconst template_data = m.template_data;\n\n// Dynamiczna zamiana {{klucz}} na wartość z template_data\nfor (const key in template_data) {\n    const regex = new RegExp(`{{${key}}}`, 'g');\n    html = html.replace(regex, template_data[key]);\n}\n\n// msg.payload = html;\n// msg.to = `${msg.email.from}`;\n// msg.from = msg.smtp.auth.user;\n// msg.subject = \"Odp: \" + msg.email.subject;\n// msg.headers = {\n//     \"Content-Type\": \"text/html\"\n// };\n\n\nmsg.message.from = \"Kwatermistrz\";\nmsg.message.subject = \"Info\";\nmsg.message.body = html;\nif (msg.message.to_group != \"\") {\n    msg.message.to = msg.payload.value;\n} \n\n\n// msg.umowa = data;\n// msg.html = html;\n\nnode.status({ fill: \"green\", shape: \"dot\", text: global.get(\"getDateTime\")() });\nreturn msg;",
         "outputs": 1,
         "timeout": 0,
         "noerr": 0,
@@ -10424,7 +10779,7 @@
         "z": "7ac738eef3d259eb",
         "g": "4f84417ea22d54a2",
         "name": "prepare:telegram:message",
-        "func": "msg.payload = {\n    chatId: msg.message.to,\n    content: msg.message.body,\n    type: \"message\",\n    options: {\n        parse_mode: \"Markdown\",\n        disable_web_page_preview: true\n    }\n}\nreturn msg;",
+        "func": "function escapeMarkdownV2(text) {\n    if (!text) return \"\";\n    return text\n        .toString()\n        .trim()\n        .replace(/[_*[\\]()~`>#+\\-=|{}.!]/g, '\\\\$&');  // Escape znaki specjalne MarkdownV2\n}\n\nmsg.message.body = escapeMarkdownV2(msg.message.body);  // oczyszczony body\n\nmsg.payload = {\n    chatId: msg.message.to,\n    content: msg.message.body,\n    type: \"message\",\n    options: {\n        parse_mode: \"MarkdownV2\",\n        disable_web_page_preview: true\n    }\n};\n\nreturn msg;",
         "outputs": 1,
         "timeout": 0,
         "noerr": 0,
@@ -10435,7 +10790,8 @@
         "y": 260,
         "wires": [
             [
-                "9eaf057bbd22b391"
+                "9eaf057bbd22b391",
+                "517f9e00e31abb1f"
             ]
         ]
     },
@@ -10445,7 +10801,7 @@
         "z": "7ac738eef3d259eb",
         "g": "4f84417ea22d54a2",
         "name": "get:config",
-        "func": "msg.config = {};\nmsg.config.limit = 20;\nmsg.config.parametr = \"*\"\nmsg.config.kind = \"telegram_admin\";\nnode.status({ fill: \"green\", shape: \"dot\", text: global.get(\"getDateTime\")() });\nreturn msg;",
+        "func": "let kind = msg.message.kind + \"_\" + msg.message.to_group\n\nmsg.config = {};\nmsg.config.limit = 20;\nmsg.config.parametr = \"*\"\nmsg.config.kind = kind;\nnode.status({ fill: \"green\", shape: \"dot\", text: global.get(\"getDateTime\")() });\nreturn msg;",
         "outputs": 1,
         "timeout": 0,
         "noerr": 0,
@@ -10505,9 +10861,7 @@
         "propertyType": "msg",
         "rules": [
             {
-                "t": "eq",
-                "v": "admin",
-                "vt": "str"
+                "t": "nempty"
             },
             {
                 "t": "else"
@@ -10745,6 +11099,138 @@
         "info": "",
         "x": 1340,
         "y": 60,
+        "wires": []
+    },
+    {
+        "id": "517f9e00e31abb1f",
+        "type": "debug",
+        "z": "7ac738eef3d259eb",
+        "g": "4f84417ea22d54a2",
+        "name": "debug 3",
+        "active": true,
+        "tosidebar": true,
+        "console": false,
+        "tostatus": false,
+        "complete": "false",
+        "statusVal": "",
+        "statusType": "auto",
+        "x": 480,
+        "y": 320,
+        "wires": []
+    },
+    {
+        "id": "41916a070ea72119",
+        "type": "inject",
+        "z": "7314cbba718b913d",
+        "name": "",
+        "props": [
+            {
+                "p": "payload"
+            },
+            {
+                "p": "topic",
+                "vt": "str"
+            }
+        ],
+        "repeat": "",
+        "crontab": "",
+        "once": false,
+        "onceDelay": 0.1,
+        "topic": "",
+        "payload": "",
+        "payloadType": "date",
+        "x": 140,
+        "y": 100,
+        "wires": [
+            [
+                "dcf0789dc7c90e29"
+            ]
+        ]
+    },
+    {
+        "id": "dcf0789dc7c90e29",
+        "type": "subflow:03b285947d86a284",
+        "z": "7314cbba718b913d",
+        "name": "",
+        "x": 320,
+        "y": 100,
+        "wires": [
+            [
+                "44557aebc338a15a"
+            ]
+        ]
+    },
+    {
+        "id": "44557aebc338a15a",
+        "type": "function",
+        "z": "7314cbba718b913d",
+        "name": "NocoDB - umowy:get:10 send-contract:2day",
+        "func": "msg.nocodb_t_active = msg.nocodb_t.umowy;\n\nmsg.payload = {\n    offset: '0',\n    limit: '5',\n    viewId: msg.nocodb_t.umowy_view,\n    where: `(status,eq,10 send-contract)~and(umowa_data,eq,daysAgo,2)`,\n    \"nested[osoby][fields]\": \"*\",\n    \"nested[rejsy][fields]\": \"*\"\n};\n\nnode.status({ fill: \"green\", shape: \"dot\", text: global.get(\"getDateTime\")() });\n\nreturn msg;",
+        "outputs": 1,
+        "timeout": 0,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 610,
+        "y": 100,
+        "wires": [
+            [
+                "ea5357a9abf27fc8"
+            ]
+        ]
+    },
+    {
+        "id": "ea5357a9abf27fc8",
+        "type": "http request",
+        "z": "7314cbba718b913d",
+        "name": "NocoDB - GET",
+        "method": "GET",
+        "ret": "obj",
+        "paytoqs": "query",
+        "url": "http://{{nocodb_host}}/api/v2/tables/{{nocodb_t_active}}/records",
+        "tls": "",
+        "persist": false,
+        "proxy": "",
+        "insecureHTTPParser": false,
+        "authType": "",
+        "senderr": false,
+        "headers": [
+            {
+                "keyType": "other",
+                "keyValue": "xc-token",
+                "valueType": "msg",
+                "valueValue": "xc_token"
+            },
+            {
+                "keyType": "Content-Type",
+                "keyValue": "",
+                "valueType": "application/json",
+                "valueValue": ""
+            }
+        ],
+        "x": 920,
+        "y": 100,
+        "wires": [
+            [
+                "5d35201a8882b461"
+            ]
+        ]
+    },
+    {
+        "id": "5d35201a8882b461",
+        "type": "debug",
+        "z": "7314cbba718b913d",
+        "name": "debug 25",
+        "active": true,
+        "tosidebar": true,
+        "console": false,
+        "tostatus": false,
+        "complete": "false",
+        "statusVal": "",
+        "statusType": "auto",
+        "x": 1140,
+        "y": 140,
         "wires": []
     }
 ]

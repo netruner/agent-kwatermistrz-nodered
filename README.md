@@ -4,6 +4,12 @@ Kwatermistrz
 Kwatermistrz dla Kapitana Bastka
 
 ### About
+0.5.3 
+- poprawki do analizy emaili 
+- mailgate nowy
+- dodane pola do mail json comment i czyste body
+- wstepne raporty
+
 0.5.2
 - armator
 
