@@ -4,6 +4,9 @@ Kwatermistrz
 Kwatermistrz dla Kapitana Bastka
 
 ### About
+0.5.5
+- poprawa logiki szukania emailow i okreslania celu w momencie nr umowy i plikow jpg 
+
 0.5.4
 - umowy 30 dni przed bez rad
 
