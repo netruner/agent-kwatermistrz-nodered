@@ -4,6 +4,9 @@ Kwatermistrz
 Kwatermistrz dla Kapitana Bastka
 
 ### About
+0.5.4
+- umowy 30 dni przed bez rad
+
 0.5.3 
 - poprawki do analizy emaili 
 - mailgate nowy
