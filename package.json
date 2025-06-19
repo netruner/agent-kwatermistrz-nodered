@@ -1,7 +1,7 @@
 {
     "name": "Kwatermistrz",
     "description": "Kwatermistrz dla Kapitana Bastka",
-    "version": "0.5.3",
+    "version": "0.5.4",
     "dependencies": {
         "node-red-contrib-email-dynamic": "1.0.1",
         "node-red-contrib-fs-ops": "1.6.0",
